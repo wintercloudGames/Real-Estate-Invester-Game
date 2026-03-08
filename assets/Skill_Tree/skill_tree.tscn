@@ -1,0 +1,398 @@
+[gd_scene load_steps=20 format=3 uid="uid://cichm52kww3cn"]
+
+[ext_resource type="Script" uid="uid://fnvw4y8aim38" path="res://assets/Skill_Tree/skill_tree.gd" id="1_nig2w"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_rsuch"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="2_dukmi"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="3_nig2w"]
+[ext_resource type="PackedScene" uid="uid://yl0bxn3mvjem" path="res://assets/Skill_Tree/Skill_Button.tscn" id="6_2tli5"]
+[ext_resource type="Texture2D" uid="uid://bnkc5mcrjvmmp" path="res://shaded-dark/shadedDark30.png" id="6_treql"]
+[ext_resource type="Script" uid="uid://d2n6iol3bgvl0" path="res://assets/UI/drag_button.gd" id="7_o85cb"]
+[ext_resource type="Texture2D" uid="uid://b52myfxlhuv3f" path="res://assets/UI/icons/temple-gate.png" id="8_treql"]
+[ext_resource type="Texture2D" uid="uid://cc1l4sdqngi14" path="res://assets/UI/icons/house.png" id="9_3avv8"]
+[ext_resource type="Texture2D" uid="uid://2st8usryltse" path="res://assets/UI/icons/village.png" id="9_o85cb"]
+[ext_resource type="Texture2D" uid="uid://cx32eru7xvko2" path="res://assets/UI/icons/health-normal.png" id="11_2n6q7"]
+[ext_resource type="Texture2D" uid="uid://b46ulwru5x0bb" path="res://assets/UI/icons/person.png" id="11_62fk7"]
+[ext_resource type="Texture2D" uid="uid://5lqyw8wkaid1" path="res://assets/UI/icons/family-house.png" id="12_guq4v"]
+[ext_resource type="Texture2D" uid="uid://bqkuokwms5xnl" path="res://assets/UI/icons/briefcase.png" id="13_guq4v"]
+[ext_resource type="Texture2D" uid="uid://bgidxna3gs0dc" path="res://assets/UI/icons/chart.png" id="13_sb7xq"]
+[ext_resource type="Texture2D" uid="uid://dwib34gx67f43" path="res://assets/UI/icons/files.png" id="15_m6mis"]
+[ext_resource type="Texture2D" uid="uid://bn2y5ckkxsfd8" path="res://assets/UI/icons/wallet.png" id="15_yn8ca"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3avv8"]
+bg_color = Color(0.332031, 0.329437, 0.329437, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nux3j"]
+bg_color = Color(0.0874939, 0.102692, 0.476563, 1)
+
+[node name="Skill_tree" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nig2w")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rsuch")
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 679.0
+offset_top = 21.0
+offset_right = -753.0
+offset_bottom = -940.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rsuch")
+
+[node name="Skill_points_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 711.0
+offset_top = 41.0
+offset_right = 1006.0
+offset_bottom = 111.0
+theme_override_font_sizes/font_size = 51
+text = "Skill points: "
+
+[node name="Level_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 231.0
+offset_top = 13.0
+offset_right = 526.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 51
+text = "Level: 1"
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 87.0
+offset_right = 408.0
+offset_bottom = 114.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3avv8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_nux3j")
+
+[node name="Close_Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -273.0
+offset_top = 40.0
+offset_right = -63.0
+offset_bottom = 137.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 61
+theme_override_styles/hover = ExtResource("2_dukmi")
+theme_override_styles/pressed = ExtResource("3_nig2w")
+theme_override_styles/normal = ExtResource("2_dukmi")
+text = "CLOSE"
+
+[node name="Cheat_Button" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -659.0
+offset_top = 40.0
+offset_right = -449.0
+offset_bottom = 137.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 61
+theme_override_styles/hover = ExtResource("2_dukmi")
+theme_override_styles/pressed = ExtResource("3_nig2w")
+theme_override_styles/normal = ExtResource("2_dukmi")
+text = "CHEAT"
+
+[node name="Drag_Button" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0104167
+anchor_top = 0.0296296
+anchor_right = 0.0104167
+anchor_bottom = 0.0296296
+offset_right = 48.0
+offset_bottom = 48.0
+scale = Vector2(2, 2)
+texture_normal = ExtResource("6_treql")
+script = ExtResource("7_o85cb")
+metadata/_edit_use_anchors_ = true
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 169.0
+offset_right = 1887.0
+offset_bottom = 1039.0
+tab_alignment = 1
+current_tab = 1
+tabs_position = 1
+
+[node name="House" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+metadata/_tab_index = 0
+
+[node name="Rent_houses" parent="TabContainer/House" instance=ExtResource("6_2tli5")]
+layout_mode = 2
+offset_left = 843.0
+offset_top = 574.0
+offset_right = 971.0
+offset_bottom = 702.0
+texture_normal = ExtResource("9_3avv8")
+skill_name = "Rent house's"
+skill_description = "Be able to rent out house's"
+level_costs = Array[int]([2])
+app_skill_to_unlock = 4
+
+[node name="House_manager" parent="TabContainer/House/Rent_houses" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = -154.0
+offset_top = -156.0
+offset_right = -26.0
+offset_bottom = -28.0
+texture_normal = ExtResource("9_o85cb")
+skill_name = "house manager"
+skill_description = "you can manage miltible proerties more easely."
+level_costs = Array[int]([5])
+app_skill_to_unlock = 3
+
+[node name="Hireing" parent="TabContainer/House/Rent_houses/House_manager" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = -33.0
+offset_top = -183.0
+offset_right = 95.0
+offset_bottom = -55.0
+texture_normal = ExtResource("11_62fk7")
+skill_name = "Hireing app"
+skill_description = "unlock an app to hire help for your rental empire."
+level_costs = Array[int]([5])
+
+[node name="rent_find_upgrade" parent="TabContainer/House/Rent_houses/House_manager/Hireing" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = -78.0
+offset_top = -197.0
+offset_right = 50.0
+offset_bottom = -69.0
+texture_normal = ExtResource("11_2n6q7")
+skill_name = "Upgrade Rent Finder"
+skill_description = "Upgrade Rent finder to get renters faster."
+level_costs = Array[int]([5])
+app_skill_to_unlock = 14
+
+[node name="Bost_rent" parent="TabContainer/House/Rent_houses" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = 214.0
+offset_top = -137.0
+offset_right = 342.0
+offset_bottom = -9.0
+max_level = 5
+skill_name = "Rent Boost"
+skill_description = "Boots your rental income"
+level_costs = Array[int]([1, 2, 2, 2, 3, 5])
+app_skill_to_unlock = 5
+
+[node name="House_stats2" parent="TabContainer/House/Rent_houses" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = 29.0
+offset_top = -194.0
+offset_right = 157.0
+offset_bottom = -66.0
+texture_normal = ExtResource("12_guq4v")
+skill_name = "House stats"
+skill_description = "show all house and property stats"
+app_skill_to_unlock = 1
+
+[node name="Money" type="Control" parent="TabContainer"]
+layout_mode = 2
+mouse_filter = 2
+metadata/_tab_index = 1
+
+[node name="Bank" parent="TabContainer/Money" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = 858.0
+offset_top = 602.0
+offset_right = 986.0
+offset_bottom = 730.0
+texture_normal = ExtResource("8_treql")
+skill_name = "Bank apps"
+skill_description = "unlockes the savings app opens a saving account and the loans app to take out and manage loans."
+level_costs = Array[int]([2])
+app_skill_to_unlock = 2
+
+[node name="market" parent="TabContainer/Money/Bank" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = 99.0
+offset_top = -210.0
+offset_right = 227.0
+offset_bottom = -82.0
+texture_normal = ExtResource("13_sb7xq")
+skill_name = "Market app"
+skill_description = "Unlockes the market app to see what the market trend is."
+app_skill_to_unlock = 7
+
+[node name="Cretit_app" parent="TabContainer/Money/Bank" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = -97.0
+offset_top = -208.0
+offset_right = 31.0
+offset_bottom = -80.0
+texture_normal = ExtResource("15_m6mis")
+skill_name = "Credit App"
+skill_description = "Unlockes the Credit app to see what the players  credit is."
+app_skill_to_unlock = 15
+
+[node name="work_amount" parent="TabContainer/Money" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = 456.0
+offset_top = 583.0
+offset_right = 584.0
+offset_bottom = 711.0
+rotation = 0.0117383
+texture_normal = ExtResource("13_guq4v")
+max_level = 4
+skill_name = "work"
+skill_description = "unlocks more options in the Jobs app."
+level_costs = Array[int]([1, 1, 2, 3])
+app_skill_to_unlock = 13
+
+[node name="work_bonus" parent="TabContainer/Money/work_amount" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = -154.431
+offset_top = -206.201
+offset_right = -26.431
+offset_bottom = -78.2015
+max_level = 5
+skill_name = "work bonus"
+skill_description = "make more money on jobs per level."
+app_skill_to_unlock = 12
+
+[node name="Business" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+metadata/_tab_index = 2
+
+[node name="business" parent="TabContainer/Business" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = 819.0
+offset_top = 641.0
+offset_right = 947.0
+offset_bottom = 769.0
+texture_normal = ExtResource("13_guq4v")
+skill_name = "Business"
+skill_description = "Be able to open a business."
+level_costs = Array[int]([5])
+app_skill_to_unlock = 6
+
+[node name="job_manager" parent="TabContainer/Business/business" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = 179.0
+offset_top = -270.0
+offset_right = 307.0
+offset_bottom = -142.0
+texture_normal = ExtResource("11_62fk7")
+skill_name = "job manager"
+skill_description = "Hire a manager to evaluate and manage 2  job opportunities for later acceptance or rejection."
+app_skill_to_unlock = 8
+
+[node name="job_manager_level" parent="TabContainer/Business/business/job_manager" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = 136.0
+offset_top = -195.0
+offset_right = 264.0
+offset_bottom = -67.0
+texture_normal = ExtResource("13_guq4v")
+max_level = 5
+skill_name = "upgrade manager"
+skill_description = "Expand manager's job holding capacity by 1"
+level_costs = Array[int]([1, 2, 2, 3, 4])
+app_skill_to_unlock = 9
+
+[node name="job_pay" parent="TabContainer/Business/business" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = -61.0
+offset_top = -267.0
+offset_right = 67.0
+offset_bottom = -139.0
+texture_normal = ExtResource("15_yn8ca")
+skill_name = "Increse job pay"
+skill_description = "Job Bonus: Earn 50% More"
+level_costs = Array[int]([5])
+app_skill_to_unlock = 10
+
+[node name="business_exp" parent="TabContainer/Business/business" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = -320.0
+offset_top = -267.0
+offset_right = -192.0
+offset_bottom = -139.0
+skill_name = "Business Bonus"
+skill_description = "Earn 45-55% More on your business worth per job complete."
+level_costs = Array[int]([5])
+app_skill_to_unlock = 11
+
+[node name="DescriptionPanel" type="Panel" parent="."]
+visible = false
+self_modulate = Color(0, 0, 0, 0.239216)
+z_index = 10
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 514.0
+offset_top = 297.0
+offset_right = -773.0
+offset_bottom = -410.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_rsuch")
+
+[node name="Skill_name" type="Label" parent="DescriptionPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 46.0
+offset_top = 40.0
+offset_right = -48.0
+offset_bottom = -152.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Skill name"
+horizontal_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="DescriptionPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 104.0
+offset_right = -44.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
+text = "skill description"
+autowrap_mode = 3
+
+[connection signal="pressed" from="Close_Button" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="Cheat_Button" to="." method="_on_cheat_button_pressed"]
+[connection signal="button_down" from="Drag_Button" to="Drag_Button" method="_on_button_down"]
+[connection signal="button_up" from="Drag_Button" to="Drag_Button" method="_on_button_up"]

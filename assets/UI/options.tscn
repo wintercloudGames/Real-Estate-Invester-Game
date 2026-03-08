@@ -1,0 +1,242 @@
+[gd_scene load_steps=10 format=3 uid="uid://cjxkvsyxwmgbe"]
+
+[ext_resource type="Script" uid="uid://drxad8xmbnlys" path="res://assets/UI/options.gd" id="1_jmeoe"]
+[ext_resource type="Script" uid="uid://doelh4c1yw73r" path="res://assets/UI/audio_stream_player.gd" id="2_012my"]
+[ext_resource type="Texture2D" uid="uid://dxprvpyyx802h" path="res://shaded-dark/shadedDark16.png" id="2_c7t4o"]
+[ext_resource type="Texture2D" uid="uid://dpvhmpu7o0fnw" path="res://shaded-dark/shadedDark14.png" id="3_btjq5"]
+[ext_resource type="Texture2D" uid="uid://c38yef4yng1n4" path="res://shaded-dark/shadedDark12.png" id="4_eedyr"]
+[ext_resource type="Texture2D" uid="uid://fk1cedpmittu" path="res://shaded-dark/shadedDark25.png" id="4_s25h3"]
+
+[sub_resource type="FontFile" id="4"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="FontFile" id="3"]
+fallbacks = Array[Font]([SubResource("4")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="Theme" id="5"]
+default_font = SubResource("3")
+
+[node name="options" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_jmeoe")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.607843)
+layout_mode = 0
+offset_top = 3.0
+offset_right = 511.0
+offset_bottom = 354.0
+color = Color(0.19526, 0.330507, 0.649089, 1)
+
+[node name="Tital" type="Label" parent="."]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 11.0
+offset_right = 286.0
+offset_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="Master_slider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 298.0
+offset_top = 114.0
+offset_right = 488.0
+offset_bottom = 130.0
+min_value = -80.0
+max_value = 5.0
+
+[node name="Tital2" type="Label" parent="Master_slider"]
+layout_mode = 0
+offset_left = 63.0
+offset_top = -29.0
+offset_right = 118.0
+offset_bottom = -6.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Master"
+horizontal_alignment = 1
+
+[node name="Music_slider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 301.0
+offset_top = 184.0
+offset_right = 488.0
+offset_bottom = 200.0
+min_value = -80.0
+max_value = 5.0
+
+[node name="Tital2" type="Label" parent="Music_slider"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = -22.0
+offset_right = 120.0
+offset_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Music"
+horizontal_alignment = 1
+
+[node name="Sound_slider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 243.0
+offset_right = 486.0
+offset_bottom = 259.0
+min_value = -80.0
+max_value = 5.0
+
+[node name="Tital2" type="Label" parent="Sound_slider"]
+layout_mode = 0
+offset_left = 53.0
+offset_top = -18.0
+offset_right = 105.0
+offset_bottom = 5.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Effects"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 452.0
+offset_top = 7.0
+offset_right = 501.0
+offset_bottom = 38.0
+focus_mode = 0
+text = "Done"
+
+[node name="play_music" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 287.0
+offset_right = 59.0
+offset_bottom = 335.0
+toggle_mode = true
+texture_normal = ExtResource("3_btjq5")
+texture_pressed = ExtResource("2_c7t4o")
+texture_hover = ExtResource("4_eedyr")
+
+[node name="skip_song" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 283.0
+offset_right = 158.0
+offset_bottom = 363.0
+scale = Vector2(0.7, 0.7)
+toggle_mode = true
+texture_normal = ExtResource("4_s25h3")
+
+[node name="CheckBox" type="CheckBox" parent="."]
+layout_mode = 0
+offset_left = 95.0
+offset_top = 154.0
+offset_right = 119.0
+offset_bottom = 178.0
+button_pressed = true
+
+[node name="Label" type="Label" parent="CheckBox"]
+layout_mode = 0
+offset_left = -26.0
+offset_top = -28.0
+offset_right = 60.0
+offset_bottom = -5.0
+theme = SubResource("5")
+text = "Full Screen"
+
+[node name="Menu_Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 205.0
+offset_top = 298.0
+offset_right = 302.0
+offset_bottom = 329.0
+text = "EXIT GAME"
+
+[node name="Delete_save_panel" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 94.0
+offset_top = 164.0
+offset_right = 282.0
+offset_bottom = 280.0
+color = Color(0.0352941, 0.0313726, 0.0313726, 1)
+
+[node name="Label" type="Label" parent="Delete_save_panel"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 5.0
+offset_right = 150.0
+offset_bottom = 54.0
+text = "     Delete?
+Are You Sure?"
+
+[node name="Yes" type="Button" parent="Delete_save_panel"]
+self_modulate = Color(0.568627, 1, 0.639216, 1)
+layout_mode = 0
+offset_left = 15.0
+offset_top = 76.0
+offset_right = 49.0
+offset_bottom = 107.0
+focus_mode = 0
+text = "yes"
+
+[node name="No" type="Button" parent="Delete_save_panel"]
+self_modulate = Color(1, 0.45098, 0.45098, 1)
+layout_mode = 0
+offset_left = 145.0
+offset_top = 78.0
+offset_right = 173.0
+offset_bottom = 109.0
+focus_mode = 0
+text = "no"
+
+[node name="Resolution" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 79.0
+offset_right = 174.0
+offset_bottom = 110.0
+selected = 0
+item_count = 3
+popup/item_0/text = "1920 x 1080"
+popup/item_1/text = "1600x900"
+popup/item_1/id = 1
+popup/item_2/text = "1280x1080"
+popup/item_2/id = 2
+
+[node name="song_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 268.0
+offset_right = 54.0
+offset_bottom = 291.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource("2_012my")
+
+[connection signal="value_changed" from="Master_slider" to="." method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="Music_slider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="Sound_slider" to="." method="_on_Sound_slider_value_changed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="toggled" from="play_music" to="." method="_on_play_music_toggled"]
+[connection signal="pressed" from="skip_song" to="." method="_on_skip_song_pressed"]
+[connection signal="toggled" from="CheckBox" to="." method="_on_check_box_toggled"]
+[connection signal="pressed" from="Menu_Button" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Delete_save_panel/Yes" to="." method="_on_Yes_pressed"]
+[connection signal="pressed" from="Delete_save_panel/No" to="." method="_on_No_pressed"]
+[connection signal="item_selected" from="Resolution" to="." method="_on_resolution_item_selected"]

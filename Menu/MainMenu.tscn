@@ -1,0 +1,536 @@
+[gd_scene load_steps=12 format=3 uid="uid://d1s3cupibr4qf"]
+
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_7l2q4"]
+[ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://new_theme.tres" id="1_veryn"]
+[ext_resource type="Script" uid="uid://cuc2yohs3ilq6" path="res://Menu/main_menu.gd" id="1_x0pbx"]
+[ext_resource type="PackedScene" uid="uid://md8dkoe233f6" path="res://Menu/profile.tscn" id="3_jnm01"]
+[ext_resource type="PackedScene" uid="uid://bam3w2ek51l8p" path="res://Menu/save_name_popup.tscn" id="4_gk4pn"]
+[ext_resource type="Script" uid="uid://hgmr1yfmp0cv" path="res://Menu/settings_menu.gd" id="5_7gsem"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="5_fgdcb"]
+[ext_resource type="AudioStream" uid="uid://cxxhebwtrm47d" path="res://effects/sounds/ui-pop-sound-316482.mp3" id="6_biqin"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="6_gk4pn"]
+[ext_resource type="AudioStream" uid="uid://pbljlsxwef84" path="res://effects/sounds/switch.wav" id="7_um3lu"]
+[ext_resource type="AudioStream" uid="uid://ubh812231qff" path="res://music/background-music-piano-soft-380590.mp3" id="8_sfxdn"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_7l2q4")
+script = ExtResource("1_x0pbx")
+profile_card_scene = ExtResource("3_jnm01")
+save_name_popup_scene = ExtResource("4_gk4pn")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_veryn")
+metadata/_edit_lock_ = true
+
+[node name="ProfilesContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 160
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 160
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ProfilesContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Label" type="Label" parent="ProfilesContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 126
+text = "Invest Your Time"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ProfilesContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="ScrollContainer" parent="ProfilesContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_veryn")
+vertical_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="ProfilesContainer/VBoxContainer/Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="ProfilesContainer" type="HBoxContainer" parent="ProfilesContainer/VBoxContainer/Control/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 63
+
+[node name="SettingsButton" type="Button" parent="ProfilesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="ProfilesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Quit"
+
+[node name="Settings_menu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_7gsem")
+
+[node name="Panel2" type="Panel" parent="Settings_menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 37.0
+offset_top = 27.0
+offset_right = -27.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_veryn")
+
+[node name="Tital2" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 1332.0
+offset_top = 353.0
+offset_right = 1800.0
+offset_bottom = 410.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+theme_override_font_sizes/font_size = 41
+text = "Master"
+horizontal_alignment = 1
+
+[node name="Tital6" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 1332.0
+offset_top = 249.0
+offset_right = 1800.0
+offset_bottom = 354.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+theme_override_font_sizes/font_size = 76
+text = "Volume"
+horizontal_alignment = 1
+
+[node name="MasterVolumeSlider" type="HSlider" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 1331.0
+offset_top = 408.0
+offset_right = 1571.0
+offset_bottom = 424.0
+scale = Vector2(2, 2)
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="Tital3" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 1331.0
+offset_top = 558.0
+offset_right = 1807.0
+offset_bottom = 615.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+theme_override_font_sizes/font_size = 41
+text = "Music"
+horizontal_alignment = 1
+
+[node name="MusicVolumeSlider" type="HSlider" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 1328.0
+offset_top = 612.0
+offset_right = 1568.0
+offset_bottom = 628.0
+scale = Vector2(2, 2)
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="Tital4" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 1329.0
+offset_top = 448.0
+offset_right = 1809.0
+offset_bottom = 505.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+theme_override_font_sizes/font_size = 41
+text = "Effects"
+horizontal_alignment = 1
+
+[node name="SFXVolumeSlider" type="HSlider" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 1332.0
+offset_top = 513.0
+offset_right = 1572.0
+offset_bottom = 529.0
+scale = Vector2(2, 2)
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="Tital5" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 769.0
+offset_top = 839.0
+offset_right = 869.0
+offset_bottom = 966.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Min
+Render Scale
+
+Max
+Render Scale"
+horizontal_alignment = 1
+
+[node name="Tital7" type="Label" parent="Settings_menu"]
+visible = false
+layout_mode = 0
+offset_left = 1421.0
+offset_top = 720.0
+offset_right = 1521.0
+offset_bottom = 743.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "UI Scale"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 420.0
+offset_top = 39.0
+offset_right = 1440.0
+offset_bottom = 211.0
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 126
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 493.0
+offset_right = 297.0
+offset_bottom = 562.0
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 50
+text = "lightning"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 292.0
+offset_right = 311.0
+offset_bottom = 361.0
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 50
+text = "Show FPS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 392.0
+offset_right = 297.0
+offset_bottom = 461.0
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 50
+text = "Weather"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 1025.0
+offset_top = 889.0
+offset_right = 1506.0
+offset_bottom = 958.0
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 50
+text = "Dynamic Resolution"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label6" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 1219.0
+offset_top = 775.0
+offset_right = 1472.0
+offset_bottom = 844.0
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 50
+text = "Target FPS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 862.0
+offset_right = 467.0
+offset_bottom = 942.0
+theme_override_font_sizes/font_size = 50
+selected = 1
+item_count = 4
+popup/item_0/text = "Low"
+popup/item_0/id = 0
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "High"
+popup/item_2/id = 2
+popup/item_3/text = "Ultra"
+popup/item_3/id = 3
+
+[node name="CloseButton" type="Button" parent="Settings_menu"]
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 0
+offset_left = 128.0
+offset_top = 81.0
+offset_right = 448.0
+offset_bottom = 189.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 71
+text = "BACK"
+
+[node name="ResetButton" type="Button" parent="Settings_menu"]
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 0
+offset_left = 1446.0
+offset_top = 86.0
+offset_right = 1766.0
+offset_bottom = 194.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 71
+text = "Reset"
+
+[node name="LightningCheck" type="CheckButton" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 382.0
+offset_top = 500.0
+offset_right = 581.0
+offset_bottom = 581.0
+theme_override_font_sizes/font_size = 50
+text = "On"
+alignment = 1
+
+[node name="WeatherCheck" type="CheckButton" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 382.0
+offset_top = 399.0
+offset_right = 581.0
+offset_bottom = 480.0
+theme_override_font_sizes/font_size = 50
+text = "On"
+alignment = 1
+
+[node name="ShowFPSCheck" type="CheckButton" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 385.0
+offset_top = 297.0
+offset_right = 584.0
+offset_bottom = 378.0
+theme_override_font_sizes/font_size = 50
+text = "On"
+alignment = 1
+
+[node name="DynamicResCheck" type="CheckButton" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 1520.0
+offset_top = 889.0
+offset_right = 1719.0
+offset_bottom = 970.0
+theme_override_font_sizes/font_size = 50
+text = "On"
+alignment = 1
+
+[node name="TargetFPSSpin" type="SpinBox" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 1515.0
+offset_top = 789.0
+offset_right = 1644.0
+offset_bottom = 846.0
+
+[node name="ResolutionOptionButton" type="OptionButton" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 677.0
+offset_right = 447.0
+offset_bottom = 758.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 51
+selected = 0
+item_count = 4
+popup/item_0/text = "1280x720"
+popup/item_0/id = 0
+popup/item_1/text = "1920x1080"
+popup/item_1/id = 1
+popup/item_2/text = "2560x1440"
+popup/item_2/id = 2
+popup/item_3/text = "3840x2160"
+popup/item_3/id = 3
+
+[node name="MinRenderScaleSpin" type="SpinBox" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 881.0
+offset_top = 848.0
+offset_right = 967.563
+offset_bottom = 879.0
+
+[node name="UIScaleSlider" type="HSlider" parent="Settings_menu"]
+visible = false
+layout_mode = 0
+offset_left = 1540.0
+offset_top = 713.0
+offset_right = 1848.0
+offset_bottom = 744.0
+min_value = -0.5
+max_value = 1.5
+step = 0.1
+value = 0.5
+
+[node name="MaxRenderScaleSpin" type="SpinBox" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 882.0
+offset_top = 934.0
+offset_right = 968.563
+offset_bottom = 965.0
+
+[node name="Delete_profile_popup" type="Panel" parent="."]
+visible = false
+z_index = 1000
+y_sort_enabled = true
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -125.0
+offset_right = 250.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_veryn")
+
+[node name="text" type="Label" parent="Delete_profile_popup"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -21.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "DELETE PROFILE: "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Delete_profile_popup"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 203.0
+offset_right = 501.0
+offset_bottom = 237.0
+alignment = 1
+
+[node name="YesButton" type="Button" parent="Delete_profile_popup/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/pressed = ExtResource("5_fgdcb")
+theme_override_styles/normal = ExtResource("6_gk4pn")
+text = "YES"
+
+[node name="NoButton" type="Button" parent="Delete_profile_popup/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NO"
+
+[node name="FPS_Label" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 1557.0
+offset_top = 80.0
+offset_right = 1812.0
+offset_bottom = 143.0
+theme_override_font_sizes/font_size = 40
+text = "Verson 0.0.4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_biqin")
+bus = &"SFX"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_um3lu")
+bus = &"SFX"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_sfxdn")
+autoplay = true
+bus = &"Music"
+parameters/looping = false
+
+[connection signal="pressed" from="ProfilesContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="ProfilesContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="value_changed" from="Settings_menu/MasterVolumeSlider" to="Settings_menu" method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="Settings_menu/MusicVolumeSlider" to="Settings_menu" method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="Settings_menu/SFXVolumeSlider" to="Settings_menu" method="_on_sfx_volume_slider_value_changed"]
+[connection signal="item_selected" from="Settings_menu/OptionButton" to="Settings_menu" method="_on_option_button_item_selected"]
+[connection signal="pressed" from="Settings_menu/CloseButton" to="Settings_menu" method="_on_close_button_pressed"]
+[connection signal="pressed" from="Settings_menu/ResetButton" to="Settings_menu" method="_on_reset_button_pressed"]
+[connection signal="toggled" from="Settings_menu/LightningCheck" to="Settings_menu" method="_on_lightning_check_toggled"]
+[connection signal="toggled" from="Settings_menu/WeatherCheck" to="Settings_menu" method="_on_weather_check_toggled"]
+[connection signal="toggled" from="Settings_menu/ShowFPSCheck" to="Settings_menu" method="_on_show_fps_check_toggled"]
+[connection signal="toggled" from="Settings_menu/DynamicResCheck" to="Settings_menu" method="_on_dynamic_res_check_toggled"]
+[connection signal="value_changed" from="Settings_menu/TargetFPSSpin" to="Settings_menu" method="_on_target_fps_spin_value_changed"]
+[connection signal="item_selected" from="Settings_menu/ResolutionOptionButton" to="Settings_menu" method="_on_resolution_item_selected"]
+[connection signal="value_changed" from="Settings_menu/MinRenderScaleSpin" to="Settings_menu" method="_on_min_render_scale_spin_value_changed"]
+[connection signal="value_changed" from="Settings_menu/UIScaleSlider" to="Settings_menu" method="_on_ui_scale_slider_value_changed"]
+[connection signal="value_changed" from="Settings_menu/MaxRenderScaleSpin" to="Settings_menu" method="_on_max_render_scale_spin_value_changed"]
+[connection signal="pressed" from="Delete_profile_popup/HBoxContainer/YesButton" to="." method="_on_yes_delete_profile_pressed"]
+[connection signal="pressed" from="Delete_profile_popup/HBoxContainer/NoButton" to="." method="_on_no_keep_profile_pressed"]

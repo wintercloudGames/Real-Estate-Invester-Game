@@ -1,0 +1,103 @@
+[gd_scene load_steps=4 format=3 uid="uid://cl7gis878wd1b"]
+
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_y1v00"]
+[ext_resource type="Script" uid="uid://ctn2bd3c1dskm" path="res://assets/UI/phone/loans_controll_mod.gd" id="2_y1v00"]
+[ext_resource type="Texture2D" uid="uid://bql3je3n7nto8" path="res://3D assets/Chads/pool_0.png" id="3_ydoa1"]
+
+[node name="Loan_controll_mod" type="Control" groups=["loans"]]
+custom_minimum_size = Vector2(325, 140)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1595.0
+offset_bottom = -940.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_y1v00")
+script = ExtResource("2_y1v00")
+
+[node name="Panel" type="TextureRect" parent="."]
+self_modulate = Color(0.172833, 0.172833, 0.172833, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_ydoa1")
+expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -170.5
+offset_top = -34.0
+offset_right = 302.5
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.75, 0.75)
+alignment = 1
+
+[node name="Make_payment" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Make Payment"
+
+[node name="RefinanceButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Refinance"
+
+[node name="PayoffButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Pay off"
+
+[node name="autopay_toogle" type="CheckButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Autopay is (true)"
+
+[node name="HBoxContainer2" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -163.5
+offset_right = 164.5
+offset_bottom = 72.0
+grow_horizontal = 2
+columns = 2
+
+[node name="loan_amount" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "balance: $12346543"
+
+[node name="loan_type" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "mortgage"
+
+[node name="payment" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "due now: 300"
+
+[node name="Intrest" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "intrest rate: %5"
+
+[node name="months" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "months: 10"
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="pressed" from="HBoxContainer/Make_payment" to="." method="_on_make_payment_pressed"]
+[connection signal="pressed" from="HBoxContainer/RefinanceButton" to="." method="_on_refinance_pressed"]
+[connection signal="pressed" from="HBoxContainer/PayoffButton" to="." method="_on_payoff_pressed"]
+[connection signal="pressed" from="HBoxContainer/autopay_toogle" to="." method="_on_list_for_rent_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

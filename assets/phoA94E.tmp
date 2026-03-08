@@ -1,0 +1,460 @@
+[gd_scene load_steps=27 format=3 uid="uid://dn8s05kak0o36"]
+
+[ext_resource type="Texture2D" uid="uid://b0vmuqioqojfj" path="res://assets/vines-7859445_1280.jpg" id="1_go8ug"]
+[ext_resource type="Texture2D" uid="uid://dsfynj8pp2hyg" path="res://phone/vecteezy_smart-phone-mobile-electronic-device-transparent-screen_6824674-1-removebg-preview.png" id="1_jm7no"]
+[ext_resource type="Script" path="res://phone/phone.gd" id="1_vu5t8"]
+[ext_resource type="Texture2D" uid="uid://lpjm4es7ky57" path="res://phone/music.png" id="2_3b6fb"]
+[ext_resource type="Texture2D" uid="uid://dqw2fb40ihypl" path="res://phone/settings.png" id="3_kahh7"]
+[ext_resource type="Texture2D" uid="uid://c4wuifyrf5ir2" path="res://phone/home.png" id="4_e7gu8"]
+[ext_resource type="Texture2D" uid="uid://bguo8n00gr1lt" path="res://phone/e-wallet.png" id="5_frm3j"]
+[ext_resource type="Script" path="res://assets/options.gd" id="6_wyu3u"]
+[ext_resource type="Texture2D" uid="uid://cefu3e5ceqmbb" path="res://phone/app.png" id="7_gl4jl"]
+[ext_resource type="Texture2D" uid="uid://dpvhmpu7o0fnw" path="res://shaded-dark/shadedDark14.png" id="7_oah20"]
+[ext_resource type="Texture2D" uid="uid://dxprvpyyx802h" path="res://shaded-dark/shadedDark16.png" id="8_2nic4"]
+[ext_resource type="Texture2D" uid="uid://drlavyjktewkv" path="res://phone/wtV9XS.png" id="8_5qchs"]
+[ext_resource type="Script" path="res://phone/music_player.gd" id="8_iq4tw"]
+[ext_resource type="Script" path="res://phone/firestorm.gd" id="9_3hjvo"]
+[ext_resource type="Texture2D" uid="uid://c38yef4yng1n4" path="res://shaded-dark/shadedDark12.png" id="9_jjmas"]
+[ext_resource type="Texture2D" uid="uid://btn64o1bylkwn" path="res://phone/skip.png" id="11_t5vsg"]
+[ext_resource type="Script" path="res://assets/audio_stream_player.gd" id="11_uys8f"]
+[ext_resource type="Script" path="res://phone/wallet.gd" id="15_0q7q6"]
+[ext_resource type="Texture2D" uid="uid://lq3cgxnta8g0" path="res://shaded-dark/shadedDark35.png" id="15_22kuw"]
+
+[sub_resource type="FontFile" id="4"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="FontFile" id="3"]
+fallbacks = Array[Font]([SubResource("4")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="Theme" id="5"]
+default_font = SubResource("3")
+
+[sub_resource type="Animation" id="Animation_tho2i"]
+resource_name = "put_away"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333334, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(150, 100), Vector2(40, -1333)]
+}
+
+[sub_resource type="Animation" id="Animation_sxlfr"]
+resource_name = "out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(40, -1200), Vector2(150, 100)]
+}
+
+[sub_resource type="Animation" id="Animation_0xyd6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(36, 9)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l32jq"]
+_data = {
+"RESET": SubResource("Animation_0xyd6"),
+"get_out": SubResource("Animation_sxlfr"),
+"put_away": SubResource("Animation_tho2i")
+}
+
+[node name="Phone" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = 9.0
+offset_right = -706.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vu5t8")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 49.25
+offset_top = 36.25
+offset_right = 399.25
+offset_bottom = 661.25
+texture = ExtResource("1_go8ug")
+expand_mode = 1
+
+[node name="apps" type="GridContainer" parent="."]
+offset_left = 68.0
+offset_top = 76.0
+offset_right = 1638.0
+offset_bottom = 2906.0
+scale = Vector2(0.2, 0.2)
+columns = 3
+
+[node name="music_player" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("2_3b6fb")
+
+[node name="settings" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("3_kahh7")
+
+[node name="house_info" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("4_e7gu8")
+
+[node name="Wallet" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("5_frm3j")
+
+[node name="job" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("7_gl4jl")
+
+[node name="firestorm" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("8_5qchs")
+script = ExtResource("9_3hjvo")
+
+[node name="options" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 52.0
+offset_top = 32.0
+offset_right = -10.0
+offset_bottom = -11.0
+script = ExtResource("6_wyu3u")
+
+[node name="ColorRect" type="ColorRect" parent="options"]
+layout_mode = 2
+offset_right = 347.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.195914, 0.200614, 0.184075, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="options"]
+layout_mode = 2
+offset_right = 347.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="options/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Tital" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "
+Settings"
+horizontal_alignment = 1
+
+[node name="Tital2" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Master"
+horizontal_alignment = 1
+
+[node name="Master_slider" type="HSlider" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+min_value = -80.0
+max_value = 5.0
+
+[node name="Tital3" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Music"
+horizontal_alignment = 1
+
+[node name="Music_slider" type="HSlider" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+min_value = -80.0
+max_value = 5.0
+
+[node name="Tital4" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Effects"
+horizontal_alignment = 1
+
+[node name="Sound_slider" type="HSlider" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+min_value = -80.0
+max_value = 5.0
+
+[node name="HSeparator" type="HSeparator" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="options/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = SubResource("5")
+text = "Full Screen"
+
+[node name="CheckBox" type="CheckBox" parent="options/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+button_pressed = true
+
+[node name="Resolution" type="OptionButton" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "1920 x 1080"
+popup/item_1/text = "1600x900"
+popup/item_1/id = 1
+popup/item_2/text = "1280x1080"
+popup/item_2/id = 2
+
+[node name="Label2" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+
+"
+
+[node name="Button" type="Button" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Done"
+
+[node name="Label3" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+
+"
+
+[node name="Menu_Button" type="Button" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "EXIT GAME"
+
+[node name="Label" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+
+
+
+
+"
+
+[node name="Music_player" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 52.0
+offset_top = 32.0
+offset_right = -10.0
+offset_bottom = -11.0
+script = ExtResource("8_iq4tw")
+
+[node name="ColorRect" type="ColorRect" parent="Music_player"]
+layout_mode = 2
+offset_right = 347.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.195914, 0.200614, 0.184075, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Music_player"]
+layout_mode = 2
+offset_right = 347.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Music_player/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+Music"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+
+
+
+
+"
+horizontal_alignment = 1
+
+[node name="song_label" type="Label" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="play_music" type="TextureButton" parent="Music_player/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("7_oah20")
+texture_pressed = ExtResource("8_2nic4")
+texture_hover = ExtResource("9_jjmas")
+
+[node name="skip_song" type="TextureButton" parent="Music_player/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("11_t5vsg")
+
+[node name="HSeparator4" type="HSeparator" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Done"
+
+[node name="Label2" type="Label" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+"
+horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music_player/ScrollContainer/VBoxContainer"]
+script = ExtResource("11_uys8f")
+
+[node name="Wallet" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 42.0
+offset_top = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("15_0q7q6")
+
+[node name="ColorRect2" type="ColorRect" parent="Wallet"]
+layout_mode = 2
+offset_left = 10.0
+offset_top = 2.0
+offset_right = 348.0
+offset_bottom = 630.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.195914, 0.200614, 0.184075, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Wallet"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 63.0
+offset_right = 331.0
+offset_bottom = 483.0
+
+[node name="money" type="Label" parent="Wallet/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "MONEY = "
+
+[node name="Income" type="Label" parent="Wallet/VBoxContainer"]
+modulate = Color(0, 1, 0.101961, 1)
+layout_mode = 2
+text = "Income = "
+
+[node name="Expenses" type="Label" parent="Wallet/VBoxContainer"]
+layout_mode = 2
+text = "Expenses = "
+
+[node name="cashflow" type="Label" parent="Wallet/VBoxContainer"]
+layout_mode = 2
+text = "cashflow  = "
+
+[node name="Button" type="Button" parent="Wallet"]
+offset_left = 147.0
+offset_top = 567.0
+offset_right = 196.0
+offset_bottom = 598.0
+focus_mode = 0
+text = "Done"
+
+[node name="VecteezySmart-phone-mobile-electronic-device-transparent-screen6824674-1-removebg-preview" type="Sprite2D" parent="."]
+position = Vector2(221.625, 345.125)
+scale = Vector2(1.87818, 1.64341)
+texture = ExtResource("1_jm7no")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 359.0
+offset_top = 3.0
+offset_right = 407.0
+offset_bottom = 51.0
+texture_normal = ExtResource("15_22kuw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_l32jq")
+}
+
+[connection signal="pressed" from="apps/music_player" to="." method="_on_music_player_pressed"]
+[connection signal="pressed" from="apps/settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="apps/Wallet" to="." method="_on_wallet_pressed"]
+[connection signal="pressed" from="apps/firestorm" to="apps/firestorm" method="_on_pressed"]
+[connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Master_slider" to="options" method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Music_slider" to="options" method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Sound_slider" to="options" method="_on_Sound_slider_value_changed"]
+[connection signal="toggled" from="options/ScrollContainer/VBoxContainer/HBoxContainer2/CheckBox" to="options" method="_on_check_box_toggled"]
+[connection signal="item_selected" from="options/ScrollContainer/VBoxContainer/Resolution" to="options" method="_on_resolution_item_selected"]
+[connection signal="pressed" from="options/ScrollContainer/VBoxContainer/Button" to="options" method="_on_button_pressed"]
+[connection signal="pressed" from="options/ScrollContainer/VBoxContainer/Menu_Button" to="options" method="_on_menu_button_pressed"]
+[connection signal="toggled" from="Music_player/ScrollContainer/VBoxContainer/HBoxContainer/play_music" to="Music_player" method="_on_play_music_toggled"]
+[connection signal="pressed" from="Music_player/ScrollContainer/VBoxContainer/HBoxContainer/skip_song" to="Music_player" method="_on_skip_song_pressed"]
+[connection signal="pressed" from="Music_player/ScrollContainer/VBoxContainer/Button" to="Music_player" method="_on_button_pressed"]
+[connection signal="pressed" from="Wallet/Button" to="Wallet" method="_on_button_pressed"]
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

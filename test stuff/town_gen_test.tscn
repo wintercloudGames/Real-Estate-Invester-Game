@@ -1,0 +1,18 @@
+[gd_scene load_steps=6 format=3 uid="uid://dsewbnw0laqsh"]
+
+[ext_resource type="Script" uid="uid://ds7vwn0n2qnku" path="res://test stuff/town_gen_test.gd" id="1_5d7du"]
+[ext_resource type="PackedScene" uid="uid://b1vogh7xv8ycb" path="res://assets/Town_Blocks/threeway.tscn" id="3_kbvao"]
+[ext_resource type="PackedScene" uid="uid://b07iqv37k8uxs" path="res://assets/Town_Blocks/straight_way.tscn" id="3_u2no0"]
+[ext_resource type="PackedScene" uid="uid://be6xahrqbrede" path="res://assets/Town_Blocks/fourway.tscn" id="5_8lbuh"]
+[ext_resource type="PackedScene" uid="uid://cajj0231mp44r" path="res://assets/Town_Blocks/turn.tscn" id="5_kbvao"]
+
+[node name="Town_gen_TEST" type="Node3D"]
+script = ExtResource("1_5d7du")
+room_scenes = {
+"fourway": ExtResource("5_8lbuh"),
+"straight_way": ExtResource("3_u2no0"),
+"threeway": ExtResource("3_kbvao"),
+"turn": ExtResource("5_kbvao")
+}
+grid_size = Vector2i(7, 7)
+max_cluster_size = null

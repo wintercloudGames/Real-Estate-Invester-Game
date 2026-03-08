@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://bam3w2ek51l8p"]
+
+[ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://new_theme.tres" id="1_rpy5p"]
+[ext_resource type="Script" uid="uid://b10fa3ya5jxlp" path="res://Menu/save_name_popup.gd" id="2_wc2lv"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="3_dgxlw"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="4_527dx"]
+
+[node name="SaveNamePopup" type="Panel"]
+z_index = 1000
+y_sort_enabled = true
+custom_minimum_size = Vector2(500, 250)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -138.0
+offset_right = 250.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rpy5p")
+script = ExtResource("2_wc2lv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 15.0
+offset_right = 508.0
+offset_bottom = 251.0
+alignment = 1
+
+[node name="label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "NAME PROFILE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NameInput" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Confirm"
+
+[node name="CancelButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/pressed = ExtResource("3_dgxlw")
+theme_override_styles/normal = ExtResource("4_527dx")
+text = "Cancel"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

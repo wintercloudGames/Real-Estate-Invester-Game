@@ -1,0 +1,311 @@
+[gd_scene load_steps=6 format=3 uid="uid://cgacn6h05bvs2"]
+
+[ext_resource type="Script" uid="uid://cmendsxboc4ur" path="res://assets/UI/business_ui.gd" id="1_en58h"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_tllg2"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="5_44lhv"]
+[ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="5_lm838"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="6_gbehf"]
+
+[node name="Business_UI" type="Control"]
+layout_mode = 3
+anchor_left = 0.171
+anchor_top = -0.051
+anchor_right = 0.176
+anchor_bottom = -0.051
+offset_left = -332.32
+offset_top = 65.08
+offset_right = -0.920013
+offset_bottom = 662.08
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_en58h")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.25
+anchor_top = -0.055
+anchor_right = 1.25
+anchor_bottom = -0.055
+offset_left = -433.25
+offset_top = -32.165
+offset_right = -15.25
+offset_bottom = 666.835
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_tllg2")
+
+[node name="job_progress" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 91.0
+offset_top = 20.0
+offset_right = 304.0
+offset_bottom = 43.0
+text = "Current Job Progress"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 87.0
+offset_top = 57.0
+offset_right = 316.0
+offset_bottom = 84.0
+
+[node name="Start_Business" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 1.0
+offset_right = 41.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Start_Business"]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 57.0
+offset_right = 388.0
+offset_bottom = 184.0
+text = "Start A Business?
+
+Name of Business"
+horizontal_alignment = 1
+
+[node name="Name_of_Business" type="LineEdit" parent="Start_Business"]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 174.0
+offset_right = 341.0
+offset_bottom = 205.0
+
+[node name="Cost_Label" type="Label" parent="Start_Business"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 256.0
+offset_right = 380.0
+offset_bottom = 305.0
+text = "Start Up Cost: $50,000
+"
+horizontal_alignment = 1
+
+[node name="Expence_Label" type="Label" parent="Start_Business"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 326.0
+offset_right = 384.0
+offset_bottom = 375.0
+text = "Monthly cost: 10000
+"
+horizontal_alignment = 1
+
+[node name="Start_A_Business_Button" type="Button" parent="Start_Business"]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 421.0
+offset_right = 331.0
+offset_bottom = 477.0
+theme = ExtResource("1_tllg2")
+text = "Start Business"
+
+[node name="Close_Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 339.0
+offset_top = -3.0
+offset_right = 399.0
+offset_bottom = 31.0
+theme = ExtResource("1_tllg2")
+theme_override_styles/hover = ExtResource("5_44lhv")
+theme_override_styles/pressed = ExtResource("6_gbehf")
+theme_override_styles/normal = ExtResource("5_44lhv")
+text = "CLOSE"
+
+[node name="Drag_Button" parent="." instance=ExtResource("5_lm838")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.088
+anchor_top = -0.008
+anchor_right = 0.088
+anchor_bottom = -0.008
+offset_left = -24.008
+offset_top = -0.223971
+offset_right = 23.992
+offset_bottom = 47.776
+
+[node name="TabContainer" type="TabContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 2.0
+offset_top = 103.0
+offset_right = 399.0
+offset_bottom = 608.0
+tab_alignment = 1
+current_tab = 2
+
+[node name="info" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Business_name" type="Label" parent="TabContainer/info"]
+layout_mode = 0
+offset_left = 132.0
+offset_top = 9.0
+offset_right = 268.0
+offset_bottom = 32.0
+text = "name of business"
+
+[node name="Sell_Business_button" type="Button" parent="TabContainer/info"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 436.0
+offset_right = 250.0
+offset_bottom = 470.0
+theme = ExtResource("1_tllg2")
+text = "Sell Business"
+
+[node name="Business_worth" type="Label" parent="TabContainer/info"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 94.0
+offset_right = 323.0
+offset_bottom = 117.0
+
+[node name="TierLabel" type="Label" parent="TabContainer/info"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 136.0
+offset_right = 323.0
+offset_bottom = 159.0
+
+[node name="employees" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Add_Employee" type="Button" parent="TabContainer/employees"]
+layout_mode = 0
+offset_left = 260.0
+offset_top = 212.0
+offset_right = 340.0
+offset_bottom = 292.0
+theme = ExtResource("1_tllg2")
+text = "ADD"
+
+[node name="Employee_count" type="Label" parent="TabContainer/employees"]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 134.0
+offset_right = 247.0
+offset_bottom = 169.0
+text = "Workers = 5"
+horizontal_alignment = 1
+
+[node name="Employee_cost" type="Label" parent="TabContainer/employees"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 59.0
+offset_right = 306.0
+offset_bottom = 82.0
+text = "Employee cost every month: 0"
+horizontal_alignment = 1
+
+[node name="Remove_Employee" type="Button" parent="TabContainer/employees"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 209.0
+offset_right = 134.0
+offset_bottom = 289.0
+theme = ExtResource("1_tllg2")
+text = "Remove"
+
+[node name="Job_info" type="Control" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="job_progress" type="Label" parent="TabContainer/Job_info"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 242.0
+offset_right = 384.0
+offset_bottom = 265.0
+text = "Current Job Progress"
+horizontal_alignment = 1
+
+[node name="job_pay_when_done" type="Label" parent="TabContainer/Job_info"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 134.0
+offset_right = 392.0
+offset_bottom = 157.0
+text = "job_pay_when_done"
+horizontal_alignment = 1
+
+[node name="stop_job_button" type="Button" parent="TabContainer/Job_info"]
+visible = false
+layout_mode = 0
+offset_left = 106.0
+offset_top = 348.0
+offset_right = 277.0
+offset_bottom = 390.0
+theme = ExtResource("1_tllg2")
+text = "stop current job"
+
+[node name="Find_jobs_button" type="Button" parent="TabContainer/Job_info"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 409.0
+offset_right = 284.0
+offset_bottom = 451.0
+theme = ExtResource("1_tllg2")
+text = "look for jobs"
+
+[node name="ProgressBar" type="ProgressBar" parent="TabContainer/Job_info"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 272.0
+offset_right = 353.0
+offset_bottom = 322.0
+
+[node name="Manager" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Manager"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = -459.0
+offset_right = -36.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_scroll_mode = 0
+
+[node name="Job_mod_Container" type="VBoxContainer" parent="TabContainer/Manager/ScrollContainer"]
+layout_mode = 2
+
+[node name="Timers" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 187.0
+offset_top = -64.0
+offset_right = 187.0
+offset_bottom = -64.0
+
+[node name="SalaryTimer" type="Timer" parent="Timers"]
+
+[node name="JobOfferTimer" type="Timer" parent="Timers"]
+
+[connection signal="focus_entered" from="Start_Business/Name_of_Business" to="." method="_on_name_of_business_focus_entered"]
+[connection signal="focus_exited" from="Start_Business/Name_of_Business" to="." method="_on_name_of_business_focus_exited"]
+[connection signal="pressed" from="Start_Business/Start_A_Business_Button" to="." method="_on_start_a_business_button_pressed"]
+[connection signal="pressed" from="Close_Button" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="TabContainer/info/Sell_Business_button" to="." method="_on_sell_business_button_pressed"]
+[connection signal="pressed" from="TabContainer/employees/Add_Employee" to="." method="_on_add_employee_pressed"]
+[connection signal="pressed" from="TabContainer/employees/Remove_Employee" to="." method="_on_remove_employee_pressed"]
+[connection signal="pressed" from="TabContainer/Job_info/stop_job_button" to="." method="_on_stop_job_button_pressed"]
+[connection signal="pressed" from="TabContainer/Job_info/Find_jobs_button" to="." method="_on_find_jobs_button_pressed"]

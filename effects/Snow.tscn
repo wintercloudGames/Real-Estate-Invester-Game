@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://0gbosql2344e"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7vvf4"]
+
+[sub_resource type="Curve" id="Curve_neoo7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.278788, 1), 0.0, 0.0, 0, 0, Vector2(0.539394, 0.0219779), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_v80v8"]
+curve = SubResource("Curve_neoo7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d1bw5"]
+emission_shape = 3
+emission_box_extents = Vector3(10, 50, 10)
+direction = Vector3(0, -1, 0)
+spread = 5.0
+initial_velocity_min = 4.0
+initial_velocity_max = 4.0
+angular_velocity_min = -136.12
+angular_velocity_max = -1.60933e-05
+orbit_velocity_min = -0.636
+orbit_velocity_max = 0.279
+gravity = Vector3(0, -1, 0)
+scale_min = 0.2
+scale_max = 0.2
+scale_curve = SubResource("CurveTexture_v80v8")
+color = Color(0, 1, 1, 1)
+color_ramp = SubResource("GradientTexture1D_7vvf4")
+color_initial_ramp = SubResource("GradientTexture1D_7vvf4")
+hue_variation_min = -0.13
+hue_variation_max = 0.23
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_77jkf"]
+
+[node name="Snow" type="GPUParticles3D"]
+transform = Transform3D(0.997015, 0, 0, 0, 4.23731, 0, 0, 0, 0.997015, 0, 19, 2)
+cast_shadow = 0
+emitting = false
+amount = 10000
+lifetime = 1.66
+randomness = 0.8
+visibility_aabb = AABB(-10, -20, -10, 20, 20, 20)
+trail_lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_d1bw5")
+draw_pass_1 = SubResource("SphereMesh_77jkf")
+
+[node name="SnowVisibility" type="VisibleOnScreenNotifier3D" parent="."]

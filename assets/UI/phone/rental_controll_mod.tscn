@@ -1,0 +1,115 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhk4t3tjwkvji"]
+
+[ext_resource type="Script" uid="uid://b6r5o3ytb05fe" path="res://assets/UI/phone/rental_controll_mod.gd" id="1_3sp5a"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_pocl4"]
+[ext_resource type="Texture2D" uid="uid://bql3je3n7nto8" path="res://3D assets/Chads/pool_0.png" id="2_qwxxh"]
+
+[node name="Rental_controll_mod" type="Control"]
+custom_minimum_size = Vector2(325, 140)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1595.0
+offset_bottom = -940.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_pocl4")
+script = ExtResource("1_3sp5a")
+
+[node name="Panel" type="TextureRect" parent="."]
+self_modulate = Color(0.172833, 0.172833, 0.172833, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_qwxxh")
+expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -167.5
+offset_top = -33.0
+offset_right = 268.5
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.75, 0.75)
+alignment = 1
+
+[node name="More_Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "More"
+
+[node name="Sell_Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Sell"
+
+[node name="Refinance_Button" type="Button" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Refinance"
+
+[node name="Collect_rent_Button" type="Button" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Collect Rent"
+
+[node name="List_for_rent_Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "List For Rent"
+
+[node name="Remove_Tenent_Button" type="Button" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 8
+text = "Remove Tenent"
+
+[node name="HBoxContainer2" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -163.5
+offset_right = 164.5
+offset_bottom = 72.0
+grow_horizontal = 2
+columns = 2
+
+[node name="House_Value" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "house price = 12346543"
+
+[node name="Morgage" type="Label" parent="HBoxContainer2"]
+visible = false
+layout_mode = 2
+text = "mortgage = 123456"
+
+[node name="rental_status" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "Rent Status?"
+
+[node name="Cash_flow" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "money"
+
+[node name="Rent_ready" type="Label" parent="HBoxContainer2"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.00637817, 0.816406, 0, 1)
+text = "Rent Ready"
+
+[connection signal="pressed" from="HBoxContainer/More_Button" to="." method="_on_more_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Sell_Button" to="." method="_on_sell_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Refinance_Button" to="." method="_on_refinance_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Collect_rent_Button" to="." method="_on_collect_rent_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/List_for_rent_Button" to="." method="_on_list_for_rent_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Remove_Tenent_Button" to="." method="_on_remove_tenent_button_pressed"]

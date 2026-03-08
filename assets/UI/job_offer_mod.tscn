@@ -1,0 +1,88 @@
+[gd_scene load_steps=4 format=3 uid="uid://beyqfi8xamm2g"]
+
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_xp8h1"]
+[ext_resource type="Texture2D" uid="uid://cgnu5qy26p7ta" path="res://Textures/Vol_7_1_Tiles_Base_Color.png" id="2_8cb8g"]
+[ext_resource type="Script" uid="uid://b3282ursum31v" path="res://assets/UI/job_offer_mod.gd" id="2_xp8h1"]
+
+[node name="Job_controll_mod" type="Control"]
+custom_minimum_size = Vector2(325, 140)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1595.0
+offset_bottom = -940.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_xp8h1")
+script = ExtResource("2_xp8h1")
+
+[node name="Panel" type="TextureRect" parent="."]
+self_modulate = Color(0.172833, 0.172833, 0.172833, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_8cb8g")
+expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -167.5
+offset_top = -33.0
+offset_right = 268.5
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.75, 0.75)
+alignment = 1
+
+[node name="Deny_job_Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Decline Job"
+
+[node name="Take_job_Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Start Job"
+
+[node name="HBoxContainer2" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -163.5
+offset_right = 164.5
+offset_bottom = 72.0
+grow_horizontal = 2
+columns = 2
+
+[node name="Job_pay" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "Job Pay"
+
+[node name="Job_time2" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "                      "
+
+[node name="Job_time" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "Job Time"
+
+[node name="Job_expire" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Job Time"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 90.0
+
+[connection signal="pressed" from="HBoxContainer/Deny_job_Button" to="." method="_on_deny_job_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Take_job_Button" to="." method="_on_take_job_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

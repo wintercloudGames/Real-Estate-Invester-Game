@@ -1,0 +1,120 @@
+[gd_scene load_steps=7 format=3 uid="uid://5sf2oo4asb"]
+
+[ext_resource type="Script" uid="uid://dsi3osmfkvip4" path="res://assets/UI/house_listing_ui.gd" id="1_byctf"]
+[ext_resource type="Texture2D" uid="uid://pilajc81x7ga" path="res://360_F_123687102_3rPakqjpruQ7hV0yImMYcSYBXGkTCwE5-removebg-preview.png" id="2_0wp2c"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="2_dpjhv"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="4_2fskf"]
+[ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="4_cckjx"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="5_twdm1"]
+
+[node name="House_listing_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 324.0
+offset_top = 71.0
+offset_right = -1137.0
+offset_bottom = -566.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_dpjhv")
+script = ExtResource("1_byctf")
+
+[node name="ColorRect" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 451.0
+offset_bottom = 470.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 28.0
+offset_right = 1460.0
+offset_bottom = 804.0
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_0wp2c")
+
+[node name="Label_price" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 45.0
+offset_top = 258.0
+offset_right = 88.0
+offset_bottom = 281.0
+text = "price:
+"
+
+[node name="Label_list_price" type="Label" parent="."]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 13.0
+offset_right = 355.0
+offset_bottom = 36.0
+text = "price:
+"
+horizontal_alignment = 1
+
+[node name="Label_loan" type="Label" parent="."]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 220.0
+offset_right = 297.0
+offset_bottom = 286.0
+text = "loan
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Loan_button" type="CheckButton" parent="."]
+layout_mode = 0
+offset_left = 263.0
+offset_top = 364.0
+offset_right = 393.0
+offset_bottom = 405.0
+text = "Use loan"
+alignment = 1
+
+[node name="Buy_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 316.0
+offset_right = 201.0
+offset_bottom = 359.0
+text = "Purchase"
+
+[node name="Buy_button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 371.0
+offset_right = 204.0
+offset_bottom = 419.0
+text = "Purchase and rent"
+
+[node name="Close_Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 372.0
+offset_top = 13.0
+offset_right = 432.0
+offset_bottom = 46.0
+theme_override_styles/normal = ExtResource("4_2fskf")
+theme_override_styles/pressed = ExtResource("5_twdm1")
+theme_override_styles/hover = ExtResource("4_2fskf")
+text = "CLOSE"
+
+[node name="Drag_Button" parent="." instance=ExtResource("4_cckjx")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08273256
+anchor_top = 0.08786512
+anchor_right = 0.08273256
+anchor_bottom = 0.08786512
+offset_left = -23.97425
+offset_top = -23.924248
+offset_right = 24.02575
+offset_bottom = 24.075754
+
+[connection signal="toggled" from="Loan_button" to="." method="_on_loan_button_toggled"]
+[connection signal="pressed" from="Buy_button" to="." method="_on_buy_button_pressed"]
+[connection signal="pressed" from="Buy_button2" to="." method="_on_buy_button_2_pressed"]
+[connection signal="pressed" from="Close_Button" to="." method="_on_close_button_pressed"]

@@ -1,0 +1,297 @@
+[gd_scene load_steps=6 format=3 uid="uid://dlx0ovoxxaxtn"]
+
+[ext_resource type="Script" uid="uid://dchi3h0qr3eto" path="res://assets/UI/house_info.gd" id="1_g1vcf"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="2_4qnaq"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="3_npbck"]
+[ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="4_nshnh"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="4_pqt6n"]
+
+[node name="House_info" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 341.0
+offset_top = 102.0
+offset_right = -1060.0
+offset_bottom = -483.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_4qnaq")
+script = ExtResource("1_g1vcf")
+
+[node name="ColorRect" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 523.0
+offset_bottom = 494.0
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 189.0
+offset_right = 513.0
+offset_bottom = 207.0
+color = Color(0.104056, 0.115702, 0.21575, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 374.0
+offset_right = 520.0
+offset_bottom = 392.0
+color = Color(0.104056, 0.115702, 0.21575, 1)
+
+[node name="Label_list_price" type="Label" parent="."]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 6.0
+offset_right = 363.0
+offset_bottom = 29.0
+text = "price:
+"
+horizontal_alignment = 1
+
+[node name="Label_bought_price" type="Label" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 40.0
+offset_right = 367.0
+offset_bottom = 63.0
+text = "price:
+"
+horizontal_alignment = 1
+
+[node name="Label_loan" type="Label" parent="."]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 98.0
+offset_right = 104.0
+offset_bottom = 121.0
+text = "loan
+"
+
+[node name="Label_morgage" type="Label" parent="."]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 131.0
+offset_right = 149.0
+offset_bottom = 154.0
+text = "Morgage = "
+
+[node name="Label_Income" type="Label" parent="."]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 233.0
+offset_right = 141.0
+offset_bottom = 256.0
+text = "Income = "
+
+[node name="Label_lease_stat" type="Label" parent="."]
+layout_mode = 0
+offset_left = 323.0
+offset_top = 213.0
+offset_right = 429.0
+offset_bottom = 236.0
+text = "lease amount"
+
+[node name="Label_condition" type="Label" parent="."]
+layout_mode = 0
+offset_left = 343.0
+offset_top = 249.0
+offset_right = 457.0
+offset_bottom = 272.0
+text = "condition: 90%"
+
+[node name="Label_punctuality" type="Label" parent="."]
+layout_mode = 0
+offset_left = 341.0
+offset_top = 286.0
+offset_right = 455.0
+offset_bottom = 309.0
+text = "condition: 90%"
+
+[node name="Label_islistedforrent" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 197.0
+offset_top = 186.0
+offset_right = 307.0
+offset_bottom = 209.0
+text = "Listed for rent"
+
+[node name="Label_cashflow" type="Label" parent="."]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 296.0
+offset_right = 148.0
+offset_bottom = 319.0
+text = "cash flow = "
+
+[node name="Buy_button" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 351.0
+offset_top = 71.0
+offset_right = 476.0
+offset_bottom = 110.0
+text = "Pay off Loan"
+
+[node name="Refinance_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 370.0
+offset_top = 133.0
+offset_right = 495.0
+offset_bottom = 172.0
+text = "Refinance"
+
+[node name="Tenent_button" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 186.0
+offset_top = 322.0
+offset_right = 346.0
+offset_bottom = 361.0
+text = "List House For Rent"
+
+[node name="Remove_Tenent" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 187.0
+offset_top = 319.0
+offset_right = 345.0
+offset_bottom = 358.0
+text = "Remove Tenant"
+
+[node name="Edit_yard_button" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 61.0
+offset_top = 431.0
+offset_right = 186.0
+offset_bottom = 470.0
+text = "Edit Yard"
+
+[node name="Sell_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 430.0
+offset_right = 469.0
+offset_bottom = 469.0
+text = "Sell House"
+
+[node name="Upgrade_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 233.0
+offset_top = 393.0
+offset_right = 293.0
+offset_bottom = 416.0
+text = "$10,000"
+
+[node name="Upgrade" type="Button" parent="."]
+layout_mode = 0
+offset_left = 205.0
+offset_top = 428.0
+offset_right = 330.0
+offset_bottom = 467.0
+text = "Upgrade"
+
+[node name="Close_Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 20.0
+offset_right = 508.0
+offset_bottom = 54.0
+theme_override_styles/normal = ExtResource("4_pqt6n")
+theme_override_styles/pressed = ExtResource("3_npbck")
+theme_override_styles/hover = ExtResource("4_pqt6n")
+text = "CLOSE"
+
+[node name="Pay_off" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 181.0
+offset_top = 132.0
+offset_right = 406.0
+offset_bottom = 321.0
+
+[node name="Amount" type="Label" parent="Pay_off"]
+layout_mode = 0
+offset_right = 224.0
+offset_bottom = 54.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Yes" type="Button" parent="Pay_off"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 119.0
+offset_right = 210.0
+offset_bottom = 171.0
+text = "PAY"
+
+[node name="No" type="Button" parent="Pay_off"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = -34.0
+offset_right = 216.0
+offset_bottom = -3.0
+theme_override_styles/normal = ExtResource("4_pqt6n")
+theme_override_styles/pressed = ExtResource("3_npbck")
+theme_override_styles/hover = ExtResource("4_pqt6n")
+text = "close"
+
+[node name="Sell_home" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 181.0
+offset_top = 132.0
+offset_right = 406.0
+offset_bottom = 321.0
+
+[node name="Amount" type="Label" parent="Sell_home"]
+layout_mode = 0
+offset_right = 224.0
+offset_bottom = 54.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Yes" type="Button" parent="Sell_home"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 119.0
+offset_right = 210.0
+offset_bottom = 171.0
+text = "SELL"
+
+[node name="No" type="Button" parent="Sell_home"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = -34.0
+offset_right = 216.0
+offset_bottom = -3.0
+theme_override_styles/normal = ExtResource("4_pqt6n")
+theme_override_styles/pressed = ExtResource("3_npbck")
+theme_override_styles/hover = ExtResource("4_pqt6n")
+text = "close"
+
+[node name="Drag_Button" parent="." instance=ExtResource("4_nshnh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0921052
+anchor_top = 0.0701754
+anchor_right = 0.0921052
+anchor_bottom = 0.0701754
+
+[connection signal="pressed" from="Buy_button" to="." method="_on_buy_button_pressed"]
+[connection signal="pressed" from="Refinance_button" to="." method="_on_refinance_button_pressed"]
+[connection signal="pressed" from="Tenent_button" to="." method="_on_tenent_button_pressed"]
+[connection signal="pressed" from="Remove_Tenent" to="." method="_on_remove_tenent_pressed"]
+[connection signal="pressed" from="Edit_yard_button" to="." method="_on_edit_yard_button_pressed"]
+[connection signal="pressed" from="Sell_button" to="." method="_on_sell_button_pressed"]
+[connection signal="pressed" from="Upgrade" to="." method="_on_upgrade_pressed"]
+[connection signal="pressed" from="Close_Button" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="Pay_off/Yes" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="Pay_off/No" to="." method="_on_no_pressed"]
+[connection signal="pressed" from="Sell_home/Yes" to="." method="_on_yes_sell_pressed"]
+[connection signal="pressed" from="Sell_home/No" to="." method="_on_no_sell_pressed"]

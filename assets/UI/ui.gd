@@ -1,0 +1,121 @@
+extends Control
+
+@onready var cashflow_label = $GridContainer/cashflow
+@onready var money_label = $GridContainer/money
+@onready var properties_label = $properties
+@onready var expenses_label = $GridContainer/Expenses
+@onready var income_label = $GridContainer/Income
+@onready var networth_label = $networth
+@onready var month_timer_label = $"../Month_mod/Month_Timer"
+@onready var month_label = $"../Month_mod/month"
+@onready var year_label = $"../Month_mod/Year"
+@onready var fps_counter = $FPS_counter
+@onready var market_conditions: Label = $Market_conditions
+@onready var negative_month_count: Label = $negative_month_count
+
+var update_timer: float = 0.0
+var update_interval: float = 0.1  # Update UI every 0.1 seconds (10 FPS)
+
+func _ready():
+	# Log Settings.showfps and FPS_counter state
+	
+	if not fps_counter or not is_instance_valid(fps_counter):
+		push_error("FPS_counter node is missing or invalid at path $FPS_counter")
+	elif not fps_counter is Label:
+		push_error("FPS_counter is not a Label, type is: ", fps_counter.get_class())
+	else:
+		
+		fps_counter.visible = Settings.showfps  # Set initial visibility
+		fps_counter.modulate = Color.WHITE
+		fps_counter.add_theme_color_override("font_color", Color.WHITE)
+	
+	update_ui()
+
+func add_comma_to_int(value: int) -> String:
+	var str_value: String = str(value)
+	var loop_end: int = 0 if value > -1 else 1
+	for i in range(str_value.length()-3, loop_end, -3):
+		str_value = str_value.insert(i, ",")
+	return str_value
+
+func _process(delta: float) -> void:
+	update_timer += delta
+	if Globals.skillpoints > 0:
+		$Skills_Button/TextureRect.visible = true
+		$Skills_Button/Label.text = str(Globals.skillpoints)
+	else:
+		$Skills_Button/TextureRect.visible = false
+		$Skills_Button/Label.text = ""
+	
+	if Globals.unlock_business:
+		$Business_Button.visible = true
+	else:
+		$Business_Button.visible = false
+	
+	if update_timer >= update_interval:
+		update_timer = 0.0
+		update_ui()
+
+func update_ui():
+	cashflow_label.add_theme_color_override("font_color", Color.RED if Globals.cashflow < 0 else Color("1dff00"))
+	cashflow_label.text = "CashFlow: " + add_comma_to_int(Globals.cashflow)
+	
+	money_label.text = "Money: " + add_comma_to_int(Globals.money)
+	money_label.add_theme_color_override("font_color", Color.RED if Globals.money < 0 else Color.YELLOW)
+	
+	properties_label.text = "Property's: " + add_comma_to_int(Globals.Propertys)
+	expenses_label.text = "Expenses: " + add_comma_to_int(Globals.Expenses)
+	income_label.text = "Income: " + add_comma_to_int(Globals.Income)
+	networth_label.text = "networth: " + add_comma_to_int(Globals.net_worth)
+	
+	month_timer_label.text = "Month Timer: " + str(int($Timer.time_left))
+	negative_month_count.text = "Months tell Bankrupt: " + str(Globals.negative_month_count) + "/12"
+	month_label.text = "Month: " + add_comma_to_int(Globals.month)
+	year_label.text = "Year: " + add_comma_to_int(Globals.year)
+	
+	if Globals.has_market_app:
+		market_conditions.visible = true
+	else:
+		market_conditions.visible = false
+	
+	if Settings.showfps and fps_counter:
+		var fps_text = "FPS: %d" % Engine.get_frames_per_second()
+		fps_counter.text = fps_text
+		fps_counter.visible = true
+		fps_counter.modulate = Color.WHITE
+		fps_counter.add_theme_color_override("font_color", Color.WHITE)
+		
+	else:
+		if fps_counter:
+			fps_counter.text = ""
+			fps_counter.visible = false
+			
+	
+	if $"../Phone/house_manager/ScrollContainer/Rental_mod_Container".get_child_count() < 0:
+		Globals.credit_score -= 0.01
+		push_warning("Rental_mod_Container has negative child count, which should be impossible")
+
+func spawn_floating_label(start_pos: Vector2) -> void:
+	var canvas_layer = CanvasLayer.new()
+	add_child(canvas_layer)
+	
+	var label = Label.new()
+	if Globals.cashflow < 0:
+		label.text = "Paid Expenses " + add_comma_to_int(Globals.cashflow) + "$"
+	else:
+		label.text = "Cashflow: +" + add_comma_to_int(Globals.cashflow) + "$"
+	
+	label.position = start_pos + Vector2(200, 150)
+	label.modulate = Color(1, 1, 1, 1)
+	canvas_layer.add_child(label)
+
+	var tween = create_tween()
+	tween.tween_property(label, "position", label.position + Vector2(0, -50), 1.0)
+	tween.tween_property(label, "modulate:a", 0, 4.0)
+	tween.tween_callback(label.queue_free)
+
+func _on_timer_timeout() -> void:
+	$"../Quit_menu".save_game()
+	Globals.monthy()
+	spawn_floating_label(Vector2(500, 200))
+	$Timer.start()

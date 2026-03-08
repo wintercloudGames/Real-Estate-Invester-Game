@@ -1,0 +1,1911 @@
+[gd_scene load_steps=63 format=3 uid="uid://bx85w10pr0a6q"]
+
+[ext_resource type="Texture2D" uid="uid://b0vmuqioqojfj" path="res://assets/UI/phone/wallpapers/vines-7859445_1280.jpg" id="1_go8ug"]
+[ext_resource type="Texture2D" uid="uid://dsfynj8pp2hyg" path="res://assets/UI/phone/vecteezy_smart-phone-mobile-electronic-device-transparent-screen_6824674-1-removebg-preview.png" id="1_jm7no"]
+[ext_resource type="Script" uid="uid://c0mwwhe17yaj3" path="res://assets/UI/phone/phone.gd" id="1_vu5t8"]
+[ext_resource type="Texture2D" uid="uid://omoauyi58j8" path="res://assets/UI/icons/boombox.png" id="3_014f2"]
+[ext_resource type="Texture2D" uid="uid://c2krvd26nopjp" path="res://assets/UI/icons/big-gear.png" id="4_ldak2"]
+[ext_resource type="Texture2D" uid="uid://cc1l4sdqngi14" path="res://assets/UI/icons/house.png" id="5_jshvl"]
+[ext_resource type="Script" uid="uid://drxad8xmbnlys" path="res://assets/UI/options.gd" id="6_wyu3u"]
+[ext_resource type="Texture2D" uid="uid://dpvhmpu7o0fnw" path="res://shaded-dark/shadedDark14.png" id="7_oah20"]
+[ext_resource type="Texture2D" uid="uid://b52myfxlhuv3f" path="res://assets/UI/icons/temple-gate.png" id="7_thg8y"]
+[ext_resource type="Texture2D" uid="uid://2st8usryltse" path="res://assets/UI/icons/village.png" id="7_xwxf0"]
+[ext_resource type="Texture2D" uid="uid://dxprvpyyx802h" path="res://shaded-dark/shadedDark16.png" id="8_2nic4"]
+[ext_resource type="Texture2D" uid="uid://bauw01d3wf7vg" path="res://assets/UI/icons/smartphone.png" id="8_aue8h"]
+[ext_resource type="Texture2D" uid="uid://bq4i34nk7daor" path="res://assets/UI/icons/money-stack.png" id="8_hqtsb"]
+[ext_resource type="Script" uid="uid://daxx544flatqx" path="res://assets/UI/phone/music_player.gd" id="8_iq4tw"]
+[ext_resource type="Texture2D" uid="uid://bn2y5ckkxsfd8" path="res://assets/UI/icons/wallet.png" id="8_rrag5"]
+[ext_resource type="Texture2D" uid="uid://cvsibdejqx1hm" path="res://assets/UI/phone/icons8-health-100.png" id="8_wo1e0"]
+[ext_resource type="Script" uid="uid://bb25fgxm2mhf1" path="res://assets/UI/phone/firestorm.gd" id="9_3hjvo"]
+[ext_resource type="Texture2D" uid="uid://c38yef4yng1n4" path="res://shaded-dark/shadedDark12.png" id="9_jjmas"]
+[ext_resource type="Texture2D" uid="uid://bgidxna3gs0dc" path="res://assets/UI/icons/chart.png" id="11_3pv8a"]
+[ext_resource type="Texture2D" uid="uid://bwtiorjr8en8m" path="res://assets/UI/icons/eating.png" id="11_jhvj4"]
+[ext_resource type="Texture2D" uid="uid://btn64o1bylkwn" path="res://assets/UI/phone/skip.png" id="11_t5vsg"]
+[ext_resource type="Script" uid="uid://doelh4c1yw73r" path="res://assets/UI/audio_stream_player.gd" id="11_uys8f"]
+[ext_resource type="Texture2D" uid="uid://5lqyw8wkaid1" path="res://assets/UI/icons/family-house.png" id="12_68fqo"]
+[ext_resource type="Texture2D" uid="uid://c8lja60debhyd" path="res://assets/UI/icons/city-car.png" id="13_57iru"]
+[ext_resource type="Texture2D" uid="uid://b2o8cev4c6588" path="res://assets/UI/phone/Sprite-0001.png" id="14_ybpqr"]
+[ext_resource type="Texture2D" uid="uid://dng1xe3b3kjvy" path="res://assets/UI/icons/home-garage.png" id="14_ykhnr"]
+[ext_resource type="Script" uid="uid://dcd215rdmlmo4" path="res://assets/UI/phone/Savings.gd" id="15_0q7q6"]
+[ext_resource type="Texture2D" uid="uid://lq3cgxnta8g0" path="res://shaded-dark/shadedDark35.png" id="15_22kuw"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="16_sd00n"]
+[ext_resource type="Texture2D" uid="uid://cac1uprg2un33" path="res://assets/UI/icons/discussion (1).png" id="17_dicc3"]
+[ext_resource type="Script" uid="uid://xtjurhpv63jk" path="res://assets/UI/phone/house_info.gd" id="17_w2s2i"]
+[ext_resource type="Script" uid="uid://e4ubj8lkmcs7" path="res://assets/UI/phone/job_info.gd" id="18_o2bmf"]
+[ext_resource type="Texture2D" uid="uid://dwib34gx67f43" path="res://assets/UI/icons/files.png" id="19_8qstc"]
+[ext_resource type="Script" uid="uid://bjo53yytepjk5" path="res://assets/UI/phone/player_stats.gd" id="24_mgvhx"]
+[ext_resource type="Script" uid="uid://b047v4lmufqyx" path="res://assets/UI/phone/backgrounds.gd" id="26_6pd25"]
+[ext_resource type="Script" uid="uid://ewnuutir7auv" path="res://assets/UI/phone/food_market.gd" id="26_q08sx"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="27_80c6r"]
+[ext_resource type="Texture2D" uid="uid://bqgljbd7hiwy0" path="res://assets/UI/phone/wallpapers/pexels-davidmcelwee-10583422.jpg" id="27_grw6u"]
+[ext_resource type="Script" uid="uid://bcdtjv5isxpir" path="res://assets/UI/phone/House_manager.gd" id="28_mfnil"]
+[ext_resource type="Texture2D" uid="uid://c8u6vlun4s7v2" path="res://assets/UI/phone/wallpapers/pexels-eberhardgross-1624496.jpg" id="28_rfb6g"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="28_sevfc"]
+[ext_resource type="Texture2D" uid="uid://i5iwk6db7um0" path="res://assets/UI/phone/wallpapers/pexels-feyzayildirimphoto-13711334.jpg" id="29_qabnp"]
+[ext_resource type="Texture2D" uid="uid://b3w4s2adwvm2p" path="res://assets/UI/phone/wallpapers/pexels-francesco-ungaro-1526713.jpg" id="30_a5q18"]
+[ext_resource type="Script" uid="uid://biep8b24qdfxw" path="res://assets/UI/phone/loans.gd" id="31_4h7ca"]
+[ext_resource type="Texture2D" uid="uid://4romudk0jrcp" path="res://assets/UI/phone/wallpapers/pexels-iamtausifhossain9321-1226302.jpg" id="31_edc7a"]
+[ext_resource type="Script" uid="uid://dx0amst0qq0sw" path="res://assets/UI/credit_info.gd" id="31_tbl1g"]
+[ext_resource type="Texture2D" uid="uid://314o6ktdqouc" path="res://assets/UI/phone/wallpapers/pexels-maoriginalphotography-1591382.jpg" id="32_b3aue"]
+[ext_resource type="Texture2D" uid="uid://bjrq4ciuthpnf" path="res://assets/UI/phone/wallpapers/pexels-mohammed-ajwad-13536287.jpg" id="33_6ogp6"]
+[ext_resource type="Texture2D" uid="uid://ckuxq5m6uhvh4" path="res://assets/UI/phone/wallpapers/pexels-rahulp9800-1212487.jpg" id="34_n5uvf"]
+[ext_resource type="Texture2D" uid="uid://cvlle3kflwc1o" path="res://assets/UI/phone/wallpapers/pexels-viajerocool-4118189.jpg" id="35_rosxa"]
+[ext_resource type="Script" uid="uid://q66ppu3j3u3r" path="res://assets/UI/phone/cars.gd" id="37_sguuv"]
+[ext_resource type="Texture2D" uid="uid://dtjgf2drnlsda" path="res://shaded-dark/shadedDark26.png" id="43_uwkqi"]
+[ext_resource type="Script" uid="uid://ccfp667m7bxy7" path="res://assets/UI/phone/hire_help.gd" id="45_beopk"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r0uqf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksmyw"]
+bg_color = Color(0.202419, 0.644531, 0.0226593, 1)
+border_width_top = 1
+border_width_bottom = 10
+border_color = Color(0.0868554, 0.453125, 0.0230103, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 5.0
+shadow_color = Color(0, 0, 0, 0.203922)
+shadow_size = 3
+shadow_offset = Vector2(2, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rid5t"]
+bg_color = Color(0.0664253, 0.654034, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.203922)
+shadow_size = 1
+shadow_offset = Vector2(2, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2nfsa"]
+bg_color = Color(0.202419, 0.644531, 0.0226593, 1)
+border_width_top = 1
+border_width_bottom = 10
+border_color = Color(0.0868554, 0.453125, 0.0230103, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 5.0
+shadow_color = Color(0, 0, 0, 0.203922)
+shadow_size = 3
+shadow_offset = Vector2(2, 6)
+
+[sub_resource type="GDScript" id="GDScript_xmdre"]
+script/source = "extends Control
+
+# Example stock data structure
+var stocks = {
+	\"GDT\": {\"price\": 100.0, \"change\": 0.0, \"history\": []},
+	\"PIXEL\": {\"price\": 75.0, \"change\": 0.0, \"history\": []},
+	\"VFX\": {\"price\": 50.0, \"change\": 0.0, \"history\": []},
+	\"INDIE\": {\"price\": 30.0, \"change\": 0.0, \"history\": []}
+}
+
+# Player's portfolio
+var portfolio = {}
+var balance = 1000.0  # Starting money
+
+# Timer interval for stock updates
+@export var update_interval: float = 1.0  # Update every second
+
+func _ready():
+	var timer = Timer.new()
+	timer.wait_time = update_interval
+	timer.autostart = true
+	timer.one_shot = false
+	timer.timeout.connect(_update_stock_prices)
+	add_child(timer)
+
+func _update_stock_prices():
+	for stock in stocks.keys():
+		var change = randf_range(-5.0, 5.0)  # Simulate stock movement
+		stocks[stock][\"change\"] = change
+		stocks[stock][\"price\"] = max(1.0, stocks[stock][\"price\"] + change)  # Prevent negative prices
+		stocks[stock][\"history\"].append(stocks[stock][\"price\"])  # Store price history
+		if stocks[stock][\"history\"].size() > 50:
+			stocks[stock][\"history\"].pop_front()  # Limit history size
+	
+	update_ui()
+
+func update_ui():
+	var ui = get_node_or_null(\"$StockMarketUI\")
+	if ui:
+		ui.update_stock_display(stocks)
+		ui.update_stock_graph(stocks)
+		ui.update_portfolio_display(portfolio, balance)
+
+# Player trading functions
+func buy_stock(stock_name: String, amount: int):
+	if stock_name in stocks and amount > 0:
+		var total_cost = stocks[stock_name][\"price\"] * amount
+		if balance >= total_cost:
+			balance -= total_cost
+			if stock_name in portfolio:
+				portfolio[stock_name] += amount
+			else:
+				portfolio[stock_name] = amount
+			update_ui()
+
+func sell_stock(stock_name: String, amount: int):
+	if stock_name in portfolio and portfolio[stock_name] >= amount and amount > 0:
+		var total_earnings = stocks[stock_name][\"price\"] * amount
+		balance += total_earnings
+		portfolio[stock_name] -= amount
+		if portfolio[stock_name] == 0:
+			portfolio.erase(stock_name)
+		update_ui()
+"
+
+[sub_resource type="Animation" id="Animation_0xyd6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(36, 9)]
+}
+
+[sub_resource type="Animation" id="Animation_sxlfr"]
+resource_name = "out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-500, 400), Vector2(50, 400)]
+}
+
+[sub_resource type="Animation" id="Animation_tho2i"]
+resource_name = "put_away"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.966667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(100, 400), Vector2(-500, 400)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l32jq"]
+_data = {
+&"RESET": SubResource("Animation_0xyd6"),
+&"get_out": SubResource("Animation_sxlfr"),
+&"put_away": SubResource("Animation_tho2i")
+}
+
+[node name="Phone" type="Control"]
+layout_mode = 3
+anchor_top = -1.911
+anchor_right = 0.353
+anchor_bottom = -0.872
+offset_left = 36.0
+offset_top = 2072.88
+offset_right = -285.76
+offset_bottom = 1591.76
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("16_sd00n")
+script = ExtResource("1_vu5t8")
+
+[node name="Wallpaper" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 12.0
+offset_right = 353.0
+offset_bottom = 631.0
+texture = ExtResource("27_grw6u")
+expand_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="apps" type="GridContainer" parent="."]
+layout_mode = 1
+offset_left = -11.0
+offset_right = 1588.0
+offset_bottom = 2950.0
+scale = Vector2(0.2, 0.2)
+pivot_offset = Vector2(40, 43.86)
+columns = 3
+
+[node name="music_player" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("3_014f2")
+
+[node name="Label" type="Label" parent="apps/music_player"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Music Player"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="settings" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("4_ldak2")
+
+[node name="Label" type="Label" parent="apps/settings"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="house_info" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("5_jshvl")
+
+[node name="Label" type="Label" parent="apps/house_info"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Info"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="House_manager" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("7_xwxf0")
+
+[node name="Label" type="Label" parent="apps/House_manager"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -108.439
+offset_right = -5.0
+offset_bottom = -25.4388
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "House Manager"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Savings" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("8_rrag5")
+
+[node name="Label" type="Label" parent="apps/Savings"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Savings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Loans" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("7_thg8y")
+
+[node name="Label" type="Label" parent="apps/Loans"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Loans"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="job" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("8_hqtsb")
+
+[node name="Label" type="Label" parent="apps/job"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Jobs"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Backgrounds" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("8_aue8h")
+
+[node name="Label" type="Label" parent="apps/Backgrounds"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Wallpaper's"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="player_stats" type="TextureButton" parent="apps"]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("8_wo1e0")
+
+[node name="Label" type="Label" parent="apps/player_stats"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 60
+text = "Wallpaper's"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Market" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("11_3pv8a")
+
+[node name="Label" type="Label" parent="apps/Market"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Market
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Food" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("11_jhvj4")
+
+[node name="Label" type="Label" parent="apps/Food"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Food"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Renters" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("12_68fqo")
+
+[node name="Label" type="Label" parent="apps/Renters"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Rent Offers"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="apps/Renters"]
+visible = false
+clip_contents = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -148.0
+offset_top = 2.56116
+offset_right = 255.0
+offset_bottom = 436.561
+grow_horizontal = 0
+scale = Vector2(0.31, 0.31)
+mouse_filter = 2
+texture = ExtResource("14_ybpqr")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="apps/Renters/TextureRect"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -436.0
+offset_right = 3.0
+offset_bottom = -1.99985
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 250
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Car_info" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("13_57iru")
+
+[node name="Label" type="Label" parent="apps/Car_info"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Car"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="apps/Car_info"]
+visible = false
+clip_contents = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -148.0
+offset_top = 2.56116
+offset_right = 255.0
+offset_bottom = 436.561
+grow_horizontal = 0
+scale = Vector2(0.31, 0.31)
+mouse_filter = 2
+texture = ExtResource("14_ybpqr")
+expand_mode = 1
+
+[node name="Hire_help" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("17_dicc3")
+
+[node name="Label" type="Label" parent="apps/Hire_help"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Hire Help"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="apps/Hire_help"]
+visible = false
+clip_contents = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -148.0
+offset_top = 2.56116
+offset_right = 255.0
+offset_bottom = 436.561
+grow_horizontal = 0
+scale = Vector2(0.31, 0.31)
+mouse_filter = 2
+texture = ExtResource("14_ybpqr")
+expand_mode = 1
+
+[node name="car_carrage" type="TextureButton" parent="apps"]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("14_ykhnr")
+
+[node name="Credit_display" type="TextureButton" parent="apps"]
+layout_mode = 2
+texture_normal = ExtResource("19_8qstc")
+
+[node name="Label" type="Label" parent="apps/Credit_display"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0001
+offset_top = -101.439
+offset_right = -16.0001
+offset_bottom = -18.439
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Credt Score"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="apps/Credit_display"]
+visible = false
+clip_contents = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -148.0
+offset_top = 2.56116
+offset_right = 255.0
+offset_bottom = 436.561
+grow_horizontal = 0
+scale = Vector2(0.31, 0.31)
+mouse_filter = 2
+texture = ExtResource("14_ybpqr")
+expand_mode = 1
+
+[node name="firestorm" type="TextureButton" parent="apps"]
+visible = false
+layout_mode = 2
+texture_normal = SubResource("CompressedTexture2D_r0uqf")
+script = ExtResource("9_3hjvo")
+
+[node name="options" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_wyu3u")
+
+[node name="ColorRect" type="Panel" parent="options"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="options"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = -40.9998
+offset_right = 345.0
+offset_bottom = 703.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="options/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Tital" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "
+
+"
+horizontal_alignment = 1
+
+[node name="Tital2" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "
+Master"
+horizontal_alignment = 1
+
+[node name="Master_slider" type="HSlider" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="Tital3" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "
+Music"
+horizontal_alignment = 1
+
+[node name="Music_slider" type="HSlider" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="Tital4" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "
+Effects"
+horizontal_alignment = 1
+
+[node name="Sound_slider" type="HSlider" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="Tital5" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "
+UI SCALE"
+horizontal_alignment = 1
+
+[node name="UI_Scale" type="HSlider" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 0.5
+max_value = 2.0
+step = 0.01
+value = 1.0
+tick_count = 4
+
+[node name="HSeparator" type="HSeparator" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="options/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="options/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Full Screen"
+
+[node name="CheckBox" type="CheckBox" parent="options/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+button_pressed = true
+
+[node name="Resolution" type="OptionButton" parent="options/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+selected = 0
+item_count = 3
+popup/item_0/text = "1920 x 1080"
+popup/item_0/id = 0
+popup/item_1/text = "1600x900"
+popup/item_1/id = 1
+popup/item_2/text = "1280x1080"
+popup/item_2/id = 2
+
+[node name="Label2" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "
+
+Difficulty Selector"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="DifficultySelector" type="OptionButton" parent="options/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+selected = 1
+item_count = 4
+popup/item_0/text = "Easy"
+popup/item_0/id = 0
+popup/item_1/text = "Normal"
+popup/item_1/id = 1
+popup/item_2/text = "Hard"
+popup/item_2/id = 2
+popup/item_3/text = "Nightmare"
+popup/item_3/id = 3
+
+[node name="Save_game" type="Button" parent="options/ScrollContainer/VBoxContainer"]
+visible = false
+modulate = Color(0.0248037, 0.596659, 0.412893, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "SAVE GAME"
+
+[node name="Label" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+
+"
+
+[node name="Menu_Button" type="Button" parent="options/ScrollContainer/VBoxContainer"]
+visible = false
+modulate = Color(0.92, 0.1104, 0.258827, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "EXIT GAME"
+
+[node name="Label4" type="Label" parent="options/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+
+
+
+
+
+"
+
+[node name="Music_player" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_iq4tw")
+
+[node name="ColorRect" type="Panel" parent="Music_player"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Music_player"]
+layout_mode = 0
+offset_right = 347.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Music_player/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label4" type="Label" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+Music"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+
+
+
+
+"
+horizontal_alignment = 1
+
+[node name="song_label" type="Label" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="play_music" type="TextureButton" parent="Music_player/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+texture_normal = ExtResource("7_oah20")
+texture_pressed = ExtResource("8_2nic4")
+texture_hover = ExtResource("9_jjmas")
+
+[node name="skip_song" type="TextureButton" parent="Music_player/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("11_t5vsg")
+
+[node name="HSeparator4" type="HSeparator" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Music_player/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+"
+horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music_player/ScrollContainer/VBoxContainer"]
+bus = &"Music"
+script = ExtResource("11_uys8f")
+
+[node name="Savings" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("15_0q7q6")
+
+[node name="ColorRect" type="Panel" parent="Savings"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+
+[node name="TabContainer" type="TabContainer" parent="Savings"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 59.0002
+offset_right = 340.0
+offset_bottom = 615.0
+current_tab = 1
+
+[node name="Savings" type="Control" parent="Savings/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="RemoveAllFundsButton" type="Button" parent="Savings/TabContainer/Savings"]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 358.0
+offset_right = 242.0
+offset_bottom = 391.0
+theme_override_styles/normal = ExtResource("27_80c6r")
+theme_override_styles/pressed = ExtResource("28_sevfc")
+theme_override_styles/hover = ExtResource("27_80c6r")
+text = "Remove ALL Fund's"
+
+[node name="Send_intrest_to" type="CheckButton" parent="Savings/TabContainer/Savings"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 170.0
+offset_right = 267.0
+offset_bottom = 203.0
+text = "Keep Compounded"
+
+[node name="SavingsBalanceLabel" type="Label" parent="Savings/TabContainer/Savings"]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 0
+offset_left = 3.0
+offset_top = 65.0002
+offset_right = 319.0
+offset_bottom = 114.0
+theme_override_font_sizes/font_size = 20
+text = "Savings Balance"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IntrestPaymentLabel" type="Label" parent="Savings/TabContainer/Savings"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 261.0
+offset_right = 319.0
+offset_bottom = 301.0
+text = "Intrest Payment"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Savings/TabContainer/Savings"]
+layout_mode = 0
+offset_right = 318.0
+offset_bottom = 47.0
+text = "Savings Account Balance"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Add_to_Savings" type="Control" parent="Savings/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="SavingsAmountInput" type="LineEdit" parent="Savings/TabContainer/Add_to_Savings"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 298.0
+offset_right = 273.0
+offset_bottom = 329.0
+
+[node name="DepositFundsButton" type="Button" parent="Savings/TabContainer/Add_to_Savings"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 370.0
+offset_right = 235.0
+offset_bottom = 403.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_ksmyw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rid5t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2nfsa")
+text = "Deposit Fund's"
+
+[node name="RemoveFundsButton" type="Button" parent="Savings/TabContainer/Add_to_Savings"]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 447.0
+offset_right = 232.0
+offset_bottom = 480.0
+theme_override_styles/normal = ExtResource("27_80c6r")
+theme_override_styles/pressed = ExtResource("28_sevfc")
+theme_override_styles/hover = ExtResource("27_80c6r")
+text = "Remove Fund's"
+
+[node name="SavingsBalanceLabel" type="Label" parent="Savings/TabContainer/Add_to_Savings"]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 0
+offset_left = 5.0
+offset_top = 47.0002
+offset_right = 321.0
+offset_bottom = 96.0002
+theme_override_font_sizes/font_size = 20
+text = "Savings Balance"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SavingsBalanceDisplay" type="Label" parent="Savings/TabContainer/Add_to_Savings"]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 97.0
+offset_right = 317.0
+offset_bottom = 146.0
+theme_override_font_sizes/font_size = 20
+text = "$400"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Loans" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("31_4h7ca")
+
+[node name="ColorRect" type="Panel" parent="Loans"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+
+[node name="TabContainer" type="TabContainer" parent="Loans"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 59.0002
+offset_right = 340.0
+offset_bottom = 615.0
+current_tab = 0
+
+[node name="Addloan" type="Control" parent="Loans/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="LoanAmountInput" type="LineEdit" parent="Loans/TabContainer/Addloan"]
+layout_mode = 0
+offset_left = 49.0
+offset_top = 223.0
+offset_right = 270.0
+offset_bottom = 254.0
+
+[node name="TakeLoanButton" type="Button" parent="Loans/TabContainer/Addloan"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 270.0
+offset_right = 230.0
+offset_bottom = 304.0
+text = "Take Loan"
+
+[node name="MaxLoanLabel" type="Label" parent="Loans/TabContainer/Addloan"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 366.0
+offset_right = 314.0
+offset_bottom = 480.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="Loans/TabContainer/Addloan"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 115.0
+offset_right = 217.0
+offset_bottom = 145.0
+selected = 0
+item_count = 5
+popup/item_0/text = "1 year"
+popup/item_0/id = 0
+popup/item_1/text = "2 year"
+popup/item_1/id = 1
+popup/item_2/text = "3 year"
+popup/item_2/id = 2
+popup/item_3/text = "4 year"
+popup/item_3/id = 3
+popup/item_4/text = "5 year"
+popup/item_4/id = 4
+
+[node name="Label" type="Label" parent="Loans/TabContainer/Addloan"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 81.0
+offset_right = 181.0
+offset_bottom = 105.0
+text = "Loan Term"
+
+[node name="Loans" type="Control" parent="Loans/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Pay_All_Payments" type="Button" parent="Loans/TabContainer/Loans"]
+layout_mode = 0
+offset_left = 198.0
+offset_top = 23.0
+offset_right = 300.0
+offset_bottom = 57.0
+text = "Pay All Loans"
+
+[node name="Totalpaymentdisplay" type="Label" parent="Loans/TabContainer/Loans"]
+layout_mode = 1
+offset_right = 179.0
+offset_bottom = 65.0
+text = "$60000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Loans/TabContainer/Loans"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = -464.0
+offset_right = -10.0
+offset_bottom = -12.9998
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_scroll_mode = 0
+
+[node name="loan_mod_Container" type="VBoxContainer" parent="Loans/TabContainer/Loans/ScrollContainer"]
+layout_mode = 2
+
+[node name="house_info" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+offset_right = 356.0
+offset_bottom = 641.0
+script = ExtResource("17_w2s2i")
+
+[node name="ColorRect" type="Panel" parent="house_info"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 13.0
+offset_right = 363.0
+offset_bottom = 633.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="house_info"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 63.0
+offset_right = 331.0
+offset_bottom = 197.0
+
+[node name="properties" type="Label" parent="house_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "properties = "
+
+[node name="Net_worth" type="Label" parent="house_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "Net_worth = "
+
+[node name="total_loan_amount" type="Label" parent="house_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "total_loan_amount = "
+
+[node name="renter_amount" type="Label" parent="house_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "renter_amount = "
+
+[node name="listed_houses" type="Label" parent="house_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "listed_houses = "
+
+[node name="ScrollContainer" type="ScrollContainer" parent="house_info"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = -603.0
+offset_right = -10.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_scroll_mode = 0
+
+[node name="Rental_mod_Container" type="VBoxContainer" parent="house_info/ScrollContainer"]
+layout_mode = 2
+
+[node name="credit_info" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+offset_right = 356.0
+offset_bottom = 641.0
+script = ExtResource("31_tbl1g")
+
+[node name="ColorRect" type="Panel" parent="credit_info"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 13.0
+offset_right = 363.0
+offset_bottom = 633.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="credit_info"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 63.0
+offset_right = 331.0
+offset_bottom = 197.0
+
+[node name="properties" type="Label" parent="credit_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Credit Score
+"
+horizontal_alignment = 1
+
+[node name="credit_score" type="Label" parent="credit_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Credit Score: 
+600"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="house_qualify" type="Label" parent="credit_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Credit Score: 
+600"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="stats" type="Label" parent="credit_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Credit Score: 
+600"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="credit_info"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = -603.0
+offset_right = -10.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_scroll_mode = 0
+
+[node name="Rental_mod_Container" type="VBoxContainer" parent="credit_info/ScrollContainer"]
+layout_mode = 2
+
+[node name="house_manager" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+offset_right = 356.0
+offset_bottom = 641.0
+script = ExtResource("28_mfnil")
+
+[node name="ColorRect" type="Panel" parent="house_manager"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 13.0
+offset_right = 363.0
+offset_bottom = 633.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="house_manager"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = -603.0
+offset_right = -10.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_scroll_mode = 0
+
+[node name="Rental_mod_Container" type="VBoxContainer" parent="house_manager/ScrollContainer"]
+layout_mode = 2
+
+[node name="job_info" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("18_o2bmf")
+
+[node name="ColorRect" type="Panel" parent="job_info"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="job_info"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 63.0
+offset_right = 331.0
+offset_bottom = 483.0
+
+[node name="Job_info" type="Label" parent="job_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "JOBS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="job 6" type="Label" parent="job_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "Dog Walker"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="job_info/VBoxContainer"]
+layout_mode = 2
+max_value = 5.0
+
+[node name="Do_task_Button1" type="Button" parent="job_info/VBoxContainer"]
+layout_mode = 2
+text = "Do Job"
+
+[node name="job 2" type="Label" parent="job_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "Construction Worker"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar2" type="ProgressBar" parent="job_info/VBoxContainer"]
+layout_mode = 2
+max_value = 25.0
+
+[node name="Do_task_Button2" type="Button" parent="job_info/VBoxContainer"]
+layout_mode = 2
+text = "Do Job"
+
+[node name="job 3" type="Label" parent="job_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "dilivery driver"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar3" type="ProgressBar" parent="job_info/VBoxContainer"]
+layout_mode = 2
+max_value = 45.0
+
+[node name="Do_task_Button3" type="Button" parent="job_info/VBoxContainer"]
+layout_mode = 2
+text = "Do Job"
+
+[node name="job 4" type="Label" parent="job_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "Taxi Driver"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar4" type="ProgressBar" parent="job_info/VBoxContainer"]
+layout_mode = 2
+max_value = 60.0
+
+[node name="Do_task_Button4" type="Button" parent="job_info/VBoxContainer"]
+layout_mode = 2
+text = "Do Job"
+
+[node name="job 5" type="Label" parent="job_info/VBoxContainer"]
+modulate = Color(1, 1, 0.317647, 1)
+layout_mode = 2
+text = "House Cleaner"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar5" type="ProgressBar" parent="job_info/VBoxContainer"]
+layout_mode = 2
+max_value = 90.0
+
+[node name="Do_task_Button5" type="Button" parent="job_info/VBoxContainer"]
+layout_mode = 2
+text = "Do Job"
+
+[node name="Market" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 407.0
+offset_top = 4.00024
+offset_right = 407.0
+offset_bottom = 4.00024
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_xmdre")
+
+[node name="Label" type="Label" parent="Market"]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 318.0
+offset_right = 210.0
+offset_bottom = 341.0
+text = "No market DATA yet"
+
+[node name="MarketGraphTexture" type="TextureRect" parent="Market"]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 141.0
+offset_right = 116.0
+offset_bottom = 141.0
+
+[node name="SubViewport" type="SubViewport" parent="Market/MarketGraphTexture"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Market/MarketGraphTexture/SubViewport"]
+
+[node name="Player_stats" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("24_mgvhx")
+
+[node name="ColorRect" type="Panel" parent="Player_stats"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player_stats"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 63.0
+offset_right = 331.0
+offset_bottom = 483.0
+
+[node name="health_label" type="Label" parent="Player_stats/VBoxContainer"]
+modulate = Color(0.0627451, 1, 0.317647, 1)
+layout_mode = 2
+text = "Health"
+
+[node name="Health_bar" type="ProgressBar" parent="Player_stats/VBoxContainer"]
+layout_mode = 2
+value = 100.0
+
+[node name="Hunger_label" type="Label" parent="Player_stats/VBoxContainer"]
+modulate = Color(0.0627451, 1, 0.317647, 1)
+layout_mode = 2
+text = "Hunger"
+
+[node name="Hunger_bar" type="ProgressBar" parent="Player_stats/VBoxContainer"]
+layout_mode = 2
+value = 100.0
+
+[node name="comfort_label" type="Label" parent="Player_stats/VBoxContainer"]
+modulate = Color(0.0627451, 1, 0.317647, 1)
+layout_mode = 2
+text = "comfort
+"
+
+[node name="comfort_bar" type="ProgressBar" parent="Player_stats/VBoxContainer"]
+layout_mode = 2
+value = 100.0
+
+[node name="Backgrounds" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("26_6pd25")
+
+[node name="ColorRect" type="Panel" parent="Backgrounds"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Backgrounds"]
+layout_mode = 1
+offset_left = 13.0
+offset_top = 27.0002
+offset_right = 2009.0
+offset_bottom = 3580.0
+scale = Vector2(0.17, 0.17)
+horizontal_scroll_mode = 0
+
+[node name="backgrounds" type="GridContainer" parent="Backgrounds/ScrollContainer"]
+custom_minimum_size = Vector2(344, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+columns = 2
+
+[node name="background1" type="TextureButton" parent="Backgrounds/ScrollContainer/backgrounds"]
+layout_mode = 2
+texture_normal = ExtResource("1_go8ug")
+stretch_mode = 0
+
+[node name="background2" type="TextureButton" parent="Backgrounds/ScrollContainer/backgrounds"]
+layout_mode = 2
+texture_normal = ExtResource("27_grw6u")
+stretch_mode = 0
+
+[node name="background3" type="TextureButton" parent="Backgrounds/ScrollContainer/backgrounds"]
+layout_mode = 2
+texture_normal = ExtResource("28_rfb6g")
+stretch_mode = 0
+
+[node name="background4" type="TextureButton" parent="Backgrounds/ScrollContainer/backgrounds"]
+layout_mode = 2
+texture_normal = ExtResource("29_qabnp")
+stretch_mode = 0
+
+[node name="background5" type="TextureButton" parent="Backgrounds/ScrollContainer/backgrounds"]
+layout_mode = 2
+texture_normal = ExtResource("30_a5q18")
+stretch_mode = 0
+
+[node name="background6" type="TextureButton" parent="Backgrounds/ScrollContainer/backgrounds"]
+layout_mode = 2
+texture_normal = ExtResource("31_edc7a")
+stretch_mode = 0
+
+[node name="background7" type="TextureButton" parent="Backgrounds/ScrollContainer/backgrounds"]
+layout_mode = 2
+texture_normal = ExtResource("32_b3aue")
+stretch_mode = 0
+
+[node name="background8" type="TextureButton" parent="Backgrounds/ScrollContainer/backgrounds"]
+layout_mode = 2
+texture_normal = ExtResource("33_6ogp6")
+stretch_mode = 0
+
+[node name="background9" type="TextureButton" parent="Backgrounds/ScrollContainer/backgrounds"]
+layout_mode = 2
+texture_normal = ExtResource("34_n5uvf")
+stretch_mode = 0
+
+[node name="background10" type="TextureButton" parent="Backgrounds/ScrollContainer/backgrounds"]
+layout_mode = 2
+texture_normal = ExtResource("35_rosxa")
+stretch_mode = 0
+
+[node name="Car_info" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("37_sguuv")
+
+[node name="ColorRect" type="Panel" parent="Car_info"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+
+[node name="Label" type="Label" parent="Car_info"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 27.0002
+offset_right = 351.0
+offset_bottom = 121.0
+text = "Your Car Info"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Car_status_label" type="Label" parent="Car_info"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 139.0
+offset_right = 357.0
+offset_bottom = 341.0
+text = "CAR INFO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Upgrade_Cost_Label" type="Label" parent="Car_info"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 438.0
+offset_right = 159.0
+offset_bottom = 488.0
+text = "CAR INFO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Repair_Cost_Label" type="Label" parent="Car_info"]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 441.0
+offset_right = 324.0
+offset_bottom = 491.0
+text = "CAR INFO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Upgrade_Button" type="Button" parent="Car_info"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 515.0
+offset_right = 170.0
+offset_bottom = 548.0
+text = "Upgrade CAR"
+
+[node name="Repaire_Button" type="Button" parent="Car_info"]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 515.0
+offset_right = 333.0
+offset_bottom = 548.0
+text = "Repaire CAR"
+
+[node name="Hire_help" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("45_beopk")
+
+[node name="ColorRect" type="Panel" parent="Hire_help"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+
+[node name="Label" type="Label" parent="Hire_help"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 27.0002
+offset_right = 351.0
+offset_bottom = 121.0
+text = "Hire Help"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rent_collecter_Button" type="Button" parent="Hire_help"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 151.0
+offset_right = 327.0
+offset_bottom = 221.0
+text = "Rent Collector $1000/mo"
+
+[node name="Cleaner_Button" type="Button" parent="Hire_help"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 318.0
+offset_right = 327.0
+offset_bottom = 388.0
+text = "Hire Cleaner $500/mo"
+
+[node name="Find_renter_Button" type="Button" parent="Hire_help"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 234.0
+offset_right = 327.0
+offset_bottom = 304.0
+text = "Renter Finder $500/mo"
+
+[node name="Renters" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="Panel" parent="Renters"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Renters"]
+layout_mode = 0
+offset_left = 117.0
+offset_top = 278.998
+offset_right = 241.0
+offset_bottom = 301.998
+text = "NO RENT OFFERS"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Renters"]
+layout_direction = 1
+layout_mode = 0
+offset_left = 23.0
+offset_top = 99.0
+offset_right = 659.0
+offset_bottom = 1097.0
+scale = Vector2(0.5, 0.5)
+horizontal_scroll_mode = 0
+
+[node name="renters" type="VBoxContainer" parent="Renters/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Renters"]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 54.0
+offset_right = 328.0
+offset_bottom = 100.0
+text = "house info"
+
+[node name="Food_market" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("26_q08sx")
+
+[node name="ColorRect" type="Panel" parent="Food_market"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Food_market"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 37.0
+offset_right = 337.0
+offset_bottom = 618.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Food_market/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="VecteezySmart-phone-mobile-electronic-device-transparent-screen6824674-1-removebg-preview" type="Sprite2D" parent="."]
+position = Vector2(180.5, 322)
+scale = Vector2(1.88222, 1.63951)
+texture = ExtResource("1_jm7no")
+metadata/_edit_lock_ = true
+
+[node name="TextureButton" type="TextureButton" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 296.0
+offset_top = 14.0002
+offset_right = 344.0
+offset_bottom = 62.0002
+texture_normal = ExtResource("15_22kuw")
+
+[node name="TextureButton2" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 598.00024
+offset_right = 230.0
+offset_bottom = 678.00024
+scale = Vector2(0.8, 0.8)
+texture_normal = ExtResource("43_uwkqi")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_l32jq")
+}
+
+[connection signal="pressed" from="apps/music_player" to="." method="_on_music_player_pressed"]
+[connection signal="pressed" from="apps/settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="apps/house_info" to="." method="_on_house_info_pressed"]
+[connection signal="pressed" from="apps/House_manager" to="." method="_on_house_manager_pressed"]
+[connection signal="pressed" from="apps/Savings" to="." method="_on_savings_pressed"]
+[connection signal="pressed" from="apps/Loans" to="." method="_on_loans_pressed"]
+[connection signal="pressed" from="apps/job" to="." method="_on_job_pressed"]
+[connection signal="pressed" from="apps/Backgrounds" to="." method="_on_backgrounds_pressed"]
+[connection signal="pressed" from="apps/player_stats" to="." method="_on_player_stats_pressed"]
+[connection signal="pressed" from="apps/Market" to="." method="_on_market_pressed"]
+[connection signal="pressed" from="apps/Food" to="." method="_on_food_pressed"]
+[connection signal="pressed" from="apps/Renters" to="." method="_on_renters_pressed"]
+[connection signal="pressed" from="apps/Car_info" to="." method="_on_car_info_pressed"]
+[connection signal="pressed" from="apps/Hire_help" to="." method="_on_hire_help_pressed"]
+[connection signal="pressed" from="apps/car_carrage" to="." method="_on_car_carrage_pressed"]
+[connection signal="pressed" from="apps/Credit_display" to="." method="_on_credit_display_pressed"]
+[connection signal="pressed" from="apps/firestorm" to="apps/firestorm" method="_on_pressed"]
+[connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Master_slider" to="options" method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Music_slider" to="options" method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Sound_slider" to="options" method="_on_Sound_slider_value_changed"]
+[connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/UI_Scale" to="options" method="_on_ui_scale_value_changed"]
+[connection signal="toggled" from="options/ScrollContainer/VBoxContainer/HBoxContainer2/CheckBox" to="options" method="_on_check_box_toggled"]
+[connection signal="item_selected" from="options/ScrollContainer/VBoxContainer/Resolution" to="options" method="_on_resolution_item_selected"]
+[connection signal="pressed" from="options/ScrollContainer/VBoxContainer/Menu_Button" to="options" method="_on_menu_button_pressed"]
+[connection signal="toggled" from="Music_player/ScrollContainer/VBoxContainer/HBoxContainer/play_music" to="Music_player" method="_on_play_music_toggled"]
+[connection signal="pressed" from="Music_player/ScrollContainer/VBoxContainer/HBoxContainer/skip_song" to="Music_player" method="_on_skip_song_pressed"]
+[connection signal="finished" from="Music_player/ScrollContainer/VBoxContainer/AudioStreamPlayer" to="Music_player/ScrollContainer/VBoxContainer/AudioStreamPlayer" method="_on_song_finished"]
+[connection signal="pressed" from="Savings/TabContainer/Savings/RemoveAllFundsButton" to="Savings" method="_on_remove_all_funds_button_pressed"]
+[connection signal="toggled" from="Savings/TabContainer/Savings/Send_intrest_to" to="Savings" method="_on_send_intrest_to_toggled"]
+[connection signal="pressed" from="Loans/TabContainer/Addloan/TakeLoanButton" to="Loans" method="_on_take_loan_button_pressed"]
+[connection signal="item_selected" from="Loans/TabContainer/Addloan/OptionButton" to="Loans" method="_on_option_button_item_selected"]
+[connection signal="pressed" from="Loans/TabContainer/Loans/Pay_All_Payments" to="Loans" method="_on_pay_all_payments_pressed"]
+[connection signal="pressed" from="Car_info/Upgrade_Button" to="Car_info" method="_on_upgrade_button_pressed"]
+[connection signal="pressed" from="Car_info/Repaire_Button" to="Car_info" method="_on_repaire_button_pressed"]
+[connection signal="pressed" from="Hire_help/Rent_collecter_Button" to="Hire_help" method="_on_rent_collecter_button_pressed"]
+[connection signal="pressed" from="Hire_help/Cleaner_Button" to="Hire_help" method="_on_cleaner_button_pressed"]
+[connection signal="pressed" from="Hire_help/Find_renter_Button" to="Hire_help" method="_on_find_renter_button_pressed"]
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="TextureButton2" to="." method="_on_texture_button_2_pressed"]

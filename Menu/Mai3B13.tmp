@@ -1,0 +1,249 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1s3cupibr4qf"]
+
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_7l2q4"]
+[ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://new_theme.tres" id="1_veryn"]
+[ext_resource type="Script" path="res://Menu/main_menu.gd" id="1_x0pbx"]
+[ext_resource type="PackedScene" uid="uid://md8dkoe233f6" path="res://Menu/profile.tscn" id="3_jnm01"]
+[ext_resource type="Script" path="res://Menu/settings.gd" id="5_7gsem"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_7l2q4")
+script = ExtResource("1_x0pbx")
+profile_card_scene = ExtResource("3_jnm01")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 37.0
+offset_top = 27.0
+offset_right = -27.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_veryn")
+
+[node name="ProfilesContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 160
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 160
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ProfilesContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Label" type="Label" parent="ProfilesContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 126
+text = "Invest Your Time"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ProfilesContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="ScrollContainer" parent="ProfilesContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_veryn")
+vertical_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="ProfilesContainer/VBoxContainer/Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="ProfilesContainer" type="HBoxContainer" parent="ProfilesContainer/VBoxContainer/Control/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 63
+
+[node name="SettingsButton" type="Button" parent="ProfilesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="ProfilesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Quit"
+
+[node name="Settings" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_7gsem")
+max_profiles = null
+enable_dynamic_resolution = null
+target_fps = null
+min_render_scale = null
+max_render_scale = null
+adjustment_speed = null
+fps_check_interval = null
+
+[node name="Panel2" type="Panel" parent="Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 37.0
+offset_top = 27.0
+offset_right = -27.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_veryn")
+
+[node name="Label" type="Label" parent="Settings"]
+layout_mode = 0
+offset_left = 420.0
+offset_top = 39.0
+offset_right = 1440.0
+offset_bottom = 211.0
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 126
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Settings"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 625.0
+offset_right = 280.0
+offset_bottom = 694.0
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 50
+text = "lightning"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="Settings"]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 424.0
+offset_right = 277.0
+offset_bottom = 493.0
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 50
+text = "Show FPS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="Settings"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 524.0
+offset_right = 280.0
+offset_bottom = 593.0
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 50
+text = "Weather"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="Settings"]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 799.0
+offset_right = 479.0
+offset_bottom = 879.0
+theme_override_font_sizes/font_size = 50
+selected = 1
+item_count = 4
+popup/item_0/text = "Low"
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "High"
+popup/item_2/id = 2
+popup/item_3/text = "Ultra"
+popup/item_3/id = 3
+
+[node name="CloseSettingsButton" type="Button" parent="Settings"]
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 0
+offset_left = 108.0
+offset_top = 72.0
+offset_right = 428.0
+offset_bottom = 152.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 71
+text = "BACK"
+
+[node name="lightning_CheckButton" type="CheckButton" parent="Settings"]
+layout_mode = 0
+offset_left = 365.0
+offset_top = 632.0
+offset_right = 564.0
+offset_bottom = 713.0
+theme_override_font_sizes/font_size = 50
+text = "On"
+alignment = 1
+
+[node name="Weather_CheckButton" type="CheckButton" parent="Settings"]
+layout_mode = 0
+offset_left = 365.0
+offset_top = 531.0
+offset_right = 564.0
+offset_bottom = 612.0
+theme_override_font_sizes/font_size = 50
+text = "On"
+alignment = 1
+
+[node name="Showfps_CheckButton" type="CheckButton" parent="Settings"]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 429.0
+offset_right = 567.0
+offset_bottom = 510.0
+theme_override_font_sizes/font_size = 50
+text = "On"
+alignment = 1
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 1604.0
+offset_top = 967.0
+offset_right = 1859.0
+offset_bottom = 1030.0
+theme_override_font_sizes/font_size = 40
+text = "0.0.4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="ProfilesContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="ProfilesContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="item_selected" from="Settings/OptionButton" to="Settings" method="_on_option_button_item_selected"]
+[connection signal="pressed" from="Settings/CloseSettingsButton" to="Settings" method="_on_close_settings_button_pressed"]
+[connection signal="toggled" from="Settings/lightning_CheckButton" to="Settings" method="_on_lightning_check_button_toggled"]
+[connection signal="toggled" from="Settings/Weather_CheckButton" to="Settings" method="_on_weather_check_button_toggled"]
+[connection signal="toggled" from="Settings/Showfps_CheckButton" to="Settings" method="_on_showfps_check_button_toggled"]

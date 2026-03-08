@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqj8lhknk27st"]
+
+[ext_resource type="Texture2D" uid="uid://bnkc5mcrjvmmp" path="res://shaded-dark/shadedDark30.png" id="1_py77m"]
+[ext_resource type="Script" uid="uid://d2n6iol3bgvl0" path="res://assets/UI/drag_button.gd" id="2_kjn15"]
+
+[node name="Drag_Button" type="TextureButton"]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+texture_normal = ExtResource("1_py77m")
+script = ExtResource("2_kjn15")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]

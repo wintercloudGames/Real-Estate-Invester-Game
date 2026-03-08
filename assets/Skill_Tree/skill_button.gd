@@ -1,0 +1,362 @@
+extends TextureButton
+class_name SkillNode
+
+@export_category("Skill Properties")
+@export var max_level: int = 1
+@export var skill_name: String = "Skill Name"
+@export_multiline var skill_description: String = "Your skill description"
+@export var level_costs: Array[int] = [1]
+
+@export_category("App Skill to Unlock")
+enum AppSkills { 
+	HIRING_APP,
+	INFO_APP,
+	BANK_APP,
+	MANAGER_APP,
+	RENT_HOUSES,
+	RENT_BOOST,
+	UNLOCK_BUSINESS,
+	HAS_MARKET_APP,
+	JOB_MANAGER,
+	JOB_MANAGER_LEVEL,
+	JOB_BONUS,
+	BUSINESS_BONUS,
+	WORK_BONUS,
+	WORK_AMOUNT,
+	RENT_FINDER_UPGRADE,
+	CREDIT_APP
+}
+@export var app_skill_to_unlock: AppSkills = AppSkills.HIRING_APP
+
+var _is_initializing_from_globals: bool = false
+
+@export_category("int and float Settings")
+@export var rent_boost_amount: float = 0.05
+@export var job_mod_amount: int = 1
+@export var work_bonus_amount: float = 0.50
+@export var work_amount:int = 1
+
+@export_category("Visual Settings")
+@export var unlocked_color: Color = Color.WHITE
+@export var level_colors: Array[Color] = [Color.GRAY, Color.DARK_GREEN]
+
+@onready var skill_tree: Control = get_node("/root/Root/UserInterface/Game/HUD/UI/Skill_tree")
+@onready var skill_level_label: Label = $SkillLevel
+@onready var skill_branch: Line2D = $SkillBranch
+
+var level: int = 0:
+	set(value):
+		var new_level = clampi(value, 0, max_level)
+		if new_level != level:
+			level = new_level
+			_update_display()
+			_update_visual_state()
+			_unlock_app_skill()
+
+
+var parent_skill: SkillNode = null
+var is_mouse_over: bool = false
+var _children_skills: Array[SkillNode] = []
+
+func _ready() -> void:
+	_update_display()
+	_update_visual_state()
+	if level_costs.size() < max_level:
+		level_costs.resize(max_level)
+		for i in range(level_costs.size()):
+			if level_costs[i] == 0:
+				level_costs[i] = 1
+	
+	# Find all child skills
+	_find_child_skills()
+	
+	# Wait a frame to ensure Globals are loaded
+	await get_tree().process_frame
+	
+	# Check if this skill should be unlocked based on Globals
+	_check_global_unlock_status()
+	visibility_changed.connect(_on_visibility_changed)
+	
+	# Wait for parent to be ready
+	await get_tree().process_frame
+	
+	var parent_node = get_parent()
+	if parent_node is SkillNode:
+		parent_skill = parent_node
+		_connect_to_parent(parent_skill)
+	
+
+func _find_child_skills() -> void:
+	_children_skills.clear()
+	for child in get_children():
+		if child is SkillNode:
+			_children_skills.append(child)
+
+
+func _on_visibility_changed() -> void:
+	if visible:
+		_update_display()
+		_update_visual_state()
+
+func _check_global_unlock_status() -> void:
+	_is_initializing_from_globals = true
+	
+	var should_update_level = false
+	var new_level = level
+
+	match app_skill_to_unlock:
+		AppSkills.HIRING_APP:
+			if Globals.has_hireing_app:
+				new_level = max_level
+				should_update_level = true
+		AppSkills.INFO_APP:
+			if Globals.has_info_app:
+				new_level = max_level
+				should_update_level = true
+		AppSkills.BANK_APP:
+			if Globals.has_bank_app:
+				new_level = max_level
+				should_update_level = true
+		AppSkills.MANAGER_APP:
+			if Globals.has_manager_app:
+				new_level = max_level
+				should_update_level = true
+		AppSkills.RENT_HOUSES:
+			if Globals.rent_houses:
+				new_level = max_level
+				should_update_level = true
+		AppSkills.UNLOCK_BUSINESS:
+			if Globals.unlock_business:
+				new_level = max_level
+				should_update_level = true
+		AppSkills.HAS_MARKET_APP:
+			if Globals.has_market_app:
+				new_level = max_level
+				should_update_level = true
+		AppSkills.JOB_MANAGER:
+			if Globals.job_manager:
+				new_level = max_level
+				should_update_level = true
+		AppSkills.JOB_BONUS:
+			if Globals.Job_bonus:
+				new_level = max_level
+				should_update_level = true
+		AppSkills.BUSINESS_BONUS:
+			if Globals.business_bonus:
+				new_level = max_level
+				should_update_level = true
+		AppSkills.CREDIT_APP:
+			if Globals.credit_app:
+				new_level = max_level
+				should_update_level = true
+		AppSkills.RENT_FINDER_UPGRADE:
+			if Globals.rent_finder_upgrade:
+				new_level = max_level
+				should_update_level = true
+
+		AppSkills.WORK_AMOUNT:
+			if work_amount > 0:
+				if Globals.has_method("get") and Globals.get("work_amount") != null:
+					var calculated_level = min(int(Globals.work_amount / work_amount), max_level)
+					new_level = calculated_level
+					should_update_level = true
+		
+		AppSkills.WORK_BONUS:
+			if work_bonus_amount > 0:
+				if Globals.has_method("get") and Globals.get("work_bonus") != null:
+					var calculated_level = min(int(Globals.work_bonus / work_bonus_amount), max_level)
+					new_level = calculated_level
+					should_update_level = true
+		
+		AppSkills.JOB_MANAGER_LEVEL:
+			if job_mod_amount > 0:
+				if Globals.has_method("get") and Globals.get("job_manager_level") != null:
+					var calculated_level = min(int(Globals.job_manager_level / job_mod_amount), max_level)
+					new_level = calculated_level
+					should_update_level = true
+					
+		AppSkills.RENT_BOOST:
+			if Globals.rent_bost > 0:
+				if Globals.has_method("get") and Globals.get("rent_bost") != null:
+					var calculated_level = min(int(Globals.rent_bost / rent_boost_amount), max_level)
+					new_level = calculated_level
+					should_update_level = true
+	
+	if should_update_level:
+		level = new_level
+
+	# Force visual updates regardless of level change
+	_update_display()
+	_update_visual_state()
+	
+	_is_initializing_from_globals = false
+
+
+func _unlock_app_skill() -> void:
+	if level == 0 or _is_initializing_from_globals:
+		return
+	
+	match app_skill_to_unlock:
+		AppSkills.HIRING_APP:
+			Globals.has_hireing_app = true
+
+		AppSkills.INFO_APP:
+			Globals.has_info_app = true
+
+		AppSkills.BANK_APP:
+			Globals.has_bank_app = true
+			
+		AppSkills.MANAGER_APP:
+			Globals.has_manager_app = true
+			
+		AppSkills.CREDIT_APP:
+			Globals.credit_app = true
+			
+		AppSkills.RENT_HOUSES:
+			Globals.rent_houses = true
+		
+		AppSkills.RENT_FINDER_UPGRADE:
+			Globals.rent_finder_upgrade = true
+			
+		AppSkills.UNLOCK_BUSINESS:
+			Globals.unlock_business = true
+			
+		AppSkills.HAS_MARKET_APP:
+			Globals.has_market_app = true
+			
+		AppSkills.JOB_MANAGER:
+			Globals.job_manager = true
+			
+		AppSkills.JOB_BONUS:
+			Globals.Job_bonus = true
+		
+		AppSkills.BUSINESS_BONUS:
+			Globals.business_bonus = true
+			
+		AppSkills.RENT_BOOST:
+			var total_boost = rent_boost_amount * level
+			Globals.rent_bost = total_boost
+			
+		AppSkills.WORK_BONUS:
+			var total_boost = work_bonus_amount * level
+			Globals.work_bonus = total_boost
+			
+		AppSkills.WORK_AMOUNT:
+			var total_boost = work_amount * level
+			Globals.work_amount = total_boost
+			
+		AppSkills.JOB_MANAGER_LEVEL:
+			var total_jobs = job_mod_amount * level
+			Globals.job_manager_level = total_jobs
+
+func _connect_to_parent(parent_node: SkillNode) -> void:
+	if not skill_branch:
+		return
+	
+	var start_point: Vector2 = skill_branch.to_local(parent_node.global_position + parent_node.size / 2)
+	var end_point: Vector2 = skill_branch.to_local(global_position + size / 2)
+	
+	skill_branch.clear_points()
+	skill_branch.add_point(start_point)
+	skill_branch.add_point(end_point)
+
+func _update_display() -> void:
+	if skill_level_label:
+		skill_level_label.text = str(level) + "/" + str(max_level)
+
+func _update_visual_state() -> void:
+	if not is_inside_tree():
+		return
+	
+	if level_colors.size() > level:
+		self_modulate = level_colors[level]
+	else:
+		self_modulate = unlocked_color
+	
+	var parent_requirements_met = _check_parent_requirements()
+	var has_enough_points = Globals.skillpoints >= get_next_level_cost()
+	
+	if level >= max_level:
+		disabled = true
+		self_modulate = Color.DARK_GREEN
+		mouse_default_cursor_shape = Control.CURSOR_ARROW
+	elif !parent_requirements_met:
+		disabled = true
+		self_modulate = Color.DARK_GRAY
+		mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN
+	elif !has_enough_points:
+		disabled = true
+		self_modulate = Color.DARK_RED
+		mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN
+	else:
+		disabled = false
+		self_modulate = Color.WHITE
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	_update_children_visuals()
+
+func _update_children_visuals() -> void:
+	for child_skill in _children_skills:
+		if is_instance_valid(child_skill):
+			child_skill._update_visual_state()
+
+func _check_parent_requirements() -> bool:
+	if parent_skill == null:
+		return true
+	var requirements_met = parent_skill.level >= parent_skill.max_level
+	return requirements_met
+
+func _on_pressed() -> void:
+	var cost = get_next_level_cost()
+
+	if can_level_up() and Globals.skillpoints >= cost and _check_parent_requirements():
+		Globals.skillpoints -= cost
+		
+		if skill_tree and skill_tree.has_method("on_skill_unlocked"):
+			skill_tree.on_skill_unlocked(skill_name, cost)
+		
+		level += 1
+
+func can_level_up() -> bool:
+	return level < max_level
+
+func get_next_level_cost() -> int:
+	if level < level_costs.size():
+		return level_costs[level]
+	return 1
+
+func _on_mouse_entered() -> void:
+	is_mouse_over = true
+	await get_tree().create_timer(0.05).timeout
+	if is_mouse_over and skill_tree and skill_tree.has_method("show_info"):
+		_show_skill_info()
+
+func _on_mouse_exited() -> void:
+	is_mouse_over = false
+	await get_tree().create_timer(0.05).timeout
+	if not is_mouse_over and skill_tree and skill_tree.has_method("hide_info"):
+		skill_tree.hide_info()
+
+func _show_skill_info() -> void:
+	var cost_text = ""
+	var requirement_text = ""
+	
+	if level < max_level:
+		cost_text = "Cost: " + str(get_next_level_cost()) + " skill points"
+		
+		if parent_skill != null and parent_skill.level < parent_skill.max_level:
+			requirement_text = "\nRequires: " + parent_skill.skill_name + " (Max Level)"
+	else:
+		cost_text = "Already Unlocked"
+	
+	var description = skill_description
+	if app_skill_to_unlock == AppSkills.RENT_BOOST:
+		description += "\nCurrent Rent Boost: +" + str(Globals.rent_bost * 100) + "%"
+	
+	if requirement_text != "":
+		description += requirement_text
+	
+	skill_tree.show_info(skill_name, description, level, max_level, cost_text)
+
+func _on_timer_timeout() -> void:
+	_update_display()
+	_update_visual_state()

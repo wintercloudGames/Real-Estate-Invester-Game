@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3 uid="uid://o74r4hcfaggi"]
+
+[ext_resource type="Texture2D" uid="uid://d3srtknlkm4fm" path="res://3D assets/faces/avatar (1).png" id="1_aw4is"]
+[ext_resource type="Script" uid="uid://ckubi53w4fmn4" path="res://houses/renter.gd" id="2_ifvnt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfoas"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ar6mx"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Renter" type="TextureButton"]
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("1_aw4is")
+stretch_mode = 0
+script = ExtResource("2_ifvnt")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 536.0
+offset_bottom = 544.0
+alignment = 1
+
+[node name="renter_info" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Name_Label" type="Label" parent="HBoxContainer/renter_info"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_nfoas")
+text = "name of renter"
+
+[node name="Rent_Label" type="Label" parent="HBoxContainer/renter_info"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_ar6mx")
+text = "Rent Ofer"
+
+[node name="renter_stats" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="ontime_stat" type="Label" parent="HBoxContainer/renter_stats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_nfoas")
+text = "???/10"
+
+[node name="lease_stat" type="Label" parent="HBoxContainer/renter_stats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_nfoas")
+text = "month/???"
+
+[node name="condition_stat" type="Label" parent="HBoxContainer/renter_stats"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_nfoas")
+text = "???/10"

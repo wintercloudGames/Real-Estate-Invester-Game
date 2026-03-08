@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dxgdw1vco1i6n"
+path="res://.godot/imported/Sweet Lullaby.mp3-0afe7fb7a6d5101deda81f1e0894cf9d.mp3str"
+
+[deps]
+
+source_file="res://music/Sweet Lullaby.mp3"
+dest_files=["res://.godot/imported/Sweet Lullaby.mp3-0afe7fb7a6d5101deda81f1e0894cf9d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

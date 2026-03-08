@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2yrsysqpuovt"]
+
+[ext_resource type="Texture2D" uid="uid://d3srtknlkm4fm" path="res://3D assets/faces/avatar (1).png" id="1_2w2lo"]
+[ext_resource type="Script" uid="uid://btjmyeut66efq" path="res://assets/UI/job_offers.gd" id="2_bmsaw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfoas"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ar6mx"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Job_offer" type="TextureButton"]
+offset_right = 540.0
+offset_bottom = 540.0
+scale = Vector2(0.2, 0.2)
+texture_normal = ExtResource("1_2w2lo")
+stretch_mode = 0
+script = ExtResource("2_bmsaw")
+
+[node name="renter_info" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 2.0
+offset_top = 10.0
+offset_right = 538.0
+offset_bottom = 523.0
+size_flags_horizontal = 6
+
+[node name="Name_Label" type="Label" parent="renter_info"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_nfoas")
+text = "name of job"
+
+[node name="pay_Label" type="Label" parent="renter_info"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_ar6mx")
+text = "job pay"
