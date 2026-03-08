@@ -1,7 +1,23 @@
 extends Control
 
 @onready var market: Node = $"../../Market"
-@onready var loans_ui: Node = $"../Phone/Loans"
+
+# UI nodes - make sure these exist in the scene!
+@onready var mission_toggle: CheckButton = $MissionToggle          # CheckButton for "Play with Mission?"
+@onready var mission_label: Label = $MissionLabel                   # shows mission description
+@onready var mission_desc_label: Label = $MissionDescLabel         # shows deadline (optional)
+
+func _ready() -> void:
+	# Start with mission mode OFF
+	Globals.mission_active = false
+	if mission_toggle:
+		mission_toggle.button_pressed = false
+		mission_toggle.text = "Mission mode: OFF"
+	
+	if mission_label:
+		mission_label.text = ""
+	if mission_desc_label:
+		mission_desc_label.text = ""
 
 func start():
 	market.difficulty = Globals.difficulty
@@ -9,86 +25,78 @@ func start():
 	market.update_label()
 	$"../Business_UI".Set_difficulty()
 	$"../Phone/Car_info".car_level = 1
+	
+	# Show/hide mission display panel if you have one
+	if has_node("../UI/MissionDisplay"):
+		get_node("../UI/MissionDisplay").visible = Globals.mission_active
+	
 	visible = false
-	Globals.first_start = true
+	Settings.first_start = true   # ← this line should now work after you added the var
 	SaveAndLoad.save_game()
 
-func calculate_loan_amount_for_payment(target_payment: float, months: int, interest_rate: float) -> float:
-	if months <= 0 or target_payment <= 0 or interest_rate < 0:
-		push_error("Invalid loan parameters: payment=%s, months=%s, interest_rate=%s" % [target_payment, months, interest_rate])
-		return 0.0
-	var monthly_rate = interest_rate / 12.0
-	var loan_amount = target_payment * (pow(1 + monthly_rate, months) - 1) / (monthly_rate * pow(1 + monthly_rate, months))
-	return loan_amount
+func generate_and_show_mission():
+	if not Globals.mission_active:
+		return  # don't generate if mission mode is off
+	
+	Globals.generate_random_mission()
+	
+	if mission_label:
+		mission_label.text = Globals.mission_desc
+	if mission_desc_label:
+		mission_desc_label.text = "by Year " + str(Globals.mission_deadline_year)
+	
+	# Optional: update toggle text for extra feedback
+	if mission_toggle:
+		mission_toggle.text = "Mission mode: ON"
 
-func add_starter_loan() -> void:
-	if not loans_ui or not is_instance_valid(loans_ui):
-		push_error("Loans UI node not found or invalid")
-		return
-	
-	var target_payment: float
-	var loan_term: int = 24  # Changed to 24-month term
-	var credit_score: int
-	var interest_rate: float
-	
-	match Globals.difficulty:
-		0:  # Easy
-			target_payment = 100.0
-			credit_score = 700
-			interest_rate = 0.08  # From loans.gd for credit_score >= 680
-		1:  # Normal
-			target_payment = 500.0
-			credit_score = 600
-			interest_rate = 0.10  # From loans.gd for credit_score >= 620
-		2:  # Hard
-			target_payment = 1000.0
-			credit_score = 400
-			interest_rate = 0.12  # From loans.gd for credit_score < 620
-		3:  # Nightmare
-			target_payment = 1500.0
-			credit_score = 300
-			interest_rate = 0.12  # From loans.gd for credit_score < 620
-		_:
-			push_error("Invalid difficulty: %s" % Globals.difficulty)
-			return
-	
-	Globals.credit_score = credit_score
-	var loan_amount = calculate_loan_amount_for_payment(target_payment, loan_term, interest_rate)
-	
-	if loan_amount <= 0:
-		push_error("Calculated loan amount invalid: %s" % loan_amount)
-		return
-	
-	# Create the loan using add_loan_mod directly to set exact payment
-	var loan_mod = loans_ui.add_loan_mod(target_payment, interest_rate, loan_amount, loan_term, loans_ui.LOAN_TYPE_PERSONAL, null)
-	if loan_mod and is_instance_valid(loan_mod):
-		Globals.exp += 10
-		Globals.money += int(loan_amount)
-		Globals.credit_score = clamp(Globals.credit_score - 5, 300, 850)
-		loans_ui.show_floating_label("Starter Loan of $" + loans_ui.add_comma_to_int(int(loan_amount)) + " approved at " + str(interest_rate * 100) + "% interest!", Color.GREEN)
-		loans_ui.update_ui()
-	else:
-		push_error("Failed to create starter loan mod")
+# ────────────────────────────────────────────────
+# Difficulty Buttons
+# ────────────────────────────────────────────────
 
 func _on_easy_button_pressed() -> void:
 	Globals.difficulty = 0
+	Globals.credit_score = 700
+	generate_and_show_mission()
 	start()
-	add_starter_loan()
 
 func _on_normal_button_pressed() -> void:
 	Globals.difficulty = 1
+	Globals.credit_score = 600
+	generate_and_show_mission()
 	start()
-	add_starter_loan()
-	Globals.money -= 5000
 
 func _on_hard_button_pressed() -> void:
 	Globals.difficulty = 2
+	Globals.credit_score = 400
+	generate_and_show_mission()
 	start()
-	add_starter_loan()
-	Globals.money -= 20000
 
 func _on_nightmare_button_pressed() -> void:
 	Globals.difficulty = 3
+	Globals.credit_score = 300
+	generate_and_show_mission()
 	start()
-	add_starter_loan()
-	Globals.money -= 24000
+
+# ────────────────────────────────────────────────
+# Mission Toggle
+# ────────────────────────────────────────────────
+
+func _on_mission_option_toggled(toggled_on: bool) -> void:
+	Globals.mission_active = toggled_on
+	
+	if toggled_on:
+		if mission_toggle:
+			mission_toggle.text = "Mission mode: ON"
+	else:
+		# Clear mission so nothing is active
+		Globals.mission_type = ""
+		Globals.mission_target = 0
+		Globals.mission_deadline_year = 0
+		Globals.mission_desc = ""
+		
+		if mission_label:
+			mission_label.text = ""
+		if mission_desc_label:
+			mission_desc_label.text = ""
+		if mission_toggle:
+			mission_toggle.text = "Mission mode: OFF"

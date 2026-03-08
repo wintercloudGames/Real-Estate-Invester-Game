@@ -4,7 +4,7 @@ extends Node
 var Master: float = 0.8
 var Music: float = 0.7
 var SFX: float = 0.9
-
+var first_start: bool = true
 # Graphics settings
 var showfps: bool = true
 var dynamic_resolution: bool = true

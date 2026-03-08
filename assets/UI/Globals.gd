@@ -16,6 +16,22 @@ var market_factor: float = 1.0
 var year = 1
 var month = 1
 
+#mission vars
+var mission_templates = [
+	{"type": "houses",       "min_target": 5,  "max_target": 50,  "min_deadline": 5,  "max_deadline": 30, "desc_base": "Own %d houses"},
+	{"type": "tenants",      "min_target": 10, "max_target": 100, "min_deadline": 6,  "max_deadline": 25, "desc_base": "%d houses with tenants"},
+	{"type": "net_worth",    "min_target": 50000,  "max_target": 5000000, "min_deadline": 7,  "max_deadline": 20, "desc_base": "Net Worth $%s"},
+	{"type": "business_rank","min_target": 3,  "max_target": 20,  "min_deadline": 8,  "max_deadline": 25, "desc_base": "Business Rank %d"},
+	{"type": "credit_max",   "min_target": 700, "max_target": 850, "min_deadline": 5,  "max_deadline": 15, "desc_base": "Credit Score %d"},
+	{"type": "cashflow_positive", "min_target": 2,"max_target": 12, "min_deadline": 10, "max_deadline": 30, "desc_base": "%d months positive cashflow"}
+]
+
+var mission_active: bool = false
+var mission_type: String = ""
+var mission_target: int = 0  # int for most; net_worth can be float→int
+var mission_deadline_year: int = 0
+var mission_desc: String = ""  # Formatted desc (e.g. "Own 23 houses")
+var mission_completed: bool = false
 var total_loan_amount = 0
 var houses_with_tenants = 0
 var Income = 0
@@ -82,6 +98,13 @@ func reset():
 	hasagent = false
 	hascleaner = false
 	renter_finder = false
+	
+	#Misson mode
+	mission_active = false
+	mission_type = ""
+	mission_target = 0
+	mission_deadline_year = 0
+	mission_completed = false
 	#skills
 	skillpoints = 1
 	exp = 0
@@ -167,7 +190,34 @@ func _process(delta: float) -> void:
 	interest = Savings_balance * interest_rate
 	credit_score = clamp(credit_score, 300, 850)
 	last_savings_paid = interest
+# Generate random mission (call on new game)
+func generate_random_mission():
+	var template = mission_templates[randi() % mission_templates.size()]
+	var difficulty_mult = [1.0, 1.2, 1.5, 2.0][difficulty]  # Easy=1x, Nightmare=2x harder
 	
+	mission_type = template.type
+	mission_target = randi_range(template.min_target, template.max_target) * int(difficulty_mult)
+	mission_deadline_year = randi_range(template.min_deadline, template.max_deadline)
+	
+	# Format desc (net_worth → commas)
+	if mission_type == "net_worth":
+		mission_desc = template.desc_base % str(mission_target)
+	else:
+		mission_desc = template.desc_base % mission_target
+	
+	mission_active = true
+	mission_completed = false
+	print("Generated Mission: ", mission_desc)  # Dev log
+# Helper: Check if mission complete (call in game.gd)
+func is_mission_complete() -> bool:
+	if not mission_active or mission_completed: return true
+	match mission_type:
+		"houses": return Propertys >= mission_target
+		"business_rank": return employees + 1 >= mission_target  # Simple rank formula
+		"net_worth": return net_worth >= mission_target
+		"credit_max": return credit_score >= mission_target
+		"tenants": return houses_with_tenants >= mission_target
+	return false
 
 func monthy():
 	money -= Expenses
