@@ -8,7 +8,6 @@ extends Panel
 func _ready() -> void:
 	visible = false
 
-
 func update_display() -> void:
 	if not Globals.mission_active:
 		visible = false
@@ -29,20 +28,25 @@ func update_display() -> void:
 		var progress_text = "Progress: "
 		match Globals.mission_type:
 			"houses":
-				progress_text += str(Globals.Propertys) + " / " + str(Globals.mission_target)
+				progress_text += add_comma_to_int(Globals.Propertys) + " / " + add_comma_to_int(Globals.mission_target)
 			"tenants":
-				progress_text += str(Globals.houses_with_tenants) + " / " + str(Globals.mission_target)
+				progress_text += add_comma_to_int(Globals.houses_with_tenants) + " / " + add_comma_to_int(Globals.mission_target)
 			"net_worth":
-				progress_text += "$" + str(int(Globals.net_worth)) + " / $" + str(Globals.mission_target)
+				progress_text += "$" + add_comma_to_int(Globals.net_worth) + " / $" + add_comma_to_int(Globals.mission_target)
 			"credit_max":
-				progress_text += str(Globals.credit_score) + " / " + str(Globals.mission_target)
+				progress_text += add_comma_to_int(Globals.credit_score) + " / " + add_comma_to_int(Globals.mission_target)
 			"business_rank":
-				progress_text += str(Globals.employees + 1) + " / " + str(Globals.mission_target)
+				progress_text += add_comma_to_int(Globals.employees + 1) + " / " + add_comma_to_int(Globals.mission_target)
 			_:
 				progress_text += "?"
 		mission_progress.text = progress_text
-	
-	print("MissionDisplay updated - visible:", visible, " - ", Globals.mission_desc)
+
+func add_comma_to_int(value: int) -> String:
+	var str_value: String = str(value)
+	var loop_end: int = 0 if value > -1 else 1
+	for i in range(str_value.length()-3, loop_end, -3):
+		str_value = str_value.insert(i, ",")
+	return str_value
 
 # Optional: live updates every frame (only if you really need it)
 func _process(delta: float) -> void:

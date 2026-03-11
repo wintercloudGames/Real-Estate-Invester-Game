@@ -108,7 +108,7 @@ func _process(delta: float) -> void:
 	if Globals.send_to_account:
 		Globals.Income = Globals.last_savings_paid
 	
-	
+	Globals.net_worth += Globals.Savings_balance
 	# House stats loop
 	var owned_houses = get_tree().get_nodes_in_group("houses")
 	for house in owned_houses:

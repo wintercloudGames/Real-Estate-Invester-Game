@@ -65,7 +65,6 @@ var work_bonus = 0.00
 var work_amount = 0
 var credit_app = false
 
-
 var difficulty:int = 1
 
 var hasagent = false
@@ -299,10 +298,11 @@ func add_starter_loan():
 			null                     # no house ref
 		)
 	
-	
 	# Give the player the loan money immediately
 	money += 500
-	money_in(loan_amount)  # trigger signal if you want UI flash
+
+func caculate_networth():
+	pass
 
 func monthy():
 	money -= Expenses
