@@ -84,7 +84,7 @@ func take_loan(amount: int):
 	add_loan_mod(monthly_payment, interest_rate, amount, loan_term, 1, null)
 	update_ui()
 	show_floating_label("Loan of $" + add_comma_to_int(amount) + " approved at " + str(interest_rate * 100) + "% interest!", Color.GREEN)
-
+	
 func add_mortgage_as_loan(payment: float, interest_rate: float, term_months: int, house: Node = null) -> Node:
 	if not house or not is_instance_valid(house):
 		push_error("add_mortgage_as_loan called with invalid house reference: %s" % str(house))

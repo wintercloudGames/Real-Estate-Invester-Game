@@ -167,6 +167,7 @@ func handle_buy(list_for_rent: bool = false) -> void:
 							loan_mod.loan_id = "mortgage_" + str(house.id)
 							# Now call house_buy with the valid loan_mod
 							house.house_buy(true, full_price, calculated_loan_amount, loan_mod)
+							Globals.recalculate_expenses()
 						else:
 							# Rollback
 							Globals.money += pay_now_amount

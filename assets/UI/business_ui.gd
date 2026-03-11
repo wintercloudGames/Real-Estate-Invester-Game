@@ -63,6 +63,7 @@ func Load_info() -> void:
 	job_time = Globals.job_time
 	max_job_time = Globals.max_job_time
 	job_pay_when_done = Globals.job_pay
+	Globals.recalculate_expenses()
 	if Globals.job_manager == true:
 		$TabContainer/Job_info/Find_jobs_button.visible = false
 
@@ -203,6 +204,7 @@ func start_business(name: String) -> void:
 	business_worth = expense
 	show_floating_label("Business Created: " + business_name, Color.GREEN)
 	business_started.emit(business_name)
+	Globals.recalculate_expenses()
 
 func pay_salaries() -> void:
 	if employees <= 0:
@@ -458,7 +460,6 @@ func _on_add_employee_pressed() -> void:
 	if employees >= max_employees:
 		show_floating_label("Max employees reached for this business tier", Color.RED)
 		return
-		
 	employees += 1
 	Globals.employees = employees
 	salary += BASE_SALARY
@@ -497,7 +498,7 @@ func _on_sell_business_button_pressed() -> void:
 	$ProgressBar.visible = false
 	$job_progress.visible = false
 	$Start_Business/Name_of_Business.text = ""
-
+	Globals.recalculate_expenses()
 func _on_name_of_business_focus_entered() -> void:
 	Globals.Editing_Business_Text = true
 

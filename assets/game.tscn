@@ -3638,7 +3638,16 @@ anchor_top = 0.11728395
 anchor_right = 0.1232492
 anchor_bottom = 0.11728395
 
+[node name="Drag_Button" parent="HUD/UI" instance=ExtResource("33_dnuxx")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0921052
+anchor_top = 0.0701754
+anchor_right = 0.0921052
+anchor_bottom = 0.0701754
+
 [node name="Game_start" type="Control" parent="HUD"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 152.0

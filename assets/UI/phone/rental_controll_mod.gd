@@ -150,14 +150,6 @@ func _on_refinance_button_pressed() -> void:
 		show_floating_label("Invalid refinance terms!", Color.RED)
 		return
 	
-	# ────────────────────────────────────────────────
-	# Apply changes
-	
-	# Fix expense tracking (critical!)
-	if loan_mod.autopay_enabled:
-		Globals.Expenses -= loan_mod.payment      # remove old payment
-		Globals.Expenses += new_payment           # add new (lower) payment
-	
 	# Update loan module
 	loan_mod.payment      = new_payment
 	loan_mod.interest     = new_interest_rate

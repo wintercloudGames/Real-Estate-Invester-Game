@@ -23,7 +23,6 @@ var mission_templates = [
 	{"type": "net_worth",    "min_target": 50000,  "max_target": 5000000, "min_deadline": 7,  "max_deadline": 20, "desc_base": "Net Worth $%s"},
 	{"type": "business_rank","min_target": 3,  "max_target": 20,  "min_deadline": 8,  "max_deadline": 25, "desc_base": "Business Rank %d"},
 	{"type": "credit_max",   "min_target": 700, "max_target": 850, "min_deadline": 5,  "max_deadline": 15, "desc_base": "Credit Score %d"},
-	{"type": "cashflow_positive", "min_target": 2,"max_target": 12, "min_deadline": 10, "max_deadline": 30, "desc_base": "%d months positive cashflow"}
 ]
 
 var mission_active: bool = false
@@ -32,6 +31,7 @@ var mission_target: int = 0  # int for most; net_worth can be float→int
 var mission_deadline_year: int = 0
 var mission_desc: String = ""  # Formatted desc (e.g. "Own 23 houses")
 var mission_completed: bool = false
+
 var total_loan_amount = 0
 var houses_with_tenants = 0
 var Income = 0
@@ -190,6 +190,7 @@ func _process(delta: float) -> void:
 	interest = Savings_balance * interest_rate
 	credit_score = clamp(credit_score, 300, 850)
 	last_savings_paid = interest
+	
 # Generate random mission (call on new game)
 func generate_random_mission():
 	var template = mission_templates[randi() % mission_templates.size()]
@@ -197,18 +198,36 @@ func generate_random_mission():
 	
 	mission_type = template.type
 	mission_target = randi_range(template.min_target, template.max_target) * int(difficulty_mult)
-	mission_deadline_year = randi_range(template.min_deadline, template.max_deadline)
+	
+	# Generate base deadline
+	var base_deadline = randi_range(template.min_deadline, template.max_deadline)
+	
+	# Make it relative to current year + safety minimum
+	mission_deadline_year = Globals.year + base_deadline
+	mission_deadline_year = max(Globals.year + 5, mission_deadline_year)  # never allow instant or very soon fail
+	
+	# Optional: harder difficulty shortens the remaining time (but still safe)
+	var remaining_years = mission_deadline_year - Globals.year
+	remaining_years = int(remaining_years / difficulty_mult)  # higher diff → shorter time
+	mission_deadline_year = Globals.year + max(5, remaining_years)
 	
 	# Format desc (net_worth → commas)
 	if mission_type == "net_worth":
-		mission_desc = template.desc_base % str(mission_target)
+		mission_desc = template.desc_base % add_comma_to_int(mission_target)  # use your comma func
+	elif mission_type == "business_rank":
+		mission_desc = "Get " % mission_target + " Business Employees"
 	else:
 		mission_desc = template.desc_base % mission_target
 	
 	mission_active = true
 	mission_completed = false
-	print("Generated Mission: ", mission_desc)  # Dev log
-# Helper: Check if mission complete (call in game.gd)
+	
+	# Debug prints – keep these for now
+	print("=== NEW MISSION GENERATED ===")
+	print("Type:", mission_type, " | Target:", mission_target)
+	print("Deadline year:", mission_deadline_year, " | Current year:", Globals.year)
+	print("Desc:", mission_desc)
+
 func is_mission_complete() -> bool:
 	if not mission_active or mission_completed: return true
 	match mission_type:
@@ -218,6 +237,76 @@ func is_mission_complete() -> bool:
 		"credit_max": return credit_score >= mission_target
 		"tenants": return houses_with_tenants >= mission_target
 	return false
+
+func add_comma_to_int(value: int) -> String:
+	var str_value: String = str(value)
+	var loop_end: int = 0 if value > -1 else 1
+	
+	for i in range(str_value.length() - 3, loop_end, -3):
+		str_value = str_value.insert(i, ",")
+	return str_value
+
+func recalculate_expenses() -> void:
+	Expenses = 0  # your base living expenses (adjust if different)
+	
+	# Fixed monthly costs
+	if employees > 0:
+		Expenses += employees * 1000  # or whatever BASE_SALARY is in Business_UI
+	if hasagent:
+		Expenses += 1000
+	if hascleaner:
+		Expenses += 500
+	if renter_finder:
+		Expenses += 500
+	
+	# Business difficulty overhead
+	if business_name != "":
+		match difficulty:
+			0: Expenses += 10000 / 4
+			1: Expenses += 10000 / 3
+			2: Expenses += 10000 / 2
+			3: Expenses += 10000
+	
+	# Loan autopay payments – add once per loan
+	var loans_ui = get_tree().get_first_node_in_group("loans_ui")  # adjust path if needed
+	if loans_ui:
+		for mod in loans_ui.active_loan_mods:
+			if is_instance_valid(mod) and mod.autopay_enabled:
+				Expenses += mod.payment
+
+func add_starter_loan():
+	if difficulty < 0 or difficulty > 3:
+		return  # safety
+	
+	var payment_amount = 500
+	match difficulty:
+		0: payment_amount = 500   # Easy
+		1: payment_amount = 500   # Medium
+		2: payment_amount = 1000  # Hard
+		3: payment_amount = 1500  # Extreme
+	
+	var loan_amount = payment_amount * 24  # e.g. 2 years worth, adjust as you like
+	var interest_rate = randf_range(0.2,0.15)  # 10% annual, or make it difficulty-based too
+	
+	# Call your existing loan-adding function from loans.gd
+	# Assuming you have a way to add a personal loan globally or via the Loans UI node
+	# If you don't have a global helper, use this pattern:
+	
+	var loans_ui = get_tree().get_first_node_in_group("loans_ui")  # or your path: /root/.../Loans
+	if loans_ui and loans_ui.has_method("add_loan_mod"):
+		loans_ui.add_loan_mod(
+			payment_amount,          # monthly payment
+			interest_rate,           # annual interest
+			loan_amount,             # initial balance
+			24,                      # months (2 years example)
+			1,                       # LOAN_TYPE_PERSONAL
+			null                     # no house ref
+		)
+		print("Starter loan added: $", loan_amount, " @ ", payment_amount, "/month")
+	
+	# Give the player the loan money immediately
+	money += loan_amount
+	money_in(loan_amount)  # trigger signal if you want UI flash
 
 func monthy():
 	money -= Expenses

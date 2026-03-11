@@ -55,7 +55,13 @@ func save_game() -> bool:
 			"month": Globals.month,
 			"renter_finder": Globals.renter_finder,
 			"hasagent": Globals.hasagent,
-			"hascleaner": Globals.hascleaner
+			"hascleaner": Globals.hascleaner,
+			"mission_active": Globals.mission_active,
+			"mission_type": Globals.mission_type,
+			"mission_target": Globals.mission_target,
+			"mission_deadline_year": Globals.mission_deadline_year,
+			"mission_desc": Globals.mission_desc,
+			"mission_completed": Globals.mission_completed,
 		},
 		"Skills": {
 			"skillpoints": Globals.skillpoints,
@@ -176,11 +182,41 @@ func load_game() -> bool:
 
 	# Load non-node-dependent data
 	if loaded_data.has("Globals"):
-		for key in loaded_data["Globals"]:
-			if key in Globals:
-				Globals.set(key, loaded_data["Globals"][key])
-			else:
-				push_warning("Unknown global key: %s" % key)
+		var g = loaded_data["Globals"]
+		Globals.save_name = g.get("save_name", "My Save")
+		Globals.money = g.get("money", 5000)
+		Globals.first_start = g.get("first_start", false)
+		Globals.credit_score = g.get("credit_score", 600)
+		Globals.Expenses = g.get("Expenses", 1000)
+		Globals.Propertys = g.get("Propertys", 0)
+		Globals.Income = g.get("Income", 0)
+		Globals.Savings_balance = g.get("Savings_balance", 0)
+		Globals.wallpaper = g.get("wallpaper", "")
+		Globals.difficulty = g.get("difficulty", 1)
+		Globals.last_savings_paid = g.get("last_savings_paid", 0)
+		Globals.Player_health = g.get("Player_health", 100)
+		Globals.Player_hunger = g.get("Player_hunger", 100)
+		Globals.Player_comfort = g.get("Player_comfort", 100)
+		Globals.business_name = g.get("business_name", "")
+		Globals.Business_worth = g.get("Business_worth", 30000)
+		Globals.max_job_time = g.get("max_job_time", 0)
+		Globals.job_pay = g.get("job_pay", 0)
+		Globals.job_time = g.get("job_time", 0)
+		Globals.employees = g.get("employees", 0)
+		Globals.car_level = g.get("car_level", 1)
+		Globals.year = g.get("year", 1)
+		Globals.month = g.get("month", 1)
+		Globals.renter_finder = g.get("renter_finder", false)
+		Globals.hasagent = g.get("hasagent", false)
+		Globals.hascleaner = g.get("hascleaner", false)
+
+		# Mission fields – this restores active state
+		Globals.mission_active = g.get("mission_active", false)
+		Globals.mission_type = g.get("mission_type", "")
+		Globals.mission_target = g.get("mission_target", 0)
+		Globals.mission_deadline_year = g.get("mission_deadline_year", 0)
+		Globals.mission_desc = g.get("mission_desc", "")
+		Globals.mission_completed = g.get("mission_completed", false)
 
 	if loaded_data.has("Skills"):
 		for key in loaded_data["Skills"]:
@@ -368,7 +404,13 @@ func create_new_profile(slot: int) -> bool:
 			"month": 1,
 			"renter_finder": false,
 			"hasagent": false,
-			"hascleaner": false
+			"hascleaner": false,
+			"mission_active": false,
+			"mission_type": "",
+			"mission_target": 0,
+			"mission_deadline_year": 0,
+			"mission_desc": "",
+			"mission_completed": false,
 		},
 		"Skills": {
 			"exp": 0,

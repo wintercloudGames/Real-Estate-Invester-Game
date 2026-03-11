@@ -30,12 +30,12 @@ func _ready() -> void:
 	$Market.apply_difficulty_settings()
 	$Market.update_label()
 	$HUD/Phone/Car_info.load_info()
-	
+	refresh_mission_display()
 	if Globals.business_name != "":
 		$"HUD/Business_UI".Set_difficulty()
 		$HUD/Business_UI.Load_info()
 	
-	$HUD/Phone/Car_info.car_level = Globals.car_level
+	$HUD/Phone/Car_info.car_level = Globals.car_level 
 	$HUD/Phone/Backgrounds.load_wallpaper_texture()
 	
 	# Ensure panels start hidden
@@ -45,6 +45,35 @@ func _ready() -> void:
 
 func apply_loaded_data_deferred() -> void:
 	SaveAndLoad.apply_loaded_data()
+	if Globals.mission_active:
+		$HUD/UI/MissionDisplay.visible = true
+
+func refresh_mission_display() -> void:
+	var panel = $HUD/UI/MissionDisplay
+	if not panel or not is_instance_valid(panel):
+		print("WARNING: HUD/UI/MissionDisplay not found in scene tree!")
+		return
+	
+	if Globals.mission_active:
+		panel.visible = true
+		
+		# Update the labels inside the panel
+		# Change the node names below to match your actual child nodes
+		var desc_label     = panel.get_node_or_null("DescLabel")        # main text e.g. "Own 29 houses"
+		var deadline_label = panel.get_node_or_null("DeadlineLabel")    # "by Year 22"
+		var progress_label = panel.get_node_or_null("ProgressLabel")    # optional "0 / 29"
+		
+		if desc_label:
+			desc_label.text = Globals.mission_desc
+		if deadline_label:
+			deadline_label.text = "by Year " + str(Globals.mission_deadline_year)
+		if progress_label:
+			progress_label.text = "Progress: " + str(Globals.Propertys) + " / " + str(Globals.mission_target)
+		
+		print("Mission panel → visible = true | ", Globals.mission_desc)
+	else:
+		panel.visible = false
+		print("No active mission → panel hidden")
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
@@ -54,6 +83,24 @@ func add_comma_to_int(value: int) -> String:
 	return str_value
 
 func _process(delta: float) -> void:
+	if Globals.mission_active and not Globals.mission_completed:
+		if Globals.mission_deadline_year <= Globals.year:
+			print("SKIP EARLY CHECK - deadline not valid yet or already passed")
+			return  # don't fail yet
+		
+		print("Mission check OK - Year:", Globals.year, "Deadline:", Globals.mission_deadline_year)
+		
+		if Globals.is_mission_complete():
+			# win
+			Globals.mission_completed = true
+			$HUD/MissionWin.visible = true
+			Globals.skillpoints += 100
+			Engine.time_scale = 0
+		elif Globals.year > Globals.mission_deadline_year:
+			print("REAL MISSION FAIL - year > deadline")
+			$HUD/GAME_OVER.visible = true
+			$HUD/GAME_OVER.message("Mission Failed! " + Globals.mission_desc)
+			Engine.time_scale = 0
 	# UI scale
 	$HUD.scale = Vector2(Settings.UI_scale, Settings.UI_scale)
 	
@@ -84,30 +131,10 @@ func _process(delta: float) -> void:
 	Globals.houses_with_tenants = 0
 	Globals.Income = 0
 	Globals.listed_houses = 0
-	
 	# Savings income
 	if Globals.send_to_account:
 		Globals.Income = Globals.last_savings_paid
 	
-	# Fixed expenses
-	if Globals.employees > 0:
-		Globals.Expenses += $"HUD/Business_UI".BASE_SALARY * Globals.employees
-	if Globals.hasagent:     Globals.Expenses += 1000
-	if Globals.hascleaner:   Globals.Expenses += 500
-	if Globals.renter_finder: Globals.Expenses += 500
-	
-	# Loan autopay
-	for mod in $HUD/Phone/Loans.active_loan_mods:
-		if is_instance_valid(mod) and mod.autopay_enabled:
-			Globals.Expenses += mod.payment
-	
-	# Business difficulty expense
-	if Globals.business_name != "":
-		match Globals.difficulty:
-			0: Globals.Expenses += 10000 / 4
-			1: Globals.Expenses += 10000 / 3
-			2: Globals.Expenses += 10000 / 2
-			3: Globals.Expenses += 10000
 	
 	# House stats loop
 	var owned_houses = get_tree().get_nodes_in_group("houses")
@@ -116,9 +143,6 @@ func _process(delta: float) -> void:
 			Globals.net_worth += (house.base_price - house.loan_price)
 			Globals.total_loan_amount += house.loan_price
 			Globals.Propertys += 1
-			
-			if house.has_loan:
-				Globals.Expenses += house.mortgage
 			
 			if house.has_tenant:
 				Globals.houses_with_tenants += 1
@@ -245,12 +269,5 @@ func _on_business_button_pressed() -> void:
 	$HUD/Business_UI.visible = !$HUD/Business_UI.visible
 
 func _on_mission_win_button_pressed() -> void:
-	# TODO: Add your logic here, e.g.
-	# - Restart game
-	# - Go to main menu
-	# - Continue playing (if you want to allow post-mission free play)
-	# Example:
-	# Engine.time_scale = 1.0
-	# if mission_win_panel: mission_win_panel.visible = false
-	# SaveAndLoad.delete_save_file(SaveAndLoad.current_save_slot)  # optional reset
-	pass
+	SaveAndLoad.delete_save_file(SaveAndLoad.current_save_slot)
+	get_tree().change_scene_to_file("res://Menu/MainMenu.tscn")

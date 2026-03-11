@@ -25,13 +25,13 @@ func start():
 	market.update_label()
 	$"../Business_UI".Set_difficulty()
 	$"../Phone/Car_info".car_level = 1
-	
+	Globals.skillpoints += 20
 	# Show/hide mission display panel if you have one
 	if has_node("../UI/MissionDisplay"):
 		get_node("../UI/MissionDisplay").visible = Globals.mission_active
-	
+	Globals.recalculate_expenses()
 	visible = false
-	Settings.first_start = true   # ← this line should now work after you added the var
+	Globals.first_start = true   # ← this line should now work after you added the var
 	SaveAndLoad.save_game()
 
 func generate_and_show_mission():
@@ -57,24 +57,30 @@ func _on_easy_button_pressed() -> void:
 	Globals.difficulty = 0
 	Globals.credit_score = 700
 	generate_and_show_mission()
+	Globals.add_starter_loan()
 	start()
 
 func _on_normal_button_pressed() -> void:
 	Globals.difficulty = 1
 	Globals.credit_score = 600
 	generate_and_show_mission()
+	Globals.add_starter_loan()
+	
 	start()
 
 func _on_hard_button_pressed() -> void:
 	Globals.difficulty = 2
 	Globals.credit_score = 400
 	generate_and_show_mission()
+	Globals.add_starter_loan()
 	start()
 
 func _on_nightmare_button_pressed() -> void:
 	Globals.difficulty = 3
 	Globals.credit_score = 300
 	generate_and_show_mission()
+	
+	
 	start()
 
 # ────────────────────────────────────────────────

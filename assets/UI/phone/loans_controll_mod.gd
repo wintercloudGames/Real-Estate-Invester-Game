@@ -37,16 +37,8 @@ func _ready() -> void:
 	# Timer for autopay
 	timer.wait_time = 60.0  # 60 seconds
 	timer.start()
-	
 	# Initialize UI
 	update_ui()
-	
-	# Connect signals
-	#Make_payment.pressed.connect(_on_make_payment_pressed)
-	#autopay_toogle.toggled.connect(_on_autopay_toggled)
-	#timer.timeout.connect(_on_timer_timeout)
-	#refinance_button.pressed.connect(_on_refinance_pressed)
-	#payoff_button.pressed.connect(_on_payoff_pressed)
 	
 	# Set autopay toggle initial state
 	if autopay_toogle:
@@ -82,6 +74,7 @@ func _on_make_payment_pressed() -> void:
 	months -= 1
 	Globals.credit_score = clamp(Globals.credit_score + 2, 300, 850)
 	
+	
 	if loan_type_str == "Mortgage" and house_ref and is_instance_valid(house_ref):
 		house_ref.loan_price = loan_balance
 		house_ref.mortgage = payment if loan_balance > 0 else 0
@@ -105,15 +98,16 @@ func _on_make_payment_pressed() -> void:
 	var ui_layer = get_node("/root/Root/UserInterface/Game/HUD")
 	if ui_layer and is_instance_valid(ui_layer):
 		var label = Label.new()
-
 	show_floating_label("Paid $" + add_comma_to_int(int(payment)),Color.GREEN)
-
+	Globals.recalculate_expenses()
 
 func _on_autopay_toggled(toggled: bool) -> void:
 	autopay_enabled = toggled
 	if loan_type_str == "Mortgage" and house_ref and is_instance_valid(house_ref):
 		if house_ref.has_method("set_autopay_enabled"):
 			house_ref.set_autopay_enabled(toggled)
+	if toggled:
+		Globals.recalculate_expenses()
 	update_ui()
 
 
@@ -152,6 +146,7 @@ func _on_refinance_pressed() -> void:
 
 	update_ui()
 	SaveAndLoad.save_game()
+	Globals.recalculate_expenses()
 	show_floating_label("Refinanced loan to $%s/month" % add_comma_to_int(int(new_payment)), Color.GREEN)
 
 func _on_payoff_pressed() -> void:
@@ -177,6 +172,7 @@ func _on_payoff_pressed() -> void:
 	else:
 		push_warning("Insufficient funds to pay off loan: id=%s, balance=%s, money=%s" % [loan_id, loan_balance, Globals.money])
 		show_floating_label("Need $%s to pay off!" % add_comma_to_int(int(loan_balance)), Color.RED)
+	Globals.recalculate_expenses()
 
 func calculate_mortgage_payment(loan_amount: float, months: int, interest_rate: float) -> float:
 	if months <= 0 or loan_amount <= 0 or interest_rate < 0:
