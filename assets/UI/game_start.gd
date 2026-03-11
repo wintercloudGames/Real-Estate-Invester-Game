@@ -8,8 +8,6 @@ extends Control
 @onready var mission_desc_label: Label = $MissionDescLabel         # shows deadline (optional)
 
 func _ready() -> void:
-	# Start with mission mode OFF
-	Globals.mission_active = false
 	if mission_toggle:
 		mission_toggle.button_pressed = false
 		mission_toggle.text = "Mission mode: OFF"

@@ -179,13 +179,16 @@ func load_game() -> bool:
 	if not loaded_data or not loaded_data is Dictionary:
 		push_error("No valid data parsed from JSON")
 		return false
-
+	
+	
 	# Load non-node-dependent data
 	if loaded_data.has("Globals"):
 		var g = loaded_data["Globals"]
+	
+		# Existing important ones (add more as needed)
 		Globals.save_name = g.get("save_name", "My Save")
 		Globals.money = g.get("money", 5000)
-		Globals.first_start = g.get("first_start", false)
+		Globals.first_start = g.get("first_start", true)
 		Globals.credit_score = g.get("credit_score", 600)
 		Globals.Expenses = g.get("Expenses", 1000)
 		Globals.Propertys = g.get("Propertys", 0)
@@ -209,14 +212,17 @@ func load_game() -> bool:
 		Globals.renter_finder = g.get("renter_finder", false)
 		Globals.hasagent = g.get("hasagent", false)
 		Globals.hascleaner = g.get("hascleaner", false)
-
-		# Mission fields – this restores active state
-		Globals.mission_active = g.get("mission_active", false)
-		Globals.mission_type = g.get("mission_type", "")
-		Globals.mission_target = g.get("mission_target", 0)
-		Globals.mission_deadline_year = g.get("mission_deadline_year", 0)
-		Globals.mission_desc = g.get("mission_desc", "")
-		Globals.mission_completed = g.get("mission_completed", false)
+		
+		# Critical: explicitly set mission vars
+		Globals.mission_active         = g.get("mission_active", false)
+		Globals.mission_type           = g.get("mission_type", "")
+		Globals.mission_target         = g.get("mission_target", 0)
+		Globals.mission_deadline_year  = g.get("mission_deadline_year", 0)
+		Globals.mission_desc           = g.get("mission_desc", "")
+		Globals.mission_completed      = g.get("mission_completed", false)
+		
+		print("Loaded mission_active:", Globals.mission_active)
+		print("Loaded mission_desc:", Globals.mission_desc)
 
 	if loaded_data.has("Skills"):
 		for key in loaded_data["Skills"]:

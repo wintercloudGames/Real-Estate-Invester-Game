@@ -285,12 +285,8 @@ func add_starter_loan():
 		2: payment_amount = 1000  # Hard
 		3: payment_amount = 1500  # Extreme
 	
-	var loan_amount = payment_amount * 24  # e.g. 2 years worth, adjust as you like
-	var interest_rate = randf_range(0.2,0.15)  # 10% annual, or make it difficulty-based too
-	
-	# Call your existing loan-adding function from loans.gd
-	# Assuming you have a way to add a personal loan globally or via the Loans UI node
-	# If you don't have a global helper, use this pattern:
+	var loan_amount = payment_amount * 24
+	var interest_rate = 0.10  # 10% annual
 	
 	var loans_ui = get_tree().get_first_node_in_group("loans_ui")  # or your path: /root/.../Loans
 	if loans_ui and loans_ui.has_method("add_loan_mod"):
@@ -302,10 +298,10 @@ func add_starter_loan():
 			1,                       # LOAN_TYPE_PERSONAL
 			null                     # no house ref
 		)
-		print("Starter loan added: $", loan_amount, " @ ", payment_amount, "/month")
+	
 	
 	# Give the player the loan money immediately
-	money += loan_amount
+	money += 500
 	money_in(loan_amount)  # trigger signal if you want UI flash
 
 func monthy():

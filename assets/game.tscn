@@ -3596,7 +3596,6 @@ grow_vertical = 1
 scale = Vector2(0.706297, 0.722974)
 
 [node name="MissionDisplay" type="Panel" parent="HUD/UI"]
-visible = false
 layout_mode = 0
 offset_left = 1045.0
 offset_top = 131.0
@@ -3605,30 +3604,43 @@ offset_bottom = 293.0
 script = ExtResource("47_j8b0p")
 
 [node name="mission" type="Label" parent="HUD/UI/MissionDisplay"]
-layout_mode = 0
-offset_left = 34.0
-offset_top = 106.0
-offset_right = 320.0
-offset_bottom = 135.0
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="mission_deadlne" type="Label" parent="HUD/UI/MissionDisplay"]
-layout_mode = 0
-offset_left = 37.0
-offset_top = 51.0
-offset_right = 319.0
-offset_bottom = 78.0
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="mission_target" type="Label" parent="HUD/UI/MissionDisplay"]
 visible = false
 layout_mode = 0
-offset_left = 34.0
-offset_top = 20.0
-offset_right = 139.0
-offset_bottom = 47.0
+offset_left = 42.0
+offset_top = 6.0
+offset_right = 328.0
+offset_bottom = 35.0
+text = "mission"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mission_deadline" type="Label" parent="HUD/UI/MissionDisplay"]
+layout_mode = 0
+offset_left = 111.0
+offset_top = 113.0
+offset_right = 256.0
+offset_bottom = 140.0
+text = "mission_deadline"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mission_des" type="Label" parent="HUD/UI/MissionDisplay"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = -2.0
+offset_right = 257.0
+offset_bottom = 46.0
+text = "mission_des"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mission_progress" type="Label" parent="HUD/UI/MissionDisplay"]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 63.0
+offset_right = 250.0
+offset_bottom = 90.0
+text = "mission_progress"
 
 [node name="Drag_Button" parent="HUD/UI/MissionDisplay" instance=ExtResource("33_dnuxx")]
 layout_mode = 1

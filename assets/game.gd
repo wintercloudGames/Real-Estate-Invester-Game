@@ -15,7 +15,7 @@ var house = null
 var mission_result_handled: bool = false
 
 func _ready() -> void:
-	#SaveAndLoad.load_game()  # ← usually called before entering this scene
+	
 	call_deferred("apply_loaded_data_deferred")
 	
 	get_tree().root.get_viewport().transparent_bg = true
@@ -24,13 +24,12 @@ func _ready() -> void:
 	if Globals.first_start == false:
 		$HUD/Game_start.visible = true
 		Globals.reset()
-	
 	# Setup systems
 	$Market.difficulty = Globals.difficulty
 	$Market.apply_difficulty_settings()
 	$Market.update_label()
 	$HUD/Phone/Car_info.load_info()
-	refresh_mission_display()
+
 	if Globals.business_name != "":
 		$"HUD/Business_UI".Set_difficulty()
 		$HUD/Business_UI.Load_info()
@@ -45,35 +44,9 @@ func _ready() -> void:
 
 func apply_loaded_data_deferred() -> void:
 	SaveAndLoad.apply_loaded_data()
-	if Globals.mission_active:
-		$HUD/UI/MissionDisplay.visible = true
-
-func refresh_mission_display() -> void:
-	var panel = $HUD/UI/MissionDisplay
-	if not panel or not is_instance_valid(panel):
-		print("WARNING: HUD/UI/MissionDisplay not found in scene tree!")
-		return
-	
-	if Globals.mission_active:
-		panel.visible = true
-		
-		# Update the labels inside the panel
-		# Change the node names below to match your actual child nodes
-		var desc_label     = panel.get_node_or_null("DescLabel")        # main text e.g. "Own 29 houses"
-		var deadline_label = panel.get_node_or_null("DeadlineLabel")    # "by Year 22"
-		var progress_label = panel.get_node_or_null("ProgressLabel")    # optional "0 / 29"
-		
-		if desc_label:
-			desc_label.text = Globals.mission_desc
-		if deadline_label:
-			deadline_label.text = "by Year " + str(Globals.mission_deadline_year)
-		if progress_label:
-			progress_label.text = "Progress: " + str(Globals.Propertys) + " / " + str(Globals.mission_target)
-		
-		print("Mission panel → visible = true | ", Globals.mission_desc)
-	else:
-		panel.visible = false
-		print("No active mission → panel hidden")
+	var path = "HUD/UI/MissionDisplay"
+	var panel = get_node_or_null(path)
+	panel.visible = Globals.mission_active
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
