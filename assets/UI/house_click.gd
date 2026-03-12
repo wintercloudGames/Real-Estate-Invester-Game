@@ -222,7 +222,7 @@ func _on_timer_timeout() -> void:
 				if mod.loan_type_str == "Mortgage" and mod.house_ref == self:
 					mod.loan_balance = loan_price
 					mod.update_ui()
-					print("Synced loan balance for house %s, loan_id: %s, new balance: %s" % [name, mod.loan_id, mod.loan_balance])
+					
 					break
 		if loan_price <= 0:
 			loan_price = 0

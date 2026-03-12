@@ -54,7 +54,6 @@ func Month_timer():
 
 	if house.has_tenant:
 		house.lease_length -= 1
-		print("Month_timer: House %s, lease_length decremented to %d" % [house.name, house.lease_length])
 		if house.lease_length <= 0:
 			house.remove_tenant()
 			if is_instance_valid(house.events):
@@ -71,15 +70,6 @@ func Month_timer():
 		payment_delay_timer.start(delay_seconds)
 		if house.owned:
 			$Label3D.text = "Rent Delayed: " + str(snapped(delay_seconds, 0.1)) + "s"
-	else:
-		if not house.has_tenant:
-			print("  - No tenant")
-		if house.lease_length <= 0 and stored_cash == 0:
-			print("  - Lease expired")
-		if payment_delay_timer.time_left > 0:
-			print("  - Timer still running: ", payment_delay_timer.time_left)
-		if stored_cash >= max_cash:
-			print("  - Max cash reached")
 
 func tenant_pays_rent():
 	if not house.owned or not house.has_tenant or house.lease_length <= 0 or stored_cash >= max_cash:

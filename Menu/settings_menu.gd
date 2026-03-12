@@ -95,8 +95,6 @@ func _ready() -> void:
 	for i in range(resolution_presets.size()):
 		var res = resolution_presets[i]
 		resolution_option_button.add_item("%dx%d" % [res.x, res.y], i)
-	print("ResolutionOptionButton initialized with %d items: %s" % [resolution_presets.size(), resolution_presets])
-	
 	
 	# Initialize sliders
 	master_volume_slider.min_value = 0.0

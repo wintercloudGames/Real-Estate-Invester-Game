@@ -2,7 +2,8 @@ extends Control
 
 
 func _on_button_pressed() -> void:
-	get_tree().quit()
+	SaveAndLoad.delete_save_file(SaveAndLoad.current_save_slot)
+	$"../.."._on_yes_pressed()
 
 func _on_button_2_pressed() -> void:
 	$"../event_popup".visible = false

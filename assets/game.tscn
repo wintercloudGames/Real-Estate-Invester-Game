@@ -3490,6 +3490,7 @@ texture_normal = ExtResource("4_5akwj")
 metadata/_edit_use_anchors_ = true
 
 [node name="RedDot" type="TextureRect" parent="HUD/UI/Phone_button"]
+visible = false
 clip_contents = true
 layout_mode = 1
 anchors_preset = 1
@@ -3512,7 +3513,6 @@ offset_top = -5.0
 offset_right = 496.0
 offset_bottom = 132.0
 theme_override_font_sizes/font_size = 100
-text = "100"
 horizontal_alignment = 1
 
 [node name="Business_Button" type="TextureButton" parent="HUD/UI"]

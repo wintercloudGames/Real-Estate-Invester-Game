@@ -30,6 +30,7 @@ func show_floating_label(text: String, color: Color = Color.WHITE):
 		
 		# Remove after all animations complete
 		tween.tween_callback(label.queue_free).set_delay(rise_duration + display_duration + fade_duration)
+
 func _on_save_delete_pressed() -> void:
 	# Create confirmation dialog
 	var confirm_dialog = ConfirmationDialog.new()

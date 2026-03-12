@@ -95,7 +95,6 @@ func add_mortgage_as_loan(payment: float, interest_rate: float, term_months: int
 	if not mod or not is_instance_valid(mod):
 		push_error("Failed to create loan mod for house: %s, mod=%s" % [house.name, str(mod)])
 		return null
-	print("add_mortgage_as_loan succeeded for house: %s, mod_id=%s" % [house.name, mod.loan_id])
 	return mod
 
 func add_loan_mod(payment: float, interest: float, loan_balance: float, months: int, loan_type: int, house_ref: Node = null) -> Node:

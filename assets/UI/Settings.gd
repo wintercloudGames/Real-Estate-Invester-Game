@@ -83,7 +83,6 @@ func save_settings():
 	if file:
 		file.store_string(JSON.stringify(settings_data, "\t"))
 		file.close()
-		print("Settings saved to: ", file_path)
 	else:
 		push_error("Failed to save settings to: ", file_path)
 		# Fallback to user:// if executable path fails
@@ -93,7 +92,6 @@ func save_settings():
 			if file:
 				file.store_string(JSON.stringify(settings_data, "\t"))
 				file.close()
-				print("Settings saved to fallback: ", file_path)
 			else:
 				push_error("Failed to save settings to fallback: ", file_path)
 
@@ -143,7 +141,6 @@ func load_settings():
 						if graphics.has("resolution") and typeof(graphics["resolution"]) == TYPE_DICTIONARY:
 							var res = graphics["resolution"]
 							resolution = Vector2i(res.get("width", 1920), res.get("height", 1080))
-					print("Settings loaded from: %s, resolution=%s, Master=%s, showfps=%s" % [file_path, resolution, Master, showfps])
 					apply_audio_settings()
 					apply_graphics_settings()
 					return
@@ -193,15 +190,14 @@ func load_settings():
 						if graphics.has("resolution") and typeof(graphics["resolution"]) == TYPE_DICTIONARY:
 							var res = graphics["resolution"]
 							resolution = Vector2i(res.get("width", 1920), res.get("height", 1080))
-					print("Settings loaded from fallback: %s, resolution=%s, Master=%s, showfps=%s" % [fallback_path, resolution, Master, showfps])
+					
 				else:
 					push_error("Invalid JSON data in: ", fallback_path)
 			else:
 				push_error("Failed to parse JSON: ", json.get_error_message())
 		else:
 			push_error("Failed to open settings file: ", fallback_path)
-	else:
-		print("No settings file found at: %s or %s" % [file_path, fallback_path])
+
 	
 	# Apply defaults if no file found
 	apply_audio_settings()

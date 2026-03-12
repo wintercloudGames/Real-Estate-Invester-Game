@@ -48,6 +48,28 @@ func apply_loaded_data_deferred() -> void:
 	var panel = get_node_or_null(path)
 	panel.visible = Globals.mission_active
 
+	await get_tree().process_frame   # wait one frame so HUD exists
+	
+	print("=== POST-LOAD CHECK ===")
+	print("mission_active:", Globals.mission_active)
+	print("year:", Globals.year, "deadline:", Globals.mission_deadline_year)
+	print("Should fail mission?", Globals.year > Globals.mission_deadline_year)
+	
+	# FORCE SHOW GAME OVER IF MISSION FAILED
+	if Globals.mission_active and Globals.year > Globals.mission_deadline_year:
+		print("FORCING GAME_OVER PANEL TO SHOW")
+		if game_over_panel:
+			game_over_panel.visible = true
+			if game_over_panel.has_method("message"):
+				game_over_panel.message("Mission Failed!\n" + Globals.mission_desc + "\nTime ran out!")
+			else:
+				var label = game_over_panel.get_node_or_null("Label") or game_over_panel.get_node_or_null("MessageLabel")
+				if label:
+					label.text = "Mission Failed!\n" + Globals.mission_desc + "\nTime ran out!"
+		Engine.time_scale = 0
+	else:
+		print("Mission fail condition NOT met")
+
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
 	var loop_end: int = 0 if value > -1 else 1
@@ -58,10 +80,8 @@ func add_comma_to_int(value: int) -> String:
 func _process(delta: float) -> void:
 	if Globals.mission_active and not Globals.mission_completed:
 		if Globals.mission_deadline_year <= Globals.year:
-			print("SKIP EARLY CHECK - deadline not valid yet or already passed")
+			
 			return  # don't fail yet
-		
-		print("Mission check OK - Year:", Globals.year, "Deadline:", Globals.mission_deadline_year)
 		
 		if Globals.is_mission_complete():
 			# win
@@ -135,24 +155,22 @@ func _process(delta: float) -> void:
 	# ────────────────────────────────────────────────
 	# Mission check (only if active and not yet handled)
 	# ────────────────────────────────────────────────
-	if Globals.mission_active and not Globals.mission_completed and not mission_result_handled:
+	if Globals.mission_active and not Globals.mission_completed:
 		if Globals.is_mission_complete():
 			Globals.mission_completed = true
 			mission_result_handled = true
+			
 			if mission_win_panel:
 				mission_win_panel.visible = true
-			Globals.skillpoints += 100
 			Engine.time_scale = 0
-		
+			print("MISSION WIN triggered")
+
 		elif Globals.year > Globals.mission_deadline_year:
+			Globals.mission_completed = true
 			mission_result_handled = true
+			
 			if game_over_panel:
 				game_over_panel.visible = true
-				if game_over_panel.has_method("message"):
-					game_over_panel.message("Mission Failed!\n" + Globals.mission_desc + "\nRestart?")
-				else:
-					# Fallback if no message method
-					print("Mission Failed - year exceeded")
 			Engine.time_scale = 0
 
 # ────────────────────────────────────────────────
