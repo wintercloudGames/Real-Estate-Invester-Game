@@ -29,7 +29,6 @@ func _on_rent_collecter_button_pressed() -> void:
 	else:
 		Globals.hasagent = true
 
-
 func _on_find_renter_button_pressed() -> void:
 	if Globals.renter_finder == true:
 		Globals.renter_finder = false

@@ -28,17 +28,16 @@ func reset():
 	stored_cash = 0
 	accumulated_months = 0
 
-
 func _on_payment_delay_timeout():
 	if house.owned and house.has_tenant and house.lease_length > 0:
 		rent_paid = true
 		tenant_pays_rent()
 
 func _on_rent_collect_timeout():
-	if house.owned and house.paid_rent and $Dollar_sign.visible:
-		collect_rent()
-		if Globals.hasagent:
-			rent_collect_timer.start(2.0)
+	#if house.owned and house.paid_rent and $Dollar_sign.visible:
+	collect_rent()
+	if Globals.hasagent:
+		rent_collect_timer.start(2.0)
 
 func _on_agent_status_changed(new_status: bool):
 	if not new_status:

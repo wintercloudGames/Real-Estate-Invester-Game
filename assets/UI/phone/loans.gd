@@ -7,7 +7,6 @@ const LOAN_TYPE_PERSONAL: int = 1
 @onready var loan_amount_input = $TabContainer/Addloan/LoanAmountInput
 @onready var take_loan_button = $TabContainer/Addloan/TakeLoanButton
 @onready var loan_mod_Container = $TabContainer/Loans/ScrollContainer/loan_mod_Container
-@onready var loan_balance_label = $TabContainer/Addloan/LoanBalanceLabel
 @onready var Totalpaymentdisplay = $TabContainer/Loans/Totalpaymentdisplay
 @onready var max_loan_label = $TabContainer/Addloan/MaxLoanLabel
 @onready var interest_rate_label = $TabContainer/Addloan/InterestRateLabel  # New label for interest rate

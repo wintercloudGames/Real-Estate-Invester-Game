@@ -2,10 +2,8 @@ extends Control
 
 @onready var market: Node = $"../../Market"
 
-# UI nodes - make sure these exist in the scene!
-@onready var mission_toggle: CheckButton = $MissionToggle          # CheckButton for "Play with Mission?"
-@onready var mission_label: Label = $MissionLabel                   # shows mission description
-@onready var mission_desc_label: Label = $MissionDescLabel         # shows deadline (optional)
+@onready var mission_toggle: CheckButton = $mission_toggle      # CheckButton for "Play with Mission?"
+@onready var mission_label: Label = $MissionLabel             # shows mission description
 
 func _ready() -> void:
 	if mission_toggle:
@@ -14,8 +12,7 @@ func _ready() -> void:
 	
 	if mission_label:
 		mission_label.text = ""
-	if mission_desc_label:
-		mission_desc_label.text = ""
+
 
 func start():
 	market.difficulty = Globals.difficulty
@@ -23,27 +20,24 @@ func start():
 	market.update_label()
 	$"../Business_UI".Set_difficulty()
 	$"../Phone/Car_info".car_level = 1
-	Globals.skillpoints += 20
 	# Show/hide mission display panel if you have one
 	if has_node("../UI/MissionDisplay"):
 		get_node("../UI/MissionDisplay").visible = Globals.mission_active
 	Globals.recalculate_expenses()
 	visible = false
-	Globals.first_start = true   # ← this line should now work after you added the var
+	Globals.first_start = true 
 	SaveAndLoad.save_game()
 
 func generate_and_show_mission():
 	if not Globals.mission_active:
-		return  # don't generate if mission mode is off
+		return 
 	
 	Globals.generate_random_mission()
 	
 	if mission_label:
 		mission_label.text = Globals.mission_desc
-	if mission_desc_label:
-		mission_desc_label.text = "by Year " + str(Globals.mission_deadline_year)
+
 	
-	# Optional: update toggle text for extra feedback
 	if mission_toggle:
 		mission_toggle.text = "Mission mode: ON"
 
@@ -81,10 +75,6 @@ func _on_nightmare_button_pressed() -> void:
 	
 	start()
 
-# ────────────────────────────────────────────────
-# Mission Toggle
-# ────────────────────────────────────────────────
-
 func _on_mission_option_toggled(toggled_on: bool) -> void:
 	Globals.mission_active = toggled_on
 	
@@ -100,7 +90,5 @@ func _on_mission_option_toggled(toggled_on: bool) -> void:
 		
 		if mission_label:
 			mission_label.text = ""
-		if mission_desc_label:
-			mission_desc_label.text = ""
 		if mission_toggle:
 			mission_toggle.text = "Mission mode: OFF"

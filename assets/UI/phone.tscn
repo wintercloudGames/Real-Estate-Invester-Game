@@ -218,9 +218,9 @@ anchor_top = -1.911
 anchor_right = 0.353
 anchor_bottom = -0.872
 offset_left = 36.0
-offset_top = 2072.88
+offset_top = 2072.8801
 offset_right = -285.76
-offset_bottom = 1591.76
+offset_bottom = 1591.7603
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("16_sd00n")
@@ -1095,17 +1095,17 @@ metadata/_tab_index = 0
 
 [node name="LoanAmountInput" type="LineEdit" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
-offset_left = 49.0
-offset_top = 223.0
-offset_right = 270.0
-offset_bottom = 254.0
+offset_left = 50.0
+offset_top = 302.00006
+offset_right = 271.0
+offset_bottom = 333.00006
 
 [node name="TakeLoanButton" type="Button" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
-offset_left = 83.0
-offset_top = 270.0
-offset_right = 230.0
-offset_bottom = 304.0
+offset_left = 88.0
+offset_top = 365.00006
+offset_right = 235.0
+offset_bottom = 399.00006
 text = "Take Loan"
 
 [node name="MaxLoanLabel" type="Label" parent="Loans/TabContainer/Addloan"]
@@ -1120,10 +1120,10 @@ autowrap_mode = 2
 
 [node name="OptionButton" type="OptionButton" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 115.0
-offset_right = 217.0
-offset_bottom = 145.0
+offset_left = 88.0
+offset_top = 69.000046
+offset_right = 232.0
+offset_bottom = 103.000046
 selected = 0
 item_count = 5
 popup/item_0/text = "1 year"
@@ -1139,11 +1139,21 @@ popup/item_4/id = 4
 
 [node name="Label" type="Label" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
-offset_left = 97.0
-offset_top = 81.0
-offset_right = 181.0
-offset_bottom = 105.0
+offset_left = 113.0
+offset_top = 37.000046
+offset_right = 197.0
+offset_bottom = 61.000046
 text = "Loan Term"
+
+[node name="InterestRateLabel" type="Label" parent="Loans/TabContainer/Addloan"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 144.00005
+offset_right = 287.0
+offset_bottom = 194.00005
+text = "Loan Term"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Loans" type="Control" parent="Loans/TabContainer"]
 visible = false

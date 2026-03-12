@@ -19,7 +19,7 @@ var month = 1
 #mission vars
 var mission_templates = [
 	{"type": "houses",       "min_target": 5,  "max_target": 50,  "min_deadline": 5,  "max_deadline": 30, "desc_base": "Own %d houses"},
-	{"type": "tenants",      "min_target": 10, "max_target": 100, "min_deadline": 6,  "max_deadline": 25, "desc_base": "%d houses with tenants"},
+	{"type": "tenants",      "min_target": 5, "max_target": 25, "min_deadline": 6,  "max_deadline": 25, "desc_base": "%d houses with tenants"},
 	{"type": "net_worth",    "min_target": 50000,  "max_target": 5000000, "min_deadline": 7,  "max_deadline": 20, "desc_base": "Net Worth $%s"},
 	{"type": "business_rank","min_target": 3,  "max_target": 20,  "min_deadline": 8,  "max_deadline": 25, "desc_base": "Business Rank %d"},
 	{"type": "credit_max",   "min_target": 700, "max_target": 850, "min_deadline": 5,  "max_deadline": 15, "desc_base": "Credit Score %d"},
@@ -220,12 +220,6 @@ func generate_random_mission():
 	
 	mission_active = true
 	mission_completed = false
-	
-	# Debug prints – keep these for now
-	print("=== NEW MISSION GENERATED ===")
-	print("Type:", mission_type, " | Target:", mission_target)
-	print("Deadline year:", mission_deadline_year, " | Current year:", Globals.year)
-	print("Desc:", mission_desc)
 
 func is_mission_complete() -> bool:
 	if not mission_active or mission_completed: return true

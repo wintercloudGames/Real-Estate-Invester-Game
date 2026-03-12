@@ -79,11 +79,11 @@ func _process(delta: float) -> void:
 	
 	# Renters notification
 	if $HUD/Phone/Renters/ScrollContainer/renters.get_child_count() > 0:
-		$HUD/UI/TextureButton/TextureRect.visible = true
-		$HUD/UI/TextureButton/Label.text = str($HUD/Phone/Renters/ScrollContainer/renters.get_child_count())
+		$HUD/UI/Phone_button/RedDot.visible = true
+		$HUD/UI/Phone_button/Number.text = str($HUD/Phone/Renters/ScrollContainer/renters.get_child_count())
 	else:
-		$HUD/UI/TextureButton/TextureRect.visible = false
-		$HUD/UI/TextureButton/Label.text = ""
+		$HUD/UI/Phone_button/RedDot.visible = false
+		$HUD/UI/Phone_button/Number.text = ""
 	
 	# Negative months warning
 	$HUD/UI/negative_month_count.visible = Globals.negative_month_count > 0
@@ -215,7 +215,7 @@ func _on_yes_pressed() -> void:
 func _on_no_pressed() -> void:
 	$HUD/Quit_menu.visible = false
 
-func _on_texture_button_pressed() -> void:
+func _on_Phone_button_pressed() -> void:
 	var has_offers = $HUD/Phone/Renters/ScrollContainer/renters.get_child_count() > 0
 	if has_offers:
 		$HUD/Phone._on_texture_button_2_pressed()
@@ -242,5 +242,9 @@ func _on_business_button_pressed() -> void:
 	$HUD/Business_UI.visible = !$HUD/Business_UI.visible
 
 func _on_mission_win_button_pressed() -> void:
-	SaveAndLoad.delete_save_file(SaveAndLoad.current_save_slot)
-	get_tree().change_scene_to_file("res://Menu/MainMenu.tscn")
+	Engine.time_scale = 1.0                    # Unpause the game
+	SaveAndLoad.delete_save_file(SaveAndLoad.current_save_slot)  # Delete current save (fresh start)
+	Globals.reset()
+	get_tree().reload_current_scene()
+	
+	

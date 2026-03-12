@@ -3,14 +3,11 @@ extends Control
 @onready var description_panel: Panel = $DescriptionPanel
 @onready var description_label: Label = $DescriptionPanel/DescriptionLabel
 @onready var skill_name_label: Label = $DescriptionPanel/Skill_name
-@onready var close_button: Button = $DescriptionPanel/CloseButton
+
 @onready var skill_points_label: Label = $Skill_points_label
 
 func _ready() -> void:
 	hide_info()
-	
-	if close_button:
-		close_button.pressed.connect(_on_close_button_pressed)
 	
 	_update_skill_points_display()
 
