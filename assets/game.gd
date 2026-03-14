@@ -40,31 +40,19 @@ func _ready() -> void:
 
 func apply_loaded_data_deferred() -> void:
 	SaveAndLoad.apply_loaded_data()
-	var path = "HUD/UI/MissionDisplay"
-	var panel = get_node_or_null(path)
-	panel.visible = Globals.mission_active
-
-	await get_tree().process_frame   # wait one frame so HUD exists
 	
-	print("=== POST-LOAD CHECK ===")
-	print("mission_active:", Globals.mission_active)
-	print("year:", Globals.year, "deadline:", Globals.mission_deadline_year)
-	print("Should fail mission?", Globals.year > Globals.mission_deadline_year)
+	await get_tree().process_frame
 	
-	# FORCE SHOW GAME OVER IF MISSION FAILED
+	print("Post-load check - year:", Globals.year, "deadline:", Globals.mission_deadline_year)
+	
 	if Globals.mission_active and Globals.year > Globals.mission_deadline_year:
-		print("FORCING GAME_OVER PANEL TO SHOW")
+		print("Load-time MISSION FAIL - forcing GAME_OVER")
 		if game_over_panel:
 			game_over_panel.visible = true
-			if game_over_panel.has_method("message"):
-				game_over_panel.message("Mission Failed!\n" + Globals.mission_desc + "\nTime ran out!")
-			else:
-				var label = game_over_panel.get_node_or_null("Label") or game_over_panel.get_node_or_null("MessageLabel")
-				if label:
-					label.text = "Mission Failed!\n" + Globals.mission_desc + "\nTime ran out!"
+			var info = game_over_panel.get_node_or_null("Info")
+			if info:
+				info.text = "Mission Failed!\n" + Globals.mission_desc + "\nTime ran out!"
 		Engine.time_scale = 0
-	else:
-		print("Mission fail condition NOT met")
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
@@ -85,10 +73,27 @@ func _process(delta: float) -> void:
 			$HUD/MissionWin.visible = true
 			Globals.skillpoints += 100
 			Engine.time_scale = 0
-		elif Globals.year > Globals.mission_deadline_year:
-			print("REAL MISSION FAIL - year > deadline")
-			$HUD/GAME_OVER.visible = true
-			$HUD/GAME_OVER.message("Mission Failed! " + Globals.mission_desc)
+		elif Globals.year > Globals.mission_deadline_year or (Globals.year == Globals.mission_deadline_year and Globals.month > 12):
+			print("MISSION FAIL - Year ", Globals.year, " > Deadline ", Globals.mission_deadline_year)
+			print("Showing GAME_OVER with message:", Globals.mission_desc)
+			
+			Globals.mission_completed = true
+			
+			if game_over_panel:
+				game_over_panel.visible = true
+				
+				# Set the message in the "Info" label
+				var info_label = game_over_panel.get_node_or_null("Info")
+				if info_label and info_label is Label:
+					info_label.text = "Mission Failed!\n" + Globals.mission_desc + "\nTime ran out!"
+				else:
+					print("WARNING: No 'Info' Label found in GAME_OVER")
+				
+				# Optional: set Title if you want
+				var title_label = game_over_panel.get_node_or_null("Title")
+				if title_label:
+					title_label.text = "Game Over"
+			
 			Engine.time_scale = 0
 	# UI scale
 	$HUD.scale = Vector2(Settings.UI_scale, Settings.UI_scale)

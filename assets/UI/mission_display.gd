@@ -19,7 +19,7 @@ func update_display() -> void:
 		mission.text = Globals.mission_desc if Globals.mission_desc else "No mission description"
 	
 	if mission_deadline:
-		mission_deadline.text = "Complete by year: " + str(Globals.mission_deadline_year)
+		mission_deadline.text = "Complete by end of year: " + str(Globals.mission_deadline_year)
 	
 	if mission_desc:
 		mission_desc.text = Globals.mission_desc  # if you want description repeated

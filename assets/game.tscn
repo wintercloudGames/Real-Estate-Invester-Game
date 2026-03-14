@@ -3585,7 +3585,6 @@ theme_override_font_sizes/font_size = 30
 text = "FPS: 000"
 
 [node name="MissionDisplay" type="Panel" parent="HUD/UI"]
-visible = false
 layout_mode = 0
 offset_left = 1045.0
 offset_top = 131.0
@@ -3606,9 +3605,9 @@ vertical_alignment = 1
 
 [node name="mission_deadline" type="Label" parent="HUD/UI/MissionDisplay"]
 layout_mode = 0
-offset_left = 111.0
+offset_left = 24.0
 offset_top = 113.0
-offset_right = 256.0
+offset_right = 333.0
 offset_bottom = 140.0
 text = "mission_deadline"
 horizontal_alignment = 1
@@ -3616,10 +3615,10 @@ vertical_alignment = 1
 
 [node name="mission_des" type="Label" parent="HUD/UI/MissionDisplay"]
 layout_mode = 0
-offset_left = 105.0
+offset_left = 63.0
 offset_top = -2.0
-offset_right = 257.0
-offset_bottom = 46.0
+offset_right = 296.0
+offset_bottom = 60.0
 text = "mission_des"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -3637,10 +3636,10 @@ vertical_alignment = 1
 [node name="Drag_Button" parent="HUD/UI/MissionDisplay" instance=ExtResource("33_dnuxx")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.1232492
-anchor_top = 0.11728395
-anchor_right = 0.1232492
-anchor_bottom = 0.11728395
+anchor_left = 0.0812324
+anchor_top = 0.043209877
+anchor_right = 0.0812324
+anchor_bottom = 0.043209877
 
 [node name="Skill_tree" parent="HUD/UI" instance=ExtResource("29_me805")]
 visible = false

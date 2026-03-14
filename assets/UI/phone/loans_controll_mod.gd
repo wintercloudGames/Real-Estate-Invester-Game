@@ -26,6 +26,7 @@ var autopay_enabled: bool = true  # Default to true
 var house_ref: Node = null     # For mortgages, reference to house node
 
 func _ready() -> void:
+	Globals.recalculate_expenses()
 	# Check for null nodes
 	if not loan_amount or not loan_type or not paymentdisplay or not Intrest or not month_display or not Make_payment or not autopay_toogle or not timer or not refinance_button or not payoff_button or not loans_ui:
 		push_error("One or more nodes are null in Loan_controll_mod.tscn. Check node paths.")

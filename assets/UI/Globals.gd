@@ -167,7 +167,6 @@ func handle_overflow(current_value: float, add_amount: float, max_value: float) 
 	}
 
 func _process(delta: float) -> void:
-
 	if exp >= exp_to_level:
 		var overflow = exp - exp_to_level
 		exp = overflow
@@ -266,6 +265,7 @@ func recalculate_expenses() -> void:
 		for mod in loans_ui.active_loan_mods:
 			if is_instance_valid(mod) and mod.autopay_enabled:
 				Expenses += mod.payment
+				net_worth -= mod.loan_amount
 
 func add_starter_loan():
 	if difficulty < 0 or difficulty > 3:
@@ -291,9 +291,6 @@ func add_starter_loan():
 			1,                       # LOAN_TYPE_PERSONAL
 			null                     # no house ref
 		)
-	
-	# Give the player the loan money immediately
-	money += 500
 
 func caculate_networth():
 	pass
