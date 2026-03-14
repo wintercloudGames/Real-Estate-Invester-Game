@@ -7,12 +7,9 @@ var house = null
 @onready var Listing_ui = $HUD/House_listing_ui
 @onready var EventPopup = $HUD/event_popup
 
-# Mission & Game Over panels (safer access)
 @onready var mission_win_panel: Control = $HUD/MissionWin
 @onready var game_over_panel: Control = $HUD/GAME_OVER
 
-# Prevent repeated win/lose triggers
-var mission_result_handled: bool = false
 
 func _ready() -> void:
 	
@@ -40,7 +37,6 @@ func _ready() -> void:
 	# Ensure panels start hidden
 	if mission_win_panel: mission_win_panel.visible = false
 	if game_over_panel:   game_over_panel.visible   = false
-	mission_result_handled = false
 
 func apply_loaded_data_deferred() -> void:
 	SaveAndLoad.apply_loaded_data()
@@ -152,13 +148,9 @@ func _process(delta: float) -> void:
 				game_over_panel.message("You died")
 		Engine.time_scale = 0
 	
-	# ────────────────────────────────────────────────
-	# Mission check (only if active and not yet handled)
-	# ────────────────────────────────────────────────
 	if Globals.mission_active and not Globals.mission_completed:
 		if Globals.is_mission_complete():
 			Globals.mission_completed = true
-			mission_result_handled = true
 			
 			if mission_win_panel:
 				mission_win_panel.visible = true
@@ -167,7 +159,6 @@ func _process(delta: float) -> void:
 
 		elif Globals.year > Globals.mission_deadline_year:
 			Globals.mission_completed = true
-			mission_result_handled = true
 			
 			if game_over_panel:
 				game_over_panel.visible = true

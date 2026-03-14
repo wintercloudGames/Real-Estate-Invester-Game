@@ -3,8 +3,8 @@ extends Node3D
 @onready var house = $".."
 
 var rent_paid: bool = false
-var payment_delay_timer: Timer
-var rent_collect_timer: Timer
+@onready var rent_collect_timer: Timer = $"../rent_collect_timer"
+@onready var payment_delay_timer: Timer = $"../payment_delay_timer"
 var month_timer: Timer
 var current_punctuality: float = 0.0
 var monthly_variation: float = 15.0
@@ -18,15 +18,16 @@ func _ready() -> void:
 		$Label3D.text = ""
 	payment_delay_timer = Timer.new()
 	payment_delay_timer.one_shot = true
-	add_child(payment_delay_timer)
-	payment_delay_timer.timeout.connect(_on_payment_delay_timeout)
-
+	
 func reset():
 	rent_paid = false
 	current_punctuality = 0.0
 	monthly_variation = 15.0
 	stored_cash = 0
 	accumulated_months = 0
+	if not house.owned:
+		$Dollar_sign.visible = false
+		$Label3D.text = ""
 
 func _on_payment_delay_timeout():
 	if house.owned and house.has_tenant and house.lease_length > 0:
@@ -34,7 +35,6 @@ func _on_payment_delay_timeout():
 		tenant_pays_rent()
 
 func _on_rent_collect_timeout():
-	#if house.owned and house.paid_rent and $Dollar_sign.visible:
 	collect_rent()
 	if Globals.hasagent:
 		rent_collect_timer.start(2.0)
@@ -56,6 +56,7 @@ func Month_timer():
 		house.lease_length -= 1
 		if house.lease_length <= 0:
 			house.remove_tenant()
+			collect_rent()
 			if is_instance_valid(house.events):
 				house.events.tenant_moves_out(house)
 			if Globals.renter_finder:
@@ -102,11 +103,11 @@ func collect_rent():
 		$Label3D.text = ""
 		return
 
-	if Globals.rent_bost > 0.0:
+	if Globals.rent_bost > 0.0 and stored_cash > 0:
 		var boosted_amount = stored_cash * (1.0 + Globals.rent_bost)
 		Globals.money += boosted_amount
 		show_floating_label("Collected Rent: $" + str(boosted_amount) + " (" + str(accumulated_months) + " months)", Color.GREEN)
-	else:
+	elif stored_cash > 0:
 		Globals.money += stored_cash
 		show_floating_label("Collected Rent: $" + str(stored_cash) + " (" + str(accumulated_months) + " months)", Color.GREEN)
 	

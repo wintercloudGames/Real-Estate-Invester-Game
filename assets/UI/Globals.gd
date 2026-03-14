@@ -225,7 +225,7 @@ func is_mission_complete() -> bool:
 	if not mission_active or mission_completed: return true
 	match mission_type:
 		"houses": return Propertys >= mission_target
-		"business_rank": return employees + 1 >= mission_target  # Simple rank formula
+		"business_rank": return employees >= mission_target
 		"net_worth": return net_worth >= mission_target
 		"credit_max": return credit_score >= mission_target
 		"tenants": return houses_with_tenants >= mission_target
