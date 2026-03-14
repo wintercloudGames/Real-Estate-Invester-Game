@@ -63,41 +63,31 @@ func add_comma_to_int(value: int) -> String:
 
 func _process(delta: float) -> void:
 	if Globals.mission_active and not Globals.mission_completed:
-		if Globals.mission_deadline_year <= Globals.year:
-			
-			return  # don't fail yet
-		
 		if Globals.is_mission_complete():
-			# win
 			Globals.mission_completed = true
-			$HUD/MissionWin.visible = true
+			if mission_win_panel:
+				mission_win_panel.visible = true
 			Globals.skillpoints += 100
 			Engine.time_scale = 0
-		elif Globals.year > Globals.mission_deadline_year or (Globals.year == Globals.mission_deadline_year and Globals.month > 12):
+			print("MISSION WIN triggered")
+		
+		# Fail at the END of the deadline year (after month 12)
+		elif Globals.year > Globals.mission_deadline_year or \
+			 (Globals.year == Globals.mission_deadline_year and Globals.month > 12):
 			print("MISSION FAIL - Year ", Globals.year, " > Deadline ", Globals.mission_deadline_year)
-			print("Showing GAME_OVER with message:", Globals.mission_desc)
-			
 			Globals.mission_completed = true
-			
 			if game_over_panel:
 				game_over_panel.visible = true
-				
-				# Set the message in the "Info" label
 				var info_label = game_over_panel.get_node_or_null("Info")
 				if info_label and info_label is Label:
 					info_label.text = "Mission Failed!\n" + Globals.mission_desc + "\nTime ran out!"
 				else:
 					print("WARNING: No 'Info' Label found in GAME_OVER")
-				
-				# Optional: set Title if you want
-				var title_label = game_over_panel.get_node_or_null("Title")
-				if title_label:
-					title_label.text = "Game Over"
-			
 			Engine.time_scale = 0
+
 	# UI scale
 	$HUD.scale = Vector2(Settings.UI_scale, Settings.UI_scale)
-	
+
 	# Renters notification
 	if $HUD/Phone/Renters/ScrollContainer/renters.get_child_count() > 0:
 		$HUD/UI/Phone_button/RedDot.visible = true
@@ -105,37 +95,44 @@ func _process(delta: float) -> void:
 	else:
 		$HUD/UI/Phone_button/RedDot.visible = false
 		$HUD/UI/Phone_button/Number.text = ""
-	
+
 	# Negative months warning
 	$HUD/UI/negative_month_count.visible = Globals.negative_month_count > 0
-	
-	# Too many negative months → game over
+
+	# Too many negative months → instant game over
 	if Globals.negative_month_count > 12:
 		if game_over_panel:
 			game_over_panel.visible = true
 		Engine.time_scale = 0
-	
+
 	# Update qualified houses
 	get_qualified_house_amount()
-	
-	# Reset globals before recalculate
+
+	# Reset globals before recalculating
 	Globals.Propertys = 0
-	Globals.net_worth = 0
+	Globals.net_worth = 0.0
+	Globals.total_debt = 0.0           # Reset debt every frame
 	Globals.total_loan_amount = 0
 	Globals.houses_with_tenants = 0
 	Globals.Income = 0
 	Globals.listed_houses = 0
-	# Savings income
-	if Globals.send_to_account:
-		Globals.Income = Globals.last_savings_paid
-	
+
+	# Savings as asset
 	Globals.net_worth += Globals.Savings_balance
+	if Globals.send_to_account == true:
+		Globals.Income += Globals.interest
 	# House stats loop
 	var owned_houses = get_tree().get_nodes_in_group("houses")
 	for house in owned_houses:
 		if house.owned:
-			Globals.net_worth += (house.base_price - house.loan_price)
-			Globals.total_loan_amount += house.loan_price
+			var house_value = house.current_price
+			var mortgage_remaining = house.loan_price
+			
+			var house_equity = house_value - mortgage_remaining
+			Globals.net_worth += house_equity
+			Globals.total_debt += mortgage_remaining
+			Globals.total_loan_amount += mortgage_remaining
+			
 			Globals.Propertys += 1
 			
 			if house.has_tenant:
@@ -144,7 +141,26 @@ func _process(delta: float) -> void:
 			
 			if house.is_listed:
 				Globals.listed_houses += 1
-	
+
+	# Personal & other loans (from loan mods)
+	# Personal & other loans
+	var loans_ui = $HUD/Phone/Loans
+	if loans_ui:
+		for mod in loans_ui.active_loan_mods:
+			if is_instance_valid(mod):
+				var balance = mod.loan_balance
+				if typeof(balance) == TYPE_FLOAT or typeof(balance) == TYPE_INT:
+					Globals.total_debt += float(balance)  # force float
+				else:
+					print("WARNING: Invalid loan_balance type:", typeof(balance), " - skipping")
+	if typeof(Globals.total_debt) == TYPE_FLOAT or typeof(Globals.total_debt) == TYPE_INT:
+		Globals.net_worth -= float(Globals.total_debt)
+	else:
+		print("CRASH AVOIDED - total_debt is not a number! Type:", typeof(Globals.total_debt))
+	Globals.total_debt = 0.0  # emergency reset
+	# Final net worth = assets - all debt
+	Globals.net_worth -= Globals.total_debt
+
 	# Final age / health game over
 	if Globals.year >= 100 or Globals.Player_health <= 0:
 		if game_over_panel:
@@ -152,23 +168,6 @@ func _process(delta: float) -> void:
 			if game_over_panel.has_method("message"):
 				game_over_panel.message("You died")
 		Engine.time_scale = 0
-	
-	if Globals.mission_active and not Globals.mission_completed:
-		if Globals.is_mission_complete():
-			Globals.mission_completed = true
-			
-			if mission_win_panel:
-				mission_win_panel.visible = true
-			Engine.time_scale = 0
-			print("MISSION WIN triggered")
-
-		elif Globals.year > Globals.mission_deadline_year:
-			Globals.mission_completed = true
-			
-			if game_over_panel:
-				game_over_panel.visible = true
-			Engine.time_scale = 0
-
 # ────────────────────────────────────────────────
 # Other functions (unchanged or minor cleanup)
 # ────────────────────────────────────────────────

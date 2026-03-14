@@ -3586,10 +3586,10 @@ text = "FPS: 000"
 
 [node name="MissionDisplay" type="Panel" parent="HUD/UI"]
 layout_mode = 0
-offset_left = 1045.0
-offset_top = 131.0
-offset_right = 1402.0
-offset_bottom = 293.0
+offset_left = 1481.0
+offset_top = 17.0
+offset_right = 1838.0
+offset_bottom = 179.0
 script = ExtResource("47_j8b0p")
 
 [node name="mission" type="Label" parent="HUD/UI/MissionDisplay"]
@@ -3636,9 +3636,9 @@ vertical_alignment = 1
 [node name="Drag_Button" parent="HUD/UI/MissionDisplay" instance=ExtResource("33_dnuxx")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0812324
+anchor_left = 0.9411764
 anchor_top = 0.043209877
-anchor_right = 0.0812324
+anchor_right = 0.9411764
 anchor_bottom = 0.043209877
 
 [node name="Skill_tree" parent="HUD/UI" instance=ExtResource("29_me805")]

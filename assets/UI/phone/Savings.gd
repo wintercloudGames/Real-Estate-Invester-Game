@@ -47,7 +47,7 @@ func remove_savings(amount: int):
 func deposit_savings(amount: int):
 	Globals.money -= amount  # Remove from cash
 	Globals.Savings_balance += amount  # Add to savings
-	# Small credit score boost for saving money
+
 	show_floating_label("Deposited $" + add_comma_to_int(amount) + " to Savings", Color.GREEN)
 
 

@@ -15,7 +15,7 @@ var last_savings_paid = 0
 var market_factor: float = 1.0
 var year = 1
 var month = 1
-
+var total_debt: float = 0.0
 #mission vars
 var mission_templates = [
 	{"type": "houses",       "min_target": 5,  "max_target": 50,  "min_deadline": 5,  "max_deadline": 30, "desc_base": "Own %d houses"},
@@ -265,7 +265,7 @@ func recalculate_expenses() -> void:
 		for mod in loans_ui.active_loan_mods:
 			if is_instance_valid(mod) and mod.autopay_enabled:
 				Expenses += mod.payment
-				net_worth -= mod.loan_amount
+	
 
 func add_starter_loan():
 	if difficulty < 0 or difficulty > 3:
