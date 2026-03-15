@@ -2,6 +2,7 @@ extends Control
 
 
 func _on_button_pressed() -> void:
+	Engine.time_scale = 1
 	SaveAndLoad.delete_save_file(SaveAndLoad.current_save_slot)
 	$"../.."._on_yes_pressed()
 

@@ -28,7 +28,7 @@ var mission_templates = [
 var mission_active: bool = false
 var mission_type: String = ""
 var mission_target: int = 0  # int for most; net_worth can be float→int
-var mission_deadline_year: int = 0
+var mission_deadline_year: int = 999
 var mission_desc: String = ""  # Formatted desc (e.g. "Own 23 houses")
 var mission_completed: bool = false
 
@@ -102,7 +102,7 @@ func reset():
 	mission_active = false
 	mission_type = ""
 	mission_target = 0
-	mission_deadline_year = 0
+	mission_deadline_year = 999
 	mission_completed = false
 	#skills
 	skillpoints = 1

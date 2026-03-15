@@ -10,9 +10,7 @@ var house = null
 @onready var mission_win_panel: Control = $HUD/MissionWin
 @onready var game_over_panel: Control = $HUD/GAME_OVER
 
-
 func _ready() -> void:
-	
 	call_deferred("apply_loaded_data_deferred")
 	
 	get_tree().root.get_viewport().transparent_bg = true
@@ -62,27 +60,36 @@ func add_comma_to_int(value: int) -> String:
 
 func _process(delta: float) -> void:
 	if Globals.mission_active and not Globals.mission_completed:
+		# ─── WIN CHECK ────────────────────────────────────────
 		if Globals.is_mission_complete():
 			Globals.mission_completed = true
 			if mission_win_panel:
 				mission_win_panel.visible = true
-			Globals.skillpoints += 100
 			Engine.time_scale = 0
-			
+			print("MISSION WIN - ", Globals.mission_desc)
+			return   # early out so we don't accidentally check fail
+
+		# ─── LOSE CHECK ───────────────────────────────────────
+		# Fail if we've passed the end of the deadline year
+		var past_deadline = false
 		
-		# Fail at the END of the deadline year (after month 12)
-		elif Globals.year > Globals.mission_deadline_year or \
-			 (Globals.year == Globals.mission_deadline_year):
+		if Globals.year > Globals.mission_deadline_year:
+			past_deadline = true
+		elif Globals.year == Globals.mission_deadline_year and Globals.month > 12:
+			past_deadline = true 
 			
-			Globals.mission_completed = true
+		if past_deadline:
+			Globals.mission_completed = true 
 			if game_over_panel:
 				game_over_panel.visible = true
-				var info_label = game_over_panel.get_node_or_null("Info")
-				if info_label and info_label is Label:
-					info_label.text = "Mission Failed!\n" + Globals.mission_desc + "\nTime ran out!"
-
+				var info = game_over_panel.get_node_or_null("Info")
+				if info:
+					info.text = "Mission Failed!\n" + Globals.mission_desc + "\nTime's up!"
+				else:
+					print("Warning: No 'Info' label in GAME_OVER panel")
 			Engine.time_scale = 0
-
+			print("MISSION FAILED - year:", Globals.year, "deadline was:", Globals.mission_deadline_year)
+		
 	# UI scale
 	$HUD.scale = Vector2(Settings.UI_scale, Settings.UI_scale)
 

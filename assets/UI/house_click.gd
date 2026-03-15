@@ -195,6 +195,7 @@ func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node 
 	$Label3D5.text = ""
 	bought_price = buy_price
 	has_loan = use_loan
+	Globals.exp += buy_price/100000
 	Globals.net_worth += buy_price
 	Listing_ui.visible = false
 	if use_loan:
