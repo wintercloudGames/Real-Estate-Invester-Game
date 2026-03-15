@@ -253,8 +253,6 @@ func trigger_crash():
 	next_crash_months = randi_range(min_crash_months, max_crash_months)
 	is_crashing = false
 
-	# Optional player impact during crash
-	Globals.money *= 0.9  # Lose 10% money, adjust as needed
 
 func update_game_economy():
 	var market_change = (current_price - previous_price) / previous_price if previous_price != 0 else 0

@@ -115,6 +115,7 @@ func _on_autopay_toggled(toggled: bool) -> void:
 func _on_timer_timeout() -> void:
 	if autopay_enabled and Globals.money >= payment:
 		_on_make_payment_pressed()
+		Globals.exp += 1
 	elif autopay_enabled and Globals.money < payment:
 		show_floating_label("Missed Loan Payment: Insufficient Funds", Color.RED)
 		Globals.exp += 1

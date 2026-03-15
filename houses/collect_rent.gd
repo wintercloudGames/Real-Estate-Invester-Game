@@ -16,8 +16,6 @@ func _ready() -> void:
 	if not house.owned:
 		$Dollar_sign.visible = false
 		$Label3D.text = ""
-	payment_delay_timer = Timer.new()
-	payment_delay_timer.one_shot = true
 	
 func reset():
 	rent_paid = false
@@ -35,13 +33,9 @@ func _on_payment_delay_timeout():
 		tenant_pays_rent()
 
 func _on_rent_collect_timeout():
-	collect_rent()
 	if Globals.hasagent:
+		collect_rent()
 		rent_collect_timer.start(2.0)
-
-func _on_agent_status_changed(new_status: bool):
-	if not new_status:
-		rent_collect_timer.stop()
 
 func Month_timer():
 	if not house.owned:
@@ -63,7 +57,7 @@ func Month_timer():
 				house.is_listed = true
 			return  # Exit to avoid redundant checks after tenant removal
 			
-	if house.has_tenant and house.lease_length > 0 and payment_delay_timer.time_left <= 0 and stored_cash < max_cash:
+	if house.has_tenant and payment_delay_timer.time_left <= 0 and stored_cash < max_cash:
 		var base_punctuality_percent = house.payment_punctuality * 100.0
 		var monthly_punctuality = base_punctuality_percent * randf_range(0.85, 1.15)
 		monthly_punctuality = clamp(monthly_punctuality, 0.0, 100.0)
@@ -98,6 +92,7 @@ func show_floating_label(message: String, color: Color) -> void:
 	tween.tween_callback(label.queue_free)
 
 func collect_rent():
+	print("collect_rent() called - giving player $", stored_cash)
 	if not house.owned:
 		$Dollar_sign.visible = false
 		$Label3D.text = ""

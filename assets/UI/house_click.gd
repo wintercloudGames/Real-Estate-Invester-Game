@@ -18,6 +18,7 @@ var is_listed = false
 var edit_mode = false
 var stored_cash = 0
 
+
 @onready var Collect_Rent = $Collect_Rent
 @onready var Listing_ui: Node = get_node("/root/Root/UserInterface/Game/HUD/House_listing_ui")
 @onready var events: Node = get_node("/root/Root/UserInterface/Game/events")
@@ -41,7 +42,7 @@ func _init():
 	add_to_group("houses")
 
 func _ready() -> void:
-
+	Globals.month_ended.connect($Collect_Rent.Month_timer)
 	if not is_building:
 		setup_yard_editor()
 	if id == "":
@@ -210,12 +211,11 @@ func collect_rent():
 	$Collect_Rent.collect_rent()
 
 func _on_timer_timeout() -> void:
+	#$Timer.start()
 	if Collect_Rent != null:
 		Collect_Rent.Month_timer()
 	if loan_price > 0 and owned:
 		loan_price -= mortgage
-		#Globals.credit_score += 1
-		#Globals.money_out(mortgage)
 		var loans_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans")
 		if loans_ui and is_instance_valid(loans_ui):
 			for mod in loans_ui.active_loan_mods:

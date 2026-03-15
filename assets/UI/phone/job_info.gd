@@ -53,7 +53,7 @@ func update_rewards() -> void:
 	var base_rewards = [25, 150, 400, 1000, 1500] 
 	rewards = []
 	for i in range(base_rewards.size()):
-		var bonus_multiplier = 1.0 + (Globals.work_bonus * 0.01)  
+		var bonus_multiplier = 1.0 + (Globals.work_bonus * 0.1)  
 		var final_reward = base_rewards[i] * bonus_multiplier
 		rewards.append(int(final_reward))
 		# Update button tooltip with reward
@@ -97,7 +97,7 @@ func complete_task(job_index: int) -> void:
 	Globals.exp += 2 + (job_index * 2)
 	task_started[job_index] = false
 	job_in_progress = false
-	Globals.money += rewards[job_index]  # Removed +5 for clarity
+	Globals.money += rewards[job_index] 
 	show_floating_label("Earned $%s" % add_comma_to_int(rewards[job_index]), Color.GREEN)
 
 # Adjusts task speed based on player stats

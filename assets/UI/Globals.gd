@@ -146,6 +146,7 @@ var normal_loan_added = false
 var interest = Savings_balance * interest_rate
 var player_has_employees: bool = false
 
+signal month_ended
 signal money_in_detect(in_value)
 signal money_out_detect(out_value)
 
@@ -296,13 +297,12 @@ func caculate_networth():
 	pass
 
 func monthy():
-	money -= Expenses
 	if money < 0:
 		negative_month_count += 1
 		credit_score -= 10
 	else:
 		negative_month_count = 0
-	
+	emit_signal("month_ended")
 	if net_worth > 0:
 		var debt_ratio = total_loan_amount / float(net_worth)
 		if debt_ratio > 0.8:

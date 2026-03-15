@@ -90,8 +90,10 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0.130532, 2.49709, 0.01
 billboard = 1
 
 [node name="payment_delay_timer" type="Timer" parent="."]
+one_shot = true
 
 [node name="rent_collect_timer" type="Timer" parent="."]
+one_shot = true
 
 [node name="Yard_editor" type="Node3D" parent="."]
 script = ExtResource("6_nyuei")

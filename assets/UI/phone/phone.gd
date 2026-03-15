@@ -125,7 +125,6 @@ func _on_music_player_pressed() -> void:
 func _on_settings_pressed() -> void:
 	$options.visible = true
 
-
 func _on_house_info_pressed() -> void:
 	$house_info.visible = true
 

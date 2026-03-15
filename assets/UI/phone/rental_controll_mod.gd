@@ -44,22 +44,36 @@ func _process(_delta: float) -> void:
 		cash_flow.text = "cashflow: " + add_comma_to_int(flow)
 	update_tenant_buttons()
 
-func update_tenant_buttons():
-	if house:
-		if house.paid_rent:
-			rent_button.visible = true
-			$HBoxContainer2/Rent_ready.visible = true
+func update_tenant_buttons() -> void:
+	if not house:
+		# Hide everything if no house selected
+		rent_button.visible = false
+		$HBoxContainer2/Rent_ready.visible = false
+		remove_tenent_button.visible = false
+		list_for_rent_button.visible = false
+		return
+
+	# ─── Rent collection button ───
+	var rent_ready = house.get_node_or_null("Collect_Rent/Dollar_sign")
+	var is_rent_ready = rent_ready and rent_ready.visible
+	
+	rent_button.visible = is_rent_ready
+	$HBoxContainer2/Rent_ready.visible = is_rent_ready   # Assuming this is a label/icon saying "Rent Ready!"
+
+	# ─── Tenant management buttons ───
+	if house.has_tenant:
+		# Has tenant → show Remove, hide List
+		remove_tenent_button.visible = true
+		list_for_rent_button.visible = false
+	else:
+		# No tenant
+		remove_tenent_button.visible = false
+		
+		if house.is_listed:
+			# Already listed → hide List button (maybe show "Listed" label instead?)
+			list_for_rent_button.visible = false
 		else:
-			rent_button.visible = false
-			$HBoxContainer2/Rent_ready.visible = false
-		if house.has_tenant:
-			remove_tenent_button.visible = true
-			list_for_rent_button.visible = false
-		if house.is_listed and not house.has_tenant:
-			remove_tenent_button.visible = false
-			list_for_rent_button.visible = false
-		if not house.is_listed and not house.has_tenant:
-			remove_tenent_button.visible = false
+			# No tenant and not listed → show List for Rent
 			list_for_rent_button.visible = true
 
 func add_comma_to_int(value: int) -> String:

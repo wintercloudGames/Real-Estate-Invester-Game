@@ -43,10 +43,9 @@ func apply_loaded_data_deferred() -> void:
 	
 	await get_tree().process_frame
 	
-	print("Post-load check - year:", Globals.year, "deadline:", Globals.mission_deadline_year)
 	
 	if Globals.mission_active and Globals.year > Globals.mission_deadline_year:
-		print("Load-time MISSION FAIL - forcing GAME_OVER")
+
 		if game_over_panel:
 			game_over_panel.visible = true
 			var info = game_over_panel.get_node_or_null("Info")
@@ -69,20 +68,19 @@ func _process(delta: float) -> void:
 				mission_win_panel.visible = true
 			Globals.skillpoints += 100
 			Engine.time_scale = 0
-			print("MISSION WIN triggered")
+			
 		
 		# Fail at the END of the deadline year (after month 12)
 		elif Globals.year > Globals.mission_deadline_year or \
-			 (Globals.year == Globals.mission_deadline_year and Globals.month > 12):
-			print("MISSION FAIL - Year ", Globals.year, " > Deadline ", Globals.mission_deadline_year)
+			 (Globals.year == Globals.mission_deadline_year):
+			
 			Globals.mission_completed = true
 			if game_over_panel:
 				game_over_panel.visible = true
 				var info_label = game_over_panel.get_node_or_null("Info")
 				if info_label and info_label is Label:
 					info_label.text = "Mission Failed!\n" + Globals.mission_desc + "\nTime ran out!"
-				else:
-					print("WARNING: No 'Info' Label found in GAME_OVER")
+
 			Engine.time_scale = 0
 
 	# UI scale
@@ -142,8 +140,6 @@ func _process(delta: float) -> void:
 			if house.is_listed:
 				Globals.listed_houses += 1
 
-	# Personal & other loans (from loan mods)
-	# Personal & other loans
 	var loans_ui = $HUD/Phone/Loans
 	if loans_ui:
 		for mod in loans_ui.active_loan_mods:
@@ -151,12 +147,10 @@ func _process(delta: float) -> void:
 				var balance = mod.loan_balance
 				if typeof(balance) == TYPE_FLOAT or typeof(balance) == TYPE_INT:
 					Globals.total_debt += float(balance)  # force float
-				else:
-					print("WARNING: Invalid loan_balance type:", typeof(balance), " - skipping")
+
 	if typeof(Globals.total_debt) == TYPE_FLOAT or typeof(Globals.total_debt) == TYPE_INT:
 		Globals.net_worth -= float(Globals.total_debt)
-	else:
-		print("CRASH AVOIDED - total_debt is not a number! Type:", typeof(Globals.total_debt))
+
 	Globals.total_debt = 0.0  # emergency reset
 	# Final net worth = assets - all debt
 	Globals.net_worth -= Globals.total_debt
@@ -220,6 +214,7 @@ func _input(event):
 		$HUD/UI/Skill_tree.visible = false
 
 func _on_yes_pressed() -> void:
+	Engine.time_scale = 1
 	var ui_node = get_tree().get_current_scene().get_node("UserInterface")
 	var parent_node = ui_node.get_parent()
 	if parent_node and parent_node.has_method("_display_main_menu"):
