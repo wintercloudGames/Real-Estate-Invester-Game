@@ -3,6 +3,7 @@ extends Node
 var money = 0
 var Propertys = 0
 var credit_score = 600
+var credit_history: Array = [600]
 var listed_houses = 0
 var first_start = false
 var active_loans: Array = []
@@ -167,6 +168,12 @@ func handle_overflow(current_value: float, add_amount: float, max_value: float) 
 		"overflowed": overflow > 0
 	}
 
+func record_credit_score():
+	credit_history.append(credit_score)
+	# Keep only the last 20 entries to prevent the graph from getting too crowded
+	if credit_history.size() > 15:
+		credit_history.pop_front()
+
 func _process(delta: float) -> void:
 	if exp >= exp_to_level:
 		var overflow = exp - exp_to_level
@@ -297,18 +304,13 @@ func caculate_networth():
 	pass
 
 func monthy():
+	record_credit_score()
 	if money < 0:
 		negative_month_count += 1
 		credit_score -= 10
 	else:
 		negative_month_count = 0
 	emit_signal("month_ended")
-	if net_worth > 0:
-		var debt_ratio = total_loan_amount / float(net_worth)
-		if debt_ratio > 0.8:
-			credit_score -= 5  # High debt penalty
-		elif debt_ratio < 0.3:
-			credit_score += 3  # Low debt bonus
 	
 	month += 1
 	if month >= 12:

@@ -92,7 +92,6 @@ func update_ui():
 			
 	
 	if $"../Phone/house_manager/ScrollContainer/Rental_mod_Container".get_child_count() < 0:
-		Globals.credit_score -= 0.01
 		push_warning("Rental_mod_Container has negative child count, which should be impossible")
 
 func spawn_floating_label(start_pos: Vector2) -> void:

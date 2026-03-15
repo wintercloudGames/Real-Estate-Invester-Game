@@ -78,7 +78,7 @@ func take_loan(amount: int):
 	var monthly_payment = (amount * interest_rate / 12) + (amount / loan_term)
 	Globals.exp += 10
 	Globals.money += amount
-	Globals.credit_score -= 5
+	Globals.credit_score -= randi_range(20,80)
 	Globals.credit_score = clamp(Globals.credit_score, 300, 850)
 	add_loan_mod(monthly_payment, interest_rate, amount, loan_term, 1, null)
 	update_ui()

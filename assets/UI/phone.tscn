@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://bx85w10pr0a6q"]
+[gd_scene load_steps=64 format=3 uid="uid://bx85w10pr0a6q"]
 
 [ext_resource type="Texture2D" uid="uid://b0vmuqioqojfj" path="res://assets/UI/phone/wallpapers/vines-7859445_1280.jpg" id="1_go8ug"]
 [ext_resource type="Texture2D" uid="uid://dsfynj8pp2hyg" path="res://assets/UI/phone/vecteezy_smart-phone-mobile-electronic-device-transparent-screen_6824674-1-removebg-preview.png" id="1_jm7no"]
@@ -50,6 +50,7 @@
 [ext_resource type="Texture2D" uid="uid://bjrq4ciuthpnf" path="res://assets/UI/phone/wallpapers/pexels-mohammed-ajwad-13536287.jpg" id="33_6ogp6"]
 [ext_resource type="Texture2D" uid="uid://ckuxq5m6uhvh4" path="res://assets/UI/phone/wallpapers/pexels-rahulp9800-1212487.jpg" id="34_n5uvf"]
 [ext_resource type="Texture2D" uid="uid://cvlle3kflwc1o" path="res://assets/UI/phone/wallpapers/pexels-viajerocool-4118189.jpg" id="35_rosxa"]
+[ext_resource type="Script" uid="uid://t4lemb0n4mj7" path="res://assets/UI/credit_history.gd" id="35_rrag5"]
 [ext_resource type="Script" uid="uid://q66ppu3j3u3r" path="res://assets/UI/phone/cars.gd" id="37_sguuv"]
 [ext_resource type="Texture2D" uid="uid://dtjgf2drnlsda" path="res://shaded-dark/shadedDark26.png" id="43_uwkqi"]
 [ext_resource type="Script" uid="uid://ccfp667m7bxy7" path="res://assets/UI/phone/hire_help.gd" id="45_beopk"]
@@ -1332,6 +1333,15 @@ horizontal_scroll_mode = 0
 
 [node name="Rental_mod_Container" type="VBoxContainer" parent="credit_info/ScrollContainer"]
 layout_mode = 2
+
+[node name="Credit_history" type="ColorRect" parent="credit_info"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 376.0
+offset_right = 347.0
+offset_bottom = 567.0
+color = Color(0.6015625, 0.6015625, 0.6015625, 1)
+script = ExtResource("35_rrag5")
 
 [node name="house_manager" type="Control" parent="."]
 visible = false

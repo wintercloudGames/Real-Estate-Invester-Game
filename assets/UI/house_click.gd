@@ -201,7 +201,7 @@ func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node 
 	if use_loan:
 		loan_price = float(loan_amount)  # Ensure float
 		mortgage = int(loan_mod.payment if loan_mod and is_instance_valid(loan_mod) else 0)
-		Globals.credit_score -= 5
+		Globals.credit_score -= randi_range(15,80)
 		Globals.credit_score = clamp(Globals.credit_score, 300, 850)
 	else:
 		just_bought = true

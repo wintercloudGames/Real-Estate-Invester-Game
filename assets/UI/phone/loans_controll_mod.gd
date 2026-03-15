@@ -130,6 +130,7 @@ func _on_refinance_pressed() -> void:
 		push_warning("Cannot refinance: no valid house reference for loan %s" % loan_id)
 		show_floating_label("No house to refinance!", Color.RED)
 		return
+	Globals.credit_score -= randi_range(10,100)
 	var new_months: int = 360 # Adjust via UI if needed
 	var new_interest: float = interest - 0.01 if interest > 0.01 else interest
 	var new_payment = calculate_mortgage_payment(loan_balance, new_months, new_interest)
@@ -155,7 +156,7 @@ func _on_payoff_pressed() -> void:
 	if Globals.money >= loan_balance:
 		Globals.money_out(loan_balance)
 		Globals.exp += 5 # Bonus exp for paying off loan
-		Globals.credit_score = clamp(Globals.credit_score + 10, 300, 850)
+		Globals.credit_score = clamp(Globals.credit_score - 10, 300, 850)
 		
 		if house_ref and is_instance_valid(house_ref):
 			house_ref.has_loan = false

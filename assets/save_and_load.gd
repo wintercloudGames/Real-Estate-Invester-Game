@@ -34,6 +34,7 @@ func save_game() -> bool:
 			"money": Globals.money,
 			"first_start": Globals.first_start,
 			"credit_score": Globals.credit_score,
+			"credit_history": Globals.credit_history,
 			"Expenses": Globals.Expenses,
 			"Propertys": Globals.Propertys,
 			"Income": Globals.Income,
@@ -190,6 +191,9 @@ func load_game() -> bool:
 		Globals.money = g.get("money", 5000)
 		Globals.first_start = g.get("first_start", true)
 		Globals.credit_score = g.get("credit_score", 600)
+		Globals.credit_history = g.get("credit_history", [Globals.credit_score])
+		if typeof(Globals.credit_history) != TYPE_ARRAY:
+			Globals.credit_history = [Globals.credit_score]
 		Globals.Expenses = g.get("Expenses", 1000)
 		Globals.Propertys = g.get("Propertys", 0)
 		Globals.Income = g.get("Income", 0)
