@@ -1,9 +1,12 @@
 extends Node
 
-var money = 0
+var money = 0.0
+var brokerage_balance: float = 0.0
 var Propertys = 0
 var credit_score = 600
 var credit_history: Array = [600]
+var portfolio: Dictionary = {} 
+var all_stocks: Array = []
 var listed_houses = 0
 var first_start = false
 var active_loans: Array = []

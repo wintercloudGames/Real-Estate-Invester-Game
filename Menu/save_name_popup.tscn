@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bam3w2ek51l8p"]
 
-[ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://new_theme.tres" id="1_rpy5p"]
+[ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://themes/new_theme.tres" id="1_rpy5p"]
 [ext_resource type="Script" uid="uid://b10fa3ya5jxlp" path="res://Menu/save_name_popup.gd" id="2_wc2lv"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="3_dgxlw"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="4_527dx"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="3_dgxlw"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="4_527dx"]
 
 [node name="SaveNamePopup" type="Panel"]
 z_index = 1000

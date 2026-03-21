@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://beyqfi8xamm2g"]
 
-[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_xp8h1"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_xp8h1"]
 [ext_resource type="Texture2D" uid="uid://cgnu5qy26p7ta" path="res://Textures/Vol_7_1_Tiles_Base_Color.png" id="2_8cb8g"]
 [ext_resource type="Script" uid="uid://b3282ursum31v" path="res://assets/UI/job_offer_mod.gd" id="2_xp8h1"]
 

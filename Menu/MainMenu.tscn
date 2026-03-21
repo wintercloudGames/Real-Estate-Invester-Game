@@ -1,14 +1,14 @@
 [gd_scene load_steps=12 format=3 uid="uid://d1s3cupibr4qf"]
 
-[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_7l2q4"]
-[ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://new_theme.tres" id="1_veryn"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_7l2q4"]
+[ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://themes/new_theme.tres" id="1_veryn"]
 [ext_resource type="Script" uid="uid://cuc2yohs3ilq6" path="res://Menu/main_menu.gd" id="1_x0pbx"]
 [ext_resource type="PackedScene" uid="uid://md8dkoe233f6" path="res://Menu/profile.tscn" id="3_jnm01"]
 [ext_resource type="PackedScene" uid="uid://bam3w2ek51l8p" path="res://Menu/save_name_popup.tscn" id="4_gk4pn"]
 [ext_resource type="Script" uid="uid://hgmr1yfmp0cv" path="res://Menu/settings_menu.gd" id="5_7gsem"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="5_fgdcb"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="5_fgdcb"]
 [ext_resource type="AudioStream" uid="uid://cxxhebwtrm47d" path="res://effects/sounds/ui-pop-sound-316482.mp3" id="6_biqin"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="6_gk4pn"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="6_gk4pn"]
 [ext_resource type="AudioStream" uid="uid://pbljlsxwef84" path="res://effects/sounds/switch.wav" id="7_um3lu"]
 [ext_resource type="AudioStream" uid="uid://ubh812231qff" path="res://music/background-music-piano-soft-380590.mp3" id="8_sfxdn"]
 

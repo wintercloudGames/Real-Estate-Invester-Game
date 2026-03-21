@@ -1,7 +1,8 @@
-[gd_scene load_steps=64 format=3 uid="uid://bx85w10pr0a6q"]
+[gd_scene load_steps=68 format=3 uid="uid://bx85w10pr0a6q"]
 
 [ext_resource type="Texture2D" uid="uid://b0vmuqioqojfj" path="res://assets/UI/phone/wallpapers/vines-7859445_1280.jpg" id="1_go8ug"]
 [ext_resource type="Texture2D" uid="uid://dsfynj8pp2hyg" path="res://assets/UI/phone/vecteezy_smart-phone-mobile-electronic-device-transparent-screen_6824674-1-removebg-preview.png" id="1_jm7no"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_rrag5"]
 [ext_resource type="Script" uid="uid://c0mwwhe17yaj3" path="res://assets/UI/phone/phone.gd" id="1_vu5t8"]
 [ext_resource type="Texture2D" uid="uid://omoauyi58j8" path="res://assets/UI/icons/boombox.png" id="3_014f2"]
 [ext_resource type="Texture2D" uid="uid://c2krvd26nopjp" path="res://assets/UI/icons/big-gear.png" id="4_ldak2"]
@@ -28,23 +29,27 @@
 [ext_resource type="Texture2D" uid="uid://dng1xe3b3kjvy" path="res://assets/UI/icons/home-garage.png" id="14_ykhnr"]
 [ext_resource type="Script" uid="uid://dcd215rdmlmo4" path="res://assets/UI/phone/Savings.gd" id="15_0q7q6"]
 [ext_resource type="Texture2D" uid="uid://lq3cgxnta8g0" path="res://shaded-dark/shadedDark35.png" id="15_22kuw"]
-[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="16_sd00n"]
 [ext_resource type="Texture2D" uid="uid://cac1uprg2un33" path="res://assets/UI/icons/discussion (1).png" id="17_dicc3"]
 [ext_resource type="Script" uid="uid://xtjurhpv63jk" path="res://assets/UI/phone/house_info.gd" id="17_w2s2i"]
 [ext_resource type="Script" uid="uid://e4ubj8lkmcs7" path="res://assets/UI/phone/job_info.gd" id="18_o2bmf"]
 [ext_resource type="Texture2D" uid="uid://dwib34gx67f43" path="res://assets/UI/icons/files.png" id="19_8qstc"]
+[ext_resource type="Texture2D" uid="uid://bvoer3ihdrn7h" path="res://assets/UI/icons/histogram.png" id="20_gxx0m"]
+[ext_resource type="Texture2D" uid="uid://by8usin4jfy1n" path="res://assets/UI/icons/skills.png" id="22_too7c"]
 [ext_resource type="Script" uid="uid://bjo53yytepjk5" path="res://assets/UI/phone/player_stats.gd" id="24_mgvhx"]
 [ext_resource type="Script" uid="uid://b047v4lmufqyx" path="res://assets/UI/phone/backgrounds.gd" id="26_6pd25"]
 [ext_resource type="Script" uid="uid://ewnuutir7auv" path="res://assets/UI/phone/food_market.gd" id="26_q08sx"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="27_80c6r"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="27_80c6r"]
 [ext_resource type="Texture2D" uid="uid://bqgljbd7hiwy0" path="res://assets/UI/phone/wallpapers/pexels-davidmcelwee-10583422.jpg" id="27_grw6u"]
 [ext_resource type="Script" uid="uid://bcdtjv5isxpir" path="res://assets/UI/phone/House_manager.gd" id="28_mfnil"]
 [ext_resource type="Texture2D" uid="uid://c8u6vlun4s7v2" path="res://assets/UI/phone/wallpapers/pexels-eberhardgross-1624496.jpg" id="28_rfb6g"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="28_sevfc"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="28_sevfc"]
 [ext_resource type="Texture2D" uid="uid://i5iwk6db7um0" path="res://assets/UI/phone/wallpapers/pexels-feyzayildirimphoto-13711334.jpg" id="29_qabnp"]
 [ext_resource type="Texture2D" uid="uid://b3w4s2adwvm2p" path="res://assets/UI/phone/wallpapers/pexels-francesco-ungaro-1526713.jpg" id="30_a5q18"]
 [ext_resource type="Script" uid="uid://biep8b24qdfxw" path="res://assets/UI/phone/loans.gd" id="31_4h7ca"]
 [ext_resource type="Texture2D" uid="uid://4romudk0jrcp" path="res://assets/UI/phone/wallpapers/pexels-iamtausifhossain9321-1226302.jpg" id="31_edc7a"]
+[ext_resource type="Theme" uid="uid://cq1ryy15yq022" path="res://themes/stocks_app.tres" id="31_g7aor"]
+[ext_resource type="Script" uid="uid://c5dbi5m3xqf3q" path="res://assets/UI/phone/Stocks/stock_app.gd" id="31_jw8de"]
+[ext_resource type="Script" uid="uid://dfytetcqe5s80" path="res://assets/UI/phone/Stocks/stock_graph.gd" id="31_o8jy6"]
 [ext_resource type="Script" uid="uid://dx0amst0qq0sw" path="res://assets/UI/credit_info.gd" id="31_tbl1g"]
 [ext_resource type="Texture2D" uid="uid://314o6ktdqouc" path="res://assets/UI/phone/wallpapers/pexels-maoriginalphotography-1591382.jpg" id="32_b3aue"]
 [ext_resource type="Texture2D" uid="uid://bjrq4ciuthpnf" path="res://assets/UI/phone/wallpapers/pexels-mohammed-ajwad-13536287.jpg" id="33_6ogp6"]
@@ -54,8 +59,6 @@
 [ext_resource type="Script" uid="uid://q66ppu3j3u3r" path="res://assets/UI/phone/cars.gd" id="37_sguuv"]
 [ext_resource type="Texture2D" uid="uid://dtjgf2drnlsda" path="res://shaded-dark/shadedDark26.png" id="43_uwkqi"]
 [ext_resource type="Script" uid="uid://ccfp667m7bxy7" path="res://assets/UI/phone/hire_help.gd" id="45_beopk"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r0uqf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksmyw"]
 bg_color = Color(0.202419, 0.644531, 0.0226593, 1)
@@ -224,7 +227,7 @@ offset_right = -285.76
 offset_bottom = 1591.7603
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("16_sd00n")
+theme = ExtResource("1_rrag5")
 script = ExtResource("1_vu5t8")
 
 [node name="Wallpaper" type="TextureRect" parent="."]
@@ -237,20 +240,28 @@ texture = ExtResource("27_grw6u")
 expand_mode = 1
 metadata/_edit_lock_ = true
 
-[node name="apps" type="GridContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
-offset_left = -11.0
-offset_right = 1588.0
-offset_bottom = 2950.0
-scale = Vector2(0.2, 0.2)
-pivot_offset = Vector2(40, 43.86)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.000002
+offset_top = 36.00003
+offset_right = 1198.5352
+offset_bottom = 1994.9998
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.215, 0.215)
+
+[node name="apps" type="GridContainer" parent="ScrollContainer"]
+layout_mode = 2
 columns = 3
 
-[node name="music_player" type="TextureButton" parent="apps"]
+[node name="music_player" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("3_014f2")
 
-[node name="Label" type="Label" parent="apps/music_player"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/music_player"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -266,11 +277,11 @@ text = "Music Player"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="settings" type="TextureButton" parent="apps"]
+[node name="settings" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("4_ldak2")
 
-[node name="Label" type="Label" parent="apps/settings"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/settings"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -286,11 +297,11 @@ text = "Settings"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="house_info" type="TextureButton" parent="apps"]
+[node name="house_info" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("5_jshvl")
 
-[node name="Label" type="Label" parent="apps/house_info"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/house_info"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -306,11 +317,11 @@ text = "Info"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="House_manager" type="TextureButton" parent="apps"]
+[node name="House_manager" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("7_xwxf0")
 
-[node name="Label" type="Label" parent="apps/House_manager"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/House_manager"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -329,11 +340,11 @@ text = "House Manager"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Savings" type="TextureButton" parent="apps"]
+[node name="Savings" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("8_rrag5")
 
-[node name="Label" type="Label" parent="apps/Savings"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/Savings"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -349,11 +360,11 @@ text = "Savings"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Loans" type="TextureButton" parent="apps"]
+[node name="Loans" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("7_thg8y")
 
-[node name="Label" type="Label" parent="apps/Loans"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/Loans"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -369,11 +380,11 @@ text = "Loans"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="job" type="TextureButton" parent="apps"]
+[node name="job" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("8_hqtsb")
 
-[node name="Label" type="Label" parent="apps/job"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/job"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -389,11 +400,11 @@ text = "Jobs"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Backgrounds" type="TextureButton" parent="apps"]
+[node name="Backgrounds" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("8_aue8h")
 
-[node name="Label" type="Label" parent="apps/Backgrounds"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/Backgrounds"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -409,12 +420,12 @@ text = "Wallpaper's"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="player_stats" type="TextureButton" parent="apps"]
+[node name="player_stats" type="TextureButton" parent="ScrollContainer/apps"]
 visible = false
 layout_mode = 2
 texture_normal = ExtResource("8_wo1e0")
 
-[node name="Label" type="Label" parent="apps/player_stats"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/player_stats"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -428,11 +439,11 @@ text = "Wallpaper's"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Market" type="TextureButton" parent="apps"]
+[node name="Market" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("11_3pv8a")
 
-[node name="Label" type="Label" parent="apps/Market"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/Market"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -449,11 +460,11 @@ text = "Market
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Food" type="TextureButton" parent="apps"]
+[node name="Food" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("11_jhvj4")
 
-[node name="Label" type="Label" parent="apps/Food"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/Food"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -469,11 +480,11 @@ text = "Food"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Renters" type="TextureButton" parent="apps"]
+[node name="Renters" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("12_68fqo")
 
-[node name="Label" type="Label" parent="apps/Renters"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/Renters"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -489,7 +500,7 @@ text = "Rent Offers"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="apps/Renters"]
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/apps/Renters"]
 visible = false
 clip_contents = true
 layout_mode = 1
@@ -506,7 +517,7 @@ mouse_filter = 2
 texture = ExtResource("14_ybpqr")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="apps/Renters/TextureRect"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/Renters/TextureRect"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -523,11 +534,11 @@ text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Car_info" type="TextureButton" parent="apps"]
+[node name="Car_info" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("13_57iru")
 
-[node name="Label" type="Label" parent="apps/Car_info"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/Car_info"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -543,7 +554,7 @@ text = "Car"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="apps/Car_info"]
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/apps/Car_info"]
 visible = false
 clip_contents = true
 layout_mode = 1
@@ -560,11 +571,11 @@ mouse_filter = 2
 texture = ExtResource("14_ybpqr")
 expand_mode = 1
 
-[node name="Hire_help" type="TextureButton" parent="apps"]
+[node name="Hire_help" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("17_dicc3")
 
-[node name="Label" type="Label" parent="apps/Hire_help"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/Hire_help"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -580,7 +591,7 @@ text = "Hire Help"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="apps/Hire_help"]
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/apps/Hire_help"]
 visible = false
 clip_contents = true
 layout_mode = 1
@@ -597,16 +608,37 @@ mouse_filter = 2
 texture = ExtResource("14_ybpqr")
 expand_mode = 1
 
-[node name="car_carrage" type="TextureButton" parent="apps"]
+[node name="car_carrage" type="TextureButton" parent="ScrollContainer/apps"]
 visible = false
 layout_mode = 2
 texture_normal = ExtResource("14_ykhnr")
 
-[node name="Credit_display" type="TextureButton" parent="apps"]
+[node name="Stock_Market" type="TextureButton" parent="ScrollContainer/apps"]
+layout_mode = 2
+texture_normal = ExtResource("20_gxx0m")
+
+[node name="Label" type="Label" parent="ScrollContainer/apps/Stock_Market"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Stock_Market
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Credit_display" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
 texture_normal = ExtResource("19_8qstc")
 
-[node name="Label" type="Label" parent="apps/Credit_display"]
+[node name="Label" type="Label" parent="ScrollContainer/apps/Credit_display"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -626,7 +658,7 @@ text = "Credt Score"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="apps/Credit_display"]
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/apps/Credit_display"]
 visible = false
 clip_contents = true
 layout_mode = 1
@@ -643,10 +675,10 @@ mouse_filter = 2
 texture = ExtResource("14_ybpqr")
 expand_mode = 1
 
-[node name="firestorm" type="TextureButton" parent="apps"]
+[node name="firestorm" type="TextureButton" parent="ScrollContainer/apps"]
 visible = false
 layout_mode = 2
-texture_normal = SubResource("CompressedTexture2D_r0uqf")
+texture_normal = ExtResource("22_too7c")
 script = ExtResource("9_3hjvo")
 
 [node name="options" type="Control" parent="."]
@@ -928,6 +960,227 @@ horizontal_alignment = 1
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music_player/ScrollContainer/VBoxContainer"]
 bus = &"Music"
 script = ExtResource("11_uys8f")
+
+[node name="Stock_app" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("31_g7aor")
+script = ExtResource("31_jw8de")
+
+[node name="TradingView" type="Panel" parent="Stock_app"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 13.0
+offset_right = 353.0
+offset_bottom = 633.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Stock_price" type="Label" parent="Stock_app/TradingView"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 131.0
+offset_right = 333.0
+offset_bottom = 180.0
+theme_override_font_sizes/font_size = 31
+text = "Stock price!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="StockName" type="Label" parent="Stock_app/TradingView"]
+visible = false
+layout_mode = 0
+offset_top = 65.0
+offset_right = 330.0
+offset_bottom = 87.0
+theme_override_font_sizes/font_size = 18
+text = "Stock NAME!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="DividendYield" type="Label" parent="Stock_app/TradingView"]
+layout_mode = 0
+offset_left = 166.0
+offset_top = 470.0
+offset_right = 311.0
+offset_bottom = 492.0
+theme_override_font_sizes/font_size = 10
+text = "dividend yeld"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="DividendPayout" type="Label" parent="Stock_app/TradingView"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 469.0
+offset_right = 143.0
+offset_bottom = 491.0
+theme_override_font_sizes/font_size = 10
+text = "Dividend pay"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="StockTicker" type="Label" parent="Stock_app/TradingView"]
+layout_mode = 0
+offset_top = 112.0
+offset_right = 330.0
+offset_bottom = 149.0
+theme_override_font_sizes/font_size = 15
+text = "Stock TICKER!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="stock_graph" type="Control" parent="Stock_app/TradingView"]
+anchors_preset = 0
+offset_left = 3.0
+offset_top = 236.0
+offset_right = 337.0
+offset_bottom = 460.0
+script = ExtResource("31_o8jy6")
+
+[node name="Back_Button" type="Button" parent="Stock_app/TradingView"]
+layout_mode = 0
+offset_left = 247.0
+offset_top = 18.0
+offset_right = 322.0
+offset_bottom = 52.0
+text = "BACK"
+
+[node name="BuyButton" type="Button" parent="Stock_app/TradingView"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 509.0
+offset_right = 157.0
+offset_bottom = 567.0
+text = "BUY"
+
+[node name="SellButton" type="Button" parent="Stock_app/TradingView"]
+layout_mode = 0
+offset_left = 178.0
+offset_top = 510.0
+offset_right = 319.0
+offset_bottom = 569.0
+text = "SELL"
+
+[node name="TradePopup" type="Panel" parent="Stock_app/TradingView"]
+visible = false
+layout_mode = 0
+offset_left = 50.0
+offset_top = 203.0
+offset_right = 295.0
+offset_bottom = 369.0
+theme = ExtResource("1_rrag5")
+
+[node name="AmountInput" type="LineEdit" parent="Stock_app/TradingView/TradePopup"]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 21.0
+offset_right = 221.0
+offset_bottom = 56.0
+theme = ExtResource("31_g7aor")
+
+[node name="TotalCostLabel" type="Label" parent="Stock_app/TradingView/TradePopup"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 72.0
+offset_right = 91.0
+offset_bottom = 92.0
+theme = ExtResource("31_g7aor")
+
+[node name="TitleLabel" type="Label" parent="Stock_app/TradingView/TradePopup"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 22.0
+offset_right = 90.0
+offset_bottom = 42.0
+
+[node name="ConfirmTradeButton" type="Button" parent="Stock_app/TradingView/TradePopup"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 117.0
+offset_right = 109.0
+offset_bottom = 153.0
+theme = ExtResource("31_g7aor")
+text = "Confirm"
+
+[node name="CancelTradeButton" type="Button" parent="Stock_app/TradingView/TradePopup"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 119.0
+offset_right = 227.0
+offset_bottom = 155.0
+theme = ExtResource("31_g7aor")
+text = "Cancel"
+
+[node name="PortfolioSummary" type="Panel" parent="Stock_app"]
+visible = false
+layout_mode = 0
+offset_left = 8.0
+offset_top = 1.0
+offset_right = 352.0
+offset_bottom = 621.0
+
+[node name="Label" type="Label" parent="Stock_app/PortfolioSummary"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 92.0
+offset_right = 345.0
+offset_bottom = 223.0
+text = "$9,000"
+clip_text = true
+
+[node name="Fund_account" type="Button" parent="Stock_app/PortfolioSummary"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 561.0
+offset_right = 163.0
+offset_bottom = 596.0
+text = "FUND ACCOUNT"
+
+[node name="Withdraw" type="Button" parent="Stock_app/PortfolioSummary"]
+layout_mode = 0
+offset_left = 181.0
+offset_top = 561.0
+offset_right = 325.0
+offset_bottom = 596.0
+text = "WITHDRAW"
+
+[node name="AmountInput" type="LineEdit" parent="Stock_app/PortfolioSummary"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 507.0
+offset_right = 282.0
+offset_bottom = 542.0
+
+[node name="DividendTimerLabel" type="Label" parent="Stock_app/PortfolioSummary"]
+layout_mode = 0
+offset_left = 190.0
+offset_top = 47.0
+offset_right = 312.0
+offset_bottom = 91.0
+
+[node name="MarketList" type="ScrollContainer" parent="Stock_app"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 199.0
+offset_right = 334.0
+offset_bottom = 500.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Stock_app/MarketList"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
 
 [node name="Savings" type="Control" parent="."]
 visible = false
@@ -1336,10 +1589,10 @@ layout_mode = 2
 
 [node name="Credit_history" type="ColorRect" parent="credit_info"]
 layout_mode = 0
-offset_left = 10.0
+offset_left = 28.0
 offset_top = 376.0
-offset_right = 347.0
-offset_bottom = 567.0
+offset_right = 335.0
+offset_bottom = 582.0
 color = Color(0.6015625, 0.6015625, 0.6015625, 1)
 script = ExtResource("35_rrag5")
 
@@ -1890,23 +2143,24 @@ libraries = {
 &"": SubResource("AnimationLibrary_l32jq")
 }
 
-[connection signal="pressed" from="apps/music_player" to="." method="_on_music_player_pressed"]
-[connection signal="pressed" from="apps/settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="apps/house_info" to="." method="_on_house_info_pressed"]
-[connection signal="pressed" from="apps/House_manager" to="." method="_on_house_manager_pressed"]
-[connection signal="pressed" from="apps/Savings" to="." method="_on_savings_pressed"]
-[connection signal="pressed" from="apps/Loans" to="." method="_on_loans_pressed"]
-[connection signal="pressed" from="apps/job" to="." method="_on_job_pressed"]
-[connection signal="pressed" from="apps/Backgrounds" to="." method="_on_backgrounds_pressed"]
-[connection signal="pressed" from="apps/player_stats" to="." method="_on_player_stats_pressed"]
-[connection signal="pressed" from="apps/Market" to="." method="_on_market_pressed"]
-[connection signal="pressed" from="apps/Food" to="." method="_on_food_pressed"]
-[connection signal="pressed" from="apps/Renters" to="." method="_on_renters_pressed"]
-[connection signal="pressed" from="apps/Car_info" to="." method="_on_car_info_pressed"]
-[connection signal="pressed" from="apps/Hire_help" to="." method="_on_hire_help_pressed"]
-[connection signal="pressed" from="apps/car_carrage" to="." method="_on_car_carrage_pressed"]
-[connection signal="pressed" from="apps/Credit_display" to="." method="_on_credit_display_pressed"]
-[connection signal="pressed" from="apps/firestorm" to="apps/firestorm" method="_on_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/music_player" to="." method="_on_music_player_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/house_info" to="." method="_on_house_info_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/House_manager" to="." method="_on_house_manager_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/Savings" to="." method="_on_savings_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/Loans" to="." method="_on_loans_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/job" to="." method="_on_job_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/Backgrounds" to="." method="_on_backgrounds_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/player_stats" to="." method="_on_player_stats_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/Market" to="." method="_on_market_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/Food" to="." method="_on_food_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/Renters" to="." method="_on_renters_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/Car_info" to="." method="_on_car_info_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/Hire_help" to="." method="_on_hire_help_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/car_carrage" to="." method="_on_car_carrage_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/Stock_Market" to="." method="_on_stock_market_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/Credit_display" to="." method="_on_credit_display_pressed"]
+[connection signal="pressed" from="ScrollContainer/apps/firestorm" to="ScrollContainer/apps/firestorm" method="_on_pressed"]
 [connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Master_slider" to="options" method="_on_master_slider_value_changed"]
 [connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Music_slider" to="options" method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Sound_slider" to="options" method="_on_Sound_slider_value_changed"]
@@ -1917,6 +2171,11 @@ libraries = {
 [connection signal="toggled" from="Music_player/ScrollContainer/VBoxContainer/HBoxContainer/play_music" to="Music_player" method="_on_play_music_toggled"]
 [connection signal="pressed" from="Music_player/ScrollContainer/VBoxContainer/HBoxContainer/skip_song" to="Music_player" method="_on_skip_song_pressed"]
 [connection signal="finished" from="Music_player/ScrollContainer/VBoxContainer/AudioStreamPlayer" to="Music_player/ScrollContainer/VBoxContainer/AudioStreamPlayer" method="_on_song_finished"]
+[connection signal="pressed" from="Stock_app/TradingView/Back_Button" to="Stock_app" method="_on_back_pressed"]
+[connection signal="pressed" from="Stock_app/TradingView/BuyButton" to="Stock_app" method="_on_buy_pressed"]
+[connection signal="pressed" from="Stock_app/TradingView/SellButton" to="Stock_app" method="_on_sell_pressed"]
+[connection signal="pressed" from="Stock_app/PortfolioSummary/Fund_account" to="Stock_app" method="_on_fund_account_pressed"]
+[connection signal="pressed" from="Stock_app/PortfolioSummary/Withdraw" to="Stock_app" method="_on_withdraw_pressed"]
 [connection signal="pressed" from="Savings/TabContainer/Savings/RemoveAllFundsButton" to="Savings" method="_on_remove_all_funds_button_pressed"]
 [connection signal="toggled" from="Savings/TabContainer/Savings/Send_intrest_to" to="Savings" method="_on_send_intrest_to_toggled"]
 [connection signal="pressed" from="Loans/TabContainer/Addloan/TakeLoanButton" to="Loans" method="_on_take_loan_button_pressed"]

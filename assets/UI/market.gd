@@ -1,8 +1,8 @@
 extends Node
 
 # Market parameters
-@export var min_growth_rate: float = -0.005  
-@export var max_growth_rate: float = 0.005 
+@export var min_growth_rate: float = -0.005
+@export var max_growth_rate: float = 0.005
 @export var min_crash_months: int = 12
 @export var max_crash_months: int = 36
 @export var crash_severity_min: float = 0.20

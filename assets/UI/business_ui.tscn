@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://cgacn6h05bvs2"]
 
 [ext_resource type="Script" uid="uid://cmendsxboc4ur" path="res://assets/UI/business_ui.gd" id="1_en58h"]
-[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_tllg2"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="5_44lhv"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_tllg2"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="5_44lhv"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="5_lm838"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="6_gbehf"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="6_gbehf"]
 
 [node name="Business_UI" type="Control"]
 layout_mode = 3

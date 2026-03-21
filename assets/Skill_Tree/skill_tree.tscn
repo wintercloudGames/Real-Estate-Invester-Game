@@ -1,9 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://cichm52kww3cn"]
+[gd_scene load_steps=21 format=3 uid="uid://cichm52kww3cn"]
 
+[ext_resource type="Theme" uid="uid://b45etg3nfmcio" path="res://themes/nice_dark_blue.tres" id="1_b6kc5"]
 [ext_resource type="Script" uid="uid://fnvw4y8aim38" path="res://assets/Skill_Tree/skill_tree.gd" id="1_nig2w"]
-[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_rsuch"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="2_dukmi"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="3_nig2w"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_rsuch"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="2_dukmi"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="3_nig2w"]
 [ext_resource type="PackedScene" uid="uid://yl0bxn3mvjem" path="res://assets/Skill_Tree/Skill_Button.tscn" id="6_2tli5"]
 [ext_resource type="Texture2D" uid="uid://bnkc5mcrjvmmp" path="res://shaded-dark/shadedDark30.png" id="6_treql"]
 [ext_resource type="Script" uid="uid://d2n6iol3bgvl0" path="res://assets/UI/drag_button.gd" id="7_o85cb"]
@@ -31,6 +32,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_b6kc5")
 script = ExtResource("1_nig2w")
 
 [node name="Panel" type="Panel" parent="."]
@@ -53,7 +55,7 @@ offset_right = -753.0
 offset_bottom = -940.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_rsuch")
+theme = ExtResource("1_b6kc5")
 
 [node name="Skill_points_label" type="Label" parent="."]
 layout_mode = 0
@@ -93,9 +95,9 @@ offset_right = -63.0
 offset_bottom = 137.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 61
-theme_override_styles/hover = ExtResource("2_dukmi")
-theme_override_styles/pressed = ExtResource("3_nig2w")
 theme_override_styles/normal = ExtResource("2_dukmi")
+theme_override_styles/pressed = ExtResource("3_nig2w")
+theme_override_styles/hover = ExtResource("2_dukmi")
 text = "CLOSE"
 
 [node name="Cheat_Button" type="Button" parent="."]
@@ -110,9 +112,9 @@ offset_right = -449.0
 offset_bottom = 137.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 61
-theme_override_styles/hover = ExtResource("2_dukmi")
-theme_override_styles/pressed = ExtResource("3_nig2w")
 theme_override_styles/normal = ExtResource("2_dukmi")
+theme_override_styles/pressed = ExtResource("3_nig2w")
+theme_override_styles/hover = ExtResource("2_dukmi")
 text = "CHEAT"
 
 [node name="Drag_Button" type="TextureButton" parent="."]
@@ -131,9 +133,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 0
-offset_left = 24.0
+offset_left = 145.0
 offset_top = 169.0
-offset_right = 1887.0
+offset_right = 1777.0
 offset_bottom = 1039.0
 tab_alignment = 1
 current_tab = 1
@@ -146,7 +148,7 @@ mouse_filter = 2
 metadata/_tab_index = 0
 
 [node name="Rent_houses" parent="TabContainer/House" instance=ExtResource("6_2tli5")]
-layout_mode = 2
+layout_mode = 0
 offset_left = 843.0
 offset_top = 574.0
 offset_right = 971.0

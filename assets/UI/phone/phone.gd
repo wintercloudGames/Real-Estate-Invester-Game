@@ -20,14 +20,14 @@ var frame_counter: int = 0
 func _ready() -> void:
 	# Cache all node references
 	renters_container = $Renters/ScrollContainer/renters
-	renters_texture_rect = $apps/Renters/TextureRect
-	car_info = $apps/Car_info
-	car_info_texture_rect = $apps/Car_info/TextureRect
+	renters_texture_rect =$ScrollContainer/apps/Renters/TextureRect
+	car_info = $ScrollContainer/apps/Car_info
+	car_info_texture_rect = $ScrollContainer/apps/Car_info/TextureRect
 	
 	# Cache UI elements array
 	ui_elements = [
 		$options, $Music_player, $Savings, $house_info, $house_manager,
-		$job_info, $Player_stats,$Loans,
+		$job_info, $Player_stats,$Loans,$Stock_app,
 		$Food_market, $Backgrounds, $Renters, $Car_info, $Hire_help,$credit_info
 	]
 
@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 		if hasrenters != last_renter_count:
 			last_renter_count = hasrenters
 			renters_texture_rect.visible = hasrenters > 0
-			$apps/Renters/TextureRect/Label.text = str(renters_container.get_child_count())
+			$ScrollContainer/apps/Renters/TextureRect/Label.text = str(renters_container.get_child_count())
 		
 		# Check difficulty - only update if changed
 		if Globals.difficulty != last_difficulty:
@@ -55,41 +55,41 @@ func _process(delta: float) -> void:
 
 func unlock_apps():
 	if Globals.has_bank_app == true:
-		$apps/Loans.visible = true
-		$apps/Savings.visible = true
+		$ScrollContainer/apps/Loans.visible = true
+		$ScrollContainer/apps/Savings.visible = true
 	else:
-		$apps/Loans.visible = false
-		$apps/Savings.visible = false
+		$ScrollContainer/apps/Loans.visible = false
+		$ScrollContainer/apps/Savings.visible = false
 	
 	if Globals.has_manager_app == true:
-		$apps/House_manager.visible = true
+		$ScrollContainer/apps/House_manager.visible = true
 	else:
-		$apps/House_manager.visible = false
+		$ScrollContainer/apps/House_manager.visible = false
 		
 	if Globals.credit_app == true:
-		$apps/Credit_display.visible = true
+		$ScrollContainer/apps/Credit_display.visible = true
 	else:
-		$apps/Credit_display.visible = false
+		$ScrollContainer/apps/Credit_display.visible = false
 		
 	if Globals.has_hireing_app == true:
-		$apps/Hire_help.visible = true
+		$ScrollContainer/apps/Hire_help.visible = true
 	else:
-		$apps/Hire_help.visible = false
+		$ScrollContainer/apps/Hire_help.visible = false
 		
 	if Globals.has_market_app == true:
-		$apps/Market.visible = true
+		$ScrollContainer/apps/Market.visible = true
 	else:
-		$apps/Market.visible = false
+		$ScrollContainer/apps/Market.visible = false
 		
 	if Globals.rent_houses == true:
-		$apps/Renters.visible = true
+		$ScrollContainer/apps/Renters.visible = true
 	else:
-		$apps/Renters.visible = false
+		$ScrollContainer/apps/Renters.visible = false
 		
 	if Globals.has_info_app == true:
-		$apps/house_info.visible = true
+		$ScrollContainer/apps/house_info.visible = true
 	else:
-		$apps/house_info.visible = false 
+		$ScrollContainer/apps/house_info.visible = false 
 
 func put_away():
 	$AnimationPlayer.play("put_away")
@@ -167,3 +167,6 @@ func _on_savings_pressed() -> void:
 
 func _on_loans_pressed() -> void:
 	$Loans.visible = true
+
+func _on_stock_market_pressed() -> void:
+	$Stock_app.visible = true

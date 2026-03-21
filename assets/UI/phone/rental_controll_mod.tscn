@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bhk4t3tjwkvji"]
 
 [ext_resource type="Script" uid="uid://b6r5o3ytb05fe" path="res://assets/UI/phone/rental_controll_mod.gd" id="1_3sp5a"]
-[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="1_pocl4"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_pocl4"]
 [ext_resource type="Texture2D" uid="uid://bql3je3n7nto8" path="res://3D assets/Chads/pool_0.png" id="2_qwxxh"]
 
 [node name="Rental_controll_mod" type="Control"]

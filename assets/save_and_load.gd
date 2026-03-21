@@ -32,6 +32,8 @@ func save_game() -> bool:
 		"Globals": {
 			"save_name": Globals.save_name,
 			"money": Globals.money,
+			"brokerage_balance": Globals.brokerage_balance,
+			"portfolio": Globals.portfolio,
 			"first_start": Globals.first_start,
 			"credit_score": Globals.credit_score,
 			"credit_history": Globals.credit_history,
@@ -86,9 +88,14 @@ func save_game() -> bool:
 			"credit_app": Globals.credit_app
 		},
 		"Houses": [],
-		"Loans": []
+		"Loans": [],
+		"Market": {}
 	}
-
+	for stock in Globals.all_stocks:
+		data["Market"][stock.ticker] = {
+			"current_price": stock.current_price,
+			"price_history": stock.price_history
+		}
 	# Save house data
 	var houses = get_tree().get_nodes_in_group("houses")
 	
@@ -189,6 +196,8 @@ func load_game() -> bool:
 		# Existing important ones (add more as needed)
 		Globals.save_name = g.get("save_name", "My Save")
 		Globals.money = g.get("money", 5000)
+		Globals.brokerage_balance = g.get("brokerage_balance", 0.0)
+		Globals.portfolio = g.get("portfolio", {})
 		Globals.first_start = g.get("first_start", true)
 		Globals.credit_score = g.get("credit_score", 600)
 		Globals.credit_history = g.get("credit_history", [Globals.credit_score])
@@ -227,7 +236,24 @@ func load_game() -> bool:
 		
 		print("Loaded mission_active:", Globals.mission_active)
 		print("Loaded mission_desc:", Globals.mission_desc)
-
+	
+	# 1. Safely Load Market Data (Price and History)
+	if loaded_data.has("Market"):
+		var m_data = loaded_data["Market"]
+		for stock in Globals.all_stocks:
+			if m_data.has(stock.ticker):
+				var stock_save = m_data[stock.ticker]
+				stock.current_price = stock_save.get("current_price", stock.current_price)
+				
+				# Safely handle the history array
+				var saved_history = stock_save.get("price_history", [])
+				if not saved_history.is_empty():
+					stock.price_history.clear()
+					for val in saved_history:
+						stock.price_history.append(float(val))
+	else:
+		push_warning("SaveAndLoad: No 'Market' data found in this save slot. Skipping.")
+		
 	if loaded_data.has("Skills"):
 		for key in loaded_data["Skills"]:
 			if key in Globals:
@@ -393,6 +419,8 @@ func create_new_profile(slot: int) -> bool:
 		"Globals": {
 			"save_name": Globals.save_name,
 			"money": 5000,
+			"brokerage_balance": 0.0,
+			"portfolio": {},
 			"Expenses": 1000,
 			"Income": 0,
 			"credit_score": 600,

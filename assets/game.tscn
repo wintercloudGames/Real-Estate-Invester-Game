@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=4 uid="uid://cung7j0rgqmwu"]
+[gd_scene load_steps=111 format=4 uid="uid://cung7j0rgqmwu"]
 
 [ext_resource type="Script" uid="uid://cq2g8tdj47vbe" path="res://assets/game.gd" id="1_f0aps"]
 [ext_resource type="Script" uid="uid://bcsm7nw2fa21b" path="res://addons/zylann.hterrain/hterrain.gd" id="2_6p1yv"]
@@ -36,19 +36,20 @@
 [ext_resource type="PackedScene" uid="uid://bx85w10pr0a6q" path="res://assets/UI/phone.tscn" id="15_4s1xj"]
 [ext_resource type="PackedScene" uid="uid://cgacn6h05bvs2" path="res://assets/UI/business_ui.tscn" id="16_0rmd6"]
 [ext_resource type="Texture2D" uid="uid://bqkuokwms5xnl" path="res://assets/UI/icons/briefcase.png" id="17_4mpck"]
+[ext_resource type="Theme" uid="uid://b45etg3nfmcio" path="res://themes/nice_dark_blue.tres" id="23_k076q"]
 [ext_resource type="Script" uid="uid://dkdnbmv5x42i1" path="res://assets/UI/game_start.gd" id="25_r1a70"]
 [ext_resource type="PackedScene" uid="uid://4scb1lh1a7vk" path="res://houses/building_large.tscn" id="28_ikew3"]
 [ext_resource type="PackedScene" uid="uid://cichm52kww3cn" path="res://assets/Skill_Tree/skill_tree.tscn" id="29_me805"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://Button_normal.tres" id="29_vc4h2"]
+[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="29_vc4h2"]
 [ext_resource type="PackedScene" uid="uid://ywcr0ke1jva2" path="res://houses/building_small.tscn" id="29_yfda1"]
 [ext_resource type="PackedScene" uid="uid://cv2v5f3ktq0jp" path="res://houses/building_small_2.tscn" id="30_7kap7"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://Button_pressed.tres" id="30_dv1k5"]
+[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="30_dv1k5"]
 [ext_resource type="PackedScene" uid="uid://yxm1bh54xc17" path="res://houses/building_large_2.tscn" id="30_ombld"]
 [ext_resource type="PackedScene" uid="uid://xkdoyiar0d5" path="res://houses/building_large_3.tscn" id="31_p0f6l"]
 [ext_resource type="PackedScene" uid="uid://bs1nw6nah1p7c" path="res://houses/building_small_3.tscn" id="31_wgy62"]
 [ext_resource type="PackedScene" uid="uid://bfbyalicra033" path="res://houses/building_small_4.tscn" id="32_172oy"]
 [ext_resource type="AudioStream" uid="uid://cxxhebwtrm47d" path="res://effects/sounds/ui-pop-sound-316482.mp3" id="32_ba7d1"]
-[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://theme.tres" id="32_nggmv"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="32_nggmv"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="33_dnuxx"]
 [ext_resource type="PackedScene" uid="uid://cjp6iwt021w63" path="res://3D assets/city-kit/sign_hospital.glb" id="33_jrpiw"]
 [ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/fixed_script.gd" id="34_6jkhm"]
@@ -2643,6 +2644,9 @@ script = ExtResource("4_cba11")
 
 [node name="Market" type="Node" parent="."]
 script = ExtResource("5_5fnqb")
+min_growth_rate = -0.02
+max_growth_rate = 0.05
+volatility = 0.2
 
 [node name="MarketTimer" type="Timer" parent="Market"]
 
@@ -2704,7 +2708,7 @@ offset_left = 538.0
 offset_top = 350.0
 offset_right = 1459.0
 offset_bottom = 804.0
-theme = ExtResource("32_nggmv")
+theme = ExtResource("23_k076q")
 script = ExtResource("8_5mqxr")
 
 [node name="Panel" type="Panel" parent="HUD/GAME_OVER"]
@@ -2768,7 +2772,7 @@ offset_right = 155.0
 offset_bottom = 96.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("32_nggmv")
+theme = ExtResource("23_k076q")
 script = ExtResource("9_13hc7")
 
 [node name="Save_menu" type="Panel" parent="HUD/Quit_menu"]
@@ -2856,30 +2860,28 @@ offset_bottom = 103.0
 text = "Would you like to quit?"
 
 [node name="House_listing_ui" parent="HUD" instance=ExtResource("2_vey1y")]
-visible = false
 custom_minimum_size = Vector2(300, 300)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+offset_left = 92.0
+offset_top = -122.0
+offset_right = 542.0
+offset_bottom = 342.0
 
 [node name="House_info" parent="HUD" instance=ExtResource("3_xv67o")]
-visible = false
 custom_minimum_size = Vector2(300, 300)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -150.0
-offset_right = 313.0
-offset_bottom = 295.0
+offset_left = -448.0
+offset_top = -128.0
+offset_right = 72.0
+offset_bottom = 348.0
 
 [node name="Phone" parent="HUD" instance=ExtResource("15_4s1xj")]
 visible = false
@@ -2923,7 +2925,7 @@ offset_right = 211.5
 offset_bottom = 121.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("32_nggmv")
+theme = ExtResource("23_k076q")
 script = ExtResource("11_mjwdw")
 
 [node name="Panel" type="Panel" parent="HUD/Hostpital_UI"]
@@ -2944,30 +2946,30 @@ vertical_alignment = 1
 
 [node name="Button" type="Button" parent="HUD/Hostpital_UI"]
 layout_mode = 0
-offset_left = 211.0
-offset_top = 180.0
-offset_right = 402.0
-offset_bottom = 235.0
+offset_left = 192.5
+offset_top = 180.5
+offset_right = 383.5
+offset_bottom = 263.5
 text = "get checkup 
 + 25 health
 - $500"
 
 [node name="Button2" type="Button" parent="HUD/Hostpital_UI"]
 layout_mode = 0
-offset_left = 22.0
-offset_top = 182.0
-offset_right = 196.0
-offset_bottom = 237.0
+offset_left = 3.5
+offset_top = 182.5
+offset_right = 177.5
+offset_bottom = 265.5
 text = "get help
 +75 health
 - $2,000"
 
 [node name="Close_Button" type="Button" parent="HUD/Hostpital_UI"]
 layout_mode = 0
-offset_left = 371.0
-offset_top = -11.0
-offset_right = 429.0
-offset_bottom = 20.0
+offset_left = 394.5
+offset_top = 17.5
+offset_right = 452.5
+offset_bottom = 48.5
 theme_override_styles/normal = ExtResource("29_vc4h2")
 theme_override_styles/pressed = ExtResource("30_dv1k5")
 theme_override_styles/hover = ExtResource("29_vc4h2")
@@ -3120,7 +3122,7 @@ offset_top = 11.0
 offset_right = 408.0
 offset_bottom = 109.0
 grow_horizontal = 2
-theme = ExtResource("32_nggmv")
+theme = ExtResource("23_k076q")
 metadata/_edit_use_anchors_ = true
 
 [node name="Year" type="Label" parent="HUD/Month_mod"]
@@ -3326,7 +3328,7 @@ offset_bottom = 25.0
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
-theme = ExtResource("32_nggmv")
+theme = ExtResource("23_k076q")
 script = ExtResource("4_j4nwd")
 metadata/_edit_lock_ = true
 
@@ -3340,11 +3342,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Panel3" type="Panel" parent="HUD/UI"]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 180.0
-offset_right = 310.0
-offset_bottom = 391.0
+offset_left = 19.29
+offset_top = 179.82
+offset_right = 315.785
+offset_bottom = 391.79
 mouse_filter = 2
+theme = ExtResource("32_nggmv")
 metadata/_edit_use_anchors_ = true
 
 [node name="GridContainer" type="GridContainer" parent="HUD/UI"]
@@ -3431,10 +3434,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -143.643
-offset_top = -63.5
-offset_right = 200.357
-offset_bottom = 166.5
+offset_left = -141.42857
+offset_top = -72.85715
+offset_right = 202.57143
+offset_bottom = 247.14285
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -3585,6 +3588,7 @@ theme_override_font_sizes/font_size = 30
 text = "FPS: 000"
 
 [node name="MissionDisplay" type="Panel" parent="HUD/UI"]
+visible = false
 layout_mode = 0
 offset_left = 1481.0
 offset_top = 17.0
@@ -3668,11 +3672,11 @@ anchor_bottom = 0.0701754
 visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_left = 152.0
-offset_top = 203.0
-offset_right = 1768.0
-offset_bottom = 874.0
-theme = ExtResource("32_nggmv")
+offset_left = 121.0
+offset_top = 212.0
+offset_right = 1732.0
+offset_bottom = 918.0
+theme = ExtResource("23_k076q")
 script = ExtResource("25_r1a70")
 
 [node name="Panel" type="Panel" parent="HUD/Game_start"]
