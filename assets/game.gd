@@ -13,8 +13,12 @@ var house = null
 func _ready() -> void:
 	call_deferred("apply_loaded_data_deferred")
 	
-	get_tree().root.get_viewport().transparent_bg = true
-	get_tree().root.get_viewport().transparent = true
+	for house in get_tree().get_nodes_in_group("houses"):
+		if not house.owned:
+			house.for_sale = randf() < 0.20 
+		house.current_price *= randf_range(0.85, 1.15)
+	
+	Globals.request_market_update.connect(simulate_market_buyers)
 	
 	if Globals.first_start == false:
 		$HUD/Game_start.visible = true
@@ -182,8 +186,59 @@ func get_qualified_house_amount():
 		$HUD/UI/GridContainer/House_qualify.text = "qualified house amount: 0"
 	
 	for house in get_tree().get_nodes_in_group("houses"):
-		house.create_label(house.current_price <= max_house_price and not house.owned)
+		var should_show = (house.current_price <= max_house_price 
+			and not house.owned 
+			and house.for_sale)
+		house.create_label(should_show)
 
+func simulate_market_buyers() -> void:
+	# 1. Get current market 'heat' from your Market node
+	# If price is high relative to base, market is 'Hot'
+	var market_node = $Market
+	var heat = clamp(market_node.current_price / market_node.base_price, 0.5, 2.0)
+	
+	var all_houses = get_tree().get_nodes_in_group("houses")
+	
+	for house in all_houses:
+		if house.owned: continue # Skip houses the player owns
+		
+		if house.for_sale:
+			# TICK THE CLOCK
+			house.time_on_market += 1
+			
+			# --- NPC BUYING LOGIC (Demand) ---
+			# Hotter market = Higher chance NPCs buy it immediately
+			var buy_chance = 0.1 + (heat * 0.2) 
+			
+			# If the house is a 'Steal' (Price < Base), NPCs are more likely to grab it
+			if house.current_price < house.base_price:
+				buy_chance += 0.15
+
+			if randf() < buy_chance:
+				house.for_sale = false
+				house.time_on_market = 0
+				print("NPC bought: ", house.name)
+			
+			# --- PRICE DROP LOGIC (Desperate Sellers) ---
+			# If house sits for 4+ months, drop price by 5%
+			elif house.time_on_market >= 4:
+				house.current_price *= 0.95
+				# Round to nearest 5000 for realism
+				house.current_price = round(house.current_price / 5000.0) * 5000
+				print(house.name, " price dropped! It's getting stale.")
+				
+		else:
+			# --- NEW LISTING LOGIC (Supply) ---
+			# If a house is NOT for sale, there's a small chance the owner lists it
+			# In a 'Cold' market (low heat), more people are forced to sell
+			var list_chance = 0.05 + (1.0 - heat) * 0.1 
+			if randf() < clamp(list_chance, 0.02, 0.15):
+				house.for_sale = true
+				house.time_on_market = 0
+				# Reset price to a 'fresh' market value based on current economy
+				house.current_price = house.base_price * heat * randf_range(0.9, 1.1)
+				print("New Listing: ", house.name)
+	
 func clear_House_ui_data():
 	House_ui.price = 0
 	House_ui.loan_price = 0

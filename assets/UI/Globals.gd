@@ -305,9 +305,11 @@ func add_starter_loan():
 
 func caculate_networth():
 	pass
-
+	
+signal request_market_update
 func monthy():
 	record_credit_score()
+	request_market_update.emit()
 	if money < 0:
 		negative_month_count += 1
 		credit_score -= 10

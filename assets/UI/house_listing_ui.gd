@@ -1,5 +1,6 @@
 extends Control
 
+@onready var time_on_market = $Time_on_market
 @onready var price_display = $Label_price
 @onready var loan_display = $Label_loan
 @onready var game = $"../.."
@@ -71,6 +72,7 @@ func _process(_delta: float) -> void:
 	
 	if house:
 		price_display.text = "Price: $" + add_comma_to_int(pay_now_amount)
+		time_on_market.text = "Months on market: " + add_comma_to_int(house.time_on_market)
 		$Label_list_price.text = "Listing: $" + add_comma_to_int(house.current_price)
 		if can_use_loan and loan_status:
 			loan_display.text = "Loan\n%d%% Financed\nDown Payment: $%s" % [

@@ -2860,6 +2860,7 @@ offset_bottom = 103.0
 text = "Would you like to quit?"
 
 [node name="House_listing_ui" parent="HUD" instance=ExtResource("2_vey1y")]
+visible = false
 custom_minimum_size = Vector2(300, 300)
 anchors_preset = 8
 anchor_left = 0.5
@@ -2872,6 +2873,7 @@ offset_right = 542.0
 offset_bottom = 342.0
 
 [node name="House_info" parent="HUD" instance=ExtResource("3_xv67o")]
+visible = false
 custom_minimum_size = Vector2(300, 300)
 anchors_preset = 8
 anchor_left = 0.5

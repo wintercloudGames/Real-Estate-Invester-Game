@@ -26,9 +26,9 @@ var stored_cash = 0
 @onready var renter = null
 @onready var game: Node = get_node("/root/Root/UserInterface/Game")
 
-var id: String = ""  # Unique identifier
+var id: String = "" 
 var bought_price = 0
-var loan_price = 0.0  # Ensure float type
+var loan_price = 0.0 
 var owned = false
 var has_loan = false
 var has_tenant = false
@@ -37,6 +37,8 @@ var paid_rent = false
 var just_bought = false
 var upgrade_max = 10
 var upgrade_amount = 0
+var for_sale = false
+var time_on_market = 0
 
 func _init():
 	add_to_group("houses")
@@ -49,9 +51,8 @@ func _ready() -> void:
 		id = "house_" + str(get_path().hash())
 	Collect_Rent = $Collect_Rent
 	randomize()
-	current_price = max(round(current_price / 5000.0) * 5000, 5000) * rarity
 	previous_price = base_price
-	loan_price = current_price * 0.8  # Initial loan price, will be overwritten by house_buy
+	loan_price = current_price * 0.8
 
 func setup_yard_editor():
 	if has_node("YardEditor"):
@@ -80,45 +81,64 @@ func update_market_value(market_change_percent: float) -> void:
 	current_price = max(round(current_price / 5000.0) * 5000, 5000)
 
 func _process(delta: float) -> void:
-	if is_listed:
-		$Label3D4.text = "Listed For Rent"
-	else:
-		$Label3D4.text = ""
-	if !has_tenant:
-		if Globals.hascleaner and apartment_condition < 1:
-			apartment_condition += 0.0001
+
+	$Label3D5.text = ""           
+	$Label3D3.text = ""        
+
 	if owned:
-		if Globals.rent_bost > 0.0:
-			var oldrent = rent
-			rent = rent * (Globals.rent_bost + 1)
-			$Label3D3.text = "CashFlow: " + add_comma_to_int(rent - mortgage)
-			rent = oldrent
+
+		if loan_price > 0:
+			$Label3D.text = "FINANCED PROPERTY"
+			$Label3D.modulate = Color.YELLOW
+			$Label3D2.text = "Loan Balance: " + add_comma_to_int(int(loan_price))
+			$Label3D2.visible = true
+			has_loan = true
 		else:
-			$Label3D3.text = "CashFlow: " + add_comma_to_int(rent - mortgage)
-		if rent < mortgage:
-			$Label3D3.modulate = Color.RED
+			$Label3D.text = "OWNED PROPERTY"
+			$Label3D.modulate = Color.GREEN
+			$Label3D2.visible = false
+			$Label3D2.text = ""
+			has_loan = false
+			mortgage = 0
+			loan_price = 0
+		if has_tenant and rent > 0:
+			var effective_rent = rent
+			if Globals.rent_bost > 0.0:
+				effective_rent = rent * (1.0 + Globals.rent_bost)
+			$Label3D3.text = "CashFlow: " + add_comma_to_int(int(effective_rent - mortgage))
+			$Label3D3.modulate = Color.GREEN if effective_rent >= mortgage else Color.RED
 		else:
-			$Label3D3.modulate = Color.GREEN
+			$Label3D3.text = ""
+		$Label3D4.text = ""
+
 	else:
-		$Label3D3.text = ""
-		$Label3D.modulate = Color.WHITE
-	if loan_price > 0 and owned:
-		$Label3D.text = "FINANCED PROPERTY"
-		$Label3D.modulate = Color.YELLOW
-		$Label3D2.text = "Loan Balance: " + add_comma_to_int(loan_price)
-		has_loan = true
-	elif loan_price <= 0 and owned:
-		if not mortgage_deducted and not just_bought:
-			mortgage_deducted = true
-		$Label3D.text = "OWNED PROPERTY"
-		$Label3D.modulate = Color.GREEN
-		$Label3D2.visible = false
-		has_loan = false
-		mortgage = 0
-		loan_price = 0
-	else:
-		$Label3D.text = add_comma_to_int(current_price)
+		$Label3D.text = add_comma_to_int(int(current_price))
 		$Label3D2.text = ""
+		$Label3D3.text = ""
+
+		if for_sale:
+
+			$Label3D.modulate = Color.WHITE
+			$Label3D4.text = "FOR SALE"
+			$Label3D4.modulate = Color(1, 0.8, 0.2)
+
+			var down_payment_needed = current_price * 0.2
+			if Globals.money >= down_payment_needed:
+				$Label3D5.text = "Affordable!"
+				$Label3D5.modulate = Color.GREEN
+			else:
+				$Label3D5.text = ""
+
+		else:
+			$Label3D.modulate = Color(0.7, 0.7, 0.7)
+			$Label3D4.text = ""           
+			$Label3D4.modulate = Color(0.6, 0.6, 0.6)
+			$Label3D5.text = ""                       
+
+		if is_listed and not has_tenant:
+			$Label3D4.text = "Listed For Rent"
+			$Label3D4.modulate = Color.CYAN
+
 
 func create_label(stat):
 	if stat == true:
@@ -139,7 +159,9 @@ func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Ve
 		if owned:
 			game.set_house_UI()
 		else:
-			game.set_listing_UI()
+			if for_sale:       
+				game.set_listing_UI()
+
 
 func edit_yard():
 	$Yard_editor.enter_edit_mode()
@@ -174,7 +196,7 @@ func sell_house(sell_price: int) -> void:
 	Globals.net_worth -= bought_price
 	Globals.money += sell_price
 	Collect_Rent.reset()
-	
+	time_on_market = 0
 	if $Collect_Rent/Dollar_sign.visible == true:
 		collect_rent()
 	if Collect_Rent:
@@ -198,6 +220,7 @@ func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node 
 	Globals.exp += buy_price/100000
 	Globals.net_worth += buy_price
 	Listing_ui.visible = false
+	time_on_market = 0
 	if use_loan:
 		loan_price = float(loan_amount)  # Ensure float
 		mortgage = int(loan_mod.payment if loan_mod and is_instance_valid(loan_mod) else 0)
