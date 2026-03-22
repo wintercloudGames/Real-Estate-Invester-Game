@@ -1,11 +1,11 @@
 [gd_scene load_steps=21 format=3 uid="uid://cichm52kww3cn"]
 
-[ext_resource type="Theme" uid="uid://dsv0vue65ar2l" path="res://themes/food_market.tres" id="1_6rtyb"]
 [ext_resource type="Theme" uid="uid://b45etg3nfmcio" path="res://themes/nice_dark_blue.tres" id="1_b6kc5"]
 [ext_resource type="Script" uid="uid://fnvw4y8aim38" path="res://assets/Skill_Tree/skill_tree.gd" id="1_nig2w"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_rsuch"]
 [ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="2_dukmi"]
 [ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="3_nig2w"]
+[ext_resource type="Theme" uid="uid://6jfb5hgx33by" path="res://themes/unnew_for_jeff.tres" id="4_6rtyb"]
 [ext_resource type="PackedScene" uid="uid://yl0bxn3mvjem" path="res://assets/Skill_Tree/Skill_Button.tscn" id="6_2tli5"]
 [ext_resource type="Texture2D" uid="uid://bnkc5mcrjvmmp" path="res://shaded-dark/shadedDark30.png" id="6_treql"]
 [ext_resource type="Script" uid="uid://d2n6iol3bgvl0" path="res://assets/UI/drag_button.gd" id="7_o85cb"]
@@ -28,6 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_rsuch")
 script = ExtResource("1_nig2w")
 
 [node name="Panel" type="Panel" parent="."]
@@ -76,7 +77,8 @@ offset_left = 175.0
 offset_top = 87.0
 offset_right = 500.0
 offset_bottom = 124.0
-theme = ExtResource("1_6rtyb")
+theme = ExtResource("4_6rtyb")
+value = 90.0
 
 [node name="Close_Button" type="Button" parent="."]
 layout_mode = 1

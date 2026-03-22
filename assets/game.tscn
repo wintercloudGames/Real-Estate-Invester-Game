@@ -2639,6 +2639,8 @@ text = "house value = "
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="AI_Invester" type="Node" parent="."]
+
 [node name="Debug" type="Node" parent="."]
 script = ExtResource("4_cba11")
 

@@ -105,11 +105,13 @@ func _ready():
 	market_graph.gui_input.connect(_on_graph_gui_input)
 	market_graph.mouse_exited.connect(_on_mouse_exited)
 	
+	# FIX: Ensure nearest filtering for sharp lines
+	market_graph.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	
 	resize_handle.mouse_filter = Control.MOUSE_FILTER_PASS
 	resize_handle.button_down.connect(_on_resize_start)
 	resize_handle.button_up.connect(_on_resize_end)
 
-	# Force hover label to be on top of everything
 	hover_layer = CanvasLayer.new()
 	hover_layer.layer = 128 
 	add_child(hover_layer)
@@ -126,7 +128,7 @@ func _ready():
 	market_graph.texture = graph_texture
 	apply_difficulty_settings()
 	randomize()
-	_add_to_history(current_price) # Fill initial point
+	_add_to_history(current_price)
 	next_crash_months = randi_range(min_crash_months, max_crash_months)
 	market_timer.start()
 
@@ -184,7 +186,21 @@ func get_visible_points() -> Array:
 	return price_history.slice(start_idx, start_idx + visible_count)
 
 func update_graph():
+	# Background
 	graph_image.fill(Color(0.08, 0.08, 0.12))
+	
+	# DRAW GRID LINES (Horizontal: Price levels, Vertical: Time intervals)
+	var grid_color = Color(1, 1, 1, 0.05) # Very subtle white
+	var horizontal_lines = 5
+	for i in range(horizontal_lines + 1):
+		var y = int(float(i) / horizontal_lines * (GRAPH_HEIGHT - 1))
+		draw_line_bresenham(graph_image, Vector2(0, y), Vector2(GRAPH_WIDTH, y), grid_color, 1)
+	
+	var vertical_lines = 8
+	for i in range(vertical_lines + 1):
+		var x = int(float(i) / vertical_lines * (GRAPH_WIDTH - 1))
+		draw_line_bresenham(graph_image, Vector2(x, 0), Vector2(x, GRAPH_HEIGHT), grid_color, 1)
+
 	var visible_data = get_visible_points()
 	if visible_data.size() < 2: return
 	var min_p = visible_data.min(); var max_p = visible_data.max()
@@ -195,46 +211,48 @@ func update_graph():
 		var x = int(float(i) / (visible_data.size() - 1) * (GRAPH_WIDTH - 1))
 		var y = int((1.0 - (visible_data[i] - min_p) / range_p) * (GRAPH_HEIGHT - 1))
 		var curr_pt = Vector2(x, y)
+		
+		# Draw price line
 		if i > 0:
 			var color = Color.RED if is_crashing or visible_data[i] < visible_data[i-1] else Color.GREEN
 			draw_line_bresenham(graph_image, prev_pt, curr_pt, color, 2)
 		
+		# Draw hover cursor line
 		var history_idx = price_history.size() - visible_data.size() - scroll_offset + i
 		if history_idx == hover_idx:
-			draw_line_bresenham(graph_image, Vector2(x, 0), Vector2(x, GRAPH_HEIGHT), Color(1, 1, 1, 0.3), 1)
+			draw_line_bresenham(graph_image, Vector2(x, 0), Vector2(x, GRAPH_HEIGHT), Color(1, 1, 1, 0.4), 1)
 			_draw_pixel_dot(graph_image, curr_pt, Color.WHITE)
 		prev_pt = curr_pt
+		
 	graph_texture.update(graph_image)
 
 func _on_graph_gui_input(event: InputEvent):
 	var visible_data = get_visible_points()
+	
+	# FIX: Use local position for accurate index mapping during resize
+	var local_pos = market_graph.get_local_mouse_position()
+	var actual_size = market_graph.size
+	
 	if event is InputEventMouseMotion:
 		if is_panning:
-			var move_ratio = float(visible_data.size()) / GRAPH_WIDTH
+			var move_ratio = float(visible_data.size()) / actual_size.x
 			scroll_offset = clamp(scroll_offset + int(event.relative.x * move_ratio), 0, price_history.size() - visible_data.size())
 			hover_label.visible = false
 			update_graph()
 		else:
-			var local_pos = event.position
-			var idx_in_view = int(clamp(local_pos.x / GRAPH_WIDTH, 0.0, 1.0) * (visible_data.size() - 1))
+			var x_ratio = clamp(local_pos.x / actual_size.x, 0.0, 1.0)
+			var idx_in_view = int(x_ratio * (visible_data.size() - 1))
 			hover_idx = clamp(price_history.size() - visible_data.size() - scroll_offset + idx_in_view, 0, price_history.size()-1)
 			
 			if hover_idx >= 0 and hover_idx < date_history.size():
 				hover_label.visible = true
-				
-				# Calculate % change for this specific point
 				var h_price = price_history[hover_idx]
 				var h_prev = price_history[hover_idx-1] if hover_idx > 0 else h_price
 				var h_percent = ((h_price - h_prev) / h_prev) * 100 if h_prev != 0 else 0
-				
-				# Get the "Year / Month" string from history
 				var h_date = date_history[hover_idx]
 				
-				# Plain white text: Year/Month then % Change
 				hover_label.text = "%s\n%s%.2f%%" % [h_date, "+" if h_percent >= 0 else "", h_percent]
 				hover_label.modulate = Color.WHITE
-				
-				# Follow the mouse globally (since it's in a CanvasLayer)
 				hover_label.global_position = get_viewport().get_mouse_position() + Vector2(20, -40)
 			update_graph()
 
@@ -276,10 +294,8 @@ func update_label():
 	]
 func _add_to_history(val: float):
 	price_history.append(val)
-	# Format: "Year / Month" (e.g., "2026 / 3")
 	var date_str = str(Globals.year) + " / " + str(Globals.month)
 	date_history.append(date_str)
-	# Keep history synchronized and within MAX_HISTORY limit
 	if price_history.size() > MAX_HISTORY: 
 		price_history.pop_front()
 		date_history.pop_front()
@@ -295,7 +311,11 @@ func resize_graph(new_w, new_h):
 	graph_image = Image.create(GRAPH_WIDTH, GRAPH_HEIGHT, false, Image.FORMAT_RGBA8)
 	graph_texture = ImageTexture.create_from_image(graph_image)
 	market_graph.texture = graph_texture
+	
+	# FIX: Sync node size with pixel data
+	market_graph.size = Vector2(GRAPH_WIDTH, GRAPH_HEIGHT)
 	market_graph.custom_minimum_size = Vector2(GRAPH_WIDTH, GRAPH_HEIGHT)
+	
 	update_graph()
 
 func _on_resize_start(): is_resizing = true; resize_origin = get_viewport().get_mouse_position(); initial_size = Vector2(GRAPH_WIDTH, GRAPH_HEIGHT)
