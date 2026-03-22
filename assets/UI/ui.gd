@@ -13,6 +13,7 @@ extends Control
 @onready var market_conditions: Label = $Market_conditions
 @onready var negative_month_count: Label = $negative_month_count
 
+var month_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 var update_timer: float = 0.0
 var update_interval: float = 0.1  # Update UI every 0.1 seconds (10 FPS)
 
@@ -70,7 +71,11 @@ func update_ui():
 	
 	month_timer_label.text = "Month Timer: " + str(int($Timer.time_left))
 	negative_month_count.text = "Months tell Bankrupt: " + str(Globals.negative_month_count) + "/12"
-	month_label.text = "Month: " + add_comma_to_int(Globals.month)
+	if Globals.month >= 1 and Globals.month <= 12:
+		var month_short = month_names[Globals.month - 1]
+		month_label.text = "("+str(Globals.month) + ") Month: " + month_short
+	else:
+		month_label.text = "Month: ???"
 	year_label.text = "Year: " + add_comma_to_int(Globals.year)
 	
 	if Globals.has_market_app:

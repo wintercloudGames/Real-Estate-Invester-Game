@@ -73,6 +73,8 @@ func save_game() -> bool:
 			"level": Globals.level,
 			"has_hireing_app": Globals.has_hireing_app,
 			"has_info_app": Globals.has_info_app,
+			"has_stock_app":Globals.has_stock_app,
+			"has_market_app":Globals.has_market_app,
 			"has_bank_app": Globals.has_bank_app,
 			"has_manager_app": Globals.has_manager_app,
 			"rent_houses": Globals.rent_houses,
@@ -91,6 +93,11 @@ func save_game() -> bool:
 		"Loans": [],
 		"Market": {}
 	}
+	var market_node = get_node_or_null("/root/Root/UserInterface/Game/Market")
+	if market_node and market_node.has_method("get_market_data"):
+		data["Market"] = market_node.get_market_data()
+	else:
+		data["Market"] = {}
 	for stock in Globals.all_stocks:
 		data["Market"][stock.ticker] = {
 			"current_price": stock.current_price,
@@ -98,7 +105,7 @@ func save_game() -> bool:
 		}
 	# Save house data
 	var houses = get_tree().get_nodes_in_group("houses")
-	
+
 	for house in houses:
 		var collect_rent = house.get_node_or_null("Collect_Rent")
 		if not is_instance_valid(house):
@@ -111,6 +118,8 @@ func save_game() -> bool:
 			"base_price": house.base_price,
 			"current_price": house.current_price,
 			"mortgage": house.mortgage,
+			"for_sale":house.for_sale,
+			"time_on_market":house.time_on_market,
 			"bought_price": house.bought_price,
 			"rent": house.rent,
 			"lease_length": house.lease_length,
@@ -187,12 +196,12 @@ func load_game() -> bool:
 	if not loaded_data or not loaded_data is Dictionary:
 		push_error("No valid data parsed from JSON")
 		return false
-	
-	
+
+
 	# Load non-node-dependent data
 	if loaded_data.has("Globals"):
 		var g = loaded_data["Globals"]
-	
+
 		# Existing important ones (add more as needed)
 		Globals.save_name = g.get("save_name", "My Save")
 		Globals.money = g.get("money", 5000)
@@ -225,7 +234,7 @@ func load_game() -> bool:
 		Globals.renter_finder = g.get("renter_finder", false)
 		Globals.hasagent = g.get("hasagent", false)
 		Globals.hascleaner = g.get("hascleaner", false)
-		
+
 		# Critical: explicitly set mission vars
 		Globals.mission_active         = g.get("mission_active", false)
 		Globals.mission_type           = g.get("mission_type", "")
@@ -233,9 +242,10 @@ func load_game() -> bool:
 		Globals.mission_deadline_year  = g.get("mission_deadline_year", 0)
 		Globals.mission_desc           = g.get("mission_desc", "")
 		Globals.mission_completed      = g.get("mission_completed", false)
-		
+
 		print("Loaded mission_active:", Globals.mission_active)
 		print("Loaded mission_desc:", Globals.mission_desc)
+
 	
 	# 1. Safely Load Market Data (Price and History)
 	if loaded_data.has("Market"):
@@ -284,8 +294,11 @@ func apply_loaded_data() -> void:
 			#print("Registered house: id=%s, name=%s, owned=%s" % [house.id, house.name, house.owned])
 		else:
 			push_warning("Invalid house or empty id: name=%s, id=%s" % [house.name, house.id])
-
-
+	
+	var market_node = get_node_or_null("/root/Root/UserInterface/Game/Market")
+	if market_node and loaded_data.has("Market"):
+		market_node.set_market_data(loaded_data["Market"])
+	
 	# Load houses
 	var matched_houses = 0
 	if loaded_data.has("Houses"):
@@ -303,6 +316,8 @@ func apply_loaded_data() -> void:
 				house.mortgage = saved_house.get("mortgage", house.mortgage)
 				house.bought_price = saved_house.get("bought_price", house.bought_price)
 				house.rent = saved_house.get("rent", house.rent)
+				house.for_sale = saved_house.get("for_sale",house.for_sale)
+				house.time_on_market = saved_house.get("time_on_market",house.time_on_market)
 				house.lease_length = saved_house.get("lease_length", house.lease_length)
 				house.apartment_condition = saved_house.get("apartment_condition", house.apartment_condition)
 				house.mortgage_deducted = saved_house.get("mortgage_deducted", house.mortgage_deducted)
@@ -398,10 +413,10 @@ func apply_loaded_data() -> void:
 						house_ref.set_remaining_months(loan_data.get("months", 360))
 					if loan_mod.autopay_enabled:
 						expenses += loan_mod.payment
-				
+
 				else:
 					push_warning("Failed to create loan mod for id=%s, type=%s, house_id=%s" % [loan_data.get("loan_id", ""), loan_type, house_id])
-	
+		
 	# Update global counters
 	Globals.Propertys = owned_count
 	Globals.net_worth = net_worth

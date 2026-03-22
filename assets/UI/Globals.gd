@@ -1,6 +1,6 @@
 extends Node
 
-var money = 0.0
+var money = 0
 var brokerage_balance: float = 0.0
 var Propertys = 0
 var credit_score = 600
@@ -17,8 +17,8 @@ var net_worth = 0
 var Savings_balance = 0
 var last_savings_paid = 0
 var market_factor: float = 1.0
-var year = 1
-var month = 1
+var year:int = 1
+var month:int = 1
 var total_debt: float = 0.0
 #mission vars
 var mission_templates = [
@@ -57,6 +57,7 @@ var has_hireing_app: bool = false
 var has_info_app: bool = false
 var has_bank_app: bool = false
 var has_manager_app: bool = false
+var has_stock_app = false
 var rent_bost: float = 0.00
 var rent_houses: bool = false
 var unlock_business: bool = false
@@ -101,7 +102,7 @@ func reset():
 	hasagent = false
 	hascleaner = false
 	renter_finder = false
-	
+
 	#Misson mode
 	mission_active = false
 	mission_type = ""
@@ -116,6 +117,7 @@ func reset():
 	has_hireing_app = false
 	has_info_app = false
 	has_bank_app = false
+	has_stock_app = false
 	has_manager_app = false
 	rent_bost = 0.00
 	rent_houses = false
@@ -150,6 +152,7 @@ var normal_loan_added = false
 var interest = Savings_balance * interest_rate
 var player_has_employees: bool = false
 
+
 signal month_ended
 signal money_in_detect(in_value)
 signal money_out_detect(out_value)
@@ -159,12 +162,12 @@ func handle_overflow(current_value: float, add_amount: float, max_value: float) 
 	var total = current_value + add_amount
 	var overflow = max(0, total - max_value)
 	var new_value = total
-	
+
 	if overflow > 0:
 		new_value = add_amount - overflow  # Reset with the overflow amount
 		if new_value < 0:
 			new_value = 0
-	
+
 	return {
 		"new_value": new_value,
 		"carryover": overflow,
@@ -184,7 +187,7 @@ func _process(delta: float) -> void:
 		skillpoints += 1
 		exp_to_level += 10
 		level += 1
-	
+
 	exp = max(0, exp)
 
 	cashflow = Income - Expenses
@@ -199,27 +202,27 @@ func _process(delta: float) -> void:
 	interest = Savings_balance * interest_rate
 	credit_score = clamp(credit_score, 300, 850)
 	last_savings_paid = interest
-	
+
 # Generate random mission (call on new game)
 func generate_random_mission():
 	var template = mission_templates[randi() % mission_templates.size()]
 	var difficulty_mult = [1.0, 1.2, 1.5, 2.0][difficulty]  # Easy=1x, Nightmare=2x harder
-	
+
 	mission_type = template.type
 	mission_target = randi_range(template.min_target, template.max_target) * int(difficulty_mult)
-	
+
 	# Generate base deadline
 	var base_deadline = randi_range(template.min_deadline, template.max_deadline)
-	
+
 	# Make it relative to current year + safety minimum
 	mission_deadline_year = Globals.year + base_deadline
 	mission_deadline_year = max(Globals.year + 5, mission_deadline_year)  # never allow instant or very soon fail
-	
+
 	# Optional: harder difficulty shortens the remaining time (but still safe)
 	var remaining_years = mission_deadline_year - Globals.year
 	remaining_years = int(remaining_years / difficulty_mult)  # higher diff → shorter time
 	mission_deadline_year = Globals.year + max(5, remaining_years)
-	
+
 	# Format desc (net_worth → commas)
 	if mission_type == "net_worth":
 		mission_desc = template.desc_base % add_comma_to_int(mission_target)  # use your comma func
@@ -227,7 +230,7 @@ func generate_random_mission():
 		mission_desc = "Get " % mission_target + " Business Employees"
 	else:
 		mission_desc = template.desc_base % mission_target
-	
+
 	mission_active = true
 	mission_completed = false
 
@@ -244,14 +247,14 @@ func is_mission_complete() -> bool:
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
 	var loop_end: int = 0 if value > -1 else 1
-	
+
 	for i in range(str_value.length() - 3, loop_end, -3):
 		str_value = str_value.insert(i, ",")
 	return str_value
 
 func recalculate_expenses() -> void:
 	Expenses = 0  # your base living expenses (adjust if different)
-	
+
 	# Fixed monthly costs
 	if employees > 0:
 		Expenses += employees * 1000  # or whatever BASE_SALARY is in Business_UI
@@ -261,7 +264,7 @@ func recalculate_expenses() -> void:
 		Expenses += 500
 	if renter_finder:
 		Expenses += 500
-	
+
 	# Business difficulty overhead
 	if business_name != "":
 		match difficulty:
@@ -269,25 +272,28 @@ func recalculate_expenses() -> void:
 			1: Expenses += 10000 / 3
 			2: Expenses += 10000 / 2
 			3: Expenses += 10000
-	
+
 	# Loan autopay payments – add once per loan
 	var loans_ui = get_tree().get_first_node_in_group("loans_ui")  # adjust path if needed
 	if loans_ui:
 		for mod in loans_ui.active_loan_mods:
 			if is_instance_valid(mod) and mod.autopay_enabled:
 				Expenses += mod.payment
-	
+
 
 func add_starter_loan():
 	if difficulty < 0 or difficulty > 3:
 		return  # safety
-	
+
 	var payment_amount = 500
 	match difficulty:
 		0: payment_amount = 500   # Easy
 		1: payment_amount = 500   # Medium
 		2: payment_amount = 1000  # Hard
 		3: payment_amount = 1500  # Extreme
+		
+	#add starter money
+	money += payment_amount
 	
 	var loan_amount = payment_amount * 24
 	var interest_rate = 0.10  # 10% annual
@@ -305,18 +311,16 @@ func add_starter_loan():
 
 func caculate_networth():
 	pass
-	
-signal request_market_update
+
 func monthy():
 	record_credit_score()
-	request_market_update.emit()
 	if money < 0:
 		negative_month_count += 1
 		credit_score -= 10
 	else:
 		negative_month_count = 0
 	emit_signal("month_ended")
-	
+
 	month += 1
 	if month >= 12:
 		year += 1
@@ -328,9 +332,9 @@ func monthy():
 			money += interest
 		else:
 			Savings_balance += interest
-		
+
 	credit_score = clamp(credit_score, 300, 850)  # Ensure score stays in range
-		
+
 func money_in(amount):
 	money += amount
 	emit_signal("money_in_detect",amount)

@@ -24,7 +24,8 @@ enum AppSkills {
 	WORK_BONUS,
 	WORK_AMOUNT,
 	RENT_FINDER_UPGRADE,
-	CREDIT_APP
+	CREDIT_APP,
+	STOCK_APP
 }
 @export var app_skill_to_unlock: AppSkills = AppSkills.HIRING_APP
 
@@ -149,6 +150,10 @@ func _check_global_unlock_status() -> void:
 			if Globals.credit_app:
 				new_level = max_level
 				should_update_level = true
+		AppSkills.STOCK_APP:
+			if Globals.has_stock_app:
+				new_level = max_level
+				should_update_level = true
 		AppSkills.RENT_FINDER_UPGRADE:
 			if Globals.rent_finder_upgrade:
 				new_level = max_level
@@ -206,6 +211,9 @@ func _unlock_app_skill() -> void:
 		AppSkills.BANK_APP:
 			Globals.has_bank_app = true
 			
+		AppSkills.STOCK_APP:
+			Globals.has_stock_app = true
+		
 		AppSkills.MANAGER_APP:
 			Globals.has_manager_app = true
 			

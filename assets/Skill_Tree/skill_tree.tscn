@@ -1,5 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://cichm52kww3cn"]
 
+[ext_resource type="Theme" uid="uid://dsv0vue65ar2l" path="res://themes/food_market.tres" id="1_6rtyb"]
 [ext_resource type="Theme" uid="uid://b45etg3nfmcio" path="res://themes/nice_dark_blue.tres" id="1_b6kc5"]
 [ext_resource type="Script" uid="uid://fnvw4y8aim38" path="res://assets/Skill_Tree/skill_tree.gd" id="1_nig2w"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_rsuch"]
@@ -18,12 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://bgidxna3gs0dc" path="res://assets/UI/icons/chart.png" id="13_sb7xq"]
 [ext_resource type="Texture2D" uid="uid://dwib34gx67f43" path="res://assets/UI/icons/files.png" id="15_m6mis"]
 [ext_resource type="Texture2D" uid="uid://bn2y5ckkxsfd8" path="res://assets/UI/icons/wallet.png" id="15_yn8ca"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3avv8"]
-bg_color = Color(0.332031, 0.329437, 0.329437, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nux3j"]
-bg_color = Color(0.0874939, 0.102692, 0.476563, 1)
+[ext_resource type="Texture2D" uid="uid://bvoer3ihdrn7h" path="res://assets/UI/icons/histogram.png" id="16_y6xip"]
 
 [node name="Skill_tree" type="Control"]
 layout_mode = 3
@@ -32,7 +28,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_b6kc5")
 script = ExtResource("1_nig2w")
 
 [node name="Panel" type="Panel" parent="."]
@@ -77,12 +72,11 @@ text = "Level: 1"
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 layout_mode = 0
-offset_left = 235.0
+offset_left = 175.0
 offset_top = 87.0
-offset_right = 408.0
-offset_bottom = 114.0
-theme_override_styles/background = SubResource("StyleBoxFlat_3avv8")
-theme_override_styles/fill = SubResource("StyleBoxFlat_nux3j")
+offset_right = 500.0
+offset_bottom = 124.0
+theme = ExtResource("1_6rtyb")
 
 [node name="Close_Button" type="Button" parent="."]
 layout_mode = 1
@@ -245,7 +239,19 @@ skill_name = "Market app"
 skill_description = "Unlockes the market app to see what the market trend is."
 app_skill_to_unlock = 7
 
-[node name="Cretit_app" parent="TabContainer/Money/Bank" instance=ExtResource("6_2tli5")]
+[node name="Stock_app" parent="TabContainer/Money/Bank" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = 314.0
+offset_top = -156.0
+offset_right = 442.0
+offset_bottom = -28.0
+texture_normal = ExtResource("16_y6xip")
+skill_name = "Stock app"
+skill_description = "Unlockes the Stock app to Trade stocks."
+level_costs = Array[int]([5])
+app_skill_to_unlock = 16
+
+[node name="Credit_app" parent="TabContainer/Money/Bank" instance=ExtResource("6_2tli5")]
 layout_mode = 0
 offset_left = -97.0
 offset_top = -208.0

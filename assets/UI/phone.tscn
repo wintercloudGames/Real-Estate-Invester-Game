@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://bx85w10pr0a6q"]
+[gd_scene load_steps=69 format=3 uid="uid://bx85w10pr0a6q"]
 
 [ext_resource type="Texture2D" uid="uid://b0vmuqioqojfj" path="res://assets/UI/phone/wallpapers/vines-7859445_1280.jpg" id="1_go8ug"]
 [ext_resource type="Texture2D" uid="uid://dsfynj8pp2hyg" path="res://assets/UI/phone/vecteezy_smart-phone-mobile-electronic-device-transparent-screen_6824674-1-removebg-preview.png" id="1_jm7no"]
@@ -59,6 +59,7 @@
 [ext_resource type="Script" uid="uid://q66ppu3j3u3r" path="res://assets/UI/phone/cars.gd" id="37_sguuv"]
 [ext_resource type="Texture2D" uid="uid://dtjgf2drnlsda" path="res://shaded-dark/shadedDark26.png" id="43_uwkqi"]
 [ext_resource type="Script" uid="uid://ccfp667m7bxy7" path="res://assets/UI/phone/hire_help.gd" id="45_beopk"]
+[ext_resource type="Theme" uid="uid://dsv0vue65ar2l" path="res://themes/food_market.tres" id="57_xes8p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksmyw"]
 bg_color = Color(0.202419, 0.644531, 0.0226593, 1)
@@ -1409,6 +1410,16 @@ text = "Loan Term"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="MonthlyPreviewLabel" type="Label" parent="Loans/TabContainer/Addloan"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 234.9998
+offset_right = 294.0
+offset_bottom = 284.99982
+text = "Loan Term"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Loans" type="Control" parent="Loans/TabContainer"]
 visible = false
 layout_mode = 2
@@ -1595,6 +1606,14 @@ offset_right = 335.0
 offset_bottom = 582.0
 color = Color(0.6015625, 0.6015625, 0.6015625, 1)
 script = ExtResource("35_rrag5")
+
+[node name="Credit_Repair_Button" type="Button" parent="credit_info"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 338.0
+offset_right = 277.0
+offset_bottom = 372.0
+text = "Credit Repair Cost $5,000"
 
 [node name="house_manager" type="Control" parent="."]
 visible = false
@@ -2112,6 +2131,7 @@ offset_bottom = 618.0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("57_xes8p")
 alignment = 1
 
 [node name="VecteezySmart-phone-mobile-electronic-device-transparent-screen6824674-1-removebg-preview" type="Sprite2D" parent="."]
@@ -2181,6 +2201,7 @@ libraries = {
 [connection signal="pressed" from="Loans/TabContainer/Addloan/TakeLoanButton" to="Loans" method="_on_take_loan_button_pressed"]
 [connection signal="item_selected" from="Loans/TabContainer/Addloan/OptionButton" to="Loans" method="_on_option_button_item_selected"]
 [connection signal="pressed" from="Loans/TabContainer/Loans/Pay_All_Payments" to="Loans" method="_on_pay_all_payments_pressed"]
+[connection signal="pressed" from="credit_info/Credit_Repair_Button" to="credit_info" method="_on_credit_repair_button_pressed"]
 [connection signal="pressed" from="Car_info/Upgrade_Button" to="Car_info" method="_on_upgrade_button_pressed"]
 [connection signal="pressed" from="Car_info/Repaire_Button" to="Car_info" method="_on_repaire_button_pressed"]
 [connection signal="pressed" from="Hire_help/Rent_collecter_Button" to="Hire_help" method="_on_rent_collecter_button_pressed"]

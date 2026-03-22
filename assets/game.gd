@@ -13,15 +13,14 @@ var house = null
 func _ready() -> void:
 	call_deferred("apply_loaded_data_deferred")
 	
-	for house in get_tree().get_nodes_in_group("houses"):
-		if not house.owned:
-			house.for_sale = randf() < 0.20 
-		house.current_price *= randf_range(0.85, 1.15)
-	
-	Globals.request_market_update.connect(simulate_market_buyers)
+	Globals.month_ended.connect(simulate_market_buyers)
 	
 	if Globals.first_start == false:
 		$HUD/Game_start.visible = true
+		for house in get_tree().get_nodes_in_group("houses"):
+			if not house.owned:
+				house.for_sale = randf() < 0.20 
+				house.current_price *= randf_range(0.85, 1.15)
 		Globals.reset()
 	# Setup systems
 	$Market.difficulty = Globals.difficulty

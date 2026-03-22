@@ -80,7 +80,13 @@ func unlock_apps():
 		$ScrollContainer/apps/Market.visible = true
 	else:
 		$ScrollContainer/apps/Market.visible = false
+	
+	if Globals.has_stock_app == true:
+		$ScrollContainer/apps/Stock_Market.visible = true
+	else:
+		$ScrollContainer/apps/Stock_Market.visible = false
 		
+	
 	if Globals.rent_houses == true:
 		$ScrollContainer/apps/Renters.visible = true
 	else:
