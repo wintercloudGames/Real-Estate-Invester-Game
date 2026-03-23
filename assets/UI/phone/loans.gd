@@ -42,13 +42,21 @@ func update_ui():
 	elif Globals.credit_score >= 680: base_rate = 0.08
 	elif Globals.credit_score >= 620: base_rate = 0.10
 	elif Globals.credit_score < 500: base_rate = 0.25
-	
+	var total_monthly_bill: float = 0.0
 	var current_rate = base_rate * heat
 	
-	# Update the Rate Display (Clean version as requested)
+
 	interest_rate_label.text = "Interest Rate: %.2f%%\nTerm: %d Months" % [current_rate * 100, loan_term]
 
-	# --- 2. Calculate the Preview Payment ---
+	var valid_mods = []
+	for mod in active_loan_mods:
+		if is_instance_valid(mod):
+			total_monthly_bill += mod.payment
+			valid_mods.append(mod)
+	active_loan_mods = valid_mods 
+	
+	Totalpaymentdisplay.text = "Total Monthly Payments: $\n$" + add_comma_to_int(int(total_monthly_bill))
+	
 	if amount > 0:
 		# Formula: (Principal * Annual Rate / 12) + (Principal / Term)
 		var preview_payment = (amount * current_rate / 12) + (amount / loan_term)

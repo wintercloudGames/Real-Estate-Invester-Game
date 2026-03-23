@@ -1320,7 +1320,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Loans" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1342,9 +1341,10 @@ offset_left = 19.0
 offset_top = 59.0002
 offset_right = 340.0
 offset_bottom = 615.0
-current_tab = 0
+current_tab = 1
 
 [node name="Addloan" type="Control" parent="Loans/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -1421,7 +1421,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Loans" type="Control" parent="Loans/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
