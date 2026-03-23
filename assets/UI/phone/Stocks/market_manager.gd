@@ -48,7 +48,6 @@ func _on_dividend_timeout():
 	if total_payout > 0:
 		Globals.brokerage_balance += total_payout
 		dividend_paid.emit(total_payout)
-		print("Dividends Paid: $", snapped(total_payout, 0.01))
 
 func _update_stock_price(stock: StockData):
 	var change = stock.current_price * randf_range(-0.02, 0.022)

@@ -239,6 +239,9 @@ func generate_renter_stats() -> Dictionary:
 		"apartment_condition": randf_range(0.7, 1.0),
 		"lease_length": selected_lease
 	}
+
+
+
 func show_floating_label(text: String, color: Color = Color.WHITE):
 	if ui_layer:
 		var label = Label.new()

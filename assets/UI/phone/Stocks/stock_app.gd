@@ -66,8 +66,6 @@ func _process(_delta):
 		div_timer_label.text = "Next Dividend in: " + str(time_left) + "s"
 
 func _on_dividends_received(amount: float):
-	# You could trigger a small animation here
-	print("UI: Received $", amount)
 	update_portfolio_summary()
 
 func _update_dividend_display():
@@ -167,8 +165,7 @@ func _on_fund_account_pressed():
 		amount_input.text = "" 
 		update_portfolio_summary()
 		SaveAndLoad.save_game()
-	else:
-		print("Insufficient cash!")
+
 
 func _on_withdraw_pressed():
 	var amount = float(amount_input.text)
@@ -243,16 +240,12 @@ func _on_confirm_trade_pressed():
 			Globals.brokerage_balance -= total_price
 			Globals.portfolio[ticker] = Globals.portfolio.get(ticker, 0) + count
 			_complete_trade()
-		else:
-			print("Not enough brokerage funds!")
 	else:
 		var owned = Globals.portfolio.get(ticker, 0)
 		if owned >= count:
 			Globals.brokerage_balance += total_price
 			Globals.portfolio[ticker] = owned - count
 			_complete_trade()
-		else:
-			print("Not enough shares!")
 
 func _complete_trade():
 	trade_popup.visible = false

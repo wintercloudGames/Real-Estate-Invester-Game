@@ -1,8 +1,11 @@
 extends Control
 
+func _ready() -> void:
+	Globals.month_ended.connect(update_credit_display)
+
 func _process(delta: float) -> void:
 	get_qualified_house_amount()
-	update_credit_display()
+
 
 func get_qualified_house_amount():
 	var down_payment = Globals.money  # Player's current money

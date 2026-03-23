@@ -39,14 +39,13 @@ var upgrade_max = 10
 var upgrade_amount = 0
 var for_sale = false
 var time_on_market = 0
-var owner_type: String = "none" # Options: "none", "player", "ai"
+var owner_type: String = "none"
 
 func _init():
 	add_to_group("houses")
 
 func _ready() -> void:
 	base_price = randi_range(80000, 500000) * rarity
-	Globals.month_ended.connect($Collect_Rent.Month_timer)
 	if not is_building:
 		setup_yard_editor()
 	if id == "":
@@ -94,13 +93,14 @@ func update_market_value(market_change_percent: float) -> void:
 	current_price = previous_price * market_multiplier * noise
 	
 	current_price = max(round(current_price / 500.0) * 500, 500)
-func _process(delta: float) -> void:
 
-	$Label3D5.text = ""           
-	$Label3D3.text = ""        
+func _process(delta: float) -> void:
+	# Reset top labels every frame
+	$Label3D5.text = ""            
+	$Label3D3.text = ""         
 
 	if owned:
-
+		# --- OWNED PROPERTY LOGIC ---
 		if loan_price > 0:
 			$Label3D.text = "FINANCED PROPERTY"
 			$Label3D.modulate = Color.YELLOW
@@ -115,17 +115,21 @@ func _process(delta: float) -> void:
 			has_loan = false
 			mortgage = 0
 			loan_price = 0
+
 		if has_tenant and rent > 0:
 			var effective_rent = rent
 			if Globals.rent_bost > 0.0:
 				effective_rent = rent * (1.0 + Globals.rent_bost)
-			$Label3D3.text = "CashFlow: " + add_comma_to_int(int(effective_rent - mortgage))
-			$Label3D3.modulate = Color.GREEN if effective_rent >= mortgage else Color.RED
-		else:
-			$Label3D3.text = ""
+			
+			var cashflow = effective_rent - mortgage
+			$Label3D3.text = "CashFlow: " + add_comma_to_int(int(cashflow))
+			$Label3D3.modulate = Color.GREEN if cashflow >= 0 else Color.RED
+		
+		# Clear the "For Sale" text if you already own it
 		$Label3D4.text = ""
 
 	else:
+		# --- UNOWNED PROPERTY LOGIC ---
 		$Label3D.text = add_comma_to_int(int(current_price))
 		$Label3D2.text = ""
 		$Label3D3.text = ""
@@ -136,26 +140,22 @@ func _process(delta: float) -> void:
 		
 		if for_sale:
 			$Label3D.modulate = Color.WHITE
-			$Label3D4.modulate = Color.ORANGE
-			$Label3D.text = add_comma_to_int(int(current_price)) 
 			$Label3D4.text = "FOR SALE"
+			$Label3D4.modulate = Color.ORANGE
 			
+			# Use the qualified amount logic from game.gd for the "Affordable!" tag
 			var down_payment_needed = current_price * 0.2
-			
 			if Globals.money >= down_payment_needed:
 				$Label3D5.text = "Affordable!"
 				$Label3D5.modulate = Color.GREEN
-			else:
-				$Label3D5.text = ""
 		else:
 			$Label3D.modulate = Color(0.7, 0.7, 0.7)
-			$Label3D4.text = ""           
-			$Label3D4.modulate = Color(0.6, 0.6, 0.6)
-			$Label3D5.text = ""                       
+			$Label3D4.text = ""            
 
-		if is_listed and not has_tenant:
-			$Label3D4.text = "Listed For Rent"
-			$Label3D4.modulate = Color.CYAN
+	# This should be outside the main if/else so it shows even if owned
+	if is_listed and not has_tenant and owned:
+		$Label3D4.text = "Listed For Rent"
+		$Label3D4.modulate = Color.CYAN
 
 func create_label(is_affordable: bool):
 	# Using a simple visibility toggle is cleaner than clearing text every frame
@@ -190,6 +190,7 @@ func remove_tenant():
 	tenant_offers = null
 	lease_length = 0
 	is_listed = false
+	Collect_Rent.collect_rent()
 	if Collect_Rent:
 		Collect_Rent.reset_rent_state(true)
 
@@ -198,35 +199,7 @@ func add_tenant(income: int, lease_duration: int = 12):
 	lease_length = lease_duration
 	House_ui.income = income
 	has_tenant = true
-
-func sell_house(sell_price: int) -> void:
-	owned = false
-	has_tenant = false
-	rent = 0
-	lease_length = 0
-	paid_rent = false
-	stored_cash = 0
-	has_loan = false
-	loan_price = 0
-	mortgage = 0
-	is_listed = false
-	tenant_offers = null
-	Globals.net_worth -= bought_price
-	Globals.money += sell_price
-	Collect_Rent.reset()
-	time_on_market = 0
-	if $Collect_Rent/Dollar_sign.visible == true:
-		collect_rent()
-	if Collect_Rent:
-		Collect_Rent.reset_rent_state(true)
-	$Label3D.text = add_comma_to_int(current_price)
-	$Label3D2.text = ""
-	$Label3D3.text = ""
-	$Label3D4.text = ""
-	$Label3D.modulate = Color.WHITE
 	
-	$Collect_Rent/Dollar_sign.visible = false
-
 func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node = null) -> void:
 	if use_loan and (not loan_mod or not is_instance_valid(loan_mod)):
 		push_error("No valid loan_mod for house %s. Reverting to cash purchase." % name)

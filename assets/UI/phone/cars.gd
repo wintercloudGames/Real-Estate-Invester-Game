@@ -20,6 +20,7 @@ func _ready():
 		$Upgrade_Cost_Label.visible = false
 
 func load_info():
+	is_broken = Globals.has_car
 	car_level = Globals.car_level
 	breakdown_rate = max(0.0, 1.0 - (car_level * 0.1))
 	update_status_label()

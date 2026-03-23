@@ -135,13 +135,9 @@ func _on_sell_button_pressed() -> void:
 func _on_yes_sell_pressed() -> void:
 	if house:
 		Globals.money += house.current_price
-		
 		Globals.Propertys -= 1
-		house.tenant_offers = null
-		house.is_listed = false
-		house.has_tenant = false
-		house.rent = 0
-		
+		house.remove_tenant()
+		$"../../Rent_offer_system".clear_offers_ui()
 		if house.has_loan:
 			var loans_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans")
 			if loans_ui and is_instance_valid(loans_ui):

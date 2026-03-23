@@ -69,7 +69,7 @@ func _process(delta: float) -> void:
 			if mission_win_panel:
 				mission_win_panel.visible = true
 			Engine.time_scale = 0
-			print("MISSION WIN - ", Globals.mission_desc)
+			
 			return   # early out so we don't accidentally check fail
 
 		# ─── LOSE CHECK ───────────────────────────────────────
@@ -88,11 +88,9 @@ func _process(delta: float) -> void:
 				var info = game_over_panel.get_node_or_null("Info")
 				if info:
 					info.text = "Mission Failed!\n" + Globals.mission_desc + "\nTime's up!"
-				else:
-					print("Warning: No 'Info' label in GAME_OVER panel")
+
 			Engine.time_scale = 0
-			print("MISSION FAILED - year:", Globals.year, "deadline was:", Globals.mission_deadline_year)
-		
+			
 	# UI scale
 	$HUD.scale = Vector2(Settings.UI_scale, Settings.UI_scale)
 
@@ -202,8 +200,8 @@ func get_qualified_house_amount():
 		max_house_price = floor(down_payment / 500.0) * 500
 	
 	# 3. Update Labels
-	var house_qualify_label = $VBoxContainer/house_qualify
-	var stats_label = $VBoxContainer/stats
+	var house_qualify_label = $HUD/Phone/credit_info/VBoxContainer/house_qualify
+	var stats_label = $HUD/Phone/credit_info/VBoxContainer/stats
 	
 	if house_qualify_label and stats_label:
 		if Globals.money >= 1000:
@@ -248,13 +246,13 @@ func simulate_market_buyers() -> void:
 			if randf() < buy_chance:
 				house.for_sale = false
 				house.time_on_market = 0
-				print("NPC bought: ", house.name)
+				
 			
 			elif house.time_on_market >= 4:
 				house.current_price *= 0.95
 				# Round to nearest 500 for realism
 				house.current_price = round(house.current_price / 500.0) * 500
-				print(house.name, " price dropped! It's getting stale.")
+				
 				
 		else:
 			# --- NEW LISTING LOGIC ---

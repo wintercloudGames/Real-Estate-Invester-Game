@@ -118,6 +118,7 @@ func save_game() -> bool:
 			"base_price": house.base_price,
 			"current_price": house.current_price,
 			"mortgage": house.mortgage,
+			"owner_type":house.owner_type,
 			"for_sale":house.for_sale,
 			"time_on_market":house.time_on_market,
 			"bought_price": house.bought_price,
@@ -243,8 +244,6 @@ func load_game() -> bool:
 		Globals.mission_desc           = g.get("mission_desc", "")
 		Globals.mission_completed      = g.get("mission_completed", false)
 
-		print("Loaded mission_active:", Globals.mission_active)
-		print("Loaded mission_desc:", Globals.mission_desc)
 
 	
 	# 1. Safely Load Market Data (Price and History)
@@ -316,6 +315,7 @@ func apply_loaded_data() -> void:
 				house.mortgage = saved_house.get("mortgage", house.mortgage)
 				house.bought_price = saved_house.get("bought_price", house.bought_price)
 				house.rent = saved_house.get("rent", house.rent)
+				house.owner_type = saved_house.get("owner_type", house.owner_type)
 				house.for_sale = saved_house.get("for_sale",house.for_sale)
 				house.time_on_market = saved_house.get("time_on_market",house.time_on_market)
 				house.lease_length = saved_house.get("lease_length", house.lease_length)

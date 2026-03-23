@@ -92,12 +92,7 @@ func show_floating_label(message: String, color: Color) -> void:
 	tween.tween_callback(label.queue_free)
 
 func collect_rent():
-	print("collect_rent() called - giving player $", stored_cash)
-	if not house.owned:
-		$Dollar_sign.visible = false
-		$Label3D.text = ""
-		return
-
+	
 	if Globals.rent_bost > 0.0 and stored_cash > 0:
 		var boosted_amount = stored_cash * (1.0 + Globals.rent_bost)
 		Globals.money += boosted_amount
@@ -117,18 +112,23 @@ func collect_rent():
 		Globals.exp += months_collected
 		$Label3D.text = get_rent_status()
 		$Dollar_sign.visible = false
+		
+	elif not house.owned:
+		$Dollar_sign.visible = false
+		$Label3D.text = ""
+
 
 func reset_rent_state(preserve_cash: bool = false):
 	rent_paid = false
 	if not preserve_cash:
 		stored_cash = 0
 		accumulated_months = 0
-	$Dollar_sign.visible = false
-	$Label3D.text = ""
 	if payment_delay_timer:
 		payment_delay_timer.stop()
 	if rent_collect_timer:
 		rent_collect_timer.stop()
+	$Dollar_sign.visible = false
+	$Label3D.text = ""
 
 func get_rent_status() -> String:
 	if not house.owned:
