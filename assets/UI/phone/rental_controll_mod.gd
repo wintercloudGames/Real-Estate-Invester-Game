@@ -2,7 +2,6 @@ extends Control
 
 @onready var house_info_UI = get_node("/root/Root/UserInterface/Game/HUD/House_info")
 
-
 @onready var sell_button: Button = $HBoxContainer/Sell_Button
 @onready var refinance_button: Button = $HBoxContainer/Refinance_Button
 @onready var list_for_rent_button: Button = $HBoxContainer/List_for_rent_Button
@@ -25,13 +24,15 @@ func _process(_delta: float) -> void:
 		morgage.text = "mortgage: " + add_comma_to_int(house.mortgage)
 		if house.has_tenant:
 			rental_status.add_theme_color_override("font_color", Color.GREEN)
-			rental_status.text = "Rented Out"
-		elif not house.is_listed:
-			rental_status.add_theme_color_override("font_color", Color.RED)
-			rental_status.text = "Not listed for rent"
+			rental_status.text = "Status: Rented"
+		elif house.is_listed:
+	# It's on the market, but waiting for a tenant
+			rental_status.add_theme_color_override("font_color", Color.YELLOW) 
+			rental_status.text = "Status: Seeking Tenant..."
 		else:
-			rental_status.add_theme_color_override("font_color", Color.RED)
-			rental_status.text = "Not Rented"
+	# The player forgot to click 'List for Rent'
+			rental_status.add_theme_color_override("font_color", Color.CRIMSON)
+			rental_status.text = "Status: Unlisted"
 			
 		rent = house.rent
 		house_value.text = "Value: " + add_comma_to_int(house.current_price)

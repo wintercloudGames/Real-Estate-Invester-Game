@@ -55,7 +55,7 @@ func update_ui():
 			valid_mods.append(mod)
 	active_loan_mods = valid_mods 
 	
-	Totalpaymentdisplay.text = "Total Monthly Payments: $\n$" + add_comma_to_int(int(total_monthly_bill))
+	Totalpaymentdisplay.text = "Total Monthly Payments: \n$" + add_comma_to_int(int(total_monthly_bill))
 	
 	if amount > 0:
 		# Formula: (Principal * Annual Rate / 12) + (Principal / Term)
