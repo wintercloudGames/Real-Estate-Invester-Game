@@ -130,7 +130,7 @@ func handle_buy(list_for_rent: bool = false) -> void:
 	
 	var loan_mod = null
 	if loan_status and can_use_loan:
-		# Loan purchase
+		# --- LOAN PURCHASE ---
 		var calculated_loan_amount = full_price - pay_now_amount
 		if Globals.money >= pay_now_amount:
 			var interest_rate = 0.06
@@ -140,8 +140,10 @@ func handle_buy(list_for_rent: bool = false) -> void:
 				interest_rate = 0.045
 			elif Globals.credit_score >= 620:
 				interest_rate = 0.055
+				
 			var term_months = 12 * 30
 			var monthly_payment = calculate_mortgage_payment(calculated_loan_amount, term_months, interest_rate)
+			
 			if monthly_payment <= 0:
 				show_floating_label("Invalid loan terms!", Color.RED)
 				return
@@ -149,9 +151,14 @@ func handle_buy(list_for_rent: bool = false) -> void:
 			# Deduct down payment
 			Globals.money_out(pay_now_amount)
 			
+			# Ownership Logic
 			house.owned = true
+			house.owner_type = "player" # Explicitly mark as Player
+			if house.is_in_group("ai_owned"):
+				house.remove_from_group("ai_owned")
+			
 			house.bought_price = full_price
-			house.loan_price = float(calculated_loan_amount)  # Set loan_price before loan creation
+			house.loan_price = float(calculated_loan_amount)
 			house.mortgage = int(monthly_payment)
 			house.has_loan = true
 			house.just_bought = true
@@ -160,6 +167,7 @@ func handle_buy(list_for_rent: bool = false) -> void:
 			var loans_ui = get_tree().get_first_node_in_group("loans_ui")
 			if not loans_ui:
 				loans_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans")
+			
 			if loans_ui and is_instance_valid(loans_ui):
 				if loans_ui.loan_mod_Container:
 					var loan_mod_path = "res://assets/UI/phone/Loans_controll_mod.tscn"
@@ -167,44 +175,19 @@ func handle_buy(list_for_rent: bool = false) -> void:
 						loan_mod = loans_ui.add_mortgage_as_loan(monthly_payment, interest_rate, term_months, house)
 						if loan_mod and is_instance_valid(loan_mod):
 							loan_mod.loan_id = "mortgage_" + str(house.id)
-							# Now call house_buy with the valid loan_mod
 							house.house_buy(true, full_price, calculated_loan_amount, loan_mod)
 							Globals.recalculate_expenses()
 						else:
-							# Rollback
-							Globals.money += pay_now_amount
-							house.owned = false
-							house.loan_price = 0
-							house.mortgage = 0
-							house.has_loan = false
-							show_floating_label("Failed to create loan!", Color.RED)
+							rollback_purchase()
 							return
 					else:
-						# Rollback
-						Globals.money += pay_now_amount
-						house.owned = false
-						house.loan_price = 0
-						house.mortgage = 0
-						house.has_loan = false
-						show_floating_label("Loan system error!", Color.RED)
+						rollback_purchase()
 						return
 				else:
-					# Rollback
-					Globals.money += pay_now_amount
-					house.owned = false
-					house.loan_price = 0
-					house.mortgage = 0
-					house.has_loan = false
-					show_floating_label("Loan system error!", Color.RED)
+					rollback_purchase()
 					return
 			else:
-				# Rollback
-				Globals.money += pay_now_amount
-				house.owned = false
-				house.loan_price = 0
-				house.mortgage = 0
-				house.has_loan = false
-				show_floating_label("Loan system error!", Color.RED)
+				rollback_purchase()
 				return
 			
 			Globals.Propertys += 1
@@ -214,16 +197,23 @@ func handle_buy(list_for_rent: bool = false) -> void:
 			show_floating_label("Need $" + add_comma_to_int(pay_now_amount) + " for down payment!", Color.RED)
 			return
 	else:
-		# Cash purchase
+		# --- CASH PURCHASE ---
 		if Globals.money >= pay_now_amount:
 			Globals.money -= pay_now_amount
+			
+			# Ownership Logic
 			house.owned = true
+			house.owner_type = "player" # Explicitly mark as Player
+			if house.is_in_group("ai_owned"):
+				house.remove_from_group("ai_owned")
+				
 			house.bought_price = full_price
 			house.loan_price = 0
 			house.mortgage = 0
 			house.has_loan = false
 			house.just_bought = true
 			house.house_buy(false, full_price, 0, null)
+			
 			Globals.Propertys += 1
 			Globals.net_worth += full_price
 			show_floating_label("Bought with cash! $" + add_comma_to_int(pay_now_amount), Color.GREEN)
@@ -239,6 +229,16 @@ func handle_buy(list_for_rent: bool = false) -> void:
 	$Loan_button.button_pressed = false
 	visible = false
 	SaveAndLoad.save_game()
+
+# Helper function to handle rollbacks if loan creation fails
+func rollback_purchase():
+	Globals.money += pay_now_amount
+	house.owned = false
+	house.owner_type = "none"
+	house.loan_price = 0
+	house.mortgage = 0
+	house.has_loan = false
+	show_floating_label("Loan system error!", Color.RED)
 
 func calculate_mortgage_payment(loan_amount: float, months: int, interest_rate: float) -> float:
 	if months <= 0 or loan_amount <= 0 or interest_rate < 0:

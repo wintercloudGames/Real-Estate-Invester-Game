@@ -1,45 +1,45 @@
 extends Node
 
-# --- Configuration ---
-@export var ai_aggression: float = 0.05 # 5% chance per month to attempt a buy
-@export var min_profit_margin: float = 0.15 # AI only buys if house is 15% below market value
-@onready var market_node = $"../Market" # Path to your Market script
+# AI starting capital
+var money: float = Globals.ai_money
+var houses_owned: Array = []
+var profit_margin_target: float = 1.20 # Wants 20% profit
 
-func _ready():
-	pass
+func _ready() -> void:
+	# Connect to your global timer 
+	Globals.month_ended.connect(_on_month_ended)
 
-func _process(_delta):
-	pass
+func _on_month_ended() -> void:
+	manage_portfolio()
+	search_for_deals()
 
-var last_checked_month = -1
+func search_for_deals() -> void:
+	var all_houses = get_tree().get_nodes_in_group("houses") 
+	
+	for house in all_houses:
+		# Only check houses not owned by the player or the AI [cite: 1, 11]
+		if not house.owned and house.for_sale:
+			# DECISION: Is it a deal? (Looking for 10% below base price)
+			if house.current_price < house.base_price * 0.90:
+				if money >= house.current_price:
+					buy_house(house)
+					break # Limit to one purchase per month for balance
 
-func attempt_ai_purchase():
-	# Difficulty check: AI is smarter/faster on harder difficulties
-	var current_chance = ai_aggression
-	if market_node.difficulty == market_node.Difficulty.NIGHTMARE:
-		current_chance = 0.15 
-
-	if randf() > current_chance:
-		return # AI decides to wait this month
-
-	var houses = get_tree().get_nodes_in_group("houses")
-	if houses.is_empty():
-		return
-
-	houses.shuffle()
-
-	for house in houses:
-		if not house.is_for_sale: continue
+func buy_house(house) -> void:
+	if Globals.ai_money >= house.current_price:
+		Globals.ai_money -= house.current_price
+		house.bought_price = house.current_price
+		house.set_as_ai_owned() # Use the new helper function
+		houses_owned.append(house)
+		house.for_sale = false
+		print("AI Investor bought ", house.name, " for $", house.current_price)
 		
-		var is_good_deal = house.price < (house.market_value * (1.0 - min_profit_margin))
-		
-		if market_node.is_crashing:
-			is_good_deal = house.price < house.market_value 
-
-		if is_good_deal:
-			buy_house_as_ai(house)
-			break # AI only buys one house per month maximum
-
-func buy_house_as_ai(house):
-	market_node.news_label.modulate = Color.GOLD
-	house.is_for_sale = false
+func manage_portfolio() -> void:
+	for house in houses_owned:
+		if not house.for_sale:
+			# SELL DECISION: Target 20% profit
+			var target_price = house.bought_price * profit_margin_target
+			
+			if house.current_price >= target_price:
+				house.for_sale = true
+				print("AI listed ", house.name, " at profit: $", house.current_price)

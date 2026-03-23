@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=4 uid="uid://cung7j0rgqmwu"]
+[gd_scene load_steps=104 format=4 uid="uid://cung7j0rgqmwu"]
 
 [ext_resource type="Script" uid="uid://cq2g8tdj47vbe" path="res://assets/game.gd" id="1_f0aps"]
 [ext_resource type="Script" uid="uid://bcsm7nw2fa21b" path="res://addons/zylann.hterrain/hterrain.gd" id="2_6p1yv"]
@@ -38,16 +38,9 @@
 [ext_resource type="Texture2D" uid="uid://bqkuokwms5xnl" path="res://assets/UI/icons/briefcase.png" id="17_4mpck"]
 [ext_resource type="Theme" uid="uid://b45etg3nfmcio" path="res://themes/nice_dark_blue.tres" id="23_k076q"]
 [ext_resource type="Script" uid="uid://dkdnbmv5x42i1" path="res://assets/UI/game_start.gd" id="25_r1a70"]
-[ext_resource type="PackedScene" uid="uid://4scb1lh1a7vk" path="res://houses/building_large.tscn" id="28_ikew3"]
 [ext_resource type="PackedScene" uid="uid://cichm52kww3cn" path="res://assets/Skill_Tree/skill_tree.tscn" id="29_me805"]
 [ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="29_vc4h2"]
-[ext_resource type="PackedScene" uid="uid://ywcr0ke1jva2" path="res://houses/building_small.tscn" id="29_yfda1"]
-[ext_resource type="PackedScene" uid="uid://cv2v5f3ktq0jp" path="res://houses/building_small_2.tscn" id="30_7kap7"]
 [ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="30_dv1k5"]
-[ext_resource type="PackedScene" uid="uid://yxm1bh54xc17" path="res://houses/building_large_2.tscn" id="30_ombld"]
-[ext_resource type="PackedScene" uid="uid://xkdoyiar0d5" path="res://houses/building_large_3.tscn" id="31_p0f6l"]
-[ext_resource type="PackedScene" uid="uid://bs1nw6nah1p7c" path="res://houses/building_small_3.tscn" id="31_wgy62"]
-[ext_resource type="PackedScene" uid="uid://bfbyalicra033" path="res://houses/building_small_4.tscn" id="32_172oy"]
 [ext_resource type="AudioStream" uid="uid://cxxhebwtrm47d" path="res://effects/sounds/ui-pop-sound-316482.mp3" id="32_ba7d1"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="32_nggmv"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="33_dnuxx"]
@@ -3801,7 +3794,7 @@ offset_bottom = 73.0
 text = "Mission Mode:"
 
 [node name="Hostpital" type="Node3D" parent="."]
-transform = Transform3D(0.995589, 0, 0, 0, 0.995589, 0, 0, 0, 0.995589, -38.8243, -0.0167836, 5.41014)
+transform = Transform3D(0.9955891, 0, 0, 0, 0.9955891, 0, 0, 0, 0.9955891, -25.824299, -0.0167836, 5.4101405)
 
 [node name="sign_hospital2" parent="Hostpital" instance=ExtResource("33_jrpiw")]
 transform = Transform3D(-0.00544399, 0, -2.62293, 0, 1.95133, 0, 1.05734, 0, -0.0135048, 0.0441513, 1.7485, 0.791565)
@@ -3809,198 +3802,13 @@ transform = Transform3D(-0.00544399, 0, -2.62293, 0, 1.95133, 0, 1.05734, 0, -0.
 [node name="hospital" type="Area3D" parent="Hostpital"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hostpital/hospital"]
-transform = Transform3D(0.999474, 0, 0.0324225, 0, 1, 0, -0.0324225, 0, 0.999474, 0.0737286, 1.21749, -0.0860519)
+transform = Transform3D(0.99947405, 0, 0.0324225, 0, 1, 0, -0.0324225, 0, 0.99947405, 0.073726654, 1.21749, -0.08605194)
 shape = SubResource("BoxShape3D_71uhx")
 
 [node name="large_buildingG" type="MeshInstance3D" parent="Hostpital"]
 mesh = SubResource("ArrayMesh_aajbe")
 skeleton = NodePath("")
 script = ExtResource("34_6jkhm")
-
-[node name="large_buildings" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, -0.105889, -6.26845)
-
-[node name="Building_large" parent="large_buildings" instance=ExtResource("28_ikew3")]
-transform = Transform3D(-1, 3.05162e-10, -8.74222e-08, 1.62838e-17, 0.999993, 0.00349065, 8.74228e-08, 0.00349065, -0.999993, -48.3004, 1.63498, 0.454138)
-rarity = 30.0
-
-[node name="Building_large9" parent="large_buildings" instance=ExtResource("28_ikew3")]
-transform = Transform3D(1, -3.72529e-10, 1.43051e-07, -8.99588e-11, 0.999993, 0.00349065, -2.14577e-07, -0.00349065, 0.999993, -36.6004, 1.63498, 1.05414)
-rarity = 30.0
-
-[node name="Building_large2" parent="large_buildings" instance=ExtResource("30_ombld")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, -1.62838e-17, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -44.5298, 1.63498, -3.64827)
-rarity = 30.0
-
-[node name="Building_large12" parent="large_buildings" instance=ExtResource("30_ombld")]
-transform = Transform3D(1, -1.55431e-16, -1.7053e-14, -1.62838e-17, 0.999993, 0.00349065, 5.68434e-15, -0.00349065, 0.999993, -45.3298, 1.63498, 0.0517344)
-rarity = 30.0
-
-[node name="Building_large8" parent="large_buildings" instance=ExtResource("30_ombld")]
-transform = Transform3D(-1, 3.05162e-10, -8.74222e-08, 0, 0.999993, 0.00349065, 8.74228e-08, 0.00349065, -0.999993, -39.5329, 1.63498, -0.204424)
-rarity = 30.0
-
-[node name="Building_large10" parent="large_buildings" instance=ExtResource("30_ombld")]
-transform = Transform3D(1, 0, 0, 0, 0.999993, 0.00349065, 0, -0.00349065, 0.999993, -37.1319, 1.63498, 7.71046)
-rarity = 30.0
-
-[node name="Building_large11" parent="large_buildings" instance=ExtResource("30_ombld")]
-transform = Transform3D(1, 0, 0, 0, 0.999993, 0.00349065, 0, -0.00349065, 0.999993, -45.4319, 1.63498, 15.5105)
-rarity = 30.0
-
-[node name="Building_large3" parent="large_buildings" instance=ExtResource("31_p0f6l")]
-rarity = 30.0
-
-[node name="Building_large4" parent="large_buildings" instance=ExtResource("28_ikew3")]
-transform = Transform3D(-4.37114e-08, 0.00349065, -0.999993, 0, 0.999993, 0.00349065, 1, 1.52581e-10, -4.37111e-08, -35.5505, 1.63498, 15.2537)
-rarity = 30.0
-
-[node name="Building_large5" parent="large_buildings" instance=ExtResource("28_ikew3")]
-transform = Transform3D(1, -1.55431e-16, -1.7053e-14, -1.62838e-17, 0.999993, 0.00349065, 5.68434e-15, -0.00349065, 0.999993, -44.6665, 1.63498, 9.06083)
-rarity = 30.0
-
-[node name="Building_small" parent="large_buildings" instance=ExtResource("29_yfda1")]
-transform = Transform3D(-1, 3.05162e-10, -8.74222e-08, 1.62838e-17, 0.999993, 0.00349065, 8.74228e-08, 0.00349065, -0.999993, -48.3004, 1.32127, 2.74253)
-rarity = 30.0
-
-[node name="Building_small28" parent="large_buildings" instance=ExtResource("29_yfda1")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 1.62838e-17, 0.999993, 0.00349065, -1, -2.19945e-10, -4.37124e-08, -42.2004, 1.32127, -4.15747)
-rarity = 30.0
-
-[node name="Building_small6" parent="large_buildings" instance=ExtResource("29_yfda1")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -34.2388, 1.32127, 11.8198)
-rarity = 30.0
-
-[node name="Building_small15" parent="large_buildings" instance=ExtResource("29_yfda1")]
-transform = Transform3D(1.31134e-07, 0.00349065, -0.999993, 5.18154e-18, 0.999993, 0.00349065, 1, -4.57743e-10, 1.31133e-07, -31.7388, 1.32127, 15.2198)
-rarity = 30.0
-
-[node name="Building_small19" parent="large_buildings" instance=ExtResource("29_yfda1")]
-transform = Transform3D(-1, 3.05162e-10, -8.74219e-08, 1.42851e-16, 0.999993, 0.00349065, 8.74226e-08, 0.00349065, -0.999993, -48.2388, 1.32127, 9.9198)
-rarity = 30.0
-
-[node name="Building_small23" parent="large_buildings" instance=ExtResource("29_yfda1")]
-transform = Transform3D(-4.37112e-08, -0.00349065, 0.999993, 1.42851e-16, 0.999993, 0.00349065, -1, -2.19946e-10, -4.37121e-08, -41.7388, 1.32127, 15.9198)
-rarity = 30.0
-
-[node name="Building_small2" parent="large_buildings" instance=ExtResource("30_7kap7")]
-transform = Transform3D(-1, 3.05162e-10, -8.74222e-08, 1.62838e-17, 0.999993, 0.00349065, 8.74228e-08, 0.00349065, -0.999993, -48.0939, 1.29353, 4.58773)
-rarity = 30.0
-
-[node name="Building_small5" parent="large_buildings" instance=ExtResource("30_7kap7")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -32.4003, 1.29353, 12.0263)
-rarity = 30.0
-
-[node name="Building_small13" parent="large_buildings" instance=ExtResource("30_7kap7")]
-transform = Transform3D(-1, 3.05162e-10, -8.74222e-08, 1.62838e-17, 0.999993, 0.00349065, 8.74228e-08, 0.00349065, -0.999993, -40.2003, 1.29353, 4.46609)
-rarity = 30.0
-
-[node name="Building_small17" parent="large_buildings" instance=ExtResource("30_7kap7")]
-transform = Transform3D(1, 3.77476e-16, 2.27374e-14, 2.66469e-17, 0.999993, 0.00349065, -2.27374e-14, -0.00349065, 0.999993, -45.0003, 1.29353, 2.32635)
-rarity = 30.0
-
-[node name="Building_small27" parent="large_buildings" instance=ExtResource("30_7kap7")]
-transform = Transform3D(-4.37114e-08, 0.00349065, -0.999993, 2.66469e-17, 0.999993, 0.00349065, 1, 1.52582e-10, -4.37111e-08, -43.3003, 1.29353, -1.07365)
-rarity = 30.0
-
-[node name="Building_small3" parent="large_buildings" instance=ExtResource("31_wgy62")]
-transform = Transform3D(-4.37114e-08, 0.00349065, -0.999993, 5.18154e-18, 0.999993, 0.00349065, 1, 1.52581e-10, -4.37111e-08, -29.7519, 1.32102, 15.0263)
-rarity = 30.0
-
-[node name="Building_small4" parent="large_buildings" instance=ExtResource("32_172oy")]
-rarity = 30.0
-
-[node name="Building_small24" parent="large_buildings" instance=ExtResource("32_172oy")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -39.8013, 1.32102, 16.1005)
-rarity = 30.0
-
-[node name="Building_small21" parent="large_buildings" instance=ExtResource("32_172oy")]
-transform = Transform3D(-4.37114e-08, 0.00349065, -0.999993, 0, 0.999993, 0.00349065, 1, 1.52581e-10, -4.37111e-08, -33.4955, 1.32102, 14.8342)
-rarity = 30.0
-
-[node name="Building_large6" parent="large_buildings" instance=ExtResource("28_ikew3")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -36.3336, 1.63498, 11.9895)
-rarity = 30.0
-
-[node name="Building_large7" parent="large_buildings" instance=ExtResource("28_ikew3")]
-transform = Transform3D(-4.37114e-08, 0.00349065, -0.999993, 0, 0.999993, 0.00349065, 1, 1.52581e-10, -4.37111e-08, -40.5958, 1.63498, 15.2155)
-rarity = 30.0
-
-[node name="Building_small7" parent="large_buildings" instance=ExtResource("30_7kap7")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -48.3302, 1.29353, 11.8263)
-rarity = 30.0
-
-[node name="Building_small22" parent="large_buildings" instance=ExtResource("30_7kap7")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -49.8302, 1.29353, 15.8263)
-rarity = 30.0
-
-[node name="Building_small8" parent="large_buildings" instance=ExtResource("31_wgy62")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -28.4881, 1.32102, 12.2296)
-rarity = 30.0
-
-[node name="Building_small11" parent="large_buildings" instance=ExtResource("31_wgy62")]
-transform = Transform3D(1, 1.55431e-16, 1.7053e-14, 1.62838e-17, 0.999993, 0.00349065, -5.68434e-15, -0.00349065, 0.999993, -36.7817, 1.32102, 5.0263)
-rarity = 30.0
-
-[node name="Building_small25" parent="large_buildings" instance=ExtResource("31_wgy62")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 1.62838e-17, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -39.8817, 1.32102, -3.8737)
-rarity = 30.0
-
-[node name="Building_small12" parent="large_buildings" instance=ExtResource("31_wgy62")]
-transform = Transform3D(-1, -3.05162e-10, 8.74222e-08, 1.62838e-17, 0.999993, 0.00349065, -8.74228e-08, 0.00349065, -0.999993, -40.2817, 1.32102, 6.7263)
-rarity = 30.0
-
-[node name="Building_small9" parent="large_buildings" instance=ExtResource("32_172oy")]
-transform = Transform3D(1, 1.88738e-16, 1.7053e-14, -5.92069e-18, 0.999993, 0.00349065, -5.68434e-15, -0.00349065, 0.999993, -45.1146, 1.32102, 11.5962)
-rarity = 30.0
-
-[node name="Building_small18" parent="large_buildings" instance=ExtResource("32_172oy")]
-transform = Transform3D(1, 1.55431e-16, 1.7053e-14, 1.62838e-17, 0.999993, 0.00349065, -5.68434e-15, -0.00349065, 0.999993, -45.2146, 1.32102, 4.5962)
-rarity = 30.0
-
-[node name="Building_small16" parent="large_buildings" instance=ExtResource("32_172oy")]
-transform = Transform3D(1, 1.55431e-16, 1.7053e-14, 1.62838e-17, 0.999993, 0.00349065, -5.68434e-15, -0.00349065, 0.999993, -45.1146, 1.32102, 6.8962)
-rarity = 30.0
-
-[node name="Building_small14" parent="large_buildings" instance=ExtResource("32_172oy")]
-transform = Transform3D(-1, 3.05162e-10, -8.74222e-08, 1.62838e-17, 0.999993, 0.00349065, 8.74228e-08, 0.00349065, -0.999993, -40.1146, 1.32102, 9.59621)
-rarity = 30.0
-
-[node name="Building_small10" parent="large_buildings" instance=ExtResource("32_172oy")]
-transform = Transform3D(-4.37114e-08, 0.00349065, -0.999993, 0, 0.999993, 0.00349065, 1, 1.52581e-10, -4.37111e-08, -42.8641, 1.32102, 14.8049)
-rarity = 30.0
-
-[node name="Building_small20" parent="large_buildings" instance=ExtResource("32_172oy")]
-transform = Transform3D(1, -1.55431e-16, -1.7053e-14, -1.62838e-17, 0.999993, 0.00349065, 5.68434e-15, -0.00349065, 0.999993, -37.0515, 1.32102, -0.925075)
-rarity = 30.0
-
-[node name="Building_small26" parent="large_buildings" instance=ExtResource("32_172oy")]
-transform = Transform3D(-4.37114e-08, 0.00349065, -0.999993, -1.62838e-17, 0.999993, 0.00349065, 1, 5.25107e-10, -4.37098e-08, -41.2515, 1.32102, -1.22508)
-rarity = 30.0
-
-[node name="Building_small29" parent="large_buildings" instance=ExtResource("32_172oy")]
-transform = Transform3D(-1, 3.05163e-10, -8.74222e-08, 1.11022e-17, 0.999994, 0.00349065, 8.74228e-08, 0.00349065, -0.999994, -47.8337, 1.22815, 5.9294)
-rarity = 30.0
-
-[node name="Building_small30" parent="large_buildings" instance=ExtResource("31_wgy62")]
-transform = Transform3D(-1, 3.05163e-10, -8.74222e-08, 1.11022e-17, 0.999994, 0.00349065, 8.74228e-08, 0.00349065, -0.999994, -47.7288, 1.32815, 7.82198)
-rarity = 30.0
-
-[node name="Building_small31" parent="large_buildings" instance=ExtResource("31_wgy62")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999994, 3.33067e-17, 0.999994, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -43.6288, 1.32815, 16.222)
-rarity = 30.0
-
-[node name="Building_small32" parent="large_buildings" instance=ExtResource("31_wgy62")]
-transform = Transform3D(1.31134e-07, 0.00349065, -0.999994, 3.33067e-17, 0.999994, 0.00349065, 1, -4.57744e-10, 1.31133e-07, -49.2288, 1.32815, 14.822)
-rarity = 30.0
-
-[node name="Building_small33" parent="large_buildings" instance=ExtResource("29_yfda1")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999994, 7.77156e-17, 0.999994, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -44.2856, 1.32818, 11.7013)
-rarity = 30.0
-
-[node name="Building_small34" parent="large_buildings" instance=ExtResource("29_yfda1")]
-transform = Transform3D(-4.37114e-08, -0.00349065, 0.999994, 7.77156e-17, 0.999994, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -48.1856, 1.32818, 15.7013)
-rarity = 30.0
 
 [node name="decore" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48006, -0.619433, -6.19686)
@@ -4020,6 +3828,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved163" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -30.4389, 0.529734, 12.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4033,6 +3842,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved164" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -32.2389, 0.529734, 12.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4046,6 +3856,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved165" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -36.1389, 0.529734, 12.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4059,6 +3870,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved166" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -34.0389, 0.529734, 12.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4072,6 +3884,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved167" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.728299, 0, 0.685259, 0, 1, 0, -0.685259, 0, 0.728299, -39.4464, 0.529734, 12.564)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4085,6 +3898,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved168" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -40.9389, 0.529734, 12.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4098,6 +3912,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved169" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -42.6389, 0.529734, 12.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4111,6 +3926,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved170" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -44.4389, 0.529734, 12.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4124,6 +3940,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved270" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.483252, 0, -0.875482, 0, 1, 0, 0.875482, 0, 0.483252, -45.6389, 0.529734, 12.6219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4137,6 +3954,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved171" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -48.3389, 0.529734, 12.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4150,6 +3968,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved172" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.720575, 0, 0.693377, 0, 1, 0, -0.693377, 0, 0.720575, -47.3389, 0.529734, 12.5219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4163,6 +3982,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved173" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -38.1389, 0.529734, -2.97807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4176,6 +3996,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved174" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -39.7389, 0.529734, -2.97807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4189,6 +4010,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved175" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -41.4389, 0.529734, -2.97807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4202,6 +4024,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved275" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.970725, 0, -0.240194, 0, 1, 0, 0.240194, 0, -0.970725, -39.4389, 0.529734, -1.97807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4215,6 +4038,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved276" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.970725, 0, -0.240194, 0, 1, 0, 0.240194, 0, -0.970725, -41.0389, 0.529734, -1.97807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4228,6 +4052,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved277" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.970725, 0, -0.240194, 0, 1, 0, 0.240194, 0, -0.970725, -42.5389, 0.529734, -1.97807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4241,6 +4066,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved278" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.970725, 0, -0.240194, 0, 1, 0, 0.240194, 0, -0.970725, -44.1389, 0.529734, -1.97807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4254,6 +4080,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved176" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -43.2389, 0.529734, -2.97807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4267,6 +4094,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved177" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -47.1389, 0.529734, -2.97807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4280,6 +4108,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved178" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -45.0389, 0.529734, -2.97807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4306,6 +4135,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved185" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.693578, 0, 0.720382, 0, 1, 0, -0.720382, 0, -0.693578, -39.4456, 0.529734, 14.3596)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4319,6 +4149,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved186" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.701034, 0, -0.713128, 0, 1, 0, 0.713128, 0, 0.701034, -37.5238, 0.529734, 12.5679)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4332,6 +4163,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved187" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -35.9722, 0.529734, 14.1219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4345,6 +4177,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved188" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -34.1722, 0.529734, 14.1219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4358,6 +4191,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved189" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -30.2722, 0.529734, 14.1219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4371,6 +4205,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved190" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -32.3722, 0.529734, 14.1219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4384,6 +4219,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved191" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -47.8722, 0.529734, 18.0219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4397,6 +4233,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved197" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -49.7722, 0.529734, 18.0219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4410,6 +4247,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved209" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -52.0722, 0.529734, 16.8219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4423,6 +4261,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved210" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -52.0722, 0.529734, 15.6219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4436,6 +4275,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved211" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -52.0722, 0.529734, 14.2219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4449,6 +4289,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved212" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 16.5219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4462,6 +4303,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved213" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 15.3219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4475,6 +4317,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved214" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.856249, 0, 0.516563, 0, 1, 0, -0.516563, 0, -0.856249, -47.3722, 0.529734, 14.4219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4488,6 +4331,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved215" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 16.8219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4501,6 +4345,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved216" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 15.6219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4514,6 +4359,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved218" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 12.0219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4527,6 +4373,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved219" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 10.8219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4540,6 +4387,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved220" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 9.42193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4553,6 +4401,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved221" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 7.82193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4566,6 +4415,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved222" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 6.62193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4579,6 +4429,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved223" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 5.22193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4592,6 +4443,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved224" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 3.72193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4605,6 +4457,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved225" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 2.52193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4618,6 +4471,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved226" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 1.12193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4631,6 +4485,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved227" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, -0.0780697)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4644,6 +4499,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved228" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, -1.27807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4657,6 +4513,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved229" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, -38.0203, 0.529734, -1.60187)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4670,6 +4527,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved230" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 0.92193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4683,6 +4541,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved231" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, -0.27807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4696,6 +4555,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved232" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, -1.67807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4709,6 +4569,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved233" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 5.22193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4722,6 +4583,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved234" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 4.02193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4735,6 +4597,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved235" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 2.62193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4748,6 +4611,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved236" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 9.32193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4761,6 +4625,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved239" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 10.8219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4774,6 +4639,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved240" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 11.2219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4787,6 +4653,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved241" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 9.92193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4800,6 +4667,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved242" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 8.62193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4813,6 +4681,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved243" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 7.32193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4826,6 +4695,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved244" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 5.92193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4839,6 +4709,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved245" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 4.62193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4852,6 +4723,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved246" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 3.52193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4865,6 +4737,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved247" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 2.22193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4878,6 +4751,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved248" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 0.821932)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4891,6 +4765,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved249" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, -0.47807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4904,6 +4779,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved250" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 9.92193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4917,6 +4793,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved251" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 8.62193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4930,6 +4807,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved252" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 7.32193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4943,6 +4821,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved259" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 17.2219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4956,6 +4835,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved260" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 15.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4969,6 +4849,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved261" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.7154, 0, -0.698715, 0, 1, 0, 0.698715, 0, -0.7154, -37.6482, 0.623256, 14.4667)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4982,6 +4863,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved262" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -45.1722, 0.529734, 17.0219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -4995,6 +4877,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved263" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 15.5219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5008,6 +4891,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved264" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.720575, 0, -0.693377, 0, 1, 0, 0.693377, 0, -0.720575, -45.6722, 0.529734, 14.3219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5021,6 +4905,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved265" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -47.8722, 0.529734, 13.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5034,6 +4919,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved268" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -48.9722, 0.529734, 13.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5047,6 +4933,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved269" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -50.1722, 0.529734, 13.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5060,6 +4947,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved266" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -50.9722, 0.529734, 15.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5073,6 +4961,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved267" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -51.0722, 0.529734, 14.1219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5086,6 +4975,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved253" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 5.92193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5099,6 +4989,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved254" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 4.62193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5112,6 +5003,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved255" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 3.52193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5125,6 +5017,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved256" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 2.22193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5138,6 +5031,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved257" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 0.821932)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5151,6 +5045,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved258" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, -0.47807)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5164,6 +5059,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved237" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 7.72193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5177,6 +5073,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved238" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 6.72193)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5190,6 +5087,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved198" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.693377, 0, 0.720575, 0, 1, 0, -0.720575, 0, -0.693377, -51.6722, 0.529734, 17.8219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5203,6 +5101,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved192" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -46.2722, 0.529734, 18.0219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5216,6 +5115,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved199" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -41.1722, 0.529734, 16.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5229,6 +5129,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved200" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -39.2722, 0.529734, 16.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5242,6 +5143,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved201" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -42.7722, 0.529734, 16.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5255,6 +5157,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved205" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -44.1722, 0.529734, 16.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5268,6 +5171,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved206" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -45.8722, 0.529734, 16.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5281,6 +5185,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved207" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -49.5722, 0.529734, 12.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5294,6 +5199,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved208" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.875481, 0, 0.483252, 0, 1, 0, -0.483252, 0, 0.875481, -51.4722, 0.529734, 13.0219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5307,6 +5213,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved202" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -49.3722, 0.529734, 16.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5320,6 +5227,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved203" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -47.4722, 0.529734, 16.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5333,6 +5241,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved204" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -50.9722, 0.529734, 16.9219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5346,6 +5255,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved193" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -44.5722, 0.529734, 18.0219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5359,6 +5269,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved194" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -42.7722, 0.529734, 18.0219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5372,6 +5283,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved195" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -38.8722, 0.529734, 18.0219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5385,6 +5297,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved196" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -40.9722, 0.529734, 18.0219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5398,6 +5311,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved271" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -44.5722, 0.529734, 14.1219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5411,6 +5325,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved272" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -42.7722, 0.529734, 14.1219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 
@@ -5424,6 +5339,7 @@ spot_angle_attenuation = 1.31951
 
 [node name="light_curved274" type="MeshInstance3D" parent="decore"]
 transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -40.9722, 0.529734, 14.1219)
+visible = false
 mesh = SubResource("ArrayMesh_bl1gy")
 skeleton = NodePath("")
 

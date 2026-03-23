@@ -39,11 +39,13 @@ var upgrade_max = 10
 var upgrade_amount = 0
 var for_sale = false
 var time_on_market = 0
+var owner_type: String = "none" # Options: "none", "player", "ai"
 
 func _init():
 	add_to_group("houses")
 
 func _ready() -> void:
+	base_price = randi_range(80000, 500000) * rarity
 	Globals.month_ended.connect($Collect_Rent.Month_timer)
 	if not is_building:
 		setup_yard_editor()
@@ -63,6 +65,15 @@ func setup_yard_editor():
 
 func add_to_base_price(amount: int):
 	base_price += amount
+
+func set_as_ai_owned():
+	owned = true
+	owner_type = "ai"
+	add_to_group("ai_owned")
+	# Change the 3D label so you can see the AI owns it
+	if has_node("Label3D5"):
+		$Label3D5.text = "Owned by AI"
+		$Label3D5.modulate = Color.ORANGE
 
 var remaining_months: int = 0
 func set_remaining_months(new_months: int) -> void:
@@ -118,7 +129,11 @@ func _process(delta: float) -> void:
 		$Label3D.text = add_comma_to_int(int(current_price))
 		$Label3D2.text = ""
 		$Label3D3.text = ""
-
+		
+		if is_in_group("ai_owned") and for_sale:
+			$Label3D5.text = "Competitor Listing"
+			$Label3D5.modulate = Color.ORANGE
+		
 		if for_sale:
 			$Label3D.modulate = Color.WHITE
 			$Label3D4.modulate = Color.ORANGE

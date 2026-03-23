@@ -1,6 +1,7 @@
 extends Node
 
 var money = 0
+var ai_money = 10000000
 var brokerage_balance: float = 0.0
 var Propertys = 0
 var credit_score = 600

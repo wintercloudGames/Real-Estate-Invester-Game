@@ -131,8 +131,9 @@ func _process(delta: float) -> void:
 		Globals.Income += Globals.interest
 	# House stats loop
 	var owned_houses = get_tree().get_nodes_in_group("houses")
+
 	for house in owned_houses:
-		if house.owned:
+		if house.owned and house.owner_type == "player":
 			var house_value = house.current_price
 			var mortgage_remaining = house.loan_price
 			
@@ -230,7 +231,7 @@ func simulate_market_buyers() -> void:
 	var all_houses = get_tree().get_nodes_in_group("houses")
 	
 	for house in all_houses:
-		if house.owned: continue # Skip houses the player owns
+		if house.owned or house.is_in_group("ai_owned"): continue
 		
 		if house.for_sale:
 			# TICK THE CLOCK
@@ -249,25 +250,20 @@ func simulate_market_buyers() -> void:
 				house.time_on_market = 0
 				print("NPC bought: ", house.name)
 			
-			# --- PRICE DROP LOGIC (Desperate Sellers) ---
-			# If house sits for 4+ months, drop price by 5%
 			elif house.time_on_market >= 4:
 				house.current_price *= 0.95
-				# Round to nearest 5000 for realism
-				house.current_price = round(house.current_price / 5000.0) * 5000
+				# Round to nearest 500 for realism
+				house.current_price = round(house.current_price / 500.0) * 500
 				print(house.name, " price dropped! It's getting stale.")
 				
 		else:
-			# --- NEW LISTING LOGIC (Supply) ---
-			# If a house is NOT for sale, there's a small chance the owner lists it
-			# In a 'Cold' market (low heat), more people are forced to sell
-			var list_chance = 0.05 + (1.0 - heat) * 0.1 
-			if randf() < clamp(list_chance, 0.02, 0.15):
+			# --- NEW LISTING LOGIC ---
+			var list_chance = 0.15 + (1.0 - heat) * 0.2 
+			
+			if randf() < clamp(list_chance, 0.05, 0.25): 
 				house.for_sale = true
 				house.time_on_market = 0
-				# Reset price to a 'fresh' market value based on current economy
 				house.current_price = house.base_price * heat * randf_range(0.9, 1.1)
-				print("New Listing: ", house.name)
 	
 func clear_House_ui_data():
 	House_ui.price = 0
