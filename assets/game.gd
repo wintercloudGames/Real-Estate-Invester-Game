@@ -19,7 +19,7 @@ func _ready() -> void:
 		$HUD/Game_start.visible = true
 		for house in get_tree().get_nodes_in_group("houses"):
 			if not house.owned:
-				house.for_sale = randf() < 0.20 
+				house.for_sale = randf() < 0.30
 				house.current_price *= randf_range(0.85, 1.15)
 		Globals.reset()
 	# Setup systems
@@ -175,20 +175,51 @@ func _process(delta: float) -> void:
 # ────────────────────────────────────────────────
 # Other functions (unchanged or minor cleanup)
 # ────────────────────────────────────────────────
-
 func get_qualified_house_amount():
 	var down_payment = Globals.money
-	var max_house_price = down_payment / 0.2
-	if Globals.money >= 1000:
-		$HUD/UI/GridContainer/House_qualify.text = "qualified house amount: " + add_comma_to_int(int(max_house_price))
-	else:
-		$HUD/UI/GridContainer/House_qualify.text = "qualified house amount: 0"
+	var down_payment_percent = 0.2
+	var can_use_loan = true
 	
+	# 1. Determine credit-based constraints
+	if Globals.credit_score >= 750:
+		down_payment_percent = 0.15 # Excellent
+	elif Globals.credit_score >= 680:
+		down_payment_percent = 0.20 # Good
+	elif Globals.credit_score >= 620:
+		down_payment_percent = 0.25 # Fair
+	else:
+		down_payment_percent = 0.30 # Poor
+		if Globals.credit_score < 500:
+			can_use_loan = false # Blacklisted
+	
+	# 2. Calculate Max Price (Rounded to $500 to match Market)
+	var max_house_price = 0
+	if can_use_loan:
+		# Use floor() to ensure we don't round UP into money the player doesn't have
+		max_house_price = floor((down_payment / down_payment_percent) / 500.0) * 500
+	else:
+		max_house_price = floor(down_payment / 500.0) * 500
+	
+	# 3. Update Labels
+	var house_qualify_label = $VBoxContainer/house_qualify
+	var stats_label = $VBoxContainer/stats
+	
+	if house_qualify_label and stats_label:
+		if Globals.money >= 1000:
+			house_qualify_label.text = "Qualified Amount: $" + add_comma_to_int(int(max_house_price))
+			stats_label.text = "Credit eligible for loans." if can_use_loan else "Low credit! Cash only."
+		else:
+			house_qualify_label.text = "Qualified Amount: $0"
+			stats_label.text = "Insufficient funds."
+
+	# 4. Update House World Labels
+	# This ensures the 3D "Affordable!" tag only shows if they pass the CREDIT check
 	for house in get_tree().get_nodes_in_group("houses"):
-		var should_show = (house.current_price <= max_house_price 
-			and not house.owned 
-			and house.for_sale)
-		house.create_label(should_show)
+		var is_available = house.for_sale and not house.owned
+		# Check if the specific house price fits within the Credit-Adjusted Max
+		var can_afford = (house.current_price <= max_house_price)
+		
+		house.create_label(can_afford and is_available)
 
 func simulate_market_buyers() -> void:
 	# 1. Get current market 'heat' from your Market node

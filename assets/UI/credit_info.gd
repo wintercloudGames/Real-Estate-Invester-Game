@@ -53,26 +53,35 @@ func get_qualified_house_amount():
 			house.create_label(false)  # Not affordable
 
 func update_credit_display():
-	var credit_label = $VBoxContainer/credit_score  # Label for credit score
+	var credit_label = $VBoxContainer/credit_score
+	var repair_btn = $Credit_Repair_Button # Assumes button is a child
+	
 	if credit_label:
 		var credit_status = ""
+		var status_color = Color.WHITE
+		
 		if Globals.credit_score >= 750:
-			credit_status = "Excellent"
+			credit_status = "Excellent"; status_color = Color.GREEN
 		elif Globals.credit_score >= 680:
-			credit_status = "Good"
+			credit_status = "Good"; status_color = Color.CHARTREUSE
 		elif Globals.credit_score >= 620:
-			credit_status = "Fair"
+			credit_status = "Fair"; status_color = Color.GOLD
 		else:
-			credit_status = "Poor"
+			credit_status = "Poor"; status_color = Color.ORANGE_RED
+			
 		credit_label.text = "Credit Score: %d (%s)" % [Globals.credit_score, credit_status]
-
+		credit_label.modulate = status_color
+		
+	# Update Repair Button State
+	if repair_btn:
+		repair_btn.disabled = (Globals.money < 5000 or Globals.credit_score >= 800)
+	
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
 	var loop_end: int = 0 if value > -1 else 1
 	for i in range(str_value.length() - 3, loop_end, -3):
 		str_value = str_value.insert(i, ",")
 	return str_value
-
 
 func _on_credit_repair_button_pressed() -> void:
 	var repair_cost = 5000 # Scaling cost makes it a mid-game goal

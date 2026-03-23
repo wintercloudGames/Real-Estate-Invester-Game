@@ -73,13 +73,16 @@ func _on_yard_edit_mode_changed(is_editing: bool):
 
 func update_market_value(market_change_percent: float) -> void:
 	previous_price = current_price
+	
 	if abs(market_change_percent) < 0.0005:
 		return
+		
 	var market_multiplier = 1.0 + market_change_percent
 	var noise = randf_range(0.9975, 1.0025)
+	
 	current_price = previous_price * market_multiplier * noise
-	current_price = max(round(current_price / 5000.0) * 5000, 5000)
-
+	
+	current_price = max(round(current_price / 500.0) * 500, 500)
 func _process(delta: float) -> void:
 
 	$Label3D5.text = ""           
@@ -117,18 +120,18 @@ func _process(delta: float) -> void:
 		$Label3D3.text = ""
 
 		if for_sale:
-
 			$Label3D.modulate = Color.WHITE
+			$Label3D4.modulate = Color.ORANGE
+			$Label3D.text = add_comma_to_int(int(current_price)) 
 			$Label3D4.text = "FOR SALE"
-			$Label3D4.modulate = Color(1, 0.8, 0.2)
-
+			
 			var down_payment_needed = current_price * 0.2
+			
 			if Globals.money >= down_payment_needed:
 				$Label3D5.text = "Affordable!"
 				$Label3D5.modulate = Color.GREEN
 			else:
 				$Label3D5.text = ""
-
 		else:
 			$Label3D.modulate = Color(0.7, 0.7, 0.7)
 			$Label3D4.text = ""           
@@ -139,12 +142,12 @@ func _process(delta: float) -> void:
 			$Label3D4.text = "Listed For Rent"
 			$Label3D4.modulate = Color.CYAN
 
-
-func create_label(stat):
-	if stat == true:
+func create_label(is_affordable: bool):
+	# Using a simple visibility toggle is cleaner than clearing text every frame
+	if has_node("Label3D5"):
+		$Label3D5.visible = is_affordable
 		$Label3D5.text = "Affordable!"
-	else:
-		$Label3D5.text = ""
+		$Label3D5.modulate = Color.GREEN
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
