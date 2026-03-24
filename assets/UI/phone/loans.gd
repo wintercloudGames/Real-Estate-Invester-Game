@@ -87,30 +87,48 @@ func update_ui():
 		max_loan_label.text = "Max Loan: $%s\n(Credit: %s | Market: x%.2f)" % [
 			add_comma_to_int(final_max), credit_cat, market_multiplier
 		]
-	
 func take_loan(amount: int):
 	var heat = get_market_heat()
 	
-	# Determine Rate based on Market + Credit
-	var base_rate = 0.12
+	# Rate Logic 
+	var base_rate = 0.12 
 	if Globals.credit_score >= 750: base_rate = 0.05
 	elif Globals.credit_score >= 680: base_rate = 0.08
 	elif Globals.credit_score >= 620: base_rate = 0.10
+	elif Globals.credit_score < 500: base_rate = 0.25 
 	
 	var final_rate = base_rate * heat
-	var monthly_payment = (amount * final_rate / 12) + (amount / loan_term)
+	var monthly_payment = (amount * final_rate / 12) + (amount / loan_term) 
 	
-	# Apply effects to Globals
+	# 1. Apply effects to Globals 
 	Globals.exp += 10
 	Globals.money += amount
-	Globals.credit_score -= randi_range(30, 60) # Taking debt lowers score
-	Globals.credit_score = clamp(Globals.credit_score, 300, 850)
+	Globals.credit_score -= randi_range(30, 60) 
+	Globals.credit_score = clamp(Globals.credit_score, 300, 850) 
 	
+	# 2. Add the module and refresh UI 
 	add_loan_mod(monthly_payment, final_rate, amount, loan_term, LOAN_TYPE_PERSONAL, null)
 	update_ui()
 	
-	var msg = "Loan of $%s approved at %.1f%% interest!" % [add_comma_to_int(amount), final_rate * 100]
+	# --- NEW FEEDBACK LAYERS ---
+	
+	# 3. Automatic Tab Switch
+	# This moves the player to the "Loans" list so they see the new item immediately.
+	if has_node("TabContainer"):
+		$TabContainer.current_tab = 1 
+
+	# 4. Sound Effect (Optional)
+	# If you have an AudioStreamPlayer node, trigger a success sound.
+	# $SuccessSound.play()
+
+	# 5. Enhanced Message 
+	var msg = "APPROVED: +$%s\n(Rate: %.1f%%)" % [add_comma_to_int(amount), final_rate * 100]
 	show_floating_label(msg, Color.GREEN)
+	
+	# 6. Global Money Update
+	# If your HUD has a 'money changed' signal, trigger it here to flash the money label.
+	if Globals.has_signal("money_changed"):
+		Globals.emit_signal("money_changed")
 
 func add_mortgage_as_loan(payment: float, interest_rate: float, term_months: int, house: Node = null) -> Node:
 	if not house or not is_instance_valid(house): return null

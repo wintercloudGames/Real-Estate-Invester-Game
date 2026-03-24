@@ -228,7 +228,6 @@ func _on_refinance_button_pressed() -> void:
 	if cash_out > 0:
 		Globals.money += cash_out
 	
-
 	# Store original values for rollback
 	var original_loan_price: float = house.loan_price
 	var original_mortgage: float = house.mortgage
@@ -253,8 +252,11 @@ func _on_refinance_button_pressed() -> void:
 			# Remove existing loan for this house, if any
 			for mod in loans_ui.active_loan_mods:
 				if mod.house_ref == house:
-					mod._on_payoff_pressed()  # Pays off old loan
+					mod.queue_free()
 					break
+			house.loan_price = calculated_loan_amount
+			house.mortgage = int(monthly_payment)
+			house.has_loan = true
 			loan_mod = loans_ui.add_mortgage_as_loan(monthly_payment, interest_rate, term_months, house)
 			if loan_mod and is_instance_valid(loan_mod):
 				loan_mod.loan_id = "mortgage_" + str(house.id)

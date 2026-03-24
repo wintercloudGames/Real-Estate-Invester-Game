@@ -16,14 +16,14 @@ extends Control
 const LOAN_TYPE_MORTGAGE: int = 0
 const LOAN_TYPE_PERSONAL: int = 1
 
-@export var loan_balance: float = 0.0  # Current balance
-@export var months: int = 0            # Remaining months
-@export var payment: float = 0.0       # Monthly payment
-@export var interest: float = 0.0      # Annual interest rate (e.g., 0.06 for 6%)
-@export var loan_id: String = ""       # Unique ID (e.g., "personal_123" or "mortgage_houseX")
-@export var loan_type_str: String = "" # "Personal" or "Mortgage"
-var autopay_enabled: bool = true  # Default to true
-var house_ref: Node = null     # For mortgages, reference to house node
+@export var loan_balance: float = 0.0  
+@export var months: int = 0            
+@export var payment: float = 0.0       
+@export var interest: float = 0.0      
+@export var loan_id: String = ""       
+@export var loan_type_str: String = "" 
+var autopay_enabled: bool = true 
+var house_ref: Node = null   
 
 func _ready() -> void:
 	Globals.recalculate_expenses()
@@ -50,12 +50,17 @@ func update_ui() -> void:
 	if loan_amount: loan_amount.text = "Balance: $" + add_comma_to_int(int(loan_balance))
 	if loan_type: loan_type.text = "Type: " + loan_type_str
 	if paymentdisplay: paymentdisplay.text = "Payment: $" + add_comma_to_int(int(payment))
-	if Intrest: Intrest.text = "Interest: " + str(int(interest * 100)) + "%"
-	if month_display: month_display.text = "Months: " + add_comma_to_int(int(months))
+	
+	# FIX: Use string formatting to show decimals (e.g., 5.0% or 12.25%)
+	if Intrest: 
+		Intrest.text = "Interest: %.1f%%" % (interest * 100.0)
+	if month_display: month_display.text = "Months: " + str(months)
 	if autopay_toogle:
 		autopay_toogle.text = "Enable Autopay: " + str(autopay_enabled)
 	
-
+	if loan_type_str == "Mortgage"and house_ref == null:
+		queue_free()
+	
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
 	var loop_end: int = 0 if value > -1 else 1
@@ -64,23 +69,17 @@ func add_comma_to_int(value: int) -> String:
 	return str_value
 
 func _on_make_payment_pressed() -> void:
-	if not Make_payment or Globals.money < payment:
-		show_floating_label("Need $%s for payment!" % add_comma_to_int(int(payment)), Color.RED)
+	if Globals.money < payment:
+		show_floating_label("Need $%s!" % add_comma_to_int(int(payment)), Color.RED)
 		return
-	Globals.exp += 1
-	Globals.money_out(payment)
+	Globals.credit_score += 2
 	var interest_payment = loan_balance * (interest / 12.0)
 	var principal_payment = payment - interest_payment
+	
 	loan_balance -= principal_payment
+	Globals.money -= principal_payment
 	months -= 1
-	Globals.credit_score = clamp(Globals.credit_score + 2, 300, 850)
-	
-	
-	if loan_type_str == "Mortgage" and house_ref and is_instance_valid(house_ref):
-		house_ref.loan_price = loan_balance
-		house_ref.mortgage = payment if loan_balance > 0 else 0
-		if house_ref.has_method("set_remaining_months"):
-			house_ref.set_remaining_months(months)
+	house_ref.loan_price = loan_balance
 	
 	if loan_balance <= 0 or months <= 0:
 		loan_balance = 0
@@ -92,7 +91,10 @@ func _on_make_payment_pressed() -> void:
 			house_ref.has_loan = false
 		if loans_ui and is_instance_valid(loans_ui) and loans_ui.active_loan_mods.has(self):
 			loans_ui.active_loan_mods.erase(self)
-			queue_free()
+			var tween = create_tween()
+			tween.tween_property(self, "modulate:a", 0, 0.5)
+			tween.tween_callback(queue_free)
+			show_floating_label("LOAN PAID OFF!", Color.GOLD)
 	update_ui()
 	SaveAndLoad.save_game()
 	
@@ -111,46 +113,42 @@ func _on_autopay_toggled(toggled: bool) -> void:
 		Globals.recalculate_expenses()
 	update_ui()
 
-
 func _on_timer_timeout() -> void:
-	if autopay_enabled and Globals.money >= payment:
-		_on_make_payment_pressed()
-		Globals.exp += 1
-	elif autopay_enabled and Globals.money < payment:
-		show_floating_label("Missed Loan Payment: Insufficient Funds", Color.RED)
-		Globals.exp += 1
-		Globals.credit_score = clamp(Globals.credit_score - 5, 300, 850)
-	elif !autopay_enabled:
-		Globals.exp += 1
-		show_floating_label("Missed Loan Payment", Color.RED)
-		Globals.credit_score = clamp(Globals.credit_score - 5, 300, 850)
+	if autopay_enabled:
+		if Globals.money >= payment:
+			_on_make_payment_pressed()
+		else:
+			show_floating_label("Autopay Failed: Insufficient Funds", Color.RED)
+			Globals.credit_score = clamp(Globals.credit_score - 10, 300, 850)
+	else:
+		show_floating_label("Loan Payment Due!", Color.YELLOW)
 
 func _on_refinance_pressed() -> void:
-	if not house_ref or not is_instance_valid(house_ref):
-		push_warning("Cannot refinance: no valid house reference for loan %s" % loan_id)
-		show_floating_label("No house to refinance!", Color.RED)
+	# 1. Get the current market rate from the main UI script
+	var current_market_rate = 0.05 # Default fallback
+	if loans_ui and loans_ui.has_method("get_base_rate_from_credit"):
+		var heat = loans_ui.get_market_heat()
+		current_market_rate = loans_ui.get_base_rate_from_credit() * heat
+
+	# 2. Only allow if the new rate is actually better
+	if current_market_rate >= interest:
+		show_floating_label("Market rates are too high to refinance!", Color.ORANGE)
 		return
-	Globals.credit_score -= randi_range(10,100)
-	var new_months: int = 360 # Adjust via UI if needed
-	var new_interest: float = interest - 0.01 if interest > 0.01 else interest
-	var new_payment = calculate_mortgage_payment(loan_balance, new_months, new_interest)
 
-	months = new_months
-	interest = new_interest
-	payment = new_payment
-	if house_ref and is_instance_valid(house_ref):
-		house_ref.mortgage = int(new_payment)
-		house_ref.loan_price = int(loan_balance)
-		house_ref.has_loan = true
-		if house_ref.has_method("set_remaining_months"):
-			house_ref.set_remaining_months(new_months)
-		if house_ref.has_method("set_house_UI"):
-			house_ref.set_house_UI()
+	# 3. Apply a "Refinance Fee" (e.g., 2% of balance)
+	var fee = loan_balance * 0.02
+	if Globals.money < fee:
+		show_floating_label("Need $%s for Refinance Fee!" % add_comma_to_int(int(fee)), Color.RED)
+		return
 
+	Globals.money_out(fee)
+	interest = current_market_rate
+	# Reset term or keep current months? Usually, people reset to 360 (30 years)
+	months = 360 
+	payment = calculate_mortgage_payment(loan_balance, months, interest)
+	
 	update_ui()
-	SaveAndLoad.save_game()
-	Globals.recalculate_expenses()
-	show_floating_label("Refinanced loan to $%s/month" % add_comma_to_int(int(new_payment)), Color.GREEN)
+	show_floating_label("Refinanced to %.1f%%!" % (interest * 100), Color.GREEN)
 
 func _on_payoff_pressed() -> void:
 	if Globals.money >= loan_balance:

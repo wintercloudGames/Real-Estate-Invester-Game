@@ -57,7 +57,6 @@ func _on_normal_button_pressed() -> void:
 	Globals.credit_score = 600
 	generate_and_show_mission()
 	Globals.add_starter_loan()
-	
 	start()
 
 func _on_hard_button_pressed() -> void:
@@ -71,8 +70,7 @@ func _on_nightmare_button_pressed() -> void:
 	Globals.difficulty = 3
 	Globals.credit_score = 300
 	generate_and_show_mission()
-	
-	
+	Globals.add_starter_loan()
 	start()
 
 func _on_mission_option_toggled(toggled_on: bool) -> void:

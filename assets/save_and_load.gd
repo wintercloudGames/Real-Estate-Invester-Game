@@ -54,6 +54,7 @@ func save_game() -> bool:
 			"job_time": Globals.job_time,
 			"employees": Globals.employees,
 			"car_level": Globals.car_level,
+			"has_car":Globals.has_car,
 			"year": Globals.year,
 			"month": Globals.month,
 			"renter_finder": Globals.renter_finder,
@@ -230,6 +231,7 @@ func load_game() -> bool:
 		Globals.job_time = g.get("job_time", 0)
 		Globals.employees = g.get("employees", 0)
 		Globals.car_level = g.get("car_level", 1)
+		Globals.has_car = g.get("has_car",true)
 		Globals.year = g.get("year", 1)
 		Globals.month = g.get("month", 1)
 		Globals.renter_finder = g.get("renter_finder", false)

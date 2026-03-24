@@ -14,16 +14,7 @@ var time_waittime = 120
 func _ready():
 	add_child(breakdown_timer)
 	breakdown_timer.timeout.connect(_on_breakdown_check)
-	update_status_label()
-	if car_level >= max_car_level:
-		$Upgrade_Button.visible = false
-		$Upgrade_Cost_Label.visible = false
-
-func load_info():
-	is_broken = Globals.has_car
-	car_level = Globals.car_level
-	breakdown_rate = max(0.0, 1.0 - (car_level * 0.1))
-	update_status_label()
+	
 	if car_level >= max_car_level:
 		$Upgrade_Button.visible = false
 		$Upgrade_Cost_Label.visible = false
@@ -56,7 +47,7 @@ func _on_repaire_button_pressed():
 	if is_broken:
 		if Globals.money >= repair_cost:
 			Globals.money -= repair_cost
-			Globals.has_car = true			
+			Globals.has_car = true
 			Globals.exp += car_level + 5
 			is_broken = false
 			show_floating_label("Car Repaired for $" + str(repair_cost), Color.GREEN)
@@ -89,14 +80,29 @@ func _on_upgrade_button_pressed():
 func get_upgrade_cost() -> int:
 	return base_upgrade_cost * car_level
 
+func load_info():
+
+	is_broken = !Globals.has_car
+	car_level = Globals.car_level
+	breakdown_rate = max(0.0, 1.0 - (car_level * 0.1))
+	update_status_label()
+	if car_level >= max_car_level:
+		$Upgrade_Button.visible = false
+		$Upgrade_Cost_Label.visible = false
+
 func update_status_label():
 	$Repair_Cost_Label.text = "Repair Cost: $" + str(get_repair_cost())
+	
+	# Logic fix: is_broken should show 'Broken', else 'Working'
 	var status = "❌ Broken Down" if is_broken else "✅ Working"
-	var upgrade_cost = get_upgrade_cost()
+	
 	car_status_label.text = "Car Level: %d\nStatus: %s\nBreakdown Rate: %.1f%%" % [car_level, status, breakdown_rate * 100]
+	
+	var upgrade_cost = get_upgrade_cost()
 	upgrade_cost_label.text = "Upgrade Cost: $" + str(upgrade_cost)
-	repair_button.disabled = not is_broken
-
+	
+	# The Repair button should only be clickable if the car IS broken
+	repair_button.disabled = !is_broken
 func show_floating_label(text: String, color: Color = Color.WHITE):
 	var label = Label.new()
 	label.text = text

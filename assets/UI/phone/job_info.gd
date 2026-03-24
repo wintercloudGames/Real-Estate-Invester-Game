@@ -30,11 +30,55 @@ var last_has_car := true
 var last_market_factor := 1.0 # Track market changes
 
 func _ready() -> void:
+	# Initialize the 'last' variable to the opposite of current so it triggers an update immediately
+	last_has_car = !Globals.has_car 
+	
 	reset_all_tasks()
 	for i in range(do_task_buttons.size()):
 		do_task_buttons[i].pressed.connect(_on_do_task_button_pressed.bind(i))
+	
+	# Force an initial update
 	update_rewards()
 	update_task_availability()
+
+func _process(delta: float) -> void:
+	# 1. CHECK FOR STATE CHANGES
+	var market_changed = abs(last_market_factor - Globals.market_factor) > 0.01
+	var car_status_changed = (last_has_car != Globals.has_car)
+	var work_level_changed = (last_work_amount != Globals.work_amount)
+
+	if work_level_changed or car_status_changed or market_changed:
+		update_rewards()
+		update_task_availability()
+		last_work_amount = Globals.work_amount
+		last_has_car = Globals.has_car
+		last_market_factor = Globals.market_factor
+	
+	# 2. UPDATE THE INFO LABEL TEXT
+	if job_in_progress:
+		# Don't change text while working
+		pass 
+	elif not Globals.has_car:
+		# ONLY show the error if the car is actually false
+		job_info_label.text = "You need a fixed car for Tasks 2–5."
+		job_info_label.add_theme_color_override("font_color", Color.RED)
+	else:
+		# Car is fixed, show normal market info
+		var market_text = "Stable"
+		if Globals.market_factor > 1.1: market_text = "Booming (High Pay)"
+		elif Globals.market_factor < 0.9: market_text = "Recession (Low Pay)"
+		
+		job_info_label.text = "Market: %s. Choose a job." % market_text
+		job_info_label.add_theme_color_override("font_color", Color.CYAN)
+	
+	# 3. HANDLE PROGRESS BAR ANIMATION
+	for i in range(progress_bars.size()):
+		if task_started[i]:
+			var bar = progress_bars[i]
+			var task_speed = get_adjusted_task_speed()
+			bar.value += delta * task_speed
+			if bar.value >= bar.max_value:
+				complete_task(i)
 
 func update_rewards() -> void:
 	# Base pay for tasks
@@ -61,39 +105,6 @@ func reset_all_tasks() -> void:
 		bar.value = 0
 	task_started = [false, false, false, false, false]
 	job_in_progress = false
-
-func _process(delta: float) -> void:
-	# Update if Work Level, Car Status, OR Market Factor changes
-	var market_changed = abs(last_market_factor - Globals.market_factor) > 0.01
-	
-	if last_work_amount != Globals.work_amount or last_has_car != Globals.has_car or market_changed:
-		update_rewards() # Re-calculate pay based on new market conditions
-		update_task_availability()
-		last_work_amount = Globals.work_amount
-		last_has_car = Globals.has_car
-		last_market_factor = Globals.market_factor
-	
-	if job_in_progress:
-		job_info_label.add_theme_color_override("font_color", Color.YELLOW)
-	elif not Globals.has_car and Globals.work_amount >= 1:
-		job_info_label.text = "You need a fixed car to do Tasks 2–5."
-		job_info_label.add_theme_color_override("font_color", Color.RED)
-	else:
-		# Show market status in the job info
-		var market_text = "Stable"
-		if Globals.market_factor > 1.1: market_text = "Booming (High Pay)"
-		elif Globals.market_factor < 0.9: market_text = "Recession (Low Pay)"
-		
-		job_info_label.text = "Market: %s. Choose a job." % market_text
-		job_info_label.add_theme_color_override("font_color", Color.CYAN if market_changed else Color.YELLOW)
-	
-	for i in range(progress_bars.size()):
-		if task_started[i]:
-			var bar = progress_bars[i]
-			var task_speed = get_adjusted_task_speed()
-			bar.value += delta * task_speed
-			if bar.value >= bar.max_value:
-				complete_task(i)
 
 func complete_task(job_index: int) -> void:
 	var bar = progress_bars[job_index]

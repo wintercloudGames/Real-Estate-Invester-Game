@@ -48,10 +48,7 @@ func _process(delta: float) -> void:
 			last_difficulty = Globals.difficulty
 			car_info.visible = Globals.difficulty >= 1
 		
-		# Check car status - only update if changed
-		if Globals.has_car != last_has_car:
-			last_has_car = Globals.has_car
-			car_info_texture_rect.visible = !Globals.has_car
+		car_info_texture_rect.visible = !Globals.has_car
 
 func unlock_apps():
 	if Globals.has_bank_app == true:
