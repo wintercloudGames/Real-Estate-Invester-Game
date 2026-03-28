@@ -78,6 +78,10 @@ func update_ui():
 		month_label.text = "Month: ???"
 	year_label.text = "Year: " + add_comma_to_int(Globals.year)
 	
+	var percent = round(Globals.market_factor * 100)
+	var label = $Market_conditions/Label
+	label.text = str(percent) + "%"
+	
 	if Globals.has_market_app:
 		market_conditions.visible = true
 	else:

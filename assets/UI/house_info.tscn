@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dlx0ovoxxaxtn"]
+[gd_scene load_steps=5 format=3 uid="uid://dlx0ovoxxaxtn"]
 
 [ext_resource type="Script" uid="uid://dchi3h0qr3eto" path="res://assets/UI/house_info.gd" id="1_g1vcf"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_wy6uo"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="3_npbck"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="4_nshnh"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="4_pqt6n"]
+[ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="4_wy6uo"]
 
 [node name="House_info" type="Control"]
 layout_mode = 3
@@ -25,6 +24,7 @@ layout_mode = 0
 offset_left = 4.0
 offset_right = 523.0
 offset_bottom = 494.0
+theme = ExtResource("1_wy6uo")
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 layout_mode = 0
@@ -202,9 +202,7 @@ offset_left = 429.0
 offset_top = 7.0
 offset_right = 489.0
 offset_bottom = 41.0
-theme_override_styles/normal = ExtResource("4_pqt6n")
-theme_override_styles/pressed = ExtResource("3_npbck")
-theme_override_styles/hover = ExtResource("4_pqt6n")
+theme = ExtResource("4_wy6uo")
 text = "CLOSE"
 
 [node name="Pay_off" type="Panel" parent="."]
@@ -236,9 +234,6 @@ offset_left = 169.0
 offset_top = -34.0
 offset_right = 216.0
 offset_bottom = -3.0
-theme_override_styles/normal = ExtResource("4_pqt6n")
-theme_override_styles/pressed = ExtResource("3_npbck")
-theme_override_styles/hover = ExtResource("4_pqt6n")
 text = "close"
 
 [node name="Sell_home" type="Panel" parent="."]
@@ -270,9 +265,6 @@ offset_left = 169.0
 offset_top = -34.0
 offset_right = 216.0
 offset_bottom = -3.0
-theme_override_styles/normal = ExtResource("4_pqt6n")
-theme_override_styles/pressed = ExtResource("3_npbck")
-theme_override_styles/hover = ExtResource("4_pqt6n")
 text = "close"
 
 [node name="Drag_Button" parent="." instance=ExtResource("4_nshnh")]

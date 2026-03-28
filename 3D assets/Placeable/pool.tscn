@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dl66ja57b77ku"]
+
+[ext_resource type="PackedScene" uid="uid://ck1rdff5n5my5" path="res://3D assets/Chads/pool.glb" id="1_f6tr3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ja0n7"]
+size = Vector3(0.42175293, 0.12915039, 0.59765625)
+
+[node name="pool" instance=ExtResource("1_f6tr3")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0006713867, -0.0018310547, 0.001953125)
+shape = SubResource("BoxShape3D_ja0n7")

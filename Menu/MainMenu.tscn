@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d1s3cupibr4qf"]
+[gd_scene load_steps=11 format=3 uid="uid://d1s3cupibr4qf"]
 
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_7l2q4"]
 [ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://themes/new_theme.tres" id="1_veryn"]
@@ -6,11 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://md8dkoe233f6" path="res://Menu/profile.tscn" id="3_jnm01"]
 [ext_resource type="PackedScene" uid="uid://bam3w2ek51l8p" path="res://Menu/save_name_popup.tscn" id="4_gk4pn"]
 [ext_resource type="Script" uid="uid://hgmr1yfmp0cv" path="res://Menu/settings_menu.gd" id="5_7gsem"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="5_fgdcb"]
 [ext_resource type="AudioStream" uid="uid://cxxhebwtrm47d" path="res://effects/sounds/ui-pop-sound-316482.mp3" id="6_biqin"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="6_gk4pn"]
 [ext_resource type="AudioStream" uid="uid://pbljlsxwef84" path="res://effects/sounds/switch.wav" id="7_um3lu"]
 [ext_resource type="AudioStream" uid="uid://ubh812231qff" path="res://music/background-music-piano-soft-380590.mp3" id="8_sfxdn"]
+[ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="8_xcttp"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -80,6 +79,7 @@ theme_override_constants/margin_bottom = 32
 [node name="ProfilesContainer" type="HBoxContainer" parent="ProfilesContainer/VBoxContainer/Control/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+localize_numeral_system = false
 theme_override_constants/separation = 63
 
 [node name="SettingsButton" type="Button" parent="ProfilesContainer/VBoxContainer"]
@@ -305,6 +305,7 @@ offset_left = 110.0
 offset_top = 862.0
 offset_right = 467.0
 offset_bottom = 942.0
+theme = ExtResource("1_7l2q4")
 theme_override_font_sizes/font_size = 50
 selected = 1
 item_count = 4
@@ -326,6 +327,7 @@ offset_right = 448.0
 offset_bottom = 189.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("8_xcttp")
 theme_override_font_sizes/font_size = 71
 text = "BACK"
 
@@ -338,6 +340,7 @@ offset_right = 1766.0
 offset_bottom = 194.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("8_xcttp")
 theme_override_font_sizes/font_size = 71
 text = "Reset"
 
@@ -347,6 +350,7 @@ offset_left = 382.0
 offset_top = 500.0
 offset_right = 581.0
 offset_bottom = 581.0
+theme = ExtResource("1_7l2q4")
 theme_override_font_sizes/font_size = 50
 text = "On"
 alignment = 1
@@ -357,6 +361,7 @@ offset_left = 382.0
 offset_top = 399.0
 offset_right = 581.0
 offset_bottom = 480.0
+theme = ExtResource("1_7l2q4")
 theme_override_font_sizes/font_size = 50
 text = "On"
 alignment = 1
@@ -367,6 +372,7 @@ offset_left = 385.0
 offset_top = 297.0
 offset_right = 584.0
 offset_bottom = 378.0
+theme = ExtResource("1_7l2q4")
 theme_override_font_sizes/font_size = 50
 text = "On"
 alignment = 1
@@ -377,6 +383,7 @@ offset_left = 1520.0
 offset_top = 889.0
 offset_right = 1719.0
 offset_bottom = 970.0
+theme = ExtResource("1_7l2q4")
 theme_override_font_sizes/font_size = 50
 text = "On"
 alignment = 1
@@ -396,6 +403,7 @@ offset_right = 447.0
 offset_bottom = 758.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("1_7l2q4")
 theme_override_font_sizes/font_size = 51
 selected = 0
 item_count = 4
@@ -480,8 +488,6 @@ alignment = 1
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("6_gk4pn")
-theme_override_styles/pressed = ExtResource("5_fgdcb")
 text = "YES"
 
 [node name="NoButton" type="Button" parent="Delete_profile_popup/HBoxContainer"]

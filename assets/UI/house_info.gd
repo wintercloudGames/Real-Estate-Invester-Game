@@ -43,7 +43,8 @@ func _process(delta: float) -> void:
 		if house.is_building == true:
 			$Edit_yard_button.visible = false
 		else:
-			$Edit_yard_button.visible = true
+			pass
+			#$Edit_yard_button.visible = true
 		price_display.text = "House Worth: " + add_comma_to_int(house.current_price)
 		label_bought_price.text = "Original House price: " + add_comma_to_int(house.bought_price)
 		loan_display.text = "Loan: " + add_comma_to_int(house.loan_price)

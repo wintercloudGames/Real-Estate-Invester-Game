@@ -81,3 +81,4 @@ func _on_visibility_changed() -> void:
 
 func _on_cheat_button_pressed() -> void:
 	Globals.exp += 50
+	Globals.money += 10000

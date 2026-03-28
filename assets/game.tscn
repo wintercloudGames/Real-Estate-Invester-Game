@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=4 uid="uid://cung7j0rgqmwu"]
+[gd_scene load_steps=101 format=4 uid="uid://cung7j0rgqmwu"]
 
 [ext_resource type="Script" uid="uid://cq2g8tdj47vbe" path="res://assets/game.gd" id="1_f0aps"]
 [ext_resource type="Script" uid="uid://bcsm7nw2fa21b" path="res://addons/zylann.hterrain/hterrain.gd" id="2_6p1yv"]
@@ -29,7 +29,6 @@
 [ext_resource type="Texture2D" uid="uid://lq3cgxnta8g0" path="res://shaded-dark/shadedDark35.png" id="11_vwjes"]
 [ext_resource type="Script" uid="uid://bjo53yytepjk5" path="res://assets/UI/phone/player_stats.gd" id="12_5wq64"]
 [ext_resource type="Script" uid="uid://c85ahhgov1iw1" path="res://assets/events/event_popup.gd" id="12_c5sid"]
-[ext_resource type="MeshLibrary" uid="uid://j1mailu3qf28" path="res://assets/ROADS.tres" id="12_gwedm"]
 [ext_resource type="AudioStream" uid="uid://ll13glidifqd" path="res://effects/sounds/loud-thunder-192165.mp3" id="12_lsqda"]
 [ext_resource type="AudioStream" uid="uid://c6p3mu2uxmndm" path="res://effects/sounds/light-rain-109591.mp3" id="13_yy7cq"]
 [ext_resource type="PackedScene" uid="uid://w86r5fs8wyd" path="res://effects/Rain.tscn" id="14_c828t"]
@@ -39,15 +38,15 @@
 [ext_resource type="Theme" uid="uid://b45etg3nfmcio" path="res://themes/nice_dark_blue.tres" id="23_k076q"]
 [ext_resource type="Script" uid="uid://dkdnbmv5x42i1" path="res://assets/UI/game_start.gd" id="25_r1a70"]
 [ext_resource type="PackedScene" uid="uid://cichm52kww3cn" path="res://assets/Skill_Tree/skill_tree.tscn" id="29_me805"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="29_vc4h2"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="30_dv1k5"]
 [ext_resource type="AudioStream" uid="uid://cxxhebwtrm47d" path="res://effects/sounds/ui-pop-sound-316482.mp3" id="32_ba7d1"]
+[ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="32_cpbdu"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="32_nggmv"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="33_dnuxx"]
 [ext_resource type="PackedScene" uid="uid://cjp6iwt021w63" path="res://3D assets/city-kit/sign_hospital.glb" id="33_jrpiw"]
 [ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/fixed_script.gd" id="34_6jkhm"]
 [ext_resource type="Texture2D" uid="uid://bnkc5mcrjvmmp" path="res://shaded-dark/shadedDark30.png" id="34_bpinu"]
 [ext_resource type="Script" uid="uid://bafra3pxdpwb5" path="res://assets/speedup.gd" id="36_6lwa0"]
+[ext_resource type="Theme" uid="uid://brhlbolp7swxd" path="res://themes/blue_for_bars.tres" id="42_drtnu"]
 [ext_resource type="Texture2D" uid="uid://by8usin4jfy1n" path="res://assets/UI/icons/skills.png" id="44_861v0"]
 [ext_resource type="Texture2D" uid="uid://b2o8cev4c6588" path="res://assets/UI/phone/Sprite-0001.png" id="44_n6l5q"]
 [ext_resource type="Script" uid="uid://dq1efejdvhf6p" path="res://assets/UI/mission_display.gd" id="47_j8b0p"]
@@ -2297,30 +2296,6 @@ fog_density = 0.088
 transform_format = 1
 mesh = ExtResource("3_4suv4")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ntv6"]
-bg_color = Color(0.654034, 0.0766446, 0, 1)
-border_width_top = 1
-border_width_bottom = 10
-border_color = Color(0.559588, 2.1013e-06, 2.1013e-06, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-expand_margin_top = 5.0
-shadow_color = Color(0, 0, 0, 0.203922)
-shadow_size = 3
-shadow_offset = Vector2(2, 6)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u7ow7"]
-bg_color = Color(0.654034, 0.0766446, 0, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_color = Color(0, 0, 0, 0.203922)
-shadow_size = 1
-shadow_offset = Vector2(2, 6)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_71uhx"]
 size = Vector3(2.44132, 2.44559, 1.4574)
 
@@ -2544,8 +2519,8 @@ centered = true
 _terrain_data = ExtResource("3_jqctu")
 chunk_size = 64
 collision_enabled = true
-collision_layer = 1
-collision_mask = 1
+collision_layer = 2
+collision_mask = 2
 shader_type = "Classic4Lite"
 custom_shader = null
 custom_globalmap_shader = null
@@ -2557,15 +2532,6 @@ shader_params/u_depth_blending = true
 shader_params/u_triplanar = null
 shader_params/u_tile_reduction = null
 metadata/_custom_type_script = "uid://bcsm7nw2fa21b"
-
-[node name="Roads" type="GridMap" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, -1.00696, -6.26845)
-mesh_library = ExtResource("12_gwedm")
-cell_size = Vector3(1, 2, 1)
-data = {
-"cells": PackedInt32Array(65508, 13, 8, 65507, 13, 8, 65505, 13, 8, 65504, 13, 8, 65503, 13, 8, 65502, 13, 8, 65501, 13, 8, 65499, 13, 8, 65500, 13, 8, 65493, 13, 8, 65492, 13, 8, 65494, 13, 8, 65495, 13, 8, 65497, 65534, 1441800, 65497, 65535, 1441800, 65497, 0, 1441800, 65497, 1, 1441800, 65497, 2, 1441800, 65497, 3, 1441800, 65497, 4, 1441800, 65497, 5, 1441800, 65497, 6, 1441800, 65497, 7, 1441800, 65497, 11, 1441800, 65497, 9, 1441800, 65497, 8, 1441800, 65487, 13, 655368, 65486, 13, 655368, 65485, 13, 655368, 65497, 15, 1441800, 65497, 16, 1441800, 65496, 17, 655368, 65495, 17, 655368, 65494, 17, 655368, 65493, 17, 655368, 65492, 17, 655368, 65491, 17, 655368, 65490, 17, 655368, 65489, 17, 3, 65488, 17, 655368, 65487, 17, 655368, 65497, 17, 1048577, 65506, 13, 8, 65489, 15, 1441800, 65489, 16, 1441800, 65491, 13, 655368, 65489, 11, 1048584, 65489, 10, 1048584, 65489, 9, 1048584, 65489, 8, 1048584, 65489, 7, 1048584, 65489, 13, 4, 65486, 17, 8, 65485, 17, 8, 65484, 17, 1, 65484, 16, 1441800, 65484, 14, 1441800, 65484, 15, 1441800, 65484, 13, 1441793, 65497, 65533, 655361, 65496, 65533, 655368, 65495, 65533, 655368, 65494, 65533, 655368, 65493, 65533, 655368, 65492, 65533, 655368, 65491, 65533, 655368, 65490, 65533, 655368, 65489, 65533, 1441793, 65489, 65534, 1048584, 65489, 65535, 1048584, 65489, 0, 1048584, 65489, 1, 1048584, 65489, 2, 1048584, 65489, 3, 1048584, 65489, 4, 1048584, 65489, 6, 1048584, 65489, 5, 1048584, 65497, 10, 1441800, 65497, 13, 655364)
-}
-metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="Rent_offer_system" type="Control" parent="."]
 layout_mode = 3
@@ -2905,6 +2871,8 @@ grow_vertical = 1
 
 [node name="Totalpaymentdisplay" parent="HUD/Phone/Loans/TabContainer/Loans" index="1"]
 layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
 offset_right = 147.0
 offset_bottom = 38.0
 
@@ -2963,13 +2931,11 @@ text = "get help
 
 [node name="Close_Button" type="Button" parent="HUD/Hostpital_UI"]
 layout_mode = 0
-offset_left = 394.5
+offset_left = 369.5
 offset_top = 17.5
 offset_right = 452.5
-offset_bottom = 48.5
-theme_override_styles/normal = ExtResource("29_vc4h2")
-theme_override_styles/pressed = ExtResource("30_dv1k5")
-theme_override_styles/hover = ExtResource("29_vc4h2")
+offset_bottom = 64.5
+theme = ExtResource("32_cpbdu")
 text = "CLOSE"
 
 [node name="event_popup" type="Control" parent="HUD"]
@@ -3026,10 +2992,10 @@ anchor_left = 1.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 0.0
-offset_left = -493.0
-offset_top = 215.0
-offset_right = -156.0
-offset_bottom = 215.0
+offset_left = -527.0
+offset_top = 169.0
+offset_right = -136.0
+offset_bottom = 866.0
 grow_horizontal = 0
 grow_vertical = 1
 theme = ExtResource("32_nggmv")
@@ -3096,6 +3062,7 @@ offset_left = 20.0
 offset_top = 219.0
 offset_right = 115.0
 offset_bottom = 256.0
+theme = ExtResource("32_nggmv")
 text = "Eccept"
 
 [node name="Deny_job" type="Button" parent="HUD/Job_offer_ui"]
@@ -3104,10 +3071,7 @@ offset_left = 179.0
 offset_top = 220.0
 offset_right = 274.0
 offset_bottom = 257.0
-theme = ExtResource("32_nggmv")
-theme_override_styles/normal = SubResource("StyleBoxFlat_1ntv6")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_u7ow7")
-theme_override_styles/hover = SubResource("StyleBoxFlat_1ntv6")
+theme = ExtResource("32_cpbdu")
 text = "Deny"
 
 [node name="Month_mod" type="Panel" parent="HUD"]
@@ -3413,6 +3377,7 @@ offset_right = 144.0
 offset_bottom = 238.0
 scale = Vector2(0.7, 0.7)
 mouse_filter = 2
+theme = ExtResource("42_drtnu")
 script = ExtResource("12_5wq64")
 metadata/_edit_use_anchors_ = true
 
@@ -3442,6 +3407,7 @@ vertical_alignment = 1
 [node name="Health_bar" type="ProgressBar" parent="HUD/UI/Player_stats/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 value = 100.0
 
 [node name="Hunger_label" type="Label" parent="HUD/UI/Player_stats/VBoxContainer"]
@@ -3455,6 +3421,7 @@ vertical_alignment = 1
 [node name="Hunger_bar" type="ProgressBar" parent="HUD/UI/Player_stats/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 value = 100.0
 
 [node name="comfort_label" type="Label" parent="HUD/UI/Player_stats/VBoxContainer"]
@@ -3468,6 +3435,7 @@ vertical_alignment = 1
 [node name="comfort_bar" type="ProgressBar" parent="HUD/UI/Player_stats/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 value = 100.0
 
 [node name="Phone_button" type="TextureButton" parent="HUD/UI"]
@@ -3566,6 +3534,15 @@ text = "Market_conditions =
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="HUD/UI/Market_conditions"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = -6.0
+offset_right = 151.0
+offset_bottom = 13.0
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="FPS_counter" type="Label" parent="HUD/UI"]
 layout_mode = 0
@@ -3677,6 +3654,7 @@ offset_right = 72.0
 offset_bottom = 131.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("32_nggmv")
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD/Game_start"]
 layout_mode = 1
@@ -3794,18 +3772,20 @@ offset_bottom = 73.0
 text = "Mission Mode:"
 
 [node name="Hostpital" type="Node3D" parent="."]
-transform = Transform3D(0.9955891, 0, 0, 0, 0.9955891, 0, 0, 0, 0.9955891, -25.824299, -0.0167836, 5.4101405)
+transform = Transform3D(0.9955891, 0, 0, 0, 0.9955891, 0, 0, 0, 0.9955891, -54.22633, -0.0167836, -0.09944878)
 
 [node name="sign_hospital2" parent="Hostpital" instance=ExtResource("33_jrpiw")]
-transform = Transform3D(-0.00544399, 0, -2.62293, 0, 1.95133, 0, 1.05734, 0, -0.0135048, 0.0441513, 1.7485, 0.791565)
+transform = Transform3D(-0.00544399, 0, -2.6229303, 0, 1.95133, 0, 1.0573401, 0, -0.0135048, 0.0441494, 1.7485002, -0.21286549)
 
 [node name="hospital" type="Area3D" parent="Hostpital"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.685755e-08)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hostpital/hospital"]
-transform = Transform3D(0.99947405, 0, 0.0324225, 0, 1, 0, -0.0324225, 0, 0.99947405, 0.073726654, 1.21749, -0.08605194)
+transform = Transform3D(0.99947405, 0, 0.0324225, 0, 1, 0, -0.0324225, 0, 0.99947405, 0.07372475, 1.21749, -1.0904825)
 shape = SubResource("BoxShape3D_71uhx")
 
 [node name="large_buildingG" type="MeshInstance3D" parent="Hostpital"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.0044309)
 mesh = SubResource("ArrayMesh_aajbe")
 skeleton = NodePath("")
 script = ExtResource("34_6jkhm")
@@ -5358,7 +5338,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.2987, 0, 16.2335)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 0, -16)
 
 [node name="StraghtWay10" parent="Town" instance=ExtResource("53_drtnu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61, 0, -16)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62, 0, -16)
 
 [node name="StraghtWay4" parent="Town" instance=ExtResource("53_drtnu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, -16)
@@ -5390,11 +5370,38 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, -9)
 [node name="StraghtWay7" parent="Town" instance=ExtResource("53_drtnu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62, 0, -9)
 
+[node name="StraghtWay14" parent="Town" instance=ExtResource("53_drtnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69, 0, -9)
+
+[node name="StraghtWay15" parent="Town" instance=ExtResource("53_drtnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76, 0, -9)
+
+[node name="StraghtWay16" parent="Town" instance=ExtResource("53_drtnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76, 0, -16)
+
+[node name="StraghtWay20" parent="Town" instance=ExtResource("53_drtnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69, 0, -16)
+
+[node name="StraghtWay19" parent="Town" instance=ExtResource("53_drtnu")]
+transform = Transform3D(-1, 0, -8.7422784e-08, 0, 1, 0, 8.7422784e-08, 0, -1, -76, 0, -23)
+
+[node name="StraghtWay21" parent="Town" instance=ExtResource("53_drtnu")]
+transform = Transform3D(-1, 0, -8.7422784e-08, 0, 1, 0, 8.7422784e-08, 0, -1, -69, 0, -23)
+
+[node name="StraghtWay22" parent="Town" instance=ExtResource("53_drtnu")]
+transform = Transform3D(-1, 0, -8.7422784e-08, 0, 1, 0, 8.7422784e-08, 0, -1, -62, 0, -23)
+
+[node name="StraghtWay17" parent="Town" instance=ExtResource("53_drtnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 0, -16)
+
+[node name="StraghtWay18" parent="Town" instance=ExtResource("53_drtnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 0, -9)
+
 [node name="StraghtWay8" parent="Town" instance=ExtResource("53_drtnu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, -23)
 
 [node name="Turn" parent="Town" instance=ExtResource("54_me805")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -55, 0, -23)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -83, 0, -23)
 
 [node name="Turn4" parent="Town" instance=ExtResource("54_me805")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -13, 0, -9)
@@ -5411,17 +5418,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -16)
 [node name="Fourway2" parent="Town" instance=ExtResource("55_861v0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 0, -16)
 
+[node name="Fourway3" parent="Town" instance=ExtResource("55_861v0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83, 0, -16)
+
 [node name="Threeway" parent="Town" instance=ExtResource("56_n6l5q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -9)
 
 [node name="Threeway3" parent="Town" instance=ExtResource("56_n6l5q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 0, -9)
 
+[node name="Threeway6" parent="Town" instance=ExtResource("56_n6l5q")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -55.000004, 0, -23)
+
+[node name="Threeway5" parent="Town" instance=ExtResource("56_n6l5q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83, 0, -9)
+
 [node name="Threeway2" parent="Town" instance=ExtResource("56_n6l5q")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -34, 0, -23)
 
-[node name="End2" parent="Town" instance=ExtResource("57_6lwa0")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -61, 0, -16)
+[node name="End3" parent="Town" instance=ExtResource("57_6lwa0")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -90, 0, -16)
+
+[node name="End4" parent="Town" instance=ExtResource("57_6lwa0")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -90, 0, -9)
 
 [node name="Threeway4" parent="Town" instance=ExtResource("56_n6l5q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -9)

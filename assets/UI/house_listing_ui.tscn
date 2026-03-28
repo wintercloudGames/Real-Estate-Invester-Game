@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://5sf2oo4asb"]
+[gd_scene load_steps=5 format=3 uid="uid://5sf2oo4asb"]
 
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_56k8e"]
 [ext_resource type="Script" uid="uid://dsi3osmfkvip4" path="res://assets/UI/house_listing_ui.gd" id="1_byctf"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="4_2fskf"]
+[ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="4_56k8e"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="4_cckjx"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="5_twdm1"]
 
 [node name="House_listing_ui" type="Control"]
 layout_mode = 3
@@ -24,6 +23,7 @@ script = ExtResource("1_byctf")
 layout_mode = 0
 offset_right = 451.0
 offset_bottom = 470.0
+theme = ExtResource("1_56k8e")
 
 [node name="Label_price" type="Label" parent="."]
 layout_mode = 0
@@ -93,13 +93,11 @@ text = "Purchase and rent"
 
 [node name="Close_Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 369.0
-offset_top = 16.0
+offset_left = 346.0
+offset_top = 5.0
 offset_right = 429.0
-offset_bottom = 50.0
-theme_override_styles/normal = ExtResource("4_2fskf")
-theme_override_styles/pressed = ExtResource("5_twdm1")
-theme_override_styles/hover = ExtResource("4_2fskf")
+offset_bottom = 52.0
+theme = ExtResource("4_56k8e")
 text = "CLOSE"
 
 [node name="Drag_Button" parent="." instance=ExtResource("4_cckjx")]

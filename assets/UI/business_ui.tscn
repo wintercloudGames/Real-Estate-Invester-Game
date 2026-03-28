@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgacn6h05bvs2"]
+[gd_scene load_steps=5 format=3 uid="uid://cgacn6h05bvs2"]
 
 [ext_resource type="Script" uid="uid://cmendsxboc4ur" path="res://assets/UI/business_ui.gd" id="1_en58h"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_tllg2"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="5_44lhv"]
+[ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="3_uwgf7"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="5_lm838"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="6_gbehf"]
 
 [node name="Business_UI" type="Control"]
 layout_mode = 3
@@ -13,9 +12,9 @@ anchor_top = -0.051
 anchor_right = 0.176
 anchor_bottom = -0.051
 offset_left = -332.32
-offset_top = 65.08
-offset_right = -0.920013
-offset_bottom = 662.08
+offset_top = 53.079998
+offset_right = 79.08002
+offset_bottom = 739.08
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -24,15 +23,9 @@ script = ExtResource("1_en58h")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.25
-anchor_top = -0.055
-anchor_right = 1.25
-anchor_bottom = -0.055
-offset_left = -433.25
-offset_top = -32.165
-offset_right = -15.25
-offset_bottom = 666.835
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_tllg2")
@@ -56,10 +49,12 @@ offset_right = 316.0
 offset_bottom = 84.0
 
 [node name="Start_Business" type="Control" parent="."]
-anchors_preset = 0
-offset_left = 1.0
-offset_right = 41.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Label" type="Label" parent="Start_Business"]
 layout_mode = 0
@@ -74,27 +69,27 @@ horizontal_alignment = 1
 
 [node name="Name_of_Business" type="LineEdit" parent="Start_Business"]
 layout_mode = 0
-offset_left = 67.0
-offset_top = 174.0
-offset_right = 341.0
-offset_bottom = 205.0
+offset_left = 78.0
+offset_top = 197.0
+offset_right = 352.0
+offset_bottom = 228.0
 
 [node name="Cost_Label" type="Label" parent="Start_Business"]
 layout_mode = 0
-offset_left = 39.0
-offset_top = 256.0
-offset_right = 380.0
-offset_bottom = 305.0
+offset_left = 41.0
+offset_top = 274.0
+offset_right = 382.0
+offset_bottom = 323.0
 text = "Start Up Cost: $50,000
 "
 horizontal_alignment = 1
 
 [node name="Expence_Label" type="Label" parent="Start_Business"]
 layout_mode = 0
-offset_left = 46.0
-offset_top = 326.0
-offset_right = 384.0
-offset_bottom = 375.0
+offset_left = 59.0
+offset_top = 360.0
+offset_right = 397.0
+offset_bottom = 409.0
 text = "Monthly cost: 10000
 "
 horizontal_alignment = 1
@@ -102,35 +97,32 @@ horizontal_alignment = 1
 [node name="Start_A_Business_Button" type="Button" parent="Start_Business"]
 layout_mode = 0
 offset_left = 91.0
-offset_top = 421.0
+offset_top = 474.0
 offset_right = 331.0
-offset_bottom = 477.0
+offset_bottom = 530.0
 theme = ExtResource("1_tllg2")
 text = "Start Business"
 
 [node name="Close_Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 339.0
-offset_top = -3.0
-offset_right = 399.0
-offset_bottom = 31.0
-theme = ExtResource("1_tllg2")
-theme_override_styles/hover = ExtResource("5_44lhv")
-theme_override_styles/pressed = ExtResource("6_gbehf")
-theme_override_styles/normal = ExtResource("5_44lhv")
+offset_left = 313.0
+offset_top = 5.0
+offset_right = 396.0
+offset_bottom = 52.0
+theme = ExtResource("3_uwgf7")
 text = "CLOSE"
 
 [node name="Drag_Button" parent="." instance=ExtResource("5_lm838")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.088
-anchor_top = -0.008
-anchor_right = 0.088
-anchor_bottom = -0.008
-offset_left = -24.008
-offset_top = -0.223971
-offset_right = 23.992
-offset_bottom = 47.776
+anchor_left = 0.121159144
+anchor_top = -0.050540864
+anchor_right = 0.121159144
+anchor_bottom = -0.050540812
+offset_left = -52.008
+offset_top = 27.671032
+offset_right = -4.0079994
+offset_bottom = 75.671005
 
 [node name="TabContainer" type="TabContainer" parent="."]
 visible = false
@@ -291,10 +283,10 @@ layout_mode = 2
 
 [node name="Timers" type="Control" parent="."]
 anchors_preset = 0
-offset_left = 187.0
-offset_top = -64.0
-offset_right = 187.0
-offset_bottom = -64.0
+offset_left = 159.0
+offset_top = -36.104996
+offset_right = 159.0
+offset_bottom = -36.104996
 
 [node name="SalaryTimer" type="Timer" parent="Timers"]
 

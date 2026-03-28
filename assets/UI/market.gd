@@ -287,7 +287,6 @@ func _draw_pixel_dot(img: Image, pos: Vector2, color: Color):
 
 func update_label():
 	var change_percent = ((current_price - previous_price) / previous_price) * 100 if previous_price != 0 else 0
-	market_label.modulate = Color.RED if is_crashing or current_price < previous_price else Color.GREEN
 	market_label.text = "Market: %s\nChange: %s%.2f%%" % [
 		"CRASHING!" if is_crashing else "Stable",
 		"+" if current_price >= previous_price else "", change_percent

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://b07iqv37k8uxs"]
+[gd_scene load_steps=25 format=4 uid="uid://b07iqv37k8uxs"]
 
 [ext_resource type="PackedScene" uid="uid://bp6voi11p4v2a" path="res://assets/Town_Blocks/Textured Houses/house_type_02.tscn" id="3_1jsfw"]
 [ext_resource type="PackedScene" uid="uid://cptkni81skypb" path="res://assets/Town_Blocks/Textured Houses/house_type_14.tscn" id="4_hccl2"]
@@ -333,6 +333,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_umlpi")
 
+[sub_resource type="Curve3D" id="Curve3D_1jsfw"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 6.9621453, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"tilts": PackedFloat32Array(-3.3999014, 0)
+}
+point_count = 2
+
 [node name="StraghtWay" type="Node3D"]
 
 [node name="road_straight" type="MeshInstance3D" parent="."]
@@ -370,6 +377,7 @@ mesh = SubResource("ArrayMesh_gl16u")
 skeleton = NodePath("")
 
 [node name="decore" type="Node3D" parent="."]
+visible = false
 
 [node name="tree_small2" parent="decore" instance=ExtResource("19_d3rsd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.639555, 0, 0.595077)
@@ -497,3 +505,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.601
 
 [node name="house_type17" parent="." instance=ExtResource("6_0vbe2")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.4512, 0.0146626, 1.61843)
+
+[node name="Path3D4" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4960818, 0, -0.018309474)
+curve = SubResource("Curve3D_1jsfw")

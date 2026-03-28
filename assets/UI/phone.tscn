@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://bx85w10pr0a6q"]
+[gd_scene load_steps=70 format=3 uid="uid://bx85w10pr0a6q"]
 
 [ext_resource type="Texture2D" uid="uid://b0vmuqioqojfj" path="res://assets/UI/phone/wallpapers/vines-7859445_1280.jpg" id="1_go8ug"]
 [ext_resource type="Texture2D" uid="uid://dsfynj8pp2hyg" path="res://assets/UI/phone/vecteezy_smart-phone-mobile-electronic-device-transparent-screen_6824674-1-removebg-preview.png" id="1_jm7no"]
@@ -38,11 +38,9 @@
 [ext_resource type="Script" uid="uid://bjo53yytepjk5" path="res://assets/UI/phone/player_stats.gd" id="24_mgvhx"]
 [ext_resource type="Script" uid="uid://b047v4lmufqyx" path="res://assets/UI/phone/backgrounds.gd" id="26_6pd25"]
 [ext_resource type="Script" uid="uid://ewnuutir7auv" path="res://assets/UI/phone/food_market.gd" id="26_q08sx"]
-[ext_resource type="StyleBox" uid="uid://h35xp0tla8ks" path="res://themes/Style Boxes/Button_normal.tres" id="27_80c6r"]
 [ext_resource type="Texture2D" uid="uid://bqgljbd7hiwy0" path="res://assets/UI/phone/wallpapers/pexels-davidmcelwee-10583422.jpg" id="27_grw6u"]
 [ext_resource type="Script" uid="uid://bcdtjv5isxpir" path="res://assets/UI/phone/House_manager.gd" id="28_mfnil"]
 [ext_resource type="Texture2D" uid="uid://c8u6vlun4s7v2" path="res://assets/UI/phone/wallpapers/pexels-eberhardgross-1624496.jpg" id="28_rfb6g"]
-[ext_resource type="StyleBox" uid="uid://bhobkioo6s853" path="res://themes/Style Boxes/Button_pressed.tres" id="28_sevfc"]
 [ext_resource type="Texture2D" uid="uid://i5iwk6db7um0" path="res://assets/UI/phone/wallpapers/pexels-feyzayildirimphoto-13711334.jpg" id="29_qabnp"]
 [ext_resource type="Texture2D" uid="uid://b3w4s2adwvm2p" path="res://assets/UI/phone/wallpapers/pexels-francesco-ungaro-1526713.jpg" id="30_a5q18"]
 [ext_resource type="Script" uid="uid://biep8b24qdfxw" path="res://assets/UI/phone/loans.gd" id="31_4h7ca"]
@@ -56,10 +54,10 @@
 [ext_resource type="Texture2D" uid="uid://ckuxq5m6uhvh4" path="res://assets/UI/phone/wallpapers/pexels-rahulp9800-1212487.jpg" id="34_n5uvf"]
 [ext_resource type="Texture2D" uid="uid://cvlle3kflwc1o" path="res://assets/UI/phone/wallpapers/pexels-viajerocool-4118189.jpg" id="35_rosxa"]
 [ext_resource type="Script" uid="uid://t4lemb0n4mj7" path="res://assets/UI/credit_history.gd" id="35_rrag5"]
+[ext_resource type="Theme" uid="uid://b8jl6a5r3l2mm" path="res://themes/yellow.tres" id="37_be6qb"]
 [ext_resource type="Script" uid="uid://q66ppu3j3u3r" path="res://assets/UI/phone/cars.gd" id="37_sguuv"]
 [ext_resource type="Texture2D" uid="uid://dtjgf2drnlsda" path="res://shaded-dark/shadedDark26.png" id="43_uwkqi"]
 [ext_resource type="Script" uid="uid://ccfp667m7bxy7" path="res://assets/UI/phone/hire_help.gd" id="45_beopk"]
-[ext_resource type="Theme" uid="uid://dsv0vue65ar2l" path="res://themes/food_market.tres" id="57_xes8p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksmyw"]
 bg_color = Color(0.202419, 0.644531, 0.0226593, 1)
@@ -86,10 +84,50 @@ shadow_size = 1
 shadow_offset = Vector2(2, 6)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2nfsa"]
-bg_color = Color(0.202419, 0.644531, 0.0226593, 1)
+bg_color = Color(0.98039216, 0.95686275, 0.35686275, 1)
 border_width_top = 1
 border_width_bottom = 10
 border_color = Color(0.0868554, 0.453125, 0.0230103, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 5.0
+shadow_color = Color(0, 0, 0, 0.203922)
+shadow_size = 3
+shadow_offset = Vector2(2, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jw8de"]
+bg_color = Color(0.81640625, 0.066970825, 0.066970825, 1)
+border_width_top = 1
+border_width_bottom = 10
+border_color = Color(0.37109375, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 5.0
+shadow_color = Color(0, 0, 0, 0.203922)
+shadow_size = 3
+shadow_offset = Vector2(2, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g7aor"]
+bg_color = Color(0.6, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.203922)
+shadow_size = 1
+shadow_offset = Vector2(2, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xes8p"]
+bg_color = Color(0.98046875, 0.9560827, 0.3561859, 1)
+border_width_top = 1
+border_width_bottom = 10
+border_color = Color(0.6509804, 0, 0, 1)
+border_blend = true
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -1206,10 +1244,9 @@ offset_left = 19.0
 offset_top = 59.0002
 offset_right = 340.0
 offset_bottom = 615.0
-current_tab = 1
+current_tab = 0
 
 [node name="Savings" type="Control" parent="Savings/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -1219,9 +1256,6 @@ offset_left = 82.0
 offset_top = 358.0
 offset_right = 242.0
 offset_bottom = 391.0
-theme_override_styles/normal = ExtResource("27_80c6r")
-theme_override_styles/pressed = ExtResource("28_sevfc")
-theme_override_styles/hover = ExtResource("27_80c6r")
 text = "Remove ALL Fund's"
 
 [node name="Send_intrest_to" type="CheckButton" parent="Savings/TabContainer/Savings"]
@@ -1263,6 +1297,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Add_to_Savings" type="Control" parent="Savings/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -1290,9 +1325,9 @@ offset_left = 85.0
 offset_top = 447.0
 offset_right = 232.0
 offset_bottom = 480.0
-theme_override_styles/normal = ExtResource("27_80c6r")
-theme_override_styles/pressed = ExtResource("28_sevfc")
-theme_override_styles/hover = ExtResource("27_80c6r")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jw8de")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g7aor")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xes8p")
 text = "Remove Fund's"
 
 [node name="SavingsBalanceLabel" type="Label" parent="Savings/TabContainer/Add_to_Savings"]
@@ -1335,6 +1370,7 @@ offset_left = 9.0
 offset_top = 13.0
 offset_right = 353.0
 offset_bottom = 633.0
+theme = ExtResource("1_rrag5")
 
 [node name="TabContainer" type="TabContainer" parent="Loans"]
 layout_mode = 0
@@ -1350,23 +1386,23 @@ metadata/_tab_index = 0
 
 [node name="LoanAmountInput" type="LineEdit" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
-offset_left = 50.0
-offset_top = 302.00006
-offset_right = 271.0
-offset_bottom = 333.00006
+offset_left = 42.0
+offset_top = 278.99982
+offset_right = 263.0
+offset_bottom = 327.99982
 
 [node name="TakeLoanButton" type="Button" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
-offset_left = 88.0
-offset_top = 365.00006
-offset_right = 235.0
-offset_bottom = 399.00006
+offset_left = 82.0
+offset_top = 340.99982
+offset_right = 229.0
+offset_bottom = 389.99982
 text = "Take Loan"
 
 [node name="MaxLoanLabel" type="Label" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
 offset_left = 3.0
-offset_top = 366.0
+offset_top = 415.99982
 offset_right = 314.0
 offset_bottom = 480.0
 horizontal_alignment = 1
@@ -1375,10 +1411,10 @@ autowrap_mode = 2
 
 [node name="OptionButton" type="OptionButton" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
-offset_left = 88.0
-offset_top = 69.000046
-offset_right = 232.0
-offset_bottom = 103.000046
+offset_left = 149.0
+offset_top = 13.999802
+offset_right = 293.0
+offset_bottom = 47.9998
 selected = 0
 item_count = 5
 popup/item_0/text = "1 year"
@@ -1394,31 +1430,32 @@ popup/item_4/id = 4
 
 [node name="Label" type="Label" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
-offset_left = 113.0
-offset_top = 37.000046
-offset_right = 197.0
-offset_bottom = 61.000046
+offset_left = 36.0
+offset_top = 16.999802
+offset_right = 120.0
+offset_bottom = 40.9998
 text = "Loan Term"
 
 [node name="InterestRateLabel" type="Label" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
 offset_left = 13.0
-offset_top = 144.00005
+offset_top = 95.9998
 offset_right = 287.0
-offset_bottom = 194.00005
+offset_bottom = 158.9998
 text = "Loan Term"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MonthlyPreviewLabel" type="Label" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 234.9998
-offset_right = 294.0
-offset_bottom = 284.99982
+offset_left = 17.0
+offset_top = 193.9998
+offset_right = 291.0
+offset_bottom = 260.99982
 text = "Loan Term"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="Loans" type="Control" parent="Loans/TabContainer"]
 visible = false
@@ -1427,16 +1464,18 @@ metadata/_tab_index = 1
 
 [node name="Pay_All_Payments" type="Button" parent="Loans/TabContainer/Loans"]
 layout_mode = 0
-offset_left = 198.0
-offset_top = 23.0
-offset_right = 300.0
-offset_bottom = 57.0
+offset_left = 176.0
+offset_top = -41.0002
+offset_right = 304.0
+offset_bottom = -7.0001984
 text = "Pay All Loans"
 
 [node name="Totalpaymentdisplay" type="Label" parent="Loans/TabContainer/Loans"]
 layout_mode = 1
-offset_right = 179.0
-offset_bottom = 65.0
+offset_left = -1.0
+offset_top = -12.000198
+offset_right = 299.0
+offset_bottom = 45.9998
 text = "$60000"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1448,9 +1487,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 13.0
-offset_top = -464.0
-offset_right = -10.0
-offset_bottom = -12.9998
+offset_top = -436.0
+offset_right = -13.0
+offset_bottom = -9.999817
 grow_horizontal = 2
 grow_vertical = 0
 horizontal_scroll_mode = 0
@@ -1543,7 +1582,7 @@ layout_mode = 0
 offset_left = 25.0
 offset_top = 63.0
 offset_right = 331.0
-offset_bottom = 197.0
+offset_bottom = 325.0
 
 [node name="properties" type="Label" parent="credit_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
@@ -1609,10 +1648,10 @@ script = ExtResource("35_rrag5")
 
 [node name="Credit_Repair_Button" type="Button" parent="credit_info"]
 layout_mode = 0
-offset_left = 83.0
-offset_top = 338.0
-offset_right = 277.0
-offset_bottom = 372.0
+offset_left = 72.0
+offset_top = 320.0
+offset_right = 288.0
+offset_bottom = 369.0
 text = "Credit Repair Cost $5,000"
 
 [node name="house_manager" type="Control" parent="."]
@@ -1676,6 +1715,7 @@ offset_bottom = 483.0
 [node name="Job_info" type="Label" parent="job_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
 text = "JOBS"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -2009,6 +2049,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("37_be6qb")
 script = ExtResource("45_beopk")
 
 [node name="ColorRect" type="Panel" parent="Hire_help"]
@@ -2017,6 +2058,7 @@ offset_left = 9.0
 offset_top = 13.0
 offset_right = 353.0
 offset_bottom = 633.0
+theme = ExtResource("1_rrag5")
 
 [node name="Label" type="Label" parent="Hire_help"]
 layout_mode = 0
@@ -2131,7 +2173,6 @@ offset_bottom = 618.0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("57_xes8p")
 alignment = 1
 
 [node name="VecteezySmart-phone-mobile-electronic-device-transparent-screen6824674-1-removebg-preview" type="Sprite2D" parent="."]
