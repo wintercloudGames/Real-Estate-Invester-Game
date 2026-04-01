@@ -164,36 +164,35 @@ offset_bottom = 365.0
 text = "Remove Tenant"
 
 [node name="Edit_yard_button" type="Button" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 9.0
-offset_top = 423.0
-offset_right = 134.0
-offset_bottom = 468.0
+offset_left = 38.0
+offset_top = 421.0
+offset_right = 163.0
+offset_bottom = 466.0
 text = "Edit Yard"
 
 [node name="Sell_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 307.0
-offset_top = 429.0
-offset_right = 432.0
-offset_bottom = 474.0
+offset_left = 336.0
+offset_top = 421.0
+offset_right = 461.0
+offset_bottom = 466.0
 text = "Sell House"
 
 [node name="Upgrade_label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 196.0
+offset_left = 216.0
 offset_top = 392.0
-offset_right = 256.0
+offset_right = 276.0
 offset_bottom = 415.0
 text = "$10,000"
 
 [node name="Upgrade" type="Button" parent="."]
 layout_mode = 0
-offset_left = 168.0
-offset_top = 427.0
-offset_right = 293.0
-offset_bottom = 472.0
+offset_left = 187.0
+offset_top = 426.0
+offset_right = 312.0
+offset_bottom = 471.0
 text = "Upgrade"
 
 [node name="Close_Button" type="Button" parent="."]

@@ -69,12 +69,17 @@ shadow_mesh = SubResource("ArrayMesh_7klia")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ppt0n"]
 points = PackedVector3Array(0.012443721, 1.0993456, 0.515625, 0.499951, 0.99991375, 0.5625, 0.080498755, 1.0956868, 0.515625, 0.012443721, 1.0993456, 0.48436278, -0.012553811, 1.0993456, 0.515625, 0.499951, 0, 0.5625, 0.5625, 0.99991375, 0.49998778, 0.16022658, 1.0830964, 0.515625, -0.50006115, 0.99991375, 0.5625, 0.080498755, 1.0956868, 0.48436278, 0.499951, 0.99991375, 0.4375, -0.012553811, 1.0993456, 0.48436278, -0.080608845, 1.0956868, 0.515625, 0.5625, 0, 0.49998778, -0.50006115, 0, 0.5625, 0.16022658, 1.0830964, 0.48436278, -0.5625, 0.99991375, 0.49998778, -0.16033673, 1.0830964, 0.515625, 0.499951, 0, 0.4375, -0.50006115, 0.99991375, 0.4375, -0.080608845, 1.0956868, 0.48436278, -0.5625, 0, 0.49998778, -0.16033673, 1.0830964, 0.48436278, -0.50006115, 0, 0.4375)
 
-[node name="fence_gardenRound_" type="MeshInstance3D"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.05000002, -1.1641532e-08, -0.14999998)
+[node name="Node3D" type="Node3D"]
+
+[node name="fence_gardenRound_" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, -0.1044651)
+layers = 8
 mesh = SubResource("ArrayMesh_ipx0k")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="fence_gardenRound_"]
+collision_layer = 8
+collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="fence_gardenRound_/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_ppt0n")

@@ -1,21 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://c26wo4sbl1rfs"]
+[gd_scene load_steps=9 format=3 uid="uid://c26wo4sbl1rfs"]
 
 [ext_resource type="Script" uid="uid://dtdaluqrijy0" path="res://assets/UI/house_click.gd" id="1_ah82t"]
 [ext_resource type="Script" uid="uid://885nck1e7d83" path="res://houses/collect_rent.gd" id="2_q78gw"]
 [ext_resource type="ArrayMesh" uid="uid://0pbpieoh3bw5" path="res://3D assets/Chads/Dollar sign.obj" id="3_lminp"]
 [ext_resource type="Script" uid="uid://bkms1t16f02un" path="res://houses/dollar_sign.gd" id="4_wau8l"]
 [ext_resource type="AudioStream" uid="uid://birhg2bkbatx" path="res://effects/sounds/547603__kaysonargyle__coin-splash.wav" id="5_w4tl7"]
-[ext_resource type="Script" uid="uid://dhaprvlthptx8" path="res://houses/yard_editor.gd" id="6_nyuei"]
-[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="7_npf6q"]
-[ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="8_p2vb1"]
-[ext_resource type="Texture2D" uid="uid://dxkahcjbmmvrf" path="res://3D assets/images/fence_1.png" id="10_su2pn"]
-[ext_resource type="Script" uid="uid://ft0oe48mvrvk" path="res://houses/pick_model.gd" id="11_j67wj"]
-[ext_resource type="AudioStream" uid="uid://cxxhebwtrm47d" path="res://effects/sounds/ui-pop-sound-316482.mp3" id="12_oe0os"]
-[ext_resource type="Texture2D" uid="uid://0g88nxqgdhd1" path="res://3D assets/images/Fence_gate.png" id="13_w3ptw"]
-[ext_resource type="Texture2D" uid="uid://de6q8klptn0x6" path="res://3D assets/images/Tree_1.png" id="14_jcj72"]
-[ext_resource type="Texture2D" uid="uid://cipvswyrvv3en" path="res://3D assets/images/pool.png" id="15_pm2td"]
-[ext_resource type="Theme" uid="uid://b8jl6a5r3l2mm" path="res://themes/yellow.tres" id="16_ah82t"]
-[ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://themes/new_theme.tres" id="16_xaej1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4ti1u"]
 size = Vector3(2.44132, 0.87654, 1.4574)
@@ -29,10 +18,11 @@ emission_energy_multiplier = 1.79
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_dndvg"]
 
 [node name="house_base" type="Node3D" groups=["houses"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.12841392)
 script = ExtResource("1_ah82t")
 
 [node name="Yard_center_for_camera" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+transform = Transform3D(1, 0, 0, 0, 0.95918083, 0.2827935, 0, -0.2827935, 0.95918083, 0, 0, -1.2362484)
 
 [node name="Area3D" type="Area3D" parent="."]
 
@@ -92,176 +82,8 @@ one_shot = true
 [node name="rent_collect_timer" type="Timer" parent="."]
 one_shot = true
 
-[node name="Yard_editor" type="Node3D" parent="." groups=["YardEditor"]]
-script = ExtResource("6_nyuei")
-
-[node name="Yard_camera" type="Camera3D" parent="Yard_editor" groups=["yard_camera"]]
-transform = Transform3D(1, 0, 0, 0, 0.733694, 0.67948, 0, -0.67948, 0.733694, 0, 5.49412, 1.4423)
-
-[node name="RayCast3D" type="RayCast3D" parent="Yard_editor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.176453, 3.55842, -1.51547)
-debug_shape_custom_color = Color(0.13662, 0.372034, 1, 1)
-debug_shape_thickness = 1
-
-[node name="SpotLight3D" type="SpotLight3D" parent="Yard_editor"]
-transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965926, 0, -0.965926, -0.258819, 0, 2, -2)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Yard_editor"]
-layer = 2
-
-[node name="DebugLabel" type="Label" parent="Yard_editor/CanvasLayer"]
-offset_left = 1467.0
-offset_top = 708.0
-offset_right = 1507.0
-offset_bottom = 731.0
-
-[node name="UI" type="Control" parent="Yard_editor/CanvasLayer"]
-layout_mode = 3
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -475.0
-offset_right = 233.0
-grow_vertical = 0
-
-[node name="ColorRect" type="Panel" parent="Yard_editor/CanvasLayer/UI"]
-layout_mode = 0
-offset_right = 232.0
-offset_bottom = 472.0
-theme = ExtResource("7_npf6q")
-
-[node name="Close_Button" type="Button" parent="Yard_editor/CanvasLayer/UI"]
-layout_mode = 0
-offset_left = 80.0
-offset_top = -37.0
-offset_right = 153.0
-offset_bottom = -3.0
-theme = ExtResource("8_p2vb1")
-text = "CLOSE"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Yard_editor/CanvasLayer/UI"]
-layout_mode = 0
-offset_right = 678.0
-offset_bottom = 1379.0
-scale = Vector2(0.335, 0.335)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Yard_editor/CanvasLayer/UI/ScrollContainer"]
-layout_mode = 2
-
-[node name="Pick_model1" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("10_su2pn")
-script = ExtResource("11_j67wj")
-model_path = "res://3D assets/Placeable/fence_classic_diagonal.tscn"
-display_name = "Fence"
-price = 100
-
-[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model1"]
-layout_mode = 0
-offset_left = 155.0
-offset_top = 24.0
-offset_right = 275.0
-offset_bottom = 60.0
-scale = Vector2(3, 3)
-text = "price: 100 "
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model1"]
-stream = ExtResource("12_oe0os")
-
-[node name="Pick_model2" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("13_w3ptw")
-script = ExtResource("11_j67wj")
-model_path = "res://3D assets/Placeable/fence_garden_round_.tscn"
-display_name = "gate"
-price = 100
-
-[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model2"]
-layout_mode = 0
-offset_left = 155.0
-offset_top = 24.0
-offset_right = 275.0
-offset_bottom = 60.0
-scale = Vector2(3, 3)
-text = "price: 100 "
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model2"]
-stream = ExtResource("12_oe0os")
-
-[node name="Pick_model3" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("14_jcj72")
-script = ExtResource("11_j67wj")
-model_path = "res://3D assets/Placeable/tree_1.tscn"
-display_name = "Tree"
-price = 100
-
-[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model3"]
-layout_mode = 0
-offset_left = 155.0
-offset_top = 24.0
-offset_right = 275.0
-offset_bottom = 60.0
-scale = Vector2(3, 3)
-text = "price: 100 "
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model3"]
-stream = ExtResource("12_oe0os")
-
-[node name="Pick_model4" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("15_pm2td")
-script = ExtResource("11_j67wj")
-model_path = "res://3D assets/Placeable/pool.tscn"
-display_name = "Pool"
-price = 2000
-
-[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model4"]
-layout_mode = 0
-offset_left = 155.0
-offset_top = 24.0
-offset_right = 275.0
-offset_bottom = 60.0
-scale = Vector2(3, 3)
-text = "price: 100 "
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model4"]
-stream = ExtResource("12_oe0os")
-
-[node name="ContextMenu" type="Panel" parent="Yard_editor/CanvasLayer"]
-visible = false
-offset_left = 1199.0
-offset_top = 413.0
-offset_right = 1486.0
-offset_bottom = 617.0
-theme = ExtResource("16_xaej1")
-
-[node name="MoveButton" type="Button" parent="Yard_editor/CanvasLayer/ContextMenu"]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 119.0
-offset_right = 132.0
-offset_bottom = 178.0
-theme = ExtResource("16_ah82t")
-text = "Move"
-
-[node name="SellButton" type="Button" parent="Yard_editor/CanvasLayer/ContextMenu"]
-layout_mode = 0
-offset_left = 143.0
-offset_top = 119.0
-offset_right = 275.0
-offset_bottom = 177.0
-theme = ExtResource("16_ah82t")
-text = "Sell"
-
-[node name="CloseButton" type="Button" parent="Yard_editor/CanvasLayer/ContextMenu"]
-layout_mode = 0
-offset_left = 206.0
-offset_top = -30.0
-offset_right = 279.0
-offset_bottom = 4.0
-theme = ExtResource("8_p2vb1")
-text = "CLOSE"
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.25881898, 0.9659259, 0, -0.9659259, -0.25881898, 0, 2, -2)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 60.0
@@ -271,9 +93,4 @@ autostart = true
 [connection signal="input_event" from="Collect_Rent/Dollar_sign/Rent_collect" to="Collect_Rent/Dollar_sign" method="_on_rent_collect_input_event"]
 [connection signal="timeout" from="payment_delay_timer" to="Collect_Rent" method="_on_payment_delay_timeout"]
 [connection signal="timeout" from="rent_collect_timer" to="Collect_Rent" method="_on_rent_collect_timeout"]
-[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/Close_Button" to="Yard_editor" method="exit_edit_mode"]
-[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model1" to="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model1" method="_on_button_pressed"]
-[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model2" to="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model2" method="_on_button_pressed"]
-[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model3" to="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model3" method="_on_button_pressed"]
-[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model4" to="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model4" method="_on_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

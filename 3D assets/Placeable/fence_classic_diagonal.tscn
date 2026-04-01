@@ -96,11 +96,14 @@ shadow_mesh = SubResource("ArrayMesh_s5cno")
 points = PackedVector3Array(-0.5, 0, -0.5, -0.5, 0, -0.4500783, -0.5, 0.4, -0.5, -0.4500783, 0, -0.5, -0.5, 0.4, -0.4500783, -0.025058717, 0, 0.024960876, -0.4500783, 0.4, -0.5, 0.024960876, 0, -0.025058717, -0.025058717, 0.4, 0.024960876, 0.44998044, 0, 0.5, 0.024960876, 0.4, -0.025058717, 0.5, 0, 0.44998044, 0.44998044, 0.4, 0.5, 0.5, 0, 0.5, 0.5, 0.4, 0.44998044, 0.5, 0.4, 0.5)
 
 [node name="fence_classicDiagonal" type="MeshInstance3D"]
-transform = Transform3D(0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0, 0.19999999, 0, 0, 0)
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+layers = 8
 mesh = SubResource("ArrayMesh_r4x53")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 8
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_d5klq")

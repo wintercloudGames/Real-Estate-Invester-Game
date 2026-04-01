@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://sod4y76qe486"]
 
 [ext_resource type="Script" uid="uid://ck20l4y7wgq8u" path="res://Menu/loading_screen.gd" id="1_1r6iy"]
-[ext_resource type="Texture2D" uid="uid://b3jeknbj4q03h" path="res://Invest Your Time.png" id="2_hbcpr"]
+[ext_resource type="Texture2D" uid="uid://cgwm7cq3uakc2" path="res://Loading_Screen.png" id="2_1jjgs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1j4rd"]
 bg_color = Color(0, 0, 0, 0.513726)
@@ -27,7 +27,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_hbcpr")
+texture = ExtResource("2_1jjgs")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -61,3 +61,7 @@ theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 91
 theme_override_styles/background = SubResource("StyleBoxFlat_1j4rd")
 theme_override_styles/fill = SubResource("StyleBoxFlat_yxh57")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(926, 160)
+amount = 23

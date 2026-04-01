@@ -112,8 +112,10 @@ func save_game() -> bool:
 		if not is_instance_valid(house):
 			push_warning("Invalid house in group 'houses': %s" % house.name)
 			continue
+			
 		var house_data = {
 			"id": house.id,
+			"yard_objects": [],
 			"plot": house.plot,
 			"rarity": house.rarity,
 			"base_price": house.base_price,
@@ -141,8 +143,17 @@ func save_game() -> bool:
 			"accumulated_months": collect_rent.accumulated_months if collect_rent else 0
 		}
 		data["Houses"].append(house_data)
-		#print("Saved house: id=%s, owned=%s, mortgage=%s, months=%s" % [house.id, house.owned, house.mortgage, house.remaining_months if house.has_method("set_remaining_months") else "N/A"])
-
+		var storage = house.get_node_or_null("YardObjects")
+		if storage:
+			for item in storage.get_children():
+				# Get the path we stored in metadata earlier
+				var path = item.get_meta("scene_path", "")
+				if path != "":
+					var item_data = {
+						"scene_path": path,
+						"transform": var_to_str(item.transform) # Saves local position/rotation/scale
+					}
+					house_data["yard_objects"].append(item_data)
 	# Save loan data
 	var loans_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans")
 	if loans_ui and is_instance_valid(loans_ui) and loans_ui.loan_mod_Container:
@@ -332,6 +343,35 @@ func apply_loaded_data() -> void:
 				house.has_tenant = saved_house.get("has_tenant", house.has_tenant)
 				house.just_bought = saved_house.get("just_bought", house.just_bought)
 				house.upgrade_amount = saved_house.get("upgrade_amount", house.upgrade_amount)
+				if saved_house.has("yard_objects"):
+					# 1. Clear existing objects to prevent duplicates on double-load
+					var storage = house.get_node_or_null("YardObjects")
+					if storage:
+						for child in storage.get_children():
+							child.queue_free()
+					else:
+						# Create storage node if it doesn't exist
+						storage = Node3D.new()
+						storage.name = "YardObjects"
+						house.add_child(storage)
+						storage.owner = house
+
+					# 2. Spawn saved objects
+					for item_data in saved_house["yard_objects"]:
+						var scene_path = item_data.get("scene_path", "")
+						if scene_path != "" and ResourceLoader.exists(scene_path):
+							var scene = load(scene_path)
+							var obj = scene.instantiate()
+							storage.add_child(obj)
+							
+							# Restore Transform (Position/Rotation)
+							var t_str = item_data.get("transform", "")
+							if t_str != "":
+								obj.transform = str_to_var(t_str)
+							
+							# Set ownership for future saves and scene tree visibility
+							obj.owner = house
+							obj.set_meta("scene_path", scene_path)
 				var collect_rent = house.get_node_or_null("Collect_Rent")
 				if collect_rent and is_instance_valid(collect_rent):
 						collect_rent.stored_cash = saved_house.get("stored_cash", 0)

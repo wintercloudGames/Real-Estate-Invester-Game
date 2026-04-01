@@ -126,9 +126,10 @@ func _on_no_pressed() -> void:
 	$Pay_off.visible = false
 
 func _on_edit_yard_button_pressed() -> void:
-	house.edit_yard()
-	visible = false
-	$"../Phone".put_away()
+	if house:
+		game._on_edit_yard_button_pressed(house)
+		visible = false
+		$"../Phone".put_away()
 
 func _on_sell_button_pressed() -> void:
 	$Sell_home.visible = true

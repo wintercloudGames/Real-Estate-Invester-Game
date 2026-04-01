@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=4 uid="uid://5og62sgj0f2i"]
 
-[ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/fixed_script.gd" id="1_oakko"]
+[ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/Generate_house_texure.gd" id="1_oakko"]
 [ext_resource type="PackedScene" uid="uid://bxauvursqwsh8" path="res://3D assets/Decore/path_long.glb" id="2_02b25"]
 [ext_resource type="PackedScene" uid="uid://c26wo4sbl1rfs" path="res://assets/Town_Blocks/house.tscn" id="3_18yac"]
 

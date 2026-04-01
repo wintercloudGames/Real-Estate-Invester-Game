@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=4 uid="uid://bnykhb0kabgga"]
 
-[ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/fixed_script.gd" id="1_7i2m2"]
+[ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/Generate_house_texure.gd" id="1_7i2m2"]
 [ext_resource type="PackedScene" uid="uid://bxauvursqwsh8" path="res://3D assets/Decore/path_long.glb" id="2_sdodn"]
 [ext_resource type="PackedScene" uid="uid://esg7hmomoge6" path="res://3D assets/Decore/driveway_long.glb" id="3_r5plk"]
 [ext_resource type="PackedScene" uid="uid://c26wo4sbl1rfs" path="res://assets/Town_Blocks/house.tscn" id="4_hsk6s"]

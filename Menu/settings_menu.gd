@@ -1,5 +1,6 @@
 extends Control
 
+# --- CONFIGURATION DATA ---
 var graphics_presets = {
 	"Low": {
 		"shadows_quality": 0,
@@ -53,12 +54,13 @@ var graphics_presets = {
 
 const preset_names = ["Low", "Medium", "High", "Ultra"]
 const resolution_presets = [
-	Vector2i(1280, 720),   # 720p/HD
-	Vector2i(1920, 1080),  # 1080p/Full HD
-	Vector2i(2560, 1440),  # 1440p/Quad HD
-	Vector2i(3840, 2160)   # 4K/Ultra HD
+	Vector2i(1280, 720),
+	Vector2i(1920, 1080),
+	Vector2i(2560, 1440),
+	Vector2i(3840, 2160)
 ]
 
+# --- UI NODES ---
 @onready var option_button: OptionButton = $OptionButton
 @onready var resolution_option_button: OptionButton = $ResolutionOptionButton
 @onready var dynamic_res_check: CheckButton = $DynamicResCheck
@@ -77,204 +79,140 @@ const resolution_presets = [
 @onready var fps_label: Label = %FPS_Label
 
 func _ready() -> void:
-	# Validate UI nodes
-	if not (option_button and resolution_option_button and dynamic_res_check and lightning_check and 
-			show_fps_check and weather_check and target_fps_spin and min_render_scale_spin and 
-			max_render_scale_spin and master_volume_slider and music_volume_slider and 
-			sfx_volume_slider and ui_scale_slider and close_button and reset_button and fps_label):
-		push_error("One or more UI nodes are missing. Check scene setup.")
-		return
-	
-	# Initialize OptionButton with presets
+	# Initialize OptionButtons
 	option_button.clear()
-	for i in range(preset_names.size()):
-		option_button.add_item(preset_names[i], i)
+	for name in preset_names:
+		option_button.add_item(name)
 	
-	# Initialize ResolutionOptionButton with presets
 	resolution_option_button.clear()
-	for i in range(resolution_presets.size()):
-		var res = resolution_presets[i]
-		resolution_option_button.add_item("%dx%d" % [res.x, res.y], i)
+	for res in resolution_presets:
+		resolution_option_button.add_item("%dx%d" % [res.x, res.y])
 	
-	# Initialize sliders
-	master_volume_slider.min_value = 0.0
-	master_volume_slider.max_value = 1.0
-	master_volume_slider.step = 0.01
-	music_volume_slider.min_value = 0.0
-	music_volume_slider.max_value = 1.0
-	music_volume_slider.step = 0.01
-	sfx_volume_slider.min_value = 0.0
-	sfx_volume_slider.max_value = 1.0
-	sfx_volume_slider.step = 0.01
-	ui_scale_slider.min_value = 0.5
-	ui_scale_slider.max_value = 2.0
-	ui_scale_slider.step = 0.1
-	
-	# Update UI
+	# Connect signals (Essential for logic to trigger)
+	option_button.item_selected.connect(_on_option_button_item_selected)
+	resolution_option_button.item_selected.connect(_on_resolution_item_selected)
+	dynamic_res_check.toggled.connect(_on_dynamic_res_check_toggled)
+	lightning_check.toggled.connect(_on_lightning_check_toggled)
+	show_fps_check.toggled.connect(_on_show_fps_check_toggled)
+	weather_check.toggled.connect(_on_weather_check_toggled)
+	target_fps_spin.value_changed.connect(_on_target_fps_spin_value_changed)
+	master_volume_slider.value_changed.connect(_on_master_volume_slider_value_changed)
+	music_volume_slider.value_changed.connect(_on_music_volume_slider_value_changed)
+	sfx_volume_slider.value_changed.connect(_on_sfx_volume_slider_value_changed)
+	ui_scale_slider.value_changed.connect(_on_ui_scale_slider_value_changed)
+	close_button.pressed.connect(_on_close_button_pressed)
+	reset_button.pressed.connect(_on_reset_button_pressed)
+
 	update_ui_from_settings()
-	
-	# Log initial state
-	print("Settings menu initialized: showfps=%s, graphics_quality=%s, resolution=%s, Master=%s, UI_scale=%s" % 
-		[Settings.showfps, Settings.graphics_quality, Settings.resolution, Settings.Master, Settings.UI_scale])
 
 func update_ui_from_settings() -> void:
-	if dynamic_res_check:
-		dynamic_res_check.button_pressed = Settings.dynamic_resolution
-	if lightning_check:
-		lightning_check.button_pressed = Settings.lightning
-		lightning_check.text = "On" if Settings.lightning else "Off"
-	if show_fps_check:
-		show_fps_check.button_pressed = Settings.showfps
-		show_fps_check.text = "On" if Settings.showfps else "Off"
-	if weather_check:
-		weather_check.button_pressed = Settings.weather
-		weather_check.text = "On" if Settings.weather else "Off"
-	if target_fps_spin:
-		target_fps_spin.value = Settings.target_fps
-	if min_render_scale_spin:
-		min_render_scale_spin.value = Settings.min_render_scale
-	if max_render_scale_spin:
-		max_render_scale_spin.value = Settings.max_render_scale
-	if master_volume_slider:
-		master_volume_slider.value = Settings.Master
-	if music_volume_slider:
-		music_volume_slider.value = Settings.Music
-	if sfx_volume_slider:
-		sfx_volume_slider.value = Settings.SFX
-	if ui_scale_slider:
-		ui_scale_slider.value = Settings.UI_scale
-	if option_button:
-		var preset_index = preset_names.find(Settings.graphics_quality)
-		if preset_index != -1:
-			option_button.selected = preset_index
-	if resolution_option_button:
-		var res_index = resolution_presets.find(Settings.resolution)
-		if res_index != -1:
-			resolution_option_button.selected = res_index
-		else:
-			# Fallback to closest resolution or default
-			resolution_option_button.selected = 1  # Default to 1080p
-			Settings.resolution = resolution_presets[1]
-			Settings.save_settings()
-			print("Resolution %s not found in presets, defaulting to 1080p" % Settings.resolution)
+	# Sync UI state with the Settings Singleton
+	dynamic_res_check.button_pressed = Settings.dynamic_resolution
+	lightning_check.button_pressed = Settings.lightning
+	show_fps_check.button_pressed = Settings.showfps
+	weather_check.button_pressed = Settings.weather
+	target_fps_spin.value = Settings.target_fps
+	master_volume_slider.value = Settings.Master
+	music_volume_slider.value = Settings.Music
+	sfx_volume_slider.value = Settings.SFX
+	ui_scale_slider.value = Settings.UI_scale
 	
-	# Update FPS label
+	var preset_idx = preset_names.find(Settings.graphics_quality)
+	if preset_idx != -1: option_button.selected = preset_idx
+	
+	var res_idx = resolution_presets.find(Settings.resolution)
+	if res_idx != -1: resolution_option_button.selected = res_idx
+	
 	if fps_label:
 		fps_label.visible = Settings.showfps
-		fps_label.modulate = Color.WHITE
-		fps_label.add_theme_color_override("font_color", Color.WHITE)
-		if Settings.showfps:
-			fps_label.text = "FPS: %d" % Engine.get_frames_per_second()
-	
-	print("Updated UI: showfps=%s, graphics_quality=%s, resolution=%s, Master=%s, UI_scale=%s" % 
-		[Settings.showfps, Settings.graphics_quality, Settings.resolution, Settings.Master, Settings.UI_scale])
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Settings.showfps and fps_label:
 		fps_label.text = "FPS: %d" % Engine.get_frames_per_second()
 
-func apply_graphics_quality(preset: String) -> void:
-	if not preset in graphics_presets:
-		push_warning("Invalid graphics preset: %s. Falling back to Ultra." % preset)
-		preset = "Ultra"
+# --- RESOLUTION LOGIC (FIXED) ---
+func _on_resolution_item_selected(index: int) -> void:
+	var new_res = resolution_presets[index]
+	Settings.resolution = new_res
 	
-	var settings = graphics_presets[preset]
-	Settings.shadows_quality = settings.shadows_quality
-	Settings.msaa = settings.msaa
-	Settings.vsync = settings.vsync
-	Settings.ssao = settings.ssao
-	Settings.glow = settings.glow
-	Settings.dof = settings.dof
-	Settings.ssr = settings.ssr
-	Settings.debanding = settings.debanding
-	Settings.texture_filter = settings.texture_filter
-	Settings.particles_quality = settings.particles_quality
+	# Force the engine to update the window
+	DisplayServer.window_set_size(new_res)
+	
+	# Center the window on screen after resize
+	var screen_center = DisplayServer.screen_get_position() + (DisplayServer.screen_get_size() / 2)
+	DisplayServer.window_set_position(screen_center - (new_res / 2))
+	
+	Settings.save_settings()
+
+# --- GRAPHICS & PRESETS ---
+func apply_graphics_quality(preset: String) -> void:
+	var s = graphics_presets[preset]
+	Settings.shadows_quality = s.shadows_quality
+	Settings.msaa = s.msaa
+	Settings.vsync = s.vsync
 	Settings.graphics_quality = preset
 	
-	Settings.apply_graphics_settings()
+	# Apply to the engine
+	DisplayServer.window_set_vsync_mode(s.vsync)
+	get_viewport().msaa_3d = s.msaa
+	
 	Settings.save_settings()
 
 func _on_option_button_item_selected(index: int) -> void:
-	var preset = option_button.get_item_text(index)
-	apply_graphics_quality(preset)
+	apply_graphics_quality(preset_names[index])
 
-func _on_resolution_item_selected(index: int) -> void:
-	if index < 0 or index >= resolution_presets.size():
-		push_error("Invalid resolution index: %d" % index)
-		return
-	Settings.resolution = resolution_presets[index]
-	Settings.apply_graphics_settings()
-	Settings.save_settings()
-	print("Resolution changed to: %s" % Settings.resolution)
-
-func _on_dynamic_res_check_toggled(toggled_on: bool) -> void:
-	Settings.dynamic_resolution = toggled_on
-	Settings.apply_graphics_settings()
-	Settings.save_settings()
-
-func _on_lightning_check_toggled(toggled_on: bool) -> void:
-	Settings.lightning = toggled_on
-	lightning_check.text = "On" if toggled_on else "Off"
-	Settings.save_settings()
-	print("Lightning toggled: %s" % toggled_on)
-
-func _on_show_fps_check_toggled(toggled_on: bool) -> void:
-	Settings.showfps = toggled_on
-	show_fps_check.text = "On" if toggled_on else "Off"
-	if fps_label:
-		fps_label.visible = toggled_on
-	Settings.save_settings()
-	print("Show FPS toggled: %s" % toggled_on)
-
-func _on_weather_check_toggled(toggled_on: bool) -> void:
-	Settings.weather = toggled_on
-	weather_check.text = "On" if toggled_on else "Off"
-	Settings.save_settings()
-	print("Weather toggled: %s" % toggled_on)
-
-func _on_target_fps_spin_value_changed(value: float) -> void:
-	Settings.target_fps = int(value)
-	Settings.apply_graphics_settings()
-	Settings.save_settings()
-
-func _on_min_render_scale_spin_value_changed(value: float) -> void:
-	Settings.min_render_scale = value
-	Settings.apply_graphics_settings()
-	Settings.save_settings()
-
-func _on_max_render_scale_spin_value_changed(value: float) -> void:
-	Settings.max_render_scale = value
-	Settings.apply_graphics_settings()
-	Settings.save_settings()
-
+# --- VOLUME LOGIC ---
 func _on_master_volume_slider_value_changed(value: float) -> void:
 	Settings.Master = value
-	Settings.apply_audio_settings()
+	var bus_idx = AudioServer.get_bus_index("Master")
+	AudioServer.set_bus_volume_db(bus_idx, linear_to_db(value))
 	Settings.save_settings()
 
 func _on_music_volume_slider_value_changed(value: float) -> void:
 	Settings.Music = value
-	Settings.apply_audio_settings()
+	var bus_idx = AudioServer.get_bus_index("Music")
+	if bus_idx != -1:
+		AudioServer.set_bus_volume_db(bus_idx, linear_to_db(value))
 	Settings.save_settings()
 
 func _on_sfx_volume_slider_value_changed(value: float) -> void:
 	Settings.SFX = value
-	Settings.apply_audio_settings()
+	var bus_idx = AudioServer.get_bus_index("SFX")
+	if bus_idx != -1:
+		AudioServer.set_bus_volume_db(bus_idx, linear_to_db(value))
+	Settings.save_settings()
+
+# --- OTHER SETTINGS ---
+func _on_show_fps_check_toggled(toggled_on: bool) -> void:
+	Settings.showfps = toggled_on
+	if fps_label: fps_label.visible = toggled_on
 	Settings.save_settings()
 
 func _on_ui_scale_slider_value_changed(value: float) -> void:
 	Settings.UI_scale = value
-	get_tree().root.content_scale_factor = Settings.UI_scale
+	get_tree().root.content_scale_factor = value
 	Settings.save_settings()
-	print("UI scale changed to: %s" % Settings.UI_scale)
+
+func _on_target_fps_spin_value_changed(value: float) -> void:
+	Settings.target_fps = int(value)
+	Engine.max_fps = Settings.target_fps
+	Settings.save_settings()
+
+func _on_lightning_check_toggled(toggled_on: bool) -> void:
+	Settings.lightning = toggled_on
+	Settings.save_settings()
+
+func _on_weather_check_toggled(toggled_on: bool) -> void:
+	Settings.weather = toggled_on
+	Settings.save_settings()
+
+func _on_dynamic_res_check_toggled(toggled_on: bool) -> void:
+	Settings.dynamic_resolution = toggled_on
+	Settings.save_settings()
 
 func _on_close_button_pressed() -> void:
-	if has_node("../AudioStreamPlayer"):
-		$"../AudioStreamPlayer".play()
 	visible = false
 	Settings.save_settings()
-	print("Settings menu closed, saving settings: resolution=%s, Master=%s, showfps=%s, UI_scale=%s" % 
-		[Settings.resolution, Settings.Master, Settings.showfps, Settings.UI_scale])
 
 func _on_reset_button_pressed() -> void:
 	Settings.reset_to_defaults()

@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=4 uid="uid://cbof167wmemn2"]
 
 [ext_resource type="PackedScene" uid="uid://cjp6iwt021w63" path="res://3D assets/city-kit/sign_hospital.glb" id="1_8jchn"]
-[ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/fixed_script.gd" id="2_hbwgw"]
+[ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/Generate_house_texure.gd" id="2_hbwgw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_71uhx"]
 size = Vector3(2.44132, 2.44559, 1.4574)

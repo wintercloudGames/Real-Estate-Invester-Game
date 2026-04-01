@@ -223,6 +223,8 @@ func handle_zoom(delta: float):
 	cam.position = cam.position.normalized() * new_distance
 
 func handle_edge_scroll(delta: float):
+	if Globals.yard_edit:
+		return
 	var viewport_size = get_viewport().get_visible_rect().size
 	var mouse_pos = get_viewport().get_mouse_position()
 	var edge_direction = Vector3.ZERO

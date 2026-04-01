@@ -1,4 +1,3 @@
-# house.gd
 extends Node3D
 
 @export var is_building = false
@@ -17,7 +16,6 @@ var tenant_offers = null
 var is_listed = false
 var edit_mode = false
 var stored_cash = 0
-
 
 @onready var Collect_Rent = $Collect_Rent
 @onready var Listing_ui: Node = get_node("/root/Root/UserInterface/Game/HUD/House_listing_ui")
@@ -46,21 +44,12 @@ func _init():
 
 func _ready() -> void:
 	base_price = randi_range(80000, 500000) * rarity
-	if not is_building:
-		setup_yard_editor()
 	if id == "":
 		id = "house_" + str(get_path().hash())
 	Collect_Rent = $Collect_Rent
 	randomize()
 	previous_price = base_price
 	loan_price = current_price * 0.8
-
-func setup_yard_editor():
-	if has_node("YardEditor"):
-		var yard_editor = $YardEditor
-		if yard_editor:
-			yard_editor.add_to_group("yard_editor")
-			yard_editor.edit_mode_toggled.connect(_on_yard_edit_mode_changed)
 
 func add_to_base_price(amount: int):
 	base_price += amount
@@ -78,8 +67,16 @@ var remaining_months: int = 0
 func set_remaining_months(new_months: int) -> void:
 	remaining_months = new_months
 
-func _on_yard_edit_mode_changed(is_editing: bool):
-	pass
+func get_total_yard_value() -> int:
+	var total = 0
+	var storage = get_node_or_null("YardObjects")
+	
+	if storage:
+		for object in storage.get_children():
+			# Get the price we stored in metadata earlier
+			total += object.get_meta("price", 0)
+			
+	return total
 
 func update_market_value(market_change_percent: float) -> void:
 	previous_price = current_price
@@ -179,10 +176,6 @@ func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Ve
 		else:
 			if for_sale:       
 				game.set_listing_UI()
-
-
-func edit_yard():
-	$Yard_editor.enter_edit_mode()
 
 func remove_tenant():
 	has_tenant = false

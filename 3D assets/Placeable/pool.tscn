@@ -8,6 +8,8 @@ size = Vector3(0.42175293, 0.12915039, 0.59765625)
 [node name="pool" instance=ExtResource("1_f6tr3")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="0"]
+collision_layer = 8
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0006713867, -0.0018310547, 0.001953125)

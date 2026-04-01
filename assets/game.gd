@@ -1,6 +1,6 @@
 extends Node3D
 
-var selected_house = null
+
 var house = null
 
 @onready var House_ui = $HUD/House_info
@@ -12,7 +12,8 @@ var house = null
 
 func _ready() -> void:
 	call_deferred("apply_loaded_data_deferred")
-	
+	$camera/Camera3D.current = true
+	Globals.yard_edit = false
 	Globals.month_ended.connect(simulate_market_buyers)
 	
 	if Globals.first_start == false:
@@ -38,6 +39,7 @@ func _ready() -> void:
 	# Ensure panels start hidden
 	if mission_win_panel: mission_win_panel.visible = false
 	if game_over_panel:   game_over_panel.visible   = false
+
 
 func apply_loaded_data_deferred() -> void:
 	SaveAndLoad.apply_loaded_data()
@@ -171,9 +173,7 @@ func _process(delta: float) -> void:
 			if game_over_panel.has_method("message"):
 				game_over_panel.message("You died")
 		Engine.time_scale = 0
-# ────────────────────────────────────────────────
-# Other functions (unchanged or minor cleanup)
-# ────────────────────────────────────────────────
+
 func get_qualified_house_amount():
 	var down_payment = Globals.money
 	var down_payment_percent = 0.2
@@ -293,6 +293,12 @@ func set_house_UI():
 		House_ui.visible = true
 	if house.has_tenant:
 		House_ui.income = house.rent
+
+func _on_edit_yard_button_pressed(house):
+	if not house: return
+	if house:
+		$Yard_editor.target_house = house
+		$Yard_editor.enter_edit_mode()
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):

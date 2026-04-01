@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://885nck1e7d83" path="res://houses/collect_rent.gd" id="3_vyknd"]
 [ext_resource type="ArrayMesh" uid="uid://0pbpieoh3bw5" path="res://3D assets/Chads/Dollar sign.obj" id="4_o86dg"]
 [ext_resource type="Script" uid="uid://bkms1t16f02un" path="res://houses/dollar_sign.gd" id="5_fsmx4"]
-[ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/fixed_script.gd" id="9_iy2l6"]
+[ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/Generate_house_texure.gd" id="9_iy2l6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q85e4"]
 size = Vector3(1.41024, 1.37443, 0.966759)
