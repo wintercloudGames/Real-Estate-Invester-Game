@@ -124,11 +124,15 @@ func _process(delta: float) -> void:
 	Globals.houses_with_tenants = 0
 	Globals.Income = 0
 	Globals.listed_houses = 0
-
+	Globals.total_property_value = 0
 	# Savings as asset
 	Globals.net_worth += Globals.Savings_balance
 	if Globals.send_to_account == true:
 		Globals.Income += Globals.interest
+	
+	#add job income
+	if Globals.has_car == true:
+		Globals.Income += Globals.job_income
 	# House stats loop
 	var owned_houses = get_tree().get_nodes_in_group("houses")
 
@@ -137,7 +141,8 @@ func _process(delta: float) -> void:
 			var house_value = house.current_price
 			var mortgage_remaining = house.loan_price
 			
-			var house_equity = house_value - mortgage_remaining
+			var house_equity = house.current_price - house.loan_price
+			Globals.total_property_value += house.current_price
 			Globals.net_worth += house_equity
 			Globals.total_debt += mortgage_remaining
 			Globals.total_loan_amount += mortgage_remaining
@@ -173,7 +178,9 @@ func _process(delta: float) -> void:
 			if game_over_panel.has_method("message"):
 				game_over_panel.message("You died")
 		Engine.time_scale = 0
-
+	
+	
+	
 func get_qualified_house_amount():
 	var down_payment = Globals.money
 	var down_payment_percent = 0.2
@@ -314,22 +321,6 @@ func _on_yes_pressed() -> void:
 
 func _on_no_pressed() -> void:
 	$HUD/Quit_menu.visible = false
-
-func _on_Phone_button_pressed() -> void:
-	var has_offers = $HUD/Phone/Renters/ScrollContainer/renters.get_child_count() > 0
-	if has_offers:
-		$HUD/Phone._on_texture_button_2_pressed()
-		$HUD/Phone/Renters.visible = true
-		if not $HUD/Phone.isout:
-			$HUD/Phone.get_out()
-			$HUD/Phone.isout = true
-	else:
-		if not $HUD/Phone.isout:
-			$HUD/Phone.get_out()
-			$HUD/Phone.isout = true
-		else:
-			$HUD/Phone.put_away()
-			$HUD/Phone.isout = false
 
 func _on_hospital_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:

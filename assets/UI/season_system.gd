@@ -2,16 +2,16 @@ extends Node
 
 enum Season { SPRING, SUMMER, FALL, WINTER }
 
+# Signal to tell the world_settings to change the light
+signal lighting_update_requested(color: Color, energy: float)
+
 var current_season: Season = Season.SPRING
 var season_length_months := 3
 
 @onready var rain_notifier = $Rain/RainVisibility
 @onready var snow_notifier = $Snow/SnowVisibility
-@onready var terrain = $"../HTerrain"
-@onready var season: Label = $"../HUD/Month_mod/Season"
 @onready var rain_node: GPUParticles3D = $Rain
 @onready var snow_node: GPUParticles3D = $Snow
-
 
 var last_month = -1
 
@@ -26,7 +26,6 @@ func _ready() -> void:
 
 func _on_rain_visible():
 	rain_node.emitting = true
-	
 
 func _on_rain_invisible():
 	rain_node.emitting = false
@@ -37,7 +36,7 @@ func _on_snow_visible():
 func _on_snow_invisible():
 	snow_node.emitting = false
 
-func _process(delta):
+func _process(_delta):
 	if Settings.weather == false:
 		return
 	if Settings.lightning == true:
@@ -56,126 +55,65 @@ func _process_season():
 	var month = Globals.month
 	current_season = Season.values()[(month - 1) / season_length_months]
 	update_environment_for_season()
-	season.text = current_season_to_string()
+	_update_lighting_values() # Trigger the light change
 
-func current_season_to_string():
+func _update_lighting_values():
+	var seasonal_color = Color.WHITE
+	var energy = 1.0
+	
 	match current_season:
-		Season.SPRING:
-			return "Spring"
-		Season.SUMMER:
-			return "Summer"
-		Season.FALL:
-			return "Fall"
-		Season.WINTER:
-			return "Winter"
-
-func update_environment_for_season():
-	match current_season:
-		Season.SPRING:
-			set_environment("spring")
-			spawn_weather("rain",0.3)
-			#terrain.set_snow_visibility(false)
-			
-		Season.SUMMER:
-			set_environment("summer")
-			spawn_weather("rain",0.1)
-			
-		Season.FALL:
-			set_environment("fall")
-			spawn_weather("rain",0.3)
-			
-		Season.WINTER:
-			set_environment("winter")
-			spawn_weather("snow",0.5)
-
+		Season.SPRING: seasonal_color = Color(0.9, 1.0, 0.9) # Light Green
+		Season.SUMMER: seasonal_color = Color(1.0, 1.0, 0.8) # Bright Yellow
+		Season.FALL:   seasonal_color = Color(1.0, 0.7, 0.4) # Warm Orange
+		Season.WINTER: seasonal_color = Color(0.8, 0.9, 1.0) # Cold Blue
+	
+	# Darken if it's currently raining or snowing
+	if rain_node.emitting or snow_node.emitting:
+		energy = 0.3 
+		
+	lighting_update_requested.emit(seasonal_color, energy)
 
 func spawn_weather(effect: String, chance: float):
 	var weather_enabled = ProjectSettings.get_setting("game/weather/enabled", true)
-	if weather_enabled == false:  # Changed this condition
-		# Disable all weather effects if weather is disabled
+	if weather_enabled == false:
 		rain_node.emitting = false
 		snow_node.emitting = false
-		$RainSound.stop()
-		return
+		return 
 	
-	# Always stop both effects first
 	rain_node.emitting = false
 	snow_node.emitting = false
-	$RainSound.stop()
 
-	# Disconnect visibility signals
-	if rain_notifier.screen_entered.is_connected(_on_rain_visible):
-		rain_notifier.screen_entered.disconnect(_on_rain_visible)
-	if rain_notifier.screen_exited.is_connected(_on_rain_invisible):
-		rain_notifier.screen_exited.disconnect(_on_rain_invisible)
-	if snow_notifier.screen_entered.is_connected(_on_snow_visible):
-		snow_notifier.screen_entered.disconnect(_on_snow_visible)
-	if snow_notifier.screen_exited.is_connected(_on_snow_invisible):
-		snow_notifier.screen_exited.disconnect(_on_snow_invisible)
 	var weather_chance = randf()
 	match effect:
 		"rain":
 			if weather_chance < chance:
-				# Reconnect only rain signals
-				rain_notifier.screen_entered.connect(_on_rain_visible)
-				rain_notifier.screen_exited.connect(_on_rain_invisible)
 				rain_node.emitting = true
 		"snow":
 			if weather_chance < chance:
-				# Reconnect only snow signals
-				snow_notifier.screen_entered.connect(_on_snow_visible)
-				snow_notifier.screen_exited.connect(_on_snow_invisible)
 				snow_node.emitting = true
-func set_environment(season: String):
+	
+	_update_lighting_values() # Update light energy based on new weather
+
+func update_environment_for_season():
 	var camera := get_viewport().get_camera_3d()
-	if not camera:
-		return
-
+	if not camera or not camera.environment: return
 	var env = camera.environment
-	if not env:
-		return
 
-	match season:
-		"spring":
-			env.fog_enabled = false
-		"summer":
-			env.fog_enabled = false
-			env.sky.sky_material.set("sky_color", Color(0.7, 0.9, 1.0))
-		"fall":
+	match current_season:
+		Season.SPRING, Season.SUMMER:
+			env.fog_enabled = false 
+		Season.FALL:
 			env.fog_enabled = true
-			env.fog_color = Color(0.7, 0.6, 0.5)
-		"winter":
+			env.fog_density = 0.01
+			env.fog_light_color = Color(0.7, 0.6, 0.5)
+		Season.WINTER:
 			env.fog_enabled = true
-			env.fog_color = Color(0.85, 0.85, 0.9)
-	
-	# Initialize fog
-	if env.fog == null:
-		env.fog = Environment.new().fog.duplicate()
-	
-	# Set seasonal effects
-	match season:
-		"spring":
-			env.fog_enabled = false
-		
-		"summer":
-			env.fog_enabled = false
-			if env.sky and env.sky.sky_material:
-				env.sky.sky_material.sky_color = Color(0.7, 0.9, 1.0)
-		
-		"fall":
-			env.fog_enabled = true
-			env.fog.density = 0.01
-			env.fog.albedo = Color(0.7, 0.6, 0.5)
-		
-		"winter":
-			env.fog_enabled = true
-			env.fog.density = 0.02
-			env.fog.albedo = Color(0.85, 0.85, 0.9)
+			env.fog_density = 0.02
+			env.fog_light_color = Color(0.85, 0.85, 0.9)
 
 func maybe_trigger_lightning():
 	if current_season != Season.SUMMER and current_season != Season.SPRING:
 		return
-
 	if rain_node.emitting and randf() < 0.0003:
 		trigger_lightning()
 
@@ -201,4 +139,3 @@ func trigger_lightning():
 	flash.queue_free()
 	await get_tree().create_timer(randf_range(0.3, 1.0)).timeout
 	$ThunderSound.play()
-	

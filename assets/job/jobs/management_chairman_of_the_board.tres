@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://u6upke2cekbp"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_yx5q1"]
+
+[resource]
+script = ExtResource("1_yx5q1")
+job_name = "Chairman of the Board"
+monthly_salary = 200000.0
+required_player_level = 70
+required_skill_points = 120
+category = "Management"
+description = "A standard job in the Management sector."

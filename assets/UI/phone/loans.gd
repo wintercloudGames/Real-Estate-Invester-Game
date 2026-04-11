@@ -101,7 +101,7 @@ func take_loan(amount: int):
 	var monthly_payment = (amount * final_rate / 12) + (amount / loan_term) 
 	
 	# 1. Apply effects to Globals 
-	Globals.exp += 10
+	Globals.exp += 10 * Globals.exp_boost
 	Globals.money += amount
 	Globals.credit_score -= randi_range(30, 60) 
 	Globals.credit_score = clamp(Globals.credit_score, 300, 850) 

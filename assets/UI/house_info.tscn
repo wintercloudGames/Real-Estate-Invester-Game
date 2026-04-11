@@ -28,18 +28,18 @@ theme = ExtResource("1_wy6uo")
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 12.0
-offset_top = 186.0
-offset_right = 513.0
-offset_bottom = 204.0
+offset_left = 10.0
+offset_top = 170.0
+offset_right = 511.0
+offset_bottom = 188.0
 color = Color(0.104056, 0.115702, 0.21575, 1)
 
 [node name="ColorRect3" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 10.0
-offset_top = 356.0
+offset_top = 371.0
 offset_right = 511.0
-offset_bottom = 374.0
+offset_bottom = 389.0
 color = Color(0.104056, 0.115702, 0.21575, 1)
 
 [node name="Label_list_price" type="Label" parent="."]
@@ -81,34 +81,34 @@ text = "Morgage = "
 
 [node name="Label_Income" type="Label" parent="."]
 layout_mode = 0
-offset_left = 66.0
-offset_top = 233.0
-offset_right = 141.0
-offset_bottom = 256.0
+offset_left = 32.0
+offset_top = 197.0
+offset_right = 107.0
+offset_bottom = 220.0
 text = "Income = "
 
 [node name="Label_lease_stat" type="Label" parent="."]
 layout_mode = 0
-offset_left = 323.0
-offset_top = 213.0
-offset_right = 429.0
-offset_bottom = 236.0
+offset_left = 342.0
+offset_top = 198.0
+offset_right = 448.0
+offset_bottom = 221.0
 text = "lease amount"
 
 [node name="Label_condition" type="Label" parent="."]
 layout_mode = 0
 offset_left = 343.0
-offset_top = 249.0
+offset_top = 235.0
 offset_right = 457.0
-offset_bottom = 272.0
+offset_bottom = 258.0
 text = "condition: 90%"
 
 [node name="Label_punctuality" type="Label" parent="."]
 layout_mode = 0
 offset_left = 341.0
-offset_top = 286.0
+offset_top = 264.0
 offset_right = 455.0
-offset_bottom = 309.0
+offset_bottom = 287.0
 text = "condition: 90%"
 
 [node name="Label_islistedforrent" type="Label" parent="."]
@@ -122,10 +122,10 @@ text = "Listed for rent"
 
 [node name="Label_cashflow" type="Label" parent="."]
 layout_mode = 0
-offset_left = 58.0
-offset_top = 296.0
-offset_right = 148.0
-offset_bottom = 319.0
+offset_left = 27.0
+offset_top = 234.0
+offset_right = 117.0
+offset_bottom = 257.0
 text = "cash flow = "
 
 [node name="Buy_button" type="Button" parent="."]
@@ -139,28 +139,28 @@ text = "Pay off Loan"
 
 [node name="Refinance_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 370.0
-offset_top = 133.0
-offset_right = 495.0
-offset_bottom = 172.0
+offset_left = 366.0
+offset_top = 106.0
+offset_right = 491.0
+offset_bottom = 145.0
 text = "Refinance"
 
 [node name="Tenent_button" type="Button" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 158.0
-offset_top = 322.0
-offset_right = 327.0
-offset_bottom = 367.0
-text = "List House For Rent"
+offset_left = 26.0
+offset_top = 291.0
+offset_right = 195.0
+offset_bottom = 348.0
+text = "List House For Rent
+(Spacebar)"
 
 [node name="Remove_Tenent" type="Button" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 159.0
-offset_top = 320.0
-offset_right = 317.0
-offset_bottom = 365.0
+offset_left = 27.0
+offset_top = 291.0
+offset_right = 196.0
+offset_bottom = 345.0
 text = "Remove Tenant"
 
 [node name="Edit_yard_button" type="Button" parent="."]
@@ -197,10 +197,10 @@ text = "Upgrade"
 
 [node name="Close_Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 429.0
-offset_top = 7.0
-offset_right = 489.0
-offset_bottom = 41.0
+offset_left = 421.0
+offset_top = 16.0
+offset_right = 504.0
+offset_bottom = 63.0
 theme = ExtResource("4_wy6uo")
 text = "CLOSE"
 
@@ -269,10 +269,10 @@ text = "close"
 [node name="Drag_Button" parent="." instance=ExtResource("4_nshnh")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.10789978
-anchor_top = 0.05639026
-anchor_right = 0.10789978
-anchor_bottom = 0.056939397
+anchor_left = 0.09248552
+anchor_top = 0.092753895
+anchor_right = 0.09248552
+anchor_bottom = 0.09330303
 offset_top = -23.913177
 offset_bottom = 23.814999
 

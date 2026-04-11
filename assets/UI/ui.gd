@@ -12,6 +12,9 @@ extends Control
 @onready var fps_counter = $FPS_counter
 @onready var market_conditions: Label = $Market_conditions
 @onready var negative_month_count: Label = $negative_month_count
+@onready var progress_bar: ProgressBar = $ProgressBar
+@onready var level_label: Label = $ProgressBar/Level_label
+
 
 var month_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 var update_timer: float = 0.0
@@ -30,6 +33,7 @@ func _ready():
 		fps_counter.modulate = Color.WHITE
 		fps_counter.add_theme_color_override("font_color", Color.WHITE)
 	
+	await get_tree().create_timer(1.0).timeout
 	update_ui()
 
 func add_comma_to_int(value: int) -> String:
@@ -58,6 +62,10 @@ func _process(delta: float) -> void:
 		update_ui()
 
 func update_ui():
+	progress_bar.value = Globals.exp
+	progress_bar.max_value = Globals.exp_to_level
+	if level_label != null:
+		level_label.text = "Level: " + str(Globals.level)
 	cashflow_label.add_theme_color_override("font_color", Color.RED if Globals.cashflow < 0 else Color("1dff00"))
 	cashflow_label.text = "CashFlow: " + add_comma_to_int(Globals.cashflow)
 	

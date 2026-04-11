@@ -2,7 +2,7 @@ extends Node3D
 
 @export var is_building = false
 @export var plot = false
-@export var rarity = 1.0
+var rarity: float = 1.0
 var base_price: float = randi_range(80000, 500000) * rarity
 var current_price: float = base_price
 var previous_price: float = 0
@@ -201,7 +201,7 @@ func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node 
 	$Label3D5.text = ""
 	bought_price = buy_price
 	has_loan = use_loan
-	Globals.exp += buy_price/100000
+	Globals.exp += buy_price/100000 * Globals.exp_boost
 	Globals.net_worth += buy_price
 	Listing_ui.visible = false
 	time_on_market = 0
@@ -214,6 +214,44 @@ func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node 
 		just_bought = true
 		loan_price = 0
 		mortgage = 0
+
+func sell_house():
+	Globals.money += current_price
+	Globals.Propertys -= 1
+	
+	remove_tenant()
+	
+	if has_loan:
+		_handle_loan_payoff()
+	
+	owned = false
+	loan_price = 0
+	mortgage = 0
+	has_loan = false
+	
+	var offer_system = get_tree().root.find_child("Rent_offer_system", true, false)
+	if offer_system:
+		offer_system.clear_offers_ui()
+
+
+func _handle_loan_payoff():
+	var loans_ui = get_tree().root.find_child("Loans", true, false)
+	
+	if loans_ui and "active_loan_mods" in loans_ui:
+		for mod in loans_ui.active_loan_mods:
+			if is_instance_valid(mod) and mod.get("house_ref") == self:
+				mod._on_payoff_pressed()
+				break
+	else:
+		loans_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans")
+		
+		if loans_ui and "active_loan_mods" in loans_ui:
+			for mod in loans_ui.active_loan_mods:
+				if is_instance_valid(mod) and mod.get("house_ref") == self:
+					mod._on_payoff_pressed()
+					break
+		else:
+			push_warning("Could not find Loans UI script to clear debt for " + name)
 
 func collect_rent():
 	$Collect_Rent.collect_rent()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=4 uid="uid://cung7j0rgqmwu"]
+[gd_scene load_steps=124 format=4 uid="uid://cung7j0rgqmwu"]
 
 [ext_resource type="Script" uid="uid://cq2g8tdj47vbe" path="res://assets/game.gd" id="1_f0aps"]
 [ext_resource type="Script" uid="uid://bcsm7nw2fa21b" path="res://addons/zylann.hterrain/hterrain.gd" id="2_6p1yv"]
@@ -37,6 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://bqkuokwms5xnl" path="res://assets/UI/icons/briefcase.png" id="17_4mpck"]
 [ext_resource type="Script" uid="uid://d353451o8co46" path="res://assets/tips.gd" id="23_5pgm1"]
 [ext_resource type="Theme" uid="uid://b45etg3nfmcio" path="res://themes/nice_dark_blue.tres" id="23_k076q"]
+[ext_resource type="Theme" uid="uid://6jfb5hgx33by" path="res://themes/unnew_for_jeff.tres" id="25_p75sm"]
 [ext_resource type="Script" uid="uid://dkdnbmv5x42i1" path="res://assets/UI/game_start.gd" id="25_r1a70"]
 [ext_resource type="PackedScene" uid="uid://cichm52kww3cn" path="res://assets/Skill_Tree/skill_tree.tscn" id="29_me805"]
 [ext_resource type="AudioStream" uid="uid://cxxhebwtrm47d" path="res://effects/sounds/ui-pop-sound-316482.mp3" id="32_ba7d1"]
@@ -44,9 +45,19 @@
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="32_nggmv"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="33_dnuxx"]
 [ext_resource type="PackedScene" uid="uid://cjp6iwt021w63" path="res://3D assets/city-kit/sign_hospital.glb" id="33_jrpiw"]
+[ext_resource type="Texture2D" uid="uid://cirt06b7xynh" path="res://3D assets/images/Screenshot_2026-04-06_113416-removebg-preview.png" id="34_01a5h"]
 [ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/Generate_house_texure.gd" id="34_6jkhm"]
 [ext_resource type="Texture2D" uid="uid://bnkc5mcrjvmmp" path="res://shaded-dark/shadedDark30.png" id="34_bpinu"]
+[ext_resource type="PackedScene" uid="uid://de7kwrtxvaiem" path="res://3D assets/Placeable/bench.tscn" id="35_ga68t"]
 [ext_resource type="Script" uid="uid://bafra3pxdpwb5" path="res://assets/speedup.gd" id="36_6lwa0"]
+[ext_resource type="PackedScene" uid="uid://c2fcobnfq60hs" path="res://3D assets/Placeable/playground.tscn" id="36_dnmxa"]
+[ext_resource type="Texture2D" uid="uid://cpc5aircf14to" path="res://3D assets/images/golf.png" id="36_kc8uy"]
+[ext_resource type="Texture2D" uid="uid://cuyib4r3kmhbe" path="res://3D assets/images/playground.png" id="36_mo6uq"]
+[ext_resource type="PackedScene" uid="uid://cdspaxr0prmki" path="res://3D assets/Placeable/golf.tscn" id="37_vg4i6"]
+[ext_resource type="Texture2D" uid="uid://din6lu1ovo4tm" path="res://3D assets/images/Screenshot_2026-04-06_112553-removebg-preview.png" id="38_ggkcb"]
+[ext_resource type="PackedScene" uid="uid://x6vxhy36w2s0" path="res://3D assets/Placeable/swing.tscn" id="38_vg4i6"]
+[ext_resource type="Texture2D" uid="uid://ccwslfwitfoww" path="res://3D assets/images/Screenshot_2026-04-06_112831-removebg-preview.png" id="39_ga68t"]
+[ext_resource type="PackedScene" uid="uid://c21vjq0ic2k2c" path="res://3D assets/Placeable/slide.tscn" id="40_myvto"]
 [ext_resource type="Theme" uid="uid://brhlbolp7swxd" path="res://themes/blue_for_bars.tres" id="42_drtnu"]
 [ext_resource type="Texture2D" uid="uid://by8usin4jfy1n" path="res://assets/UI/icons/skills.png" id="44_861v0"]
 [ext_resource type="Texture2D" uid="uid://b2o8cev4c6588" path="res://assets/UI/phone/Sprite-0001.png" id="44_n6l5q"]
@@ -54,20 +65,24 @@
 [ext_resource type="PackedScene" uid="uid://b07iqv37k8uxs" path="res://assets/Town_Blocks/straight_way.tscn" id="53_drtnu"]
 [ext_resource type="PackedScene" uid="uid://cajj0231mp44r" path="res://assets/Town_Blocks/turn.tscn" id="54_me805"]
 [ext_resource type="PackedScene" uid="uid://be6xahrqbrede" path="res://assets/Town_Blocks/fourway.tscn" id="55_861v0"]
+[ext_resource type="Script" uid="uid://dgryi3pyg16we" path="res://assets/phone_button.gd" id="56_3uwtb"]
 [ext_resource type="PackedScene" uid="uid://b1vogh7xv8ycb" path="res://assets/Town_Blocks/threeway.tscn" id="56_n6l5q"]
 [ext_resource type="PackedScene" uid="uid://2cqm1robps1o" path="res://assets/Town_Blocks/end.tscn" id="57_6lwa0"]
 [ext_resource type="Script" uid="uid://dhaprvlthptx8" path="res://houses/yard_editor.gd" id="62_01a5h"]
 [ext_resource type="Texture2D" uid="uid://dxkahcjbmmvrf" path="res://3D assets/images/fence_1.png" id="63_ga68t"]
 [ext_resource type="Script" uid="uid://ft0oe48mvrvk" path="res://houses/pick_model.gd" id="64_myvto"]
+[ext_resource type="PackedScene" uid="uid://bw07hvhq2wfot" path="res://assets/job/job_display.tscn" id="64_pkglu"]
 [ext_resource type="PackedScene" uid="uid://caq04w4mqefoi" path="res://3D assets/Placeable/fence_classic_diagonal.tscn" id="65_pkglu"]
 [ext_resource type="Texture2D" uid="uid://0g88nxqgdhd1" path="res://3D assets/images/Fence_gate.png" id="66_43td7"]
 [ext_resource type="PackedScene" uid="uid://dpq0hr1tkt1d0" path="res://3D assets/Placeable/fence_garden_round_.tscn" id="67_2ekl0"]
 [ext_resource type="Texture2D" uid="uid://de6q8klptn0x6" path="res://3D assets/images/Tree_1.png" id="68_q1u52"]
 [ext_resource type="PackedScene" uid="uid://bx4bskf674t3q" path="res://3D assets/Placeable/tree_1.tscn" id="69_c5ool"]
 [ext_resource type="Texture2D" uid="uid://cipvswyrvv3en" path="res://3D assets/images/pool.png" id="70_2pd84"]
+[ext_resource type="Texture2D" uid="uid://b0p66tco4u1fd" path="res://assets/UI/icons/take-my-money.png" id="71_43td7"]
 [ext_resource type="PackedScene" uid="uid://dl66ja57b77ku" path="res://3D assets/Placeable/pool.tscn" id="71_ojuag"]
 [ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://themes/new_theme.tres" id="72_8whiy"]
 [ext_resource type="Theme" uid="uid://b8jl6a5r3l2mm" path="res://themes/yellow.tres" id="73_wiy2o"]
+[ext_resource type="PackedScene" uid="uid://dilevjugi3hsg" path="res://assets/Airplane.tscn" id="81_myvto"]
 
 [sub_resource type="Resource" id="Resource_prxnp"]
 script = ExtResource("4_mevvh")
@@ -2300,8 +2315,9 @@ sky_material = SubResource("ProceduralSkyMaterial_syrvp")
 [sub_resource type="Environment" id="Environment_bmqof"]
 background_mode = 2
 sky = SubResource("Sky_do6a0")
+sky_rotation = Vector3(0, -0.008726646, 0)
 ambient_light_source = 3
-ambient_light_color = Color(0.46964, 0.826901, 0.84995, 1)
+ambient_light_color = Color(0.47691345, 0.8906869, 0.91796875, 1)
 fog_mode = 1
 fog_density = 0.088
 
@@ -2429,96 +2445,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_en13c")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nki1d"]
-resource_name = "pavement"
-albedo_color = Color(0.884383, 0.884383, 0.906332, 1)
-metallic = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3erya"]
-resource_name = "light"
-albedo_color = Color(0.975468, 0.977247, 0.984322, 1)
-metallic = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mpky0"]
-resource_name = "_defaultMat"
-emission_enabled = true
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_drtnu"]
-_surfaces = [{
-"aabb": AABB(-0.025, 0, -0.025, 0.05, 0.675, 0.225),
-"format": 34896613377,
-"index_count": 258,
-"index_data": PackedByteArray("AgAAAAEAAQADAAIABgAEAAUABQAHAAYAAgADAAgACAAJAAIACAAKAAkACgALAAkACgAMAAsADAANAAsADAAOAA0ADgAPAA0ADwAQAA0ADwARABAAEQASABAAEgATABAAEwAUABAAEwAVABQAFgAMAAoACgAXABYADQAQABgAGAAZAA0ABgAaABsAGwAEAAYABwAcAB0AHQAeAAcAIQAfACAAIAAiACEAIwAdABIAEgARACMAJAAIAAMAAwAlACQAAAAiACAAIAABAAAAEwAGAAcABwAeABMAFQATAB4AHgAmABUAJwAJAAsACwAoACcAFAAVACYAJgApABQAHAAqABsAGwAaABwAKwAjABEAEQAPACsAJQAsAC0ALQAuACUAKAALAA0ADQAZACgAHQAcABoAGgASAB0ABQAqABwAHAAHAAUALAAfACEAIQAtACwAFwAKAAgACAAkABcAIQAiAAAAAAACACEAAgAuACEALgAtACEALwArAA8ADwAOAC8AEAAUACkAKQAYABAAEgAaAAYABgATABIAFgAvAA4ADgAMABYAAgAJACcAJwAuAAIAHgAdACMAIwAYAB4AGAApAB4AKQAmAB4AGAAjACsAGQAYACsAGQArAC8AGQAvABYAKAAZABYAKAAWABcAJwAoABcAJwAXACQALgAnACQAJAAlAC4A"),
-"name": "pavement",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 48,
-"vertex_data": PackedByteArray("AAD//xvHAAAAAJH3G8cAAP8///84jgAA/z+R9ziOAAAAAAAAAAAAAP//AAAAAAAAAADsJQAAAAD//+wlAAAAAP8/l/YtdgAA/z+9/k5vAAD/P7nziV8AAP8/DfsyUgAA/z8g755LAAD/PyT1lzgAAP8/EumYOwAA/z/q4WQwAAD/P1zt/CMAAP8/EtqqKgAA/z/jOKoqAAD/P+M4OA4AAP8/KOSVFQAA/z8S2jgOAAD/vyDvnksAAP+/ufOJXwAA/79c7fwjAAD/vyT1lzgAAAAA7CXjOAAAAAAAAOM4AAD//+wl4zgAAP+/4ziqKgAA/7/jODgOAAD//5H3//8AAAAAkff//wAA////////AAAAAP////8AAP+/EtqqKgAA/7+X9i12AAD/v5H3OI4AAP+/Eto4DgAA/7+9/k5vAAD/vw37MlIAAP+/KOSVFQAA//8AAOM4AAD/v+rhZDAAAP//kfcbxwAA/////xvHAAD/v///OI4AAP+/EumYOwAA")
-}, {
-"aabb": AABB(-0.025, 0.652778, 0.1, 0.05, 1e-05, 0.1),
-"format": 34896613377,
-"index_count": 12,
-"index_data": PackedByteArray("AgAAAAEAAQADAAIAAwAEAAIAAwAFAAQA"),
-"name": "light",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 6,
-"vertex_data": PackedByteArray("AAAAAP9/AAAAAAAA//8AAP8/AAAAAAAA//8AAP//AAD/vwAAAAAAAP//AAD/fwAA")
-}, {
-"aabb": AABB(-0.025, 0, -0.025, 0.05, 1e-05, 0.05),
-"format": 34896613377,
-"index_count": 6,
-"index_data": PackedByteArray("AgAAAAEAAQADAAIA"),
-"name": "_defaultMat",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 4,
-"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAA//8AAP//AAAAAAAA//8AAP//AAA=")
-}]
-blend_shape_mode = 0
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_bl1gy"]
-resource_name = "light_curved_Mesh light_curved"
-_surfaces = [{
-"aabb": AABB(-0.025, 0, -0.025, 0.05, 0.675, 0.225),
-"attribute_data": PackedByteArray("AuEAAALhYAQGwAAABsBgBP+PAIX/bwCF/49Mcf9vTHH/v2AEeLLiBP+/AACbrqYAvKVgBjuekQKImsMI1I+jBYWR6As3i6APPYSuCf+HtBP/h3Jn/3dyZyN8dg7/d7QT/3eRN/93XzP/h5E3/4dfM/+HrCf/d6wn/4dHIv93RyL/j0xx/48Ahf9vTHH/bwCF/28Uc/937Wj/jxRz/4ftaP+PYAT/b2AE/48AAP9vAAD/h3Jn/3dyZ/+HtBP/d7QT/3cZZv9352H/hxlm/4fnYf//AAD//2AE/98AAP/fYAT/jxRz/28Uc/+H7Wj/d+1o/4dyZ/93cmf/h7QT/3e0E/+HjUj/h/JN/3eNSP938k3/h38X/3d/F/+HGhL/dxoS/48Ahf9vAIX/j0xx/29Mcf+HVRb/d1UW/4cjEv93IxL8HmAE/B4AAPg/YAT4PwAA/4caM/+Hfzj/dxoz/3d/OP+PFHP/bxRz/4ftaP937Wj/bwCF/29Mcf+PAIX/j0xxAABgBAAAAAD/H2AE/x8AAP93JE3/d/JI/4ckTf+H8kj/b2ms/2+Pov+Paaz/d7WY/4e1mP+Pj6L/h1Yb/3dWG/+HJRf/dyUX/4d0HP93dBz/hw8X/3cPF/+PFHP/bxRz/4ftaP937Wj/h6Mm/3ejJv+HcSL/d3Ei/4fEZv93xGb/h19h/3dfYf93cmf/d7QT/4dyZ8F7rgnbg3YO/4e0E8d0oA8qcKMFeW7oC3ZlwwjDYZECQlpgBmNRpgCGTeIE/z8AAP8/YAQ="),
-"format": 34896613399,
-"index_count": 258,
-"index_data": PackedByteArray("AgAAAAEAAQADAAIABgAEAAUABQAHAAYACgAIAAkACQALAAoACQAMAAsADAANAAsADAAOAA0ADgAPAA0ADgAQAA8AEAARAA8AEQASAA8AEQATABIAEwAUABIAFAAVABIAFQAWABIAFQAXABYAGgAYABkAGQAbABoAHgAcAB0AHQAfAB4AIgAgACEAIQAjACIAJgAkACUAJQAnACYAKgAoACkAKQArACoALgAsAC0ALQAvAC4AMgAwADEAMQAzADIANgA0ADUANQA3ADYAOgA4ADkAOQA7ADoAPgA8AD0APQA/AD4AQgBAAEEAQQBDAEIARgBEAEUARQBHAEYASgBIAEkASQBLAEoATgBMAE0ATQBPAE4AUgBQAFEAUQBTAFIAVgBUAFUAVQBXAFYAWgBYAFkAWQBbAFoAXgBcAF0AXQBfAF4AYgBgAGEAYQBjAGIAZgBkAGUAZQBnAGYAagBoAGkAaQBrAGoAawBsAGoAbABtAGoAcABuAG8AbwBxAHAAdAByAHMAcwB1AHQAeAB2AHcAdwB5AHgAfAB6AHsAewB9AHwAgAB+AH8AfwCBAIAAhACCAIMAgwCFAIQAhQCGAIQAhgCHAIQAhQCDAIgAiQCFAIgAiQCIAIoAiQCKAIsAjACJAIsAjACLAI0AjgCMAI0AjgCNAI8AkACOAI8AjwCRAJAA"),
-"material": SubResource("StandardMaterial3D_nki1d"),
-"name": "pavement",
-"primitive": 3,
-"uv_scale": Vector4(15.748, 51.1496, 0, 0),
-"vertex_count": 146,
-"vertex_data": PackedByteArray("AAD//xvH/MQAAJH3G8f8xP8///84jvrJ/z+R9ziO+skAAAAAAAD/////AAAAAP//AADsJQAA/////+wlAAD///8/kfc4jv+//z+X9i12/7//P///OI7/v/8/vf5Ob/+//z+584lf/7//Pw37MlL/v/8/IO+eS/+//z8k9Zc4/7//PxLpmDv/v/8/6uFkMP+//z9c7fwj/7//PxLaqir/v/8/4ziqKv+//z/jODgO/7//PyjklRX/v/8/Eto4Dv+//z8g755LZKL/P7nziV9CrP+/IO+eS2Si/7+584lfQqz/P1zt/CP///+/XO38I////z8k9Zc4////vyT1lzj//wAA7CXjOCDAAAAAAOM4/78AAOwlAAAgwAAAAAAAAP+////sJeM4IMD/v+M4qiqawP//7CUAACDA/7/jODgOmsD//5H3//8AgAAAkff//wCA////////AIAAAP////8AgP+/4ziqKgCA/z/jOKoqAID/vxLaqioAgP8/EtqqKgCA/z+X9i12ILb/P5H3OI4Qu/+/l/YtdiC2/7+R9ziOELsAAP//////vwAAkff///+/AAD//xvH/MQAAJH3G8f8xAAA7CUAAP/////sJQAA////P+M4OA7///+/4zg4Dv///z/jODgO////v+M4OA7///8/Eto4Dv///78S2jgO////P73+Tm////8/DfsyUv///7+9/k5v////vw37MlL///8/Eto4Dv///78S2jgO////PyjklRX///+/KOSVFf////8AAOM4AIAAAAAA4zgAgP//7CXjOJOEAADsJeM4k4T/vxLaqiq4if8/EtqqKriJ/7/q4WQwp47/P+rhZDCnjv//kfcbx/zE/////xvH/MT/v5H3OI76yf+///84jvrJ/z8N+zJS////PyT1lzj///+/DfsyUv///78k9Zc4/////+wl4ziThAAA7CXjOJOE/7/jOKoq+on/P+M4qir6if//AADjOP+////sJeM4IMD//wAAAAD/v///7CUAACDA//+R9////7//////////v///kfcbx/zE/////xvH/MT/P7nziV9CrP8/l/YtdiC2/7+584lfQqz/v5f2LXYgtgAA//////+/AAD//xvH/7//////////v/8///84jknC/7///ziOScL/////G8f/v/+/6uFkMKeO/z/q4WQwp47/vxLpmDuFmP8/EumYO4WY/z8o5JUV////vyjklRX///8/XO38I////79c7fwj//8AAOwl4zggwAAA7CUAACDA/z/jOKoqmsD/P+M4OA6awP+/EumYO4WY/z8S6Zg7hZj/vyDvnktkov8/IO+eS2Si/z+9/k5v////v73+Tm////8///84jv///7///ziO////v+M4qir/v/+/EtqqKv+//7/jODgO/7//v1zt/CP/v/+/KOSVFf+//78S2jgO/7//v+rhZDD/v/+/JPWXOP+//78S6Zg7/7//vyDvnkv/v/+/DfsyUv+//7+584lf/7//v73+Tm//v/+/l/Ytdv+//7///ziO/7//v5H3OI7/v/9/////f////3////9/////f////3////9/Lfn/fy35/3/+//9//v//f/7//3/+//9//v//f/7//3/+//9//v//f/7//3/+//9//v//f/7//3////9/////f////3///wAA/38AAP9/AAD/fwAA/3//f63h/3+t4f9/VNj/f1TYeIYM8/9///94hgzz/3////GMeQZJmaQM8Yx5BkmZpAz/f////3////9/////f////3////9/////f////3///wAA/38AAP9/AAD/fwAA/3//f////3////9/////f////38t+f9/Lfn/f/fx/3/38f9/////f////3////9/////f8nH/3/Pz/9/ycf/f8/P/39L8v9/S/L/f03s/39N7P9/////f///////f////38AAP9/AAD/fwAA/38AAP9//38AAP9/AAD/fwAA/38AAP9/z8//f1TY/3/Pz/9/VNj///9/////f////3////9//38AAPGMeQb/fwAA8Yx5Bv9/AAD/fwAA/38AAP9/AAAAAP9/AAD/fwAA/38AAP9/////f////3////9/////f////3/+//9/AAD/fwAA/38AAP9/AAD/f/9/Tez/f03s/3+t4f9/reF4hgzzeIYM86SMteakjLXmAAD/fwAA/38AAP9/AAD/f/9/ycf/f8nH/3/Lwf9/y8H/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA")
-}, {
-"aabb": AABB(-0.025, 0.652778, 0.1, 0.05, 1e-05, 0.1),
-"attribute_data": PackedByteArray("//+a4///////vzXHAAD///8/NccAAJrj"),
-"format": 34896613399,
-"index_count": 12,
-"index_data": PackedByteArray("AgAAAAEAAQADAAIAAwAEAAIAAwAFAAQA"),
-"material": SubResource("StandardMaterial3D_3erya"),
-"name": "light",
-"primitive": 3,
-"uv_scale": Vector4(1.9685, 17.748, 0, 0),
-"vertex_count": 6,
-"vertex_data": PackedByteArray("AAAAAP9///8AAAAA//////8/AAAAAP////8AAP//////vwAAAAD/////AAD/f////3//P/9//z//f/8//3//P/9//z//f/8/")
-}, {
-"aabb": AABB(-0.025, 0, -0.025, 0.05, 1e-05, 0.05),
-"attribute_data": PackedByteArray("/x8AAP8fYAQAAAAA/x8AAP8fYAQAAAAA"),
-"format": 34896613399,
-"index_count": 6,
-"index_data": PackedByteArray("AgAAAAEABQADAAQA"),
-"material": SubResource("StandardMaterial3D_mpky0"),
-"name": "_defaultMat",
-"primitive": 3,
-"uv_scale": Vector4(15.748, 51.1496, 0, 0),
-"vertex_count": 6,
-"vertex_data": PackedByteArray("AAAAAAAA//8AAAAA////////AAAAAP////8AAP///7///wAAAAD/vwAAAAD///+//3//P/9//z//f/8/AAD/fwAA/38AAP9/")
-}]
-blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_drtnu")
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_f0aps")
@@ -2679,6 +2605,7 @@ debug_shape_thickness = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Yard_editor"]
 layer = 2
+visible = false
 
 [node name="UI" type="Control" parent="Yard_editor/CanvasLayer"]
 layout_mode = 3
@@ -2686,25 +2613,17 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 21.0
-offset_top = -599.0
-offset_right = 250.0
+offset_top = -320.0
+offset_right = 754.0
 offset_bottom = -39.0
 grow_vertical = 0
 
-[node name="ColorRect" type="Panel" parent="Yard_editor/CanvasLayer/UI"]
-layout_mode = 0
-offset_left = 2.0
-offset_top = 88.0
-offset_right = 228.0
-offset_bottom = 556.0
-theme = ExtResource("32_nggmv")
-
 [node name="House_value" type="Label" parent="Yard_editor/CanvasLayer/UI"]
 layout_mode = 0
-offset_left = 24.0
-offset_top = -48.0
-offset_right = 225.0
-offset_bottom = 1.0
+offset_left = 4.0
+offset_top = -161.0
+offset_right = 295.0
+offset_bottom = -112.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/paragraph_spacing = 5
@@ -2714,10 +2633,10 @@ text = "house value $100"
 
 [node name="tips" type="Button" parent="Yard_editor/CanvasLayer/UI"]
 layout_mode = 0
-offset_left = 121.0
-offset_top = 30.0
-offset_right = 210.0
-offset_bottom = 65.0
+offset_left = 111.0
+offset_top = -83.0
+offset_right = 200.0
+offset_bottom = -48.0
 theme = ExtResource("32_nggmv")
 text = "Hint"
 script = ExtResource("23_5pgm1")
@@ -2725,10 +2644,10 @@ script = ExtResource("23_5pgm1")
 [node name="Controlls" type="Label" parent="Yard_editor/CanvasLayer/UI/tips"]
 visible = false
 layout_mode = 0
-offset_left = 113.0
-offset_top = 347.0
-offset_right = 513.0
-offset_bottom = 507.0
+offset_left = 625.0
+offset_top = 211.0
+offset_right = 1025.0
+offset_bottom = 371.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/paragraph_spacing = 5
@@ -2741,31 +2660,41 @@ text = "[A / D] or [Arrows] : Rotate Camera
 
 [node name="Close_Button" type="Button" parent="Yard_editor/CanvasLayer/UI"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 19.0
-offset_right = 103.0
-offset_bottom = 66.0
+offset_left = 4.0
+offset_top = -90.0
+offset_right = 87.0
+offset_bottom = -43.0
 theme = ExtResource("32_cpbdu")
 text = "CLOSE"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Yard_editor/CanvasLayer/UI"]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 99.999985
-offset_right = 571.2537
-offset_bottom = 1332.8358
-scale = Vector2(0.335, 0.335)
+[node name="TabBar" type="TabContainer" parent="Yard_editor/CanvasLayer/UI"]
+layout_mode = 1
+offset_top = -10.000011
+offset_right = 1578.0
+offset_bottom = 607.7777
+scale = Vector2(0.45, 0.45)
+theme = ExtResource("25_p75sm")
+theme_override_font_sizes/font_size = 50
+tab_alignment = 1
+current_tab = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Yard_editor/CanvasLayer/UI/ScrollContainer"]
+[node name="Fences" type="ScrollContainer" parent="Yard_editor/CanvasLayer/UI/TabBar"]
+visible = false
 layout_mode = 2
+horizontal_scroll_mode = 0
+metadata/_tab_index = 0
 
-[node name="Pick_model1" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="Yard_editor/CanvasLayer/UI/TabBar/Fences"]
+layout_mode = 2
+columns = 3
+
+[node name="Fence" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/TabBar/Fences/GridContainer"]
 layout_mode = 2
 texture_normal = ExtResource("63_ga68t")
 script = ExtResource("64_myvto")
 model_scene = ExtResource("65_pkglu")
 
-[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model1"]
+[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/TabBar/Fences/GridContainer/Fence"]
 layout_mode = 0
 offset_left = 155.0
 offset_top = 24.0
@@ -2774,16 +2703,16 @@ offset_bottom = 60.0
 scale = Vector2(3, 3)
 text = "price: 100 "
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model1"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/TabBar/Fences/GridContainer/Fence"]
 stream = ExtResource("32_ba7d1")
 
-[node name="Pick_model2" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer"]
+[node name="ronded_gate" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/TabBar/Fences/GridContainer"]
 layout_mode = 2
 texture_normal = ExtResource("66_43td7")
 script = ExtResource("64_myvto")
 model_scene = ExtResource("67_2ekl0")
 
-[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model2"]
+[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/TabBar/Fences/GridContainer/ronded_gate"]
 layout_mode = 0
 offset_left = 155.0
 offset_top = 24.0
@@ -2792,17 +2721,26 @@ offset_bottom = 60.0
 scale = Vector2(3, 3)
 text = "price: 100 "
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model2"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/TabBar/Fences/GridContainer/ronded_gate"]
 stream = ExtResource("32_ba7d1")
 
-[node name="Pick_model3" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer"]
+[node name="Decore" type="ScrollContainer" parent="Yard_editor/CanvasLayer/UI/TabBar"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+metadata/_tab_index = 1
+
+[node name="GridContainer" type="GridContainer" parent="Yard_editor/CanvasLayer/UI/TabBar/Decore"]
+layout_mode = 2
+columns = 3
+
+[node name="Tree_1" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/TabBar/Decore/GridContainer"]
 layout_mode = 2
 texture_normal = ExtResource("68_q1u52")
 script = ExtResource("64_myvto")
 model_scene = ExtResource("69_c5ool")
 price = 200
 
-[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model3"]
+[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/TabBar/Decore/GridContainer/Tree_1"]
 layout_mode = 0
 offset_left = 155.0
 offset_top = 24.0
@@ -2811,17 +2749,45 @@ offset_bottom = 60.0
 scale = Vector2(3, 3)
 text = "price: 100 "
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model3"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/TabBar/Decore/GridContainer/Tree_1"]
 stream = ExtResource("32_ba7d1")
 
-[node name="Pick_model4" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer"]
+[node name="bench" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/TabBar/Decore/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("34_01a5h")
+script = ExtResource("64_myvto")
+model_scene = ExtResource("35_ga68t")
+
+[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/TabBar/Decore/GridContainer/bench"]
+layout_mode = 0
+offset_left = 155.0
+offset_top = 24.0
+offset_right = 275.0
+offset_bottom = 60.0
+scale = Vector2(3, 3)
+text = "price: 100 "
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/TabBar/Decore/GridContainer/bench"]
+stream = ExtResource("32_ba7d1")
+
+[node name="Fun" type="ScrollContainer" parent="Yard_editor/CanvasLayer/UI/TabBar"]
+visible = false
+layout_mode = 2
+horizontal_scroll_mode = 0
+metadata/_tab_index = 2
+
+[node name="GridContainer" type="GridContainer" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun"]
+layout_mode = 2
+columns = 3
+
+[node name="Pool" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer"]
 layout_mode = 2
 texture_normal = ExtResource("70_2pd84")
 script = ExtResource("64_myvto")
 model_scene = ExtResource("71_ojuag")
 price = 2000
 
-[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model4"]
+[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Pool"]
 layout_mode = 0
 offset_left = 155.0
 offset_top = 24.0
@@ -2830,7 +2796,82 @@ offset_bottom = 60.0
 scale = Vector2(3, 3)
 text = "price: 100 "
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model4"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Pool"]
+stream = ExtResource("32_ba7d1")
+
+[node name="golf" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("36_kc8uy")
+script = ExtResource("64_myvto")
+model_scene = ExtResource("37_vg4i6")
+price = 500
+
+[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/golf"]
+layout_mode = 0
+offset_left = 155.0
+offset_top = 24.0
+offset_right = 275.0
+offset_bottom = 60.0
+scale = Vector2(3, 3)
+text = "price: 100 "
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/golf"]
+stream = ExtResource("32_ba7d1")
+
+[node name="Slide" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("39_ga68t")
+script = ExtResource("64_myvto")
+model_scene = ExtResource("40_myvto")
+price = 200
+
+[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Slide"]
+layout_mode = 0
+offset_left = 155.0
+offset_top = 24.0
+offset_right = 275.0
+offset_bottom = 60.0
+scale = Vector2(3, 3)
+text = "price: 100 "
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Slide"]
+stream = ExtResource("32_ba7d1")
+
+[node name="Swing" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("38_ggkcb")
+script = ExtResource("64_myvto")
+model_scene = ExtResource("38_vg4i6")
+
+[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Swing"]
+layout_mode = 0
+offset_left = 155.0
+offset_top = 24.0
+offset_right = 275.0
+offset_bottom = 60.0
+scale = Vector2(3, 3)
+text = "price: 100 "
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Swing"]
+stream = ExtResource("32_ba7d1")
+
+[node name="playground" type="TextureButton" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer"]
+layout_mode = 2
+texture_normal = ExtResource("36_mo6uq")
+script = ExtResource("64_myvto")
+model_scene = ExtResource("36_dnmxa")
+price = 10000
+
+[node name="Label" type="Label" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/playground"]
+layout_mode = 0
+offset_left = 155.0
+offset_top = 24.0
+offset_right = 275.0
+offset_bottom = 60.0
+scale = Vector2(3, 3)
+text = "price: 100 "
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/playground"]
 stream = ExtResource("32_ba7d1")
 
 [node name="ContextMenu" type="Panel" parent="Yard_editor/CanvasLayer"]
@@ -3296,10 +3337,10 @@ text = "Deny"
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 100.0
-offset_top = 11.0
-offset_right = 408.0
-offset_bottom = 109.0
+offset_left = 80.0
+offset_top = 33.0
+offset_right = 388.0
+offset_bottom = 131.0
 grow_horizontal = 2
 theme = ExtResource("23_k076q")
 metadata/_edit_use_anchors_ = true
@@ -3317,6 +3358,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Year 100"
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Season" type="Label" parent="HUD/Month_mod"]
 layout_mode = 1
@@ -3331,6 +3373,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Spring"
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="month" type="Label" parent="HUD/Month_mod"]
 layout_mode = 1
@@ -3345,21 +3388,23 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "month 1"
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Month_Timer" type="Label" parent="HUD/Month_mod"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 87.0
-offset_top = 50.0
-offset_right = -120.0
-offset_bottom = -6.0
+offset_left = 91.0
+offset_top = 51.0
+offset_right = -116.0
+offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Month Timer"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Universal_Text_Box" type="Panel" parent="HUD"]
 visible = false
@@ -3430,20 +3475,20 @@ script = ExtResource("36_6lwa0")
 
 [node name="HSlider" type="HSlider" parent="HUD/Speedup"]
 layout_mode = 0
-offset_left = 900.0
-offset_top = 112.0
-offset_right = 1042.0
-offset_bottom = 128.0
+offset_left = 805.0
+offset_top = 133.0
+offset_right = 947.0
+offset_bottom = 149.0
 
 [node name="GameSpeed_text" type="Label" parent="HUD/Speedup"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 884.0
-offset_top = 86.0
-offset_right = 1019.0
-offset_bottom = 109.0
+offset_left = 787.0
+offset_top = 111.0
+offset_right = 922.0
+offset_bottom = 134.0
 grow_horizontal = 2
 theme = ExtResource("32_nggmv")
 text = "Speed Up"
@@ -3508,33 +3553,25 @@ script = ExtResource("4_j4nwd")
 metadata/_edit_lock_ = true
 
 [node name="Panel2" type="Panel" parent="HUD/UI"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.0026041667
+anchor_right = -0.059375
 offset_left = 20.0
 offset_top = 15.0
 offset_right = 869.0
 offset_bottom = 160.0
 metadata/_edit_use_anchors_ = true
 
-[node name="Panel3" type="Panel" parent="HUD/UI"]
-layout_mode = 0
-offset_left = 19.29
-offset_top = 179.82
-offset_right = 315.785
-offset_bottom = 391.79
-mouse_filter = 2
-theme = ExtResource("32_nggmv")
-metadata/_edit_use_anchors_ = true
-
 [node name="GridContainer" type="GridContainer" parent="HUD/UI"]
 layout_mode = 0
-offset_left = 58.0
+offset_left = 52.0
 offset_top = 43.0
-offset_right = 793.0
+offset_right = 705.0
 offset_bottom = 132.0
 theme_override_constants/h_separation = 25
 theme_override_constants/v_separation = 35
 columns = 3
-metadata/_edit_use_anchors_ = true
 
 [node name="money" type="Label" parent="HUD/UI/GridContainer"]
 modulate = Color(1, 1, 0.317647, 1)
@@ -3560,6 +3597,14 @@ visible = false
 layout_mode = 2
 text = "house qualify = 10,000"
 
+[node name="JobDisplay" parent="HUD/UI" instance=ExtResource("64_pkglu")]
+visible = false
+layout_mode = 0
+offset_left = 653.0
+offset_top = 411.0
+offset_right = 653.0
+offset_bottom = 411.0
+
 [node name="networth" type="Label" parent="HUD/UI"]
 visible = false
 layout_mode = 0
@@ -3571,9 +3616,9 @@ text = "net  = "
 
 [node name="negative_month_count" type="Label" parent="HUD/UI"]
 layout_mode = 0
-offset_left = 617.0
+offset_left = 521.0
 offset_top = 24.0
-offset_right = 833.0
+offset_right = 737.0
 offset_bottom = 59.0
 text = "Months tell Bankrupt: 10/12"
 
@@ -3590,18 +3635,33 @@ text = "prps = "
 wait_time = 60.0
 autostart = true
 
+[node name="Panel3" type="Panel" parent="HUD/UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.0016744772
+anchor_bottom = 0.007601844
+offset_left = 20.0
+offset_top = 183.0
+offset_right = 470.785
+offset_bottom = 510.79
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme = ExtResource("32_nggmv")
+
 [node name="Player_stats" type="Control" parent="HUD/UI"]
 layout_mode = 1
-anchors_preset = 0
-offset_left = 144.0
-offset_top = 238.0
-offset_right = 144.0
-offset_bottom = 238.0
-scale = Vector2(0.7, 0.7)
+anchor_left = 0.0010416746
+anchor_top = 0.0018518377
+anchor_right = 0.0010416746
+anchor_bottom = 0.0018518377
+offset_left = 144.71
+offset_top = 241.18
+offset_right = 144.71
+offset_bottom = 241.18
+scale = Vector2(0.5, 0.5)
 mouse_filter = 2
 theme = ExtResource("42_drtnu")
 script = ExtResource("12_5wq64")
-metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HUD/UI/Player_stats"]
 layout_mode = 1
@@ -3610,10 +3670,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -141.42857
-offset_top = -72.85715
-offset_right = 202.57143
-offset_bottom = 247.14285
+offset_left = -189.42004
+offset_top = -94.359955
+offset_right = 159.15137
+offset_bottom = 205.64001
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -3660,15 +3720,23 @@ mouse_filter = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 value = 100.0
 
-[node name="Phone_button" type="TextureButton" parent="HUD/UI"]
+[node name="Phone_button" type="TextureButton" parent="HUD/UI" node_paths=PackedStringArray("phone_node", "renters_container")]
 layout_mode = 1
-offset_left = 371.0
-offset_top = 193.0
-offset_right = 883.0
-offset_bottom = 705.0
-scale = Vector2(0.2, 0.2)
+anchors_preset = -1
+anchor_left = -0.008333334
+anchor_top = -0.05648148
+anchor_right = -0.008333334
+anchor_bottom = -0.05648148
+offset_left = 368.0
+offset_top = 234.0
+offset_right = 880.0
+offset_bottom = 746.0
+scale = Vector2(0.1, 0.1)
 toggle_mode = true
 texture_normal = ExtResource("4_5akwj")
+script = ExtResource("56_3uwtb")
+phone_node = NodePath("../../Phone")
+renters_container = NodePath("../../Phone/Renters/ScrollContainer/renters")
 metadata/_edit_use_anchors_ = true
 
 [node name="RedDot" type="TextureRect" parent="HUD/UI/Phone_button"]
@@ -3696,25 +3764,52 @@ offset_right = 496.0
 offset_bottom = 132.0
 theme_override_font_sizes/font_size = 100
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Business_Button" type="TextureButton" parent="HUD/UI"]
 layout_mode = 1
-offset_left = 617.0
-offset_top = 197.0
-offset_right = 1129.0
-offset_bottom = 709.0
-scale = Vector2(0.2, 0.2)
+anchors_preset = -1
+anchor_left = -0.032291666
+anchor_top = -0.062962964
+anchor_right = -0.032291666
+anchor_bottom = -0.062962964
+offset_left = 614.0
+offset_top = 238.0
+offset_right = 1126.0
+offset_bottom = 750.0
+scale = Vector2(0.1, 0.1)
 toggle_mode = true
 texture_normal = ExtResource("17_4mpck")
 metadata/_edit_use_anchors_ = true
 
+[node name="Show_job_display" type="TextureButton" parent="HUD/UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.06614583
+anchor_top = -0.06111111
+anchor_right = -0.06614583
+anchor_bottom = -0.06111111
+offset_left = 614.0
+offset_top = 238.0
+offset_right = 1126.0
+offset_bottom = 750.0
+scale = Vector2(0.1, 0.1)
+toggle_mode = true
+texture_normal = ExtResource("71_43td7")
+metadata/_edit_use_anchors_ = true
+
 [node name="Skills_Button" type="TextureButton" parent="HUD/UI"]
 layout_mode = 1
-offset_left = 495.0
-offset_top = 194.0
-offset_right = 1007.0
-offset_bottom = 706.0
-scale = Vector2(0.2, 0.2)
+anchors_preset = -1
+anchor_left = -0.038541667
+anchor_top = -0.058333334
+anchor_right = -0.038541667
+anchor_bottom = -0.058333334
+offset_left = 492.0
+offset_top = 235.0
+offset_right = 1004.0
+offset_bottom = 747.0
+scale = Vector2(0.1, 0.1)
 toggle_mode = true
 texture_normal = ExtResource("44_861v0")
 metadata/_edit_use_anchors_ = true
@@ -3734,6 +3829,7 @@ scale = Vector2(0.31, 0.31)
 mouse_filter = 2
 texture = ExtResource("44_n6l5q")
 expand_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="HUD/UI/Skills_Button"]
 layout_mode = 0
@@ -3744,9 +3840,15 @@ offset_bottom = 132.0
 theme_override_font_sizes/font_size = 100
 text = "100"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Market_conditions" type="Label" parent="HUD/UI"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.0546875
+anchor_top = 0.0046296297
+anchor_right = -0.0546875
+anchor_bottom = 0.0046296297
 offset_left = 651.0
 offset_top = 65.0
 offset_right = 808.0
@@ -3768,11 +3870,11 @@ vertical_alignment = 1
 
 [node name="FPS_counter" type="Label" parent="HUD/UI"]
 layout_mode = 0
-offset_left = 904.0
-offset_top = 24.0
-offset_right = 1022.0
-offset_bottom = 66.0
-theme_override_font_sizes/font_size = 30
+offset_left = 775.0
+offset_top = 69.0
+offset_right = 838.0
+offset_bottom = 87.0
+theme_override_font_sizes/font_size = 15
 text = "FPS: 000"
 
 [node name="MissionDisplay" type="Panel" parent="HUD/UI"]
@@ -3839,13 +3941,13 @@ layout_mode = 1
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 542.0
-offset_top = 260.0
-offset_right = 2474.0
-offset_bottom = 1358.0
+offset_left = 503.0
+offset_top = 389.0
+offset_right = 2435.0
+offset_bottom = 1487.0
 grow_horizontal = 1
 grow_vertical = 1
-scale = Vector2(0.706297, 0.722974)
+scale = Vector2(0.5, 0.512)
 
 [node name="Drag_Button" parent="HUD/UI" instance=ExtResource("33_dnuxx")]
 visible = false
@@ -3856,14 +3958,36 @@ anchor_top = 0.0701754
 anchor_right = 0.0921052
 anchor_bottom = 0.0701754
 
+[node name="ProgressBar" type="ProgressBar" parent="HUD/UI"]
+layout_mode = 0
+offset_left = 796.0
+offset_top = 12.0
+offset_right = 1038.0
+offset_bottom = 56.0
+theme = ExtResource("25_p75sm")
+theme_override_font_sizes/font_size = 15
+value = 90.0
+show_percentage = false
+
+[node name="Level_label" type="Label" parent="HUD/UI/ProgressBar"]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 9.0
+offset_right = 157.0
+offset_bottom = 33.0
+theme_override_font_sizes/font_size = 20
+text = "Level: 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Game_start" type="Control" parent="HUD"]
 visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 121.0
 offset_top = 212.0
-offset_right = 1732.0
-offset_bottom = 918.0
+offset_right = 1859.0
+offset_bottom = 1045.0
 theme = ExtResource("23_k076q")
 script = ExtResource("25_r1a70")
 
@@ -3872,8 +3996,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 72.0
-offset_bottom = 131.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("32_nggmv")
@@ -3979,6 +4101,7 @@ theme_override_font_sizes/font_size = 50
 text = "NIGHTMARE "
 
 [node name="mission_toggle" type="CheckButton" parent="HUD/Game_start"]
+visible = false
 layout_mode = 0
 offset_left = 1406.0
 offset_top = 85.0
@@ -3986,6 +4109,7 @@ offset_right = 1571.0
 offset_bottom = 133.0
 
 [node name="MissionLabel" type="Label" parent="HUD/Game_start"]
+visible = false
 layout_mode = 0
 offset_left = 1335.0
 offset_top = 20.0
@@ -3997,7 +4121,7 @@ text = "Mission Mode:"
 transform = Transform3D(0.9955891, 0, 0, 0, 0.9955891, 0, 0, 0, 0.9955891, -54.22633, -0.0167836, -0.09944878)
 
 [node name="sign_hospital2" parent="Hostpital" instance=ExtResource("33_jrpiw")]
-transform = Transform3D(-0.00544399, 0, -2.6229303, 0, 1.95133, 0, 1.0573401, 0, -0.0135048, 0.0441494, 1.7485002, -0.21286549)
+transform = Transform3D(-0.0054439898, 0, -2.6229303, 0, 1.9513298, 0, 1.0573401, 0, -0.0135048, 0.04414749, 1.7485002, -0.1871582)
 
 [node name="hospital" type="Area3D" parent="Hostpital"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.685755e-08)
@@ -4011,1547 +4135,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.0044309)
 mesh = SubResource("ArrayMesh_aajbe")
 skeleton = NodePath("")
 script = ExtResource("34_6jkhm")
-
-[node name="decore" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48006, -0.619433, -6.19686)
-
-[node name="light_curved162" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -28.7389, 0.529734, 12.9219)
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved162"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved163" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -30.4389, 0.529734, 12.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved163"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved164" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -32.2389, 0.529734, 12.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved164"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved165" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -36.1389, 0.529734, 12.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved165"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved166" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -34.0389, 0.529734, 12.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved166"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved167" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.728299, 0, 0.685259, 0, 1, 0, -0.685259, 0, 0.728299, -39.4464, 0.529734, 12.564)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved167"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved168" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -40.9389, 0.529734, 12.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved168"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved169" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -42.6389, 0.529734, 12.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved169"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved170" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -44.4389, 0.529734, 12.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved170"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved270" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.483252, 0, -0.875482, 0, 1, 0, 0.875482, 0, 0.483252, -45.6389, 0.529734, 12.6219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved270"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved171" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -48.3389, 0.529734, 12.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved171"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved172" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.720575, 0, 0.693377, 0, 1, 0, -0.693377, 0, 0.720575, -47.3389, 0.529734, 12.5219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved172"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved173" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -38.1389, 0.529734, -2.97807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved173"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved174" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -39.7389, 0.529734, -2.97807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved174"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved175" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -41.4389, 0.529734, -2.97807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved175"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved275" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.970725, 0, -0.240194, 0, 1, 0, 0.240194, 0, -0.970725, -39.4389, 0.529734, -1.97807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved275"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved276" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.970725, 0, -0.240194, 0, 1, 0, 0.240194, 0, -0.970725, -41.0389, 0.529734, -1.97807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved276"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved277" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.970725, 0, -0.240194, 0, 1, 0, 0.240194, 0, -0.970725, -42.5389, 0.529734, -1.97807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved277"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved278" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.970725, 0, -0.240194, 0, 1, 0, 0.240194, 0, -0.970725, -44.1389, 0.529734, -1.97807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved278"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved176" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -43.2389, 0.529734, -2.97807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved176"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved177" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -47.1389, 0.529734, -2.97807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved177"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved178" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -45.0389, 0.529734, -2.97807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved178"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved179" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -27.8722, 0.529734, 14.1219)
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved179"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved185" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.693578, 0, 0.720382, 0, 1, 0, -0.720382, 0, -0.693578, -39.4456, 0.529734, 14.3596)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved185"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved186" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.701034, 0, -0.713128, 0, 1, 0, 0.713128, 0, 0.701034, -37.5238, 0.529734, 12.5679)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved186"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved187" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -35.9722, 0.529734, 14.1219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved187"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved188" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -34.1722, 0.529734, 14.1219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved188"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved189" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -30.2722, 0.529734, 14.1219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved189"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved190" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -32.3722, 0.529734, 14.1219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved190"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved191" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -47.8722, 0.529734, 18.0219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved191"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved197" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -49.7722, 0.529734, 18.0219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved197"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved209" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -52.0722, 0.529734, 16.8219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved209"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved210" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -52.0722, 0.529734, 15.6219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved210"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved211" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -52.0722, 0.529734, 14.2219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved211"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved212" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 16.5219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved212"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved213" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 15.3219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved213"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved214" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.856249, 0, 0.516563, 0, 1, 0, -0.516563, 0, -0.856249, -47.3722, 0.529734, 14.4219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved214"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved215" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 16.8219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved215"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved216" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 15.6219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved216"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved218" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 12.0219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved218"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved219" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 10.8219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved219"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved220" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 9.42193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved220"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved221" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 7.82193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved221"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved222" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 6.62193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved222"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved223" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 5.22193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved223"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved224" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 3.72193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved224"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved225" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 2.52193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved225"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved226" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, 1.12193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved226"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved227" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, -0.0780697)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved227"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved228" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -38.9722, 0.529734, -1.27807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved228"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved229" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, -38.0203, 0.529734, -1.60187)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved229"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved230" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 0.92193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved230"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved231" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, -0.27807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved231"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved232" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, -1.67807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved232"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved233" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 5.22193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved233"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved234" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 4.02193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved234"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved235" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 2.62193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved235"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved236" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 9.32193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved236"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved239" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 10.8219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved239"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved240" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 11.2219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved240"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved241" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 9.92193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved241"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved242" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 8.62193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved242"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved243" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 7.32193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved243"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved244" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 5.92193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved244"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved245" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 4.62193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved245"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved246" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 3.52193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved246"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved247" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 2.22193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved247"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved248" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 0.821932)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved248"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved249" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, -0.47807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved249"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved250" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 9.92193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved250"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved251" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 8.62193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved251"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved252" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 7.32193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved252"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved259" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 17.2219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved259"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved260" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 15.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved260"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved261" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.7154, 0, -0.698715, 0, 1, 0, 0.698715, 0, -0.7154, -37.6482, 0.623256, 14.4667)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved261"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved262" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -45.1722, 0.529734, 17.0219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved262"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved263" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -45.9722, 0.529734, 15.5219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved263"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved264" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.720575, 0, -0.693377, 0, 1, 0, 0.693377, 0, -0.720575, -45.6722, 0.529734, 14.3219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved264"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved265" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -47.8722, 0.529734, 13.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved265"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved268" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -48.9722, 0.529734, 13.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved268"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved269" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -50.1722, 0.529734, 13.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved269"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved266" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -50.9722, 0.529734, 15.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved266"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved267" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -51.0722, 0.529734, 14.1219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved267"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved253" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 5.92193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved253"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved254" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 4.62193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved254"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved255" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 3.52193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved255"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved256" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 2.22193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved256"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved257" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, 0.821932)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved257"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved258" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.0192324, 0, -0.999815, 0, 1, 0, 0.999815, 0, -0.0192324, -37.9722, 0.529734, -0.47807)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved258"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved237" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 7.72193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved237"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved238" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.0192325, 0, 0.999815, 0, 1, 0, -0.999815, 0, 0.0192325, -47.0722, 0.529734, 6.72193)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved238"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved198" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.693377, 0, 0.720575, 0, 1, 0, -0.720575, 0, -0.693377, -51.6722, 0.529734, 17.8219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved198"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved192" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -46.2722, 0.529734, 18.0219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved192"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved199" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -41.1722, 0.529734, 16.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved199"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved200" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -39.2722, 0.529734, 16.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved200"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved201" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -42.7722, 0.529734, 16.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved201"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved205" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -44.1722, 0.529734, 16.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved205"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved206" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -45.8722, 0.529734, 16.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved206"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved207" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -49.5722, 0.529734, 12.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved207"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved208" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.875481, 0, 0.483252, 0, 1, 0, -0.483252, 0, 0.875481, -51.4722, 0.529734, 13.0219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved208"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved202" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -49.3722, 0.529734, 16.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved202"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved203" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -47.4722, 0.529734, 16.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved203"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved204" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(0.999815, 0, -0.0192323, 0, 1, 0, 0.0192323, 0, 0.999815, -50.9722, 0.529734, 16.9219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved204"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved193" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -44.5722, 0.529734, 18.0219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved193"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved194" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -42.7722, 0.529734, 18.0219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved194"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved195" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -38.8722, 0.529734, 18.0219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved195"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved196" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -40.9722, 0.529734, 18.0219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved196"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved271" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -44.5722, 0.529734, 14.1219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved271"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved272" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -42.7722, 0.529734, 14.1219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved272"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
-
-[node name="light_curved274" type="MeshInstance3D" parent="decore"]
-transform = Transform3D(-0.999815, 0, 0.0192324, 0, 1, 0, -0.0192324, 0, -0.999815, -40.9722, 0.529734, 14.1219)
-visible = false
-mesh = SubResource("ArrayMesh_bl1gy")
-skeleton = NodePath("")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="decore/light_curved274"]
-transform = Transform3D(0.1, 0, 0, 0, 0.00036827, 0.0999993, 0, -0.0999993, 0.00036827, 0, 0.639068, 0.188376)
-light_energy = 16.0
-light_volumetric_fog_energy = 1.738
-spot_range = 10.775
-spot_angle = 55.27
-spot_angle_attenuation = 1.31951
 
 [node name="Town" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.2987, 0, 16.2335)
@@ -5667,15 +4250,28 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -90, 0
 [node name="Threeway4" parent="Town" instance=ExtResource("56_n6l5q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -9)
 
+[node name="Airplane" parent="." instance=ExtResource("81_myvto")]
+transform = Transform3D(0.10650703, 0, -0.9943119, 0, 1, 0, 0.9943119, 0, 0.10650703, -95.28168, 30.620932, -11.65383)
+
+[node name="Airplane2" parent="." instance=ExtResource("81_myvto")]
+transform = Transform3D(0.10650703, 0, -0.9943119, 0, 1, 0, 0.9943119, 0, 0.10650703, -116.05453, 30.620932, -29.247198)
+
+[node name="Airplane3" parent="." instance=ExtResource("81_myvto")]
+transform = Transform3D(0.10650703, 0, -0.9943119, 0, 1, 0, 0.9943119, 0, 0.10650703, -128.56317, 30.620932, -11.760675)
+
 [connection signal="timeout" from="Rent_offer_system/Timer" to="Rent_offer_system" method="_on_timer_timeout"]
 [connection signal="timeout" from="Market/MarketTimer" to="Market" method="_on_market_timer_timeout"]
-[connection signal="mouse_entered" from="Yard_editor/CanvasLayer/UI" to="Yard_editor" method="_on_ui_mouse_entered"]
 [connection signal="pressed" from="Yard_editor/CanvasLayer/UI/tips" to="Yard_editor/CanvasLayer/UI/tips" method="_on_pressed"]
 [connection signal="pressed" from="Yard_editor/CanvasLayer/UI/Close_Button" to="Yard_editor" method="exit_edit_mode"]
-[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model1" to="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model1" method="_pressed"]
-[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model2" to="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model2" method="_pressed"]
-[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model3" to="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model3" method="_pressed"]
-[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model4" to="Yard_editor/CanvasLayer/UI/ScrollContainer/VBoxContainer/Pick_model4" method="_pressed"]
+[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Fences/GridContainer/Fence" to="Yard_editor/CanvasLayer/UI/TabBar/Fences/GridContainer/Fence" method="_pressed"]
+[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Fences/GridContainer/ronded_gate" to="Yard_editor/CanvasLayer/UI/TabBar/Fences/GridContainer/ronded_gate" method="_pressed"]
+[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Decore/GridContainer/Tree_1" to="Yard_editor/CanvasLayer/UI/TabBar/Decore/GridContainer/Tree_1" method="_pressed"]
+[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Decore/GridContainer/bench" to="Yard_editor/CanvasLayer/UI/TabBar/Decore/GridContainer/bench" method="_pressed"]
+[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Pool" to="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Pool" method="_pressed"]
+[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/golf" to="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/golf" method="_pressed"]
+[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Slide" to="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Slide" method="_pressed"]
+[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Swing" to="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Swing" method="_pressed"]
+[connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/playground" to="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/playground" method="_pressed"]
 [connection signal="pressed" from="HUD/GAME_OVER/Button" to="HUD/GAME_OVER" method="_on_button_pressed"]
 [connection signal="pressed" from="HUD/GAME_OVER/Button2" to="HUD/GAME_OVER" method="_on_button_2_pressed"]
 [connection signal="pressed" from="HUD/Quit_menu/Save_menu/Save_game" to="HUD/Quit_menu" method="_on_save_game_pressed"]
@@ -5693,8 +4289,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -9)
 [connection signal="pressed" from="HUD/MissionWin/MissionWinButton" to="." method="_on_mission_win_button_pressed"]
 [connection signal="value_changed" from="HUD/Speedup/HSlider" to="HUD/Speedup" method="_on_h_slider_value_changed"]
 [connection signal="timeout" from="HUD/UI/Timer" to="HUD/UI" method="_on_timer_timeout"]
-[connection signal="pressed" from="HUD/UI/Phone_button" to="." method="_on_Phone_button_pressed"]
 [connection signal="pressed" from="HUD/UI/Business_Button" to="." method="_on_business_button_pressed"]
+[connection signal="pressed" from="HUD/UI/Show_job_display" to="HUD/UI/JobDisplay" method="_on_show_job_display_pressed"]
 [connection signal="pressed" from="HUD/UI/Skills_Button" to="." method="_on_skills_button_pressed"]
 [connection signal="pressed" from="HUD/Game_start/MarginContainer/VBoxContainer/HBoxContainer/Easy_Button" to="HUD/Game_start" method="_on_easy_button_pressed"]
 [connection signal="pressed" from="HUD/Game_start/MarginContainer/VBoxContainer/HBoxContainer/Normal_Button" to="HUD/Game_start" method="_on_normal_button_pressed"]

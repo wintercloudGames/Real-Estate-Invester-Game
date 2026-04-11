@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://gx84knbbu4u3"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_1km8d"]
+
+[resource]
+script = ExtResource("1_1km8d")
+job_name = "Concrete Finisher"
+monthly_salary = 4600.0
+required_player_level = 15
+required_skill_points = 12
+description = "A standard job in the Labor sector."

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://dq0k84w15j8r0"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_oj8kk"]
+
+[resource]
+script = ExtResource("1_oj8kk")
+job_name = "Site Foreman"
+monthly_salary = 9500.0
+required_player_level = 28
+required_skill_points = 25
+description = "A standard job in the Labor sector."

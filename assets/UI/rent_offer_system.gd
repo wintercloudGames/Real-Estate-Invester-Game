@@ -58,10 +58,11 @@ func on_market_condition_changed(market_condition: float):
 func reset_timer():
 	if timer:
 		timer.stop()
-		timer.wait_time = randf_range(rent_min_time, rent_max_time)
+		timer.wait_time = randf_range(rent_min_time, rent_max_time) * Globals.rent_finder_boost
 		timer.start()
 
 func check_and_start_timer():
+
 	if timer and timer.is_stopped():
 		var available_houses = get_available_houses()
 		if available_houses.size() > 0:
@@ -154,12 +155,13 @@ func _on_renter_selected(rent_amount: int, renter_stats: Dictionary):
 		clear_offers_ui()
 		house.apartment_condition = renter_stats.apartment_condition
 		house.payment_punctuality = renter_stats.payment_punctuality
-		
+		Globals.exp += 5 * Globals.exp_boost
 		var duration_text = ""
 		match renter_stats.lease_length:
 			6: duration_text = "6-month"
 			12: duration_text = "1-year"
 			24: duration_text = "2-year"
+			60: duration_text = "5-year lease"
 			_: duration_text = "%d-month" % renter_stats.lease_length
 		
 		show_floating_label("Tenant Added! (%s lease)" % duration_text, Color.GREEN)

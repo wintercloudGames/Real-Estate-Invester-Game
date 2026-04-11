@@ -82,7 +82,7 @@ func _process(delta: float) -> void:
 
 func update_rewards() -> void:
 	# Base pay for tasks
-	var base_rewards = [25, 150, 400, 1000, 1500] 
+	var base_rewards = [10, 50, 100, 400, 600]
 	rewards = []
 	
 	for i in range(base_rewards.size()):
@@ -109,7 +109,7 @@ func reset_all_tasks() -> void:
 func complete_task(job_index: int) -> void:
 	var bar = progress_bars[job_index]
 	bar.value = 0
-	Globals.exp += 2 + (job_index * 2)
+	Globals.exp += 2 + (job_index * 2) * Globals.exp_boost
 	task_started[job_index] = false
 	job_in_progress = false
 	

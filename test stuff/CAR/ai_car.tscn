@@ -1209,8 +1209,17 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_8eb41")
 
 [node name="AICar" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.00365353)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.054608107, 0.00365353)
+axis_lock_linear_y = true
+axis_lock_angular_y = true
 script = ExtResource("1_bvlxt")
+max_speed = null
+acceleration = null
+base_rotation_speed = null
+gravity = null
+look_ahead_dist = null
+side_buffer = null
+steer_smoothness = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0178146, 0.138092, -0.0125122)
@@ -1335,17 +1344,17 @@ avoidance_enabled = true
 transform = Transform3D(1, 0, 0, 0, 0.00511377, -0.999987, 0, 0.999987, 0.00511377, 0, 0.126082, -0.13243)
 
 [node name="FrontLeftRay" type="RayCast3D" parent="."]
-transform = Transform3D(0.830178, 0.557492, 0.00285092, 0, 0.00511377, -0.999987, -0.557499, 0.830167, 0.00424534, 0, 0.126082, -0.13243)
+transform = Transform3D(0.9417412, 0.33633536, 0.0017199605, -1.9329088e-10, 0.00511377, -0.999987, -0.3363394, 0.9417288, 0.004815847, 0, 0.126082, -0.13243)
 
 [node name="FrontRightRay" type="RayCast3D" parent="."]
-transform = Transform3D(0.9277, -0.373323, -0.00190911, 0, 0.00511377, -0.999987, 0.373328, 0.927687, 0.00474404, 0, 0.126082, -0.13243)
+transform = Transform3D(0.9657906, -0.25932142, -0.0013261244, 0, 0.0051137693, -0.99998695, 0.25932485, 0.96577716, 0.004938826, 0, 0.126082, -0.13243)
 
 [node name="LeftRay" type="RayCast3D" parent="."]
-transform = Transform3D(-0.247335, 0.968552, -0.0270753, -0.0968361, -0.0525129, -0.993914, -0.964079, -0.243208, 0.106779, 0, 0.126082, -0.13243)
+transform = Transform3D(-0.8549403, 0.51568943, 0.056049805, -0.0968361, -0.052512895, -0.993914, -0.50960755, -0.85516524, 0.09483272, 0, 0.126082, -0.13243)
 target_position = Vector3(0, -0.5, 0)
 
 [node name="RightRay" type="RayCast3D" parent="."]
-transform = Transform3D(-0.0337696, -0.996741, 0.073264, 0.158568, -0.0777208, -0.984285, 0.98677, -0.0216216, 0.160676, 0, 0.126082, -0.13243)
+transform = Transform3D(-0.95681936, -0.25807524, -0.13376562, 0.15856797, -0.07772081, -0.98428506, 0.24362288, -0.96299386, 0.115287215, 0, 0.126082, -0.13243)
 target_position = Vector3(0, -0.5, 0)
 
 [node name="BackRay" type="RayCast3D" parent="."]
@@ -1357,4 +1366,9 @@ target_position = Vector3(0, -0.3, 0)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0911053, -0.300394)
+spot_angle = 21.6144
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.9983897, 0, 0.056727562, 0, 1, 0, -0.056727562, 0, -0.9983897, 0, 0.0911053, 0.25728822)
+light_color = Color(0.97265625, 0, 0, 1)
 spot_angle = 21.6144

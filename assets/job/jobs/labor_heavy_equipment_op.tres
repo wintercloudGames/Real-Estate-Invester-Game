@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://b6i0ikhyt1mpg"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_ae6tl"]
+
+[resource]
+script = ExtResource("1_ae6tl")
+job_name = "Heavy Equipment Op"
+monthly_salary = 6200.0
+required_player_level = 20
+required_skill_points = 18
+description = "A standard job in the Labor sector."

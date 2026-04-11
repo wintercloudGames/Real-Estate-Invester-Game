@@ -27,10 +27,10 @@ theme = ExtResource("1_56k8e")
 
 [node name="Label_price" type="Label" parent="."]
 layout_mode = 0
-offset_left = 52.0
-offset_top = 263.0
-offset_right = 95.0
-offset_bottom = 304.0
+offset_left = 50.0
+offset_top = 242.0
+offset_right = 93.0
+offset_bottom = 291.0
 text = "price:
 "
 
@@ -72,16 +72,17 @@ offset_left = 247.0
 offset_top = 367.0
 offset_right = 377.0
 offset_bottom = 415.0
-text = "Use loan"
+text = "Use loan
+(Q)"
 alignment = 1
 
 [node name="Buy_button" type="Button" parent="."]
 layout_mode = 0
 offset_left = 41.0
-offset_top = 316.0
+offset_top = 297.0
 offset_right = 201.0
-offset_bottom = 359.0
-text = "Purchase"
+offset_bottom = 354.0
+text = "Purchase (E)"
 
 [node name="Buy_button2" type="Button" parent="."]
 layout_mode = 0
@@ -89,24 +90,25 @@ offset_left = 41.0
 offset_top = 371.0
 offset_right = 204.0
 offset_bottom = 419.0
-text = "Purchase and rent"
+text = "Purchase and rent
+(SpaceBar)"
 
 [node name="Close_Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 346.0
-offset_top = 5.0
-offset_right = 429.0
-offset_bottom = 52.0
+offset_left = 350.0
+offset_top = 17.0
+offset_right = 433.0
+offset_bottom = 64.0
 theme = ExtResource("4_56k8e")
 text = "CLOSE"
 
 [node name="Drag_Button" parent="." instance=ExtResource("4_cckjx")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0917146
-anchor_top = 0.060911976
-anchor_right = 0.0917146
-anchor_bottom = 0.060911976
+anchor_left = 0.10478649
+anchor_top = 0.09702936
+anchor_right = 0.10478649
+anchor_bottom = 0.09702936
 offset_left = -24.097008
 offset_top = -23.984005
 offset_right = 23.902992

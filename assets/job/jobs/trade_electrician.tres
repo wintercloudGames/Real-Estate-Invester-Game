@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://b2evfpvhvxoi2"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_el34h"]
+
+[resource]
+script = ExtResource("1_el34h")
+job_name = "Electrician"
+monthly_salary = 5200.0
+required_player_level = 14
+required_skill_points = 12
+category = "Trade"
+description = "A standard job in the Trade sector."

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://b1drf5mfl1gxv"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_yqcho"]
+
+[resource]
+script = ExtResource("1_yqcho")
+job_name = "Furniture Mover"
+monthly_salary = 950.0
+required_player_level = 2
+required_skill_points = 1
+description = "A standard job in the Labor sector."

@@ -60,6 +60,11 @@ func update_ui() -> void:
 	
 	if loan_type_str == "Mortgage"and house_ref == null:
 		queue_free()
+	if loan_type_str == "Mortgage" and not is_instance_valid(house_ref):
+		print("House no longer exists, removing mortgage module.")
+		if loans_ui and loans_ui.active_loan_mods.has(self):
+			loans_ui.active_loan_mods.erase(self)
+		queue_free()
 	
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
@@ -79,7 +84,13 @@ func _on_make_payment_pressed() -> void:
 	loan_balance -= principal_payment
 	Globals.money -= principal_payment
 	months -= 1
-	house_ref.loan_price = loan_balance
+	if is_instance_valid(house_ref):
+		house_ref.loan_price = loan_balance
+	else:
+		# If the house is gone but this is a mortgage, the loan should probably vanish
+		if loan_type_str == "Mortgage":
+			queue_free()
+			return
 	
 	if loan_balance <= 0 or months <= 0:
 		loan_balance = 0
@@ -153,7 +164,7 @@ func _on_refinance_pressed() -> void:
 func _on_payoff_pressed() -> void:
 	if Globals.money >= loan_balance:
 		Globals.money_out(loan_balance)
-		Globals.exp += 5 # Bonus exp for paying off loan
+		Globals.exp += 5 * Globals.exp_boost # Bonus exp for paying off loan
 		Globals.credit_score = clamp(Globals.credit_score - 10, 300, 850)
 		
 		if house_ref and is_instance_valid(house_ref):

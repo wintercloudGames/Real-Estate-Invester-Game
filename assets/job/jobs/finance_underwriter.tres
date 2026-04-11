@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://cy1u605y1hyk"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_thnid"]
+
+[resource]
+script = ExtResource("1_thnid")
+job_name = "Underwriter"
+monthly_salary = 9200.0
+required_player_level = 20
+required_skill_points = 18
+category = "Finance"
+description = "A standard job in the Finance sector."

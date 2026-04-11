@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://bx85w10pr0a6q"]
+[gd_scene load_steps=73 format=3 uid="uid://bx85w10pr0a6q"]
 
 [ext_resource type="Texture2D" uid="uid://b0vmuqioqojfj" path="res://assets/UI/phone/wallpapers/vines-7859445_1280.jpg" id="1_go8ug"]
 [ext_resource type="Texture2D" uid="uid://dsfynj8pp2hyg" path="res://assets/UI/phone/vecteezy_smart-phone-mobile-electronic-device-transparent-screen_6824674-1-removebg-preview.png" id="1_jm7no"]
@@ -49,11 +49,14 @@
 [ext_resource type="Script" uid="uid://c5dbi5m3xqf3q" path="res://assets/UI/phone/Stocks/stock_app.gd" id="31_jw8de"]
 [ext_resource type="Script" uid="uid://dfytetcqe5s80" path="res://assets/UI/phone/Stocks/stock_graph.gd" id="31_o8jy6"]
 [ext_resource type="Script" uid="uid://dx0amst0qq0sw" path="res://assets/UI/credit_info.gd" id="31_tbl1g"]
+[ext_resource type="Theme" uid="uid://dj5h3xow3kg3g" path="res://themes/nicegreen.tres" id="31_xes8p"]
 [ext_resource type="Texture2D" uid="uid://314o6ktdqouc" path="res://assets/UI/phone/wallpapers/pexels-maoriginalphotography-1591382.jpg" id="32_b3aue"]
 [ext_resource type="Texture2D" uid="uid://bjrq4ciuthpnf" path="res://assets/UI/phone/wallpapers/pexels-mohammed-ajwad-13536287.jpg" id="33_6ogp6"]
 [ext_resource type="Texture2D" uid="uid://ckuxq5m6uhvh4" path="res://assets/UI/phone/wallpapers/pexels-rahulp9800-1212487.jpg" id="34_n5uvf"]
 [ext_resource type="Texture2D" uid="uid://cvlle3kflwc1o" path="res://assets/UI/phone/wallpapers/pexels-viajerocool-4118189.jpg" id="35_rosxa"]
 [ext_resource type="Script" uid="uid://t4lemb0n4mj7" path="res://assets/UI/credit_history.gd" id="35_rrag5"]
+[ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="36_be6qb"]
+[ext_resource type="Theme" uid="uid://brhlbolp7swxd" path="res://themes/blue_for_bars.tres" id="36_xes8p"]
 [ext_resource type="Theme" uid="uid://b8jl6a5r3l2mm" path="res://themes/yellow.tres" id="37_be6qb"]
 [ext_resource type="Script" uid="uid://q66ppu3j3u3r" path="res://assets/UI/phone/cars.gd" id="37_sguuv"]
 [ext_resource type="Texture2D" uid="uid://dtjgf2drnlsda" path="res://shaded-dark/shadedDark26.png" id="43_uwkqi"]
@@ -435,7 +438,7 @@ grow_vertical = 0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 60
-text = "Jobs"
+text = "Fast cash"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1008,10 +1011,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("31_g7aor")
+theme = ExtResource("31_xes8p")
 script = ExtResource("31_jw8de")
 
 [node name="TradingView" type="Panel" parent="Stock_app"]
+visible = false
 layout_mode = 0
 offset_left = 9.0
 offset_top = 13.0
@@ -1033,7 +1037,6 @@ vertical_alignment = 1
 clip_text = true
 
 [node name="StockName" type="Label" parent="Stock_app/TradingView"]
-visible = false
 layout_mode = 0
 offset_top = 65.0
 offset_right = 330.0
@@ -1046,11 +1049,11 @@ clip_text = true
 
 [node name="DividendYield" type="Label" parent="Stock_app/TradingView"]
 layout_mode = 0
-offset_left = 166.0
+offset_left = 185.0
 offset_top = 470.0
-offset_right = 311.0
+offset_right = 334.0
 offset_bottom = 492.0
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 15
 text = "dividend yeld"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1058,11 +1061,11 @@ clip_text = true
 
 [node name="DividendPayout" type="Label" parent="Stock_app/TradingView"]
 layout_mode = 0
-offset_left = 33.0
+offset_left = 9.0
 offset_top = 469.0
-offset_right = 143.0
+offset_right = 176.0
 offset_bottom = 491.0
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 15
 text = "Dividend pay"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1116,58 +1119,57 @@ visible = false
 layout_mode = 0
 offset_left = 50.0
 offset_top = 203.0
-offset_right = 295.0
-offset_bottom = 369.0
+offset_right = 308.0
+offset_bottom = 394.0
 theme = ExtResource("1_rrag5")
 
 [node name="AmountInput" type="LineEdit" parent="Stock_app/TradingView/TradePopup"]
 layout_mode = 0
-offset_left = 130.0
-offset_top = 21.0
-offset_right = 221.0
-offset_bottom = 56.0
-theme = ExtResource("31_g7aor")
+offset_left = 132.0
+offset_top = 14.0
+offset_right = 223.0
+offset_bottom = 61.0
+theme = ExtResource("36_xes8p")
 
 [node name="TotalCostLabel" type="Label" parent="Stock_app/TradingView/TradePopup"]
 layout_mode = 0
-offset_left = 43.0
-offset_top = 72.0
-offset_right = 91.0
-offset_bottom = 92.0
+offset_left = 30.0
+offset_top = 71.0
+offset_right = 78.0
+offset_bottom = 91.0
 theme = ExtResource("31_g7aor")
 
 [node name="TitleLabel" type="Label" parent="Stock_app/TradingView/TradePopup"]
 layout_mode = 0
-offset_left = 42.0
-offset_top = 22.0
-offset_right = 90.0
-offset_bottom = 42.0
+offset_left = 47.0
+offset_top = 30.0
+offset_right = 95.0
+offset_bottom = 50.0
 
 [node name="ConfirmTradeButton" type="Button" parent="Stock_app/TradingView/TradePopup"]
 layout_mode = 0
-offset_left = 22.0
-offset_top = 117.0
-offset_right = 109.0
-offset_bottom = 153.0
-theme = ExtResource("31_g7aor")
+offset_left = 23.0
+offset_top = 131.0
+offset_right = 114.0
+offset_bottom = 184.0
+theme = ExtResource("31_xes8p")
 text = "Confirm"
 
 [node name="CancelTradeButton" type="Button" parent="Stock_app/TradingView/TradePopup"]
 layout_mode = 0
-offset_left = 140.0
-offset_top = 119.0
-offset_right = 227.0
-offset_bottom = 155.0
-theme = ExtResource("31_g7aor")
+offset_left = 138.0
+offset_top = 130.0
+offset_right = 240.0
+offset_bottom = 186.0
+theme = ExtResource("36_be6qb")
 text = "Cancel"
 
 [node name="PortfolioSummary" type="Panel" parent="Stock_app"]
-visible = false
 layout_mode = 0
 offset_left = 8.0
 offset_top = 1.0
 offset_right = 352.0
-offset_bottom = 621.0
+offset_bottom = 634.0
 
 [node name="Label" type="Label" parent="Stock_app/PortfolioSummary"]
 layout_mode = 0
@@ -1197,9 +1199,10 @@ text = "WITHDRAW"
 [node name="AmountInput" type="LineEdit" parent="Stock_app/PortfolioSummary"]
 layout_mode = 0
 offset_left = 61.0
-offset_top = 507.0
+offset_top = 500.0
 offset_right = 282.0
-offset_bottom = 542.0
+offset_bottom = 547.0
+theme = ExtResource("36_xes8p")
 
 [node name="DividendTimerLabel" type="Label" parent="Stock_app/PortfolioSummary"]
 layout_mode = 0
@@ -1211,9 +1214,9 @@ offset_bottom = 91.0
 [node name="MarketList" type="ScrollContainer" parent="Stock_app"]
 layout_mode = 0
 offset_left = 28.0
-offset_top = 199.0
+offset_top = 157.0
 offset_right = 334.0
-offset_bottom = 500.0
+offset_bottom = 489.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Stock_app/MarketList"]
 layout_mode = 2
@@ -1244,9 +1247,10 @@ offset_left = 19.0
 offset_top = 59.0002
 offset_right = 340.0
 offset_bottom = 615.0
-current_tab = 0
+current_tab = 1
 
 [node name="Savings" type="Control" parent="Savings/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -1297,7 +1301,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Add_to_Savings" type="Control" parent="Savings/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -1307,6 +1310,7 @@ offset_left = 52.0
 offset_top = 298.0
 offset_right = 273.0
 offset_bottom = 329.0
+theme = ExtResource("36_xes8p")
 
 [node name="DepositFundsButton" type="Button" parent="Savings/TabContainer/Add_to_Savings"]
 layout_mode = 0
@@ -1390,6 +1394,7 @@ offset_left = 42.0
 offset_top = 278.99982
 offset_right = 263.0
 offset_bottom = 327.99982
+theme = ExtResource("36_xes8p")
 
 [node name="TakeLoanButton" type="Button" parent="Loans/TabContainer/Addloan"]
 layout_mode = 0
@@ -1669,6 +1674,14 @@ offset_top = 13.0
 offset_right = 363.0
 offset_bottom = 633.0
 
+[node name="Collect_rent" type="Button" parent="house_manager"]
+layout_mode = 0
+offset_left = 190.0
+offset_top = 46.0
+offset_right = 327.0
+offset_bottom = 80.0
+text = "Collect All Rent"
+
 [node name="ScrollContainer" type="ScrollContainer" parent="house_manager"]
 layout_mode = 1
 anchors_preset = 12
@@ -1676,9 +1689,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 21.0
-offset_top = -603.0
+offset_top = -555.0
 offset_right = -10.0
-offset_bottom = -19.0
+offset_bottom = -53.0
 grow_horizontal = 2
 grow_vertical = 0
 horizontal_scroll_mode = 0
@@ -1723,7 +1736,7 @@ vertical_alignment = 1
 [node name="job 6" type="Label" parent="job_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
-text = "Dog Walker"
+text = "Do online survey"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1738,7 +1751,7 @@ text = "Do Job"
 [node name="job 2" type="Label" parent="job_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
-text = "Construction Worker"
+text = "Take trash to recycle"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1753,7 +1766,7 @@ text = "Do Job"
 [node name="job 3" type="Label" parent="job_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
-text = "dilivery driver"
+text = "Taxi Driver"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1768,7 +1781,7 @@ text = "Do Job"
 [node name="job 4" type="Label" parent="job_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
-text = "Taxi Driver"
+text = "Delivery Driver"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1783,7 +1796,7 @@ text = "Do Job"
 [node name="job 5" type="Label" parent="job_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
-text = "House Cleaner"
+text = "Clean a house"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -2243,6 +2256,7 @@ libraries = {
 [connection signal="item_selected" from="Loans/TabContainer/Addloan/OptionButton" to="Loans" method="_on_option_button_item_selected"]
 [connection signal="pressed" from="Loans/TabContainer/Loans/Pay_All_Payments" to="Loans" method="_on_pay_all_payments_pressed"]
 [connection signal="pressed" from="credit_info/Credit_Repair_Button" to="credit_info" method="_on_credit_repair_button_pressed"]
+[connection signal="pressed" from="house_manager/Collect_rent" to="house_manager" method="_on_collect_rent_pressed"]
 [connection signal="pressed" from="Car_info/Upgrade_Button" to="Car_info" method="_on_upgrade_button_pressed"]
 [connection signal="pressed" from="Car_info/Repaire_Button" to="Car_info" method="_on_repaire_button_pressed"]
 [connection signal="pressed" from="Hire_help/Rent_collecter_Button" to="Hire_help" method="_on_rent_collecter_button_pressed"]

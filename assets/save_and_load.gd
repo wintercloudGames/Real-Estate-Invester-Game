@@ -32,6 +32,14 @@ func save_game() -> bool:
 		"Globals": {
 			"save_name": Globals.save_name,
 			"money": Globals.money,
+			"current_job_name": Globals.current_job_name,
+			"job_income": Globals.job_income,
+			"job_exp_per_month": Globals.job_exp_per_month,
+			"labor_points": Globals.labor_points,
+			"services_points": Globals.services_points,
+			"trade_points": Globals.trade_points,
+			"finance_points": Globals.finance_points,
+			"management_points": Globals.management_points,
 			"brokerage_balance": Globals.brokerage_balance,
 			"portfolio": Globals.portfolio,
 			"first_start": Globals.first_start,
@@ -88,6 +96,8 @@ func save_game() -> bool:
 			"work_bonus": Globals.work_bonus,
 			"work_amount": Globals.work_amount,
 			"rent_finder_upgrade": Globals.rent_finder_upgrade,
+			"exp_boost": Globals.exp_boost,
+			"rent_finder_boost":Globals.rent_finder_boost,
 			"credit_app": Globals.credit_app
 		},
 		"Houses": [],
@@ -218,6 +228,14 @@ func load_game() -> bool:
 		# Existing important ones (add more as needed)
 		Globals.save_name = g.get("save_name", "My Save")
 		Globals.money = g.get("money", 5000)
+		Globals.current_job_name = g.get("current_job_name", "Unemployed")
+		Globals.job_income = g.get("job_income", 0.0)
+		Globals.job_exp_per_month = g.get("job_exp_per_month", 0.0)
+		Globals.labor_points = g.get("labor_points", 0)
+		Globals.services_points = g.get("services_points", 0)
+		Globals.trade_points = g.get("trade_points", 0)
+		Globals.finance_points = g.get("finance_points", 0)
+		Globals.management_points = g.get("management_points", 0)
 		Globals.brokerage_balance = g.get("brokerage_balance", 0.0)
 		Globals.portfolio = g.get("portfolio", {})
 		Globals.first_start = g.get("first_start", true)
@@ -258,7 +276,6 @@ func load_game() -> bool:
 		Globals.mission_completed      = g.get("mission_completed", false)
 
 
-	
 	# 1. Safely Load Market Data (Price and History)
 	if loaded_data.has("Market"):
 		var m_data = loaded_data["Market"]
@@ -476,6 +493,9 @@ func create_new_profile(slot: int) -> bool:
 		"Globals": {
 			"save_name": Globals.save_name,
 			"money": 5000,
+			"job_exp_per_month":0.0,
+			"current_job_name": "Unemployed",
+			"job_income": 0,
 			"brokerage_balance": 0.0,
 			"portfolio": {},
 			"Expenses": 1000,

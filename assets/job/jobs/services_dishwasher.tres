@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://dc7qbeaiuu46r"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_uttpu"]
+
+[resource]
+script = ExtResource("1_uttpu")
+job_name = "Dishwasher"
+monthly_salary = 750.0
+category = "Services"
+description = "A standard job in the Services sector."

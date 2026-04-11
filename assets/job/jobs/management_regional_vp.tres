@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://bnxw4wyjiynki"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_uolch"]
+
+[resource]
+script = ExtResource("1_uolch")
+job_name = "Regional VP"
+monthly_salary = 55000.0
+required_player_level = 44
+required_skill_points = 55
+category = "Management"
+description = "A standard job in the Management sector."

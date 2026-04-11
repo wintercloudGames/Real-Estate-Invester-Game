@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2fcobnfq60hs"]
+
+[ext_resource type="PackedScene" uid="uid://bv5hycitv1shg" path="res://3D assets/Chads/playground.glb" id="1_wu1my"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wu1my"]
+size = Vector3(2.6347656, 1.8337402, 1.6270752)
+
+[node name="Playground" type="Node3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+
+[node name="playground" parent="." instance=ExtResource("1_wu1my")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="playground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.55855274)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="playground/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44628915, 0.7591553, -0.43219003)
+shape = SubResource("BoxShape3D_wu1my")

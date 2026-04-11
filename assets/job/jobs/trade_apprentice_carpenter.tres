@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://chxkmql2a0m4k"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_8ee1a"]
+
+[resource]
+script = ExtResource("1_8ee1a")
+job_name = "Apprentice Carpenter"
+monthly_salary = 1200.0
+required_player_level = 2
+required_skill_points = 1
+category = "Trade"
+description = "A standard job in the Trade sector."

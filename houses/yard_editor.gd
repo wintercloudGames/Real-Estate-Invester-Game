@@ -108,20 +108,17 @@ func handle_selection_click():
 	
 	if ray_node.is_colliding():
 		var collider = ray_node.get_collider()
-		print("HIT SOMETHING: ", collider.name) # DEBUG 1
 		
 		var current_node = collider
 		while current_node != null:
-			print("Checking parent: ", current_node.name) # DEBUG 2
+
 			if current_node.get_parent() and current_node.get_parent().name == "YardObjects":
 				selected_object = current_node
 				show_context_menu()
 				return
 			current_node = current_node.get_parent()
 		
-		print("REJECTED: Not a child of YardObjects")
-	else:
-		print("RAYCAST MISSED: Hit nothing on Layer 4")
+
 
 func show_context_menu():
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -263,13 +260,10 @@ func enter_edit_mode():
 	Globals.yard_edit = true
 
 func exit_edit_mode():
+	$"../HUD/Phone".get_out()
 	is_edit_mode = false
 	ui_canvas.visible = false
 	context_menu.visible = false
 	if is_instance_valid(gameplay_camera): gameplay_camera.make_current()
 	target_house = null
 	Globals.yard_edit = false
-
-func _on_ui_mouse_entered() -> void:
-	if is_dragging:
-		delete_current_preview()

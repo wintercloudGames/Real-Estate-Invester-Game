@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StockData" load_steps=2 format=3 uid="uid://bicttina21na0"]
+
+[ext_resource type="Script" uid="uid://by2chx7k2bww3" path="res://assets/UI/phone/Stocks/stock_data.gd" id="1_jcjka"]
+
+[resource]
+script = ExtResource("1_jcjka")
+stock_name = "DeepSea Logistics"
+ticker = "DSEA"
+current_price = 88.0
+volatility = 0.06
+dividend_yield = 0.19
+metadata/_custom_type_script = "uid://by2chx7k2bww3"

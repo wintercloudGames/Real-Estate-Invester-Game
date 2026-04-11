@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dilevjugi3hsg"]
+
+[ext_resource type="Script" uid="uid://d3ep5vc78njbk" path="res://assets/airplane.gd" id="1_4ok6g"]
+[ext_resource type="PackedScene" uid="uid://bbcj5ryn4axnm" path="res://test stuff/airplane/Untitled-1.glb" id="1_p3dox"]
+
+[node name="Airplane" type="Node3D"]
+script = ExtResource("1_4ok6g")
+
+[node name="Untitled-1" parent="." instance=ExtResource("1_p3dox")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)

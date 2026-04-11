@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://g8kaf5ig2lgt"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_lmshi"]
+
+[resource]
+script = ExtResource("1_lmshi")
+job_name = "Pipefitter"
+monthly_salary = 2400.0
+required_player_level = 7
+required_skill_points = 5
+category = "Trade"
+description = "A standard job in the Trade sector."

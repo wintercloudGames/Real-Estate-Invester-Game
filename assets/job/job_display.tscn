@@ -1,0 +1,134 @@
+[gd_scene load_steps=6 format=3 uid="uid://bw07hvhq2wfot"]
+
+[ext_resource type="Theme" uid="uid://moc43gk5ss8p" path="res://themes/job_menu.tres" id="1_h25pc"]
+[ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="2_lr5qw"]
+[ext_resource type="Script" uid="uid://dmder56bmlk68" path="res://assets/job/job_display.gd" id="2_rbwtn"]
+[ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="3_tixg6"]
+[ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="4_tixg6"]
+
+[node name="JobDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("1_h25pc")
+script = ExtResource("2_rbwtn")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -4.0
+offset_right = 674.0
+offset_bottom = 395.0
+
+[node name="Drag_Button" parent="." instance=ExtResource("2_lr5qw")]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 9.0
+offset_right = 60.0
+offset_bottom = 57.0
+
+[node name="Close_Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 552.0
+offset_top = -59.0
+offset_right = 668.0
+offset_bottom = -1.0
+grow_horizontal = 0
+theme = ExtResource("3_tixg6")
+theme_override_font_sizes/font_size = 26
+text = "CLOSE"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 31.0
+offset_right = 646.0
+offset_bottom = 303.0
+theme_override_font_sizes/font_size = 25
+text = "Current Job title"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="job_list_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 295.0
+offset_right = 213.0
+offset_bottom = 359.0
+text = "Job List"
+
+[node name="job_list" type="TabContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 261.0
+offset_top = 71.0
+offset_right = 701.0
+offset_bottom = 344.0
+current_tab = 0
+
+[node name="Labor" type="ScrollContainer" parent="job_list"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="job_list/Labor"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_tixg6")
+
+[node name="Services" type="ScrollContainer" parent="job_list"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="job_list/Services"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_tixg6")
+
+[node name="Trade" type="ScrollContainer" parent="job_list"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="job_list/Trade"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_tixg6")
+
+[node name="Finance" type="ScrollContainer" parent="job_list"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="job_list/Finance"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_tixg6")
+
+[node name="Management" type="ScrollContainer" parent="job_list"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="job_list/Management"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_tixg6")
+
+[node name="Stats" type="Label" parent="."]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 67.0
+offset_right = 119.0
+offset_bottom = 267.0
+vertical_alignment = 1
+
+[connection signal="pressed" from="Close_Button" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="job_list_button" to="." method="_on_apply_for_job_pressed"]

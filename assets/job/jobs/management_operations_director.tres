@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://ctkaww7vpsdnc"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_2lcco"]
+
+[resource]
+script = ExtResource("1_2lcco")
+job_name = "Operations Director"
+monthly_salary = 21000.0
+required_player_level = 32
+required_skill_points = 30
+category = "Management"
+description = "A standard job in the Management sector."

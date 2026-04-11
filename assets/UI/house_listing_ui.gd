@@ -20,6 +20,25 @@ var pay_now_amount: int = 0  # Amount player pays now (down payment or full pric
 func _ready() -> void:
 	update_prices()
 
+func _input(event: InputEvent) -> void:
+	if visible == false:
+		pass
+	if Input.is_action_just_pressed("buy"):
+		handle_buy(false)
+	
+	if Input.is_action_just_pressed("buyandrent"):
+		if Globals.rent_houses == true:
+			handle_buy(true)
+	
+	if Input.is_action_just_pressed("loantoggle"):
+		if loan_status == true:
+			$Loan_button.button_pressed = false
+			_on_loan_button_toggled(false)
+		elif loan_status == false:
+			$Loan_button.button_pressed = true
+			_on_loan_button_toggled(true)
+		
+
 func update_prices() -> void:
 	if not house:
 		full_price = 0

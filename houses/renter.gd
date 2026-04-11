@@ -6,18 +6,41 @@ var rent_offer = 0
 
 @onready var renters: Control = $"../../.."
 
-var textures = [
-	preload("res://3D assets/faces/avatar (1).png"),
-	preload("res://3D assets/faces/avatar (2).png"),
-	preload("res://3D assets/faces/avatar.png")
-]
+var textures = []
 
 func _ready():
+	load_textures_from_folder("res://3D assets/faces/")
 	set_random_texture()
+func load_textures_from_folder(path: String):
+	var dir = DirAccess.open(path)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		
+		while file_name != "":
+			if !dir.current_is_dir():
+				# We check for the base file OR the engine's export pointers
+				if file_name.ends_with(".png") or file_name.ends_with(".png.import") or file_name.ends_with(".remap"):
+					# Clean the name: remove .import or .remap to get the original asset path
+					var clean_name = file_name.replace(".import", "").replace(".remap", "")
+					var full_path = path + clean_name
+					
+					var tex = load(full_path)
+					# Only add if it's actually a texture and not already in the list
+					if tex is Texture2D and !textures.has(tex):
+						textures.append(tex)
+			
+			file_name = dir.get_next()
+		dir.list_dir_end()
+	else:
+		print("Error: Could not open path: ", path)
 
 func set_random_texture():
-	texture_normal = textures[randi() % textures.size()]  # For TextureButtontexture = textures[randi() % textures.size()]  # Use this if it's a TextureRect
-
+	if textures.size() > 0:
+		texture_normal = textures[randi() % textures.size()]
+	else:
+		print("Warning: No textures found in the faces folder!")
+	
 func _on_pressed() -> void:
 	var parent_node = self.get_parent()
 	
@@ -50,6 +73,7 @@ func setup(offer: int, name: String, stats: Dictionary):
 			6: duration_text = "6-month lease"
 			12: duration_text = "1-year lease"
 			24: duration_text = "2-year lease"
+			60: duration_text = "5-year lease"
 			_: duration_text = "%d month lease" % stats.lease_length
 		$HBoxContainer/renter_stats/lease_stat.text = duration_text
 	

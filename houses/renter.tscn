@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://o74r4hcfaggi"]
 
-[ext_resource type="Texture2D" uid="uid://d3srtknlkm4fm" path="res://3D assets/faces/avatar (1).png" id="1_aw4is"]
+[ext_resource type="Texture2D" uid="uid://canubt6ak3jyt" path="res://3D assets/faces/avatar7.png" id="1_tnraw"]
 [ext_resource type="Script" uid="uid://ckubi53w4fmn4" path="res://houses/renter.gd" id="2_ifvnt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfoas"]
@@ -10,8 +10,10 @@ bg_color = Color(0, 0, 0, 1)
 bg_color = Color(0, 0, 0, 1)
 
 [node name="Renter" type="TextureButton"]
+offset_right = 540.0
+offset_bottom = 540.0
 scale = Vector2(0.25, 0.25)
-texture_normal = ExtResource("1_aw4is")
+texture_normal = ExtResource("1_tnraw")
 stretch_mode = 0
 script = ExtResource("2_ifvnt")
 

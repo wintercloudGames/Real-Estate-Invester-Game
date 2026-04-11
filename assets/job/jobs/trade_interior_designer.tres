@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://di4vtsb7myolr"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_jwi48"]
+
+[resource]
+script = ExtResource("1_jwi48")
+job_name = "Interior Designer"
+monthly_salary = 12000.0
+required_player_level = 25
+required_skill_points = 25
+category = "Trade"
+description = "A standard job in the Trade sector."

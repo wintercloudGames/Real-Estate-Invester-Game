@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://byjdqrh53jmjg"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_nwo46"]
+
+[resource]
+script = ExtResource("1_nwo46")
+job_name = "Master Architect"
+monthly_salary = 55000.0
+required_player_level = 50
+required_skill_points = 70
+category = "Trade"
+description = "A standard job in the Trade sector."

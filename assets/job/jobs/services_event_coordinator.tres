@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://4ycop855u6l8"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_dku1a"]
+
+[resource]
+script = ExtResource("1_dku1a")
+job_name = "Event Coordinator"
+monthly_salary = 4500.0
+required_player_level = 16
+required_skill_points = 12
+category = "Services"
+description = "A standard job in the Services sector."

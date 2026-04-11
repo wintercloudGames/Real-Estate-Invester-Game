@@ -151,7 +151,7 @@ func _complete_job() -> void:
 	$TabContainer/Job_info/stop_job_button.visible = false
 	if Globals.job_manager == false:
 		$TabContainer/Job_info/Find_jobs_button.visible = true
-	Globals.exp += 25
+	Globals.exp += 25 * Globals.exp_boost
 	if job_pay_when_done >= 0:
 		Globals.money += job_pay_when_done
 		if Globals.business_bonus:

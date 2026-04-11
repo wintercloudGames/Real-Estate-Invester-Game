@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c21vjq0ic2k2c"]
+
+[ext_resource type="PackedScene" uid="uid://ctiqw7j4j37ct" path="res://3D assets/Chads/slide.glb" id="1_grx6i"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0i4ux"]
+size = Vector3(1.5523071, 2.7827148, 4.233856)
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
+
+[node name="slide2" parent="." instance=ExtResource("1_grx6i")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.016937256, 1.2496246, 0.49720764)
+shape = SubResource("BoxShape3D_0i4ux")

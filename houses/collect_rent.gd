@@ -109,7 +109,7 @@ func collect_rent():
 		house.apartment_condition = max(house.apartment_condition, 0)
 	
 	if house.owned:
-		Globals.exp += months_collected
+		Globals.exp += 2 * months_collected * Globals.exp_boost
 		$Label3D.text = get_rent_status()
 		$Dollar_sign.visible = false
 		

@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="StockData" load_steps=2 format=3 uid="uid://chs2owiigxxh4"]
-
-[ext_resource type="Script" uid="uid://by2chx7k2bww3" path="res://assets/UI/phone/Stocks/stock_data.gd" id="1_7m17b"]
-
-[resource]
-script = ExtResource("1_7m17b")
-metadata/_custom_type_script = "uid://by2chx7k2bww3"

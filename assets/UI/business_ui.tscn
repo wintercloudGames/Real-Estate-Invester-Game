@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgacn6h05bvs2"]
+[gd_scene load_steps=6 format=3 uid="uid://cgacn6h05bvs2"]
 
 [ext_resource type="Script" uid="uid://cmendsxboc4ur" path="res://assets/UI/business_ui.gd" id="1_en58h"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_tllg2"]
+[ext_resource type="Theme" uid="uid://brhlbolp7swxd" path="res://themes/blue_for_bars.tres" id="3_pwkvr"]
 [ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="3_uwgf7"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="5_lm838"]
 
@@ -73,6 +74,7 @@ offset_left = 78.0
 offset_top = 197.0
 offset_right = 352.0
 offset_bottom = 228.0
+theme = ExtResource("3_pwkvr")
 
 [node name="Cost_Label" type="Label" parent="Start_Business"]
 layout_mode = 0

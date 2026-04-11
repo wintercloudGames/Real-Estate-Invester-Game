@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://mmj3dqgfvelg"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_o66b7"]
+
+[resource]
+script = ExtResource("1_o66b7")
+job_name = "Demolition Specialist"
+monthly_salary = 3400.0
+required_player_level = 12
+required_skill_points = 8
+description = "A standard job in the Labor sector."

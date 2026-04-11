@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://c74g4s2lcnwes"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_tm1st"]
+
+[resource]
+script = ExtResource("1_tm1st")
+job_name = "Security Guard"
+monthly_salary = 2200.0
+required_player_level = 8
+required_skill_points = 5
+category = "Services"
+description = "A standard job in the Services sector."

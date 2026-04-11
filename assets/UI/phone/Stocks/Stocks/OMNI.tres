@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StockData" load_steps=2 format=3 uid="uid://cqppy8edkcuu4"]
+
+[ext_resource type="Script" uid="uid://by2chx7k2bww3" path="res://assets/UI/phone/Stocks/stock_data.gd" id="1_4y1cl"]
+
+[resource]
+script = ExtResource("1_4y1cl")
+stock_name = "Omni-Retail"
+ticker = "OMNI"
+current_price = 75.0
+volatility = 0.6
+metadata/_custom_type_script = "uid://by2chx7k2bww3"

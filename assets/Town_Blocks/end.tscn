@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://2cqm1robps1o"]
+[gd_scene load_steps=9 format=4 uid="uid://2cqm1robps1o"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aobxq"]
 resource_name = "pavement"
@@ -118,9 +118,33 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_xvwge")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_hvllr"]
+size = Vector3(0.12440137, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nw3m1"]
+size = Vector3(1, 1, 0.123046875)
+
 [node name="End" type="Node3D"]
 
 [node name="road_endRound" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
 mesh = SubResource("ArrayMesh_1edta")
 skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48236704, 0, 0)
+shape = SubResource("BoxShape3D_hvllr")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0.88615644)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.079833984, 0, -0.43847656)
+shape = SubResource("BoxShape3D_nw3m1")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.079833984, 0, -1.4384766)
+shape = SubResource("BoxShape3D_nw3m1")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://h6263jpymqwl"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_qtne8"]
+
+[resource]
+script = ExtResource("1_qtne8")
+job_name = "Roofer"
+monthly_salary = 2500.0
+required_player_level = 9
+required_skill_points = 6
+description = "A standard job in the Labor sector."

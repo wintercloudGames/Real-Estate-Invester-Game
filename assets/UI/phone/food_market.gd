@@ -31,7 +31,7 @@ var food_items = {
 
 # Inside _ready function:
 func _ready() -> void:
-	var button_theme = load("res://theme.tres")  # Adjust the path
+	var button_theme = load("res://themes/theme.tres")  # Adjust the path
 	for food_name in food_items.keys():
 		var button = Button.new()
 		button.text = food_items[food_name]["label"] + "\nHunger: " + str(food_items[food_name]["hunger"]) + "\nHealth: " + str(food_items[food_name]["health"]) + "\nCost: " + str(food_items[food_name]["cost"])

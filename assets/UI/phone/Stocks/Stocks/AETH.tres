@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StockData" load_steps=2 format=3 uid="uid://b480lkxuyyqg2"]
+
+[ext_resource type="Script" uid="uid://by2chx7k2bww3" path="res://assets/UI/phone/Stocks/stock_data.gd" id="1_ymoh6"]
+
+[resource]
+script = ExtResource("1_ymoh6")
+stock_name = "Aether Energy"
+ticker = "AETH"
+current_price = 140.0
+volatility = 0.04
+metadata/_custom_type_script = "uid://by2chx7k2bww3"

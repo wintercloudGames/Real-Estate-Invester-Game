@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://de4ljvqquapf6"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_dip33"]
+
+[resource]
+script = ExtResource("1_dip33")
+job_name = "Delivery Driver"
+monthly_salary = 1500.0
+required_player_level = 5
+required_skill_points = 2
+category = "Services"
+description = "A standard job in the Services sector."

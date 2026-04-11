@@ -37,7 +37,7 @@ func show_info(skill_name: String, info: String, current_level: int = 0, max_lev
 	
 	# Show and position the panel
 	description_panel.visible = true
-	_position_panel_near_mouse()
+	#_position_panel_near_mouse()
 
 func hide_info() -> void:
 	if description_panel:

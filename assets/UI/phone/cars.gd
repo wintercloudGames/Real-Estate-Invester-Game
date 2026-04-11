@@ -48,7 +48,7 @@ func _on_repaire_button_pressed():
 		if Globals.money >= repair_cost:
 			Globals.money -= repair_cost
 			Globals.has_car = true
-			Globals.exp += car_level + 5
+			Globals.exp += car_level + 5 * Globals.exp_boost
 			is_broken = false
 			show_floating_label("Car Repaired for $" + str(repair_cost), Color.GREEN)
 		else:
@@ -67,7 +67,7 @@ func _on_upgrade_button_pressed():
 		Globals.money -= cost
 		Globals.car_level += 1
 		breakdown_rate -= 0.1
-		Globals.exp += car_level + 5
+		Globals.exp += car_level + 5 * Globals.exp_boost
 		car_level += 1
 		show_floating_label("Upgraded Car to Level %d" % car_level, Color.GREEN)
 	else:

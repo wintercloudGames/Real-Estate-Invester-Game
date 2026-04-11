@@ -13,6 +13,7 @@ var first_start = false
 var active_loans: Array = []
 var save_name: String = "My Save"
 var has_car = true
+var total_property_value: int = 0
 var car_level = 1
 var net_worth = 0
 var Savings_balance = 0
@@ -21,6 +22,12 @@ var market_factor: float = 1.0
 var year:int = 1
 var month:int = 1
 var total_debt: float = 0.0
+
+#Job vars
+var current_job_name: String = "Unemployed"
+var job_exp_per_month: float = 10
+var job_income: float = 0.0
+
 #mission vars
 var mission_templates = [
 	{"type": "houses",       "min_target": 5,  "max_target": 50,  "min_deadline": 5,  "max_deadline": 30, "desc_base": "Own %d houses"},
@@ -69,7 +76,15 @@ var rent_finder_upgrade = false
 var Job_bonus = false
 var work_bonus = 0.00
 var work_amount = 0
+var exp_boost = 1.0
+var rent_finder_boost = 1.0
 var credit_app = false
+	#job category Skills
+var labor_points = 0
+var services_points = 0
+var trade_points = 0
+var finance_points = 0
+var management_points = 0
 
 var difficulty:int = 1
 
@@ -83,6 +98,9 @@ func reset():
 	credit_score = 600
 	year = 1
 	car_level = 1
+	job_income = 0
+	current_job_name = "Unemployed"
+	job_exp_per_month = 10
 	month = 1
 	Savings_balance = 0
 	listed_houses = 0
@@ -110,6 +128,7 @@ func reset():
 	mission_target = 0
 	mission_deadline_year = 999
 	mission_completed = false
+	
 	#skills
 	skillpoints = 1
 	exp = 0
@@ -121,6 +140,14 @@ func reset():
 	has_stock_app = false
 	has_manager_app = false
 	rent_bost = 0.00
+	
+	#job category Skills
+	labor_points
+	services_points
+	trade_points
+	finance_points
+	management_points
+	
 	rent_houses = false
 	unlock_business = false
 	has_market_app = false
@@ -132,6 +159,9 @@ func reset():
 	work_amount = 0
 	rent_finder_upgrade = false
 	credit_app = false
+	has_stock_app = false
+	exp_boost = 1.0
+	rent_finder_boost = 1.0
 
 
 #Businessinfo
@@ -314,7 +344,13 @@ func caculate_networth():
 	pass
 
 func monthy():
+	money += job_income
+	money -= Expenses
 	record_credit_score()
+	if exp_boost > 0:
+		exp += job_exp_per_month * exp_boost
+	else:
+		exp += job_exp_per_month
 	if money < 0:
 		negative_month_count += 1
 		credit_score -= 10

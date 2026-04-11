@@ -230,7 +230,7 @@ func show_floating_label(text: String, color: Color = Color.WHITE) -> void:
 
 func _on_sell_button_pressed() -> void:
 	if house:
-		house.sell_house(house.current_price)
+		house.sell_house()
 		
 
 func _on_more_button_pressed() -> void:

@@ -78,6 +78,13 @@ func _process(delta: float) -> void:
 	if loan_price <= 0:
 		mortgage = 0
 
+func _input(event: InputEvent) -> void:
+	if visible == false:
+		pass
+	if Input.is_action_just_pressed("buyandrent"):
+		if Globals.rent_houses == true:
+			_on_tenent_button_pressed()
+
 func _on_remove_tenent_pressed() -> void:
 	house.remove_tenant()
 
@@ -103,8 +110,9 @@ func update_tenant_buttons():
 				$Label_islistedforrent.visible = false
 
 func _on_tenent_button_pressed() -> void:
-	house.is_listed = true
-	update_tenant_buttons()
+	if house:
+		house.is_listed = true
+		update_tenant_buttons()
 
 func _on_close_button_pressed() -> void:
 	visible = false
@@ -136,6 +144,11 @@ func _on_sell_button_pressed() -> void:
 
 func _on_yes_sell_pressed() -> void:
 	if house:
+		house.sell_house()
+		visible = false
+	if has_node("Sell_home"):
+		$Sell_home.visible = false
+		return
 		Globals.money += house.current_price
 		Globals.Propertys -= 1
 		house.remove_tenant()
@@ -186,6 +199,7 @@ func show_floating_label(text: String, color: Color = Color.WHITE) -> void:
 		push_warning("No canvas_layer found for floating label: " + text)
 
 func _on_refinance_button_pressed() -> void:
+	# 1. Basic Validations
 	if not is_instance_valid(house):
 		show_floating_label("Invalid house!", Color.RED)
 		return
@@ -194,24 +208,21 @@ func _on_refinance_button_pressed() -> void:
 		show_floating_label("House not owned!", Color.RED)
 		return
 	
-	# Check loan eligibility based on credit score
-	var can_use_loan: bool = Globals.credit_score >= 500
-	if not can_use_loan:
-		show_floating_label("Cannot refinance: Credit score below 500!", Color.RED)
+	if Globals.credit_score < 500:
+		show_floating_label("Credit score too low (min 500)!", Color.RED)
 		return
+
+	# 2. Calculate New Loan and Cash Out
+	# We use the current market price as the new total loan amount
+	var new_loan_total: float = house.current_price
+	var current_debt: float = house.loan_price
+	var calculated_cash_out: float = new_loan_total - current_debt
 	
-	# Play popup sound
-	var popup_sound = get_node_or_null("../popupsound")
-	if popup_sound:
-		popup_sound.play()
-	
-	# Calculate new loan amount (full current price, as in original function)
-	var calculated_loan_amount: float = house.current_price
-	if calculated_loan_amount <= 0:
-		show_floating_label("Invalid loan amount!", Color.RED)
+	if calculated_cash_out <= 0:
+		show_floating_label("No equity available to cash out!", Color.YELLOW)
 		return
-	
-	# Determine interest rate based on credit score
+
+	# 3. Determine Interest Rate based on Credit Score
 	var interest_rate: float = 0.06
 	if Globals.credit_score >= 750:
 		interest_rate = 0.04
@@ -220,75 +231,65 @@ func _on_refinance_button_pressed() -> void:
 	elif Globals.credit_score >= 620:
 		interest_rate = 0.055
 	
-	var term_months: int = 12 * 30
-	var monthly_payment: float = calculate_mortgage_payment(calculated_loan_amount, term_months, interest_rate)
+	var term_months: int = 360 # Standard 30-year reset [cite: 8]
+	var monthly_payment: float = calculate_mortgage_payment(new_loan_total, term_months, interest_rate)
+	
 	if monthly_payment <= 0:
-		show_floating_label("Invalid loan terms!", Color.RED)
+		show_floating_label("Error calculating payment!", Color.RED)
 		return
-	
-	# Cash out: Add difference between new loan and existing loan (if any)
-	if cash_out > 0:
-		Globals.money += cash_out
-	
-	# Store original values for rollback
-	var original_loan_price: float = house.loan_price
-	var original_mortgage: float = house.mortgage
-	var original_loan_status: bool = house.has_loan
-	
-	# Update house properties
-	house.bought_price = house.current_price
-	house.loan_price = calculated_loan_amount
-	house.mortgage = int(monthly_payment)
-	house.has_loan = true
-	house.just_bought = true
-	
-	# Add loan to Loans UI
-	var loan_mod = null
+
+	# 4. Update the Loan UI System
 	var loans_ui = get_tree().get_first_node_in_group("loans_ui")
 	if not loans_ui:
 		loans_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans")
 	
-	if loans_ui and is_instance_valid(loans_ui) and loans_ui.loan_mod_Container:
-		var loan_mod_path = "res://assets/UI/phone/Loans_controll_mod.tscn"
-		if ResourceLoader.exists(loan_mod_path):
-			# Remove existing loan for this house, if any
-			for mod in loans_ui.active_loan_mods:
-				if mod.house_ref == house:
-					mod.queue_free()
-					break
-			house.loan_price = calculated_loan_amount
+	if loans_ui and is_instance_valid(loans_ui):
+		# Remove the old loan module for this house if it exists 
+		for mod in loans_ui.active_loan_mods:
+			if mod.house_ref == house:
+				mod.queue_free()
+				loans_ui.active_loan_mods.erase(mod)
+				break
+		
+		# Create the new loan module
+		var loan_mod = loans_ui.add_mortgage_as_loan(monthly_payment, interest_rate, term_months, house)
+		
+		if loan_mod and is_instance_valid(loan_mod):
+			# FIX: Manually set the variables used in loans_controll_mod.gd 
+			loan_mod.loan_balance = new_loan_total 
+			loan_mod.months = term_months
+			loan_mod.interest = interest_rate
+			loan_mod.payment = monthly_payment
+			loan_mod.loan_type_str = "Mortgage"
+			loan_mod.house_ref = house
+			loan_mod.loan_id = "mortgage_" + str(house.id)
+			
+			# Force the UI to refresh with these new values 
+			loan_mod.update_ui()
+			
+			# 5. Finalize House Data and Player Money
+			house.loan_price = new_loan_total
 			house.mortgage = int(monthly_payment)
 			house.has_loan = true
-			loan_mod = loans_ui.add_mortgage_as_loan(monthly_payment, interest_rate, term_months, house)
-			if loan_mod and is_instance_valid(loan_mod):
-				loan_mod.loan_id = "mortgage_" + str(house.id)
-				house.house_buy(true, house.current_price, calculated_loan_amount, loan_mod)
-			else:
-				rollback()
-				show_floating_label("Failed to create loan!", Color.RED)
-				return
+			house.bought_price = house.current_price
+			
+			Globals.money += calculated_cash_out
+			
+			# Play sound and update local labels
+			var popup_sound = get_node_or_null("../popupsound")
+			if popup_sound: popup_sound.play()
+			
+			if loan_display: loan_display.text = "Loan: " + add_comma_to_int(int(house.loan_price))
+			if mortgage_label: mortgage_label.text = "Mortgage: " + add_comma_to_int(int(house.mortgage))
+			
+			show_floating_label("Refinanced! Cash out: $" + add_comma_to_int(int(calculated_cash_out)), Color.GREEN)
+			visible = false
+			SaveAndLoad.save_game()
+			Globals.recalculate_expenses() # Ensure budget updates 
 		else:
-			rollback()
-			show_floating_label("Loan system error!", Color.RED)
-			return
+			show_floating_label("Failed to generate loan module!", Color.RED)
 	else:
-		rollback()
-		show_floating_label("Loan system error!", Color.RED)
-		return
-	
-	# Update script-level variables
-	price = house.current_price
-	loan_price = house.loan_price
-	mortgage = house.mortgage
-	loan_status = house.has_loan
-	cash_out = 0
-	
-	# Update UI
-	loan_display.text = "Loan: " + add_comma_to_int(house.loan_price)
-	mortgage_label.text = "Mortgage: " + add_comma_to_int(house.mortgage)
-	visible = false
-	SaveAndLoad.save_game()
-	show_floating_label("Refinanced! Cash out: $" + add_comma_to_int(int(cash_out)), Color.GREEN)
+		show_floating_label("Loan system not found!", Color.RED)
 
 func calculate_mortgage_payment(loan_amount: float, months: int, interest_rate: float) -> float:
 	if months <= 0 or loan_amount <= 0 or interest_rate < 0:

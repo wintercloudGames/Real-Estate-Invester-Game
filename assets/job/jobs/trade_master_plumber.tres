@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://b1xvk6yspugbc"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_g4o8q"]
+
+[resource]
+script = ExtResource("1_g4o8q")
+job_name = "Master Plumber"
+monthly_salary = 7800.0
+required_player_level = 19
+required_skill_points = 18
+category = "Trade"
+description = "A standard job in the Trade sector."

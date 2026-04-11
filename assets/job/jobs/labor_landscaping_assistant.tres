@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://dkl7yv3blvuj1"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_j8i55"]
+
+[resource]
+script = ExtResource("1_j8i55")
+job_name = "Landscaping Assistant"
+monthly_salary = 1800.0
+required_player_level = 6
+required_skill_points = 4
+description = "A standard job in the Labor sector."

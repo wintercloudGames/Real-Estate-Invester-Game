@@ -49,6 +49,6 @@ func add_comma_to_int(value: int) -> String:
 	return str_value
 
 # Optional: live updates every frame (only if you really need it)
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Globals.mission_active:
 		update_display()

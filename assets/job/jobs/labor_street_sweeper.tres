@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://dnx1v6upeym4k"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_qqrkn"]
+
+[resource]
+script = ExtResource("1_qqrkn")
+job_name = "Street Sweeper"
+description = "A standard job in the Labor sector."

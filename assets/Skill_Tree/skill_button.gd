@@ -25,7 +25,14 @@ enum AppSkills {
 	WORK_AMOUNT,
 	RENT_FINDER_UPGRADE,
 	CREDIT_APP,
-	STOCK_APP
+	STOCK_APP,
+	EXP_BOOST,
+	RENT_FINDER_BOOST,
+	LABOR_POINTS,
+	SERVICES_POINTS,
+	TRADE_POINTS,
+	FINANCE_POINTS,
+	MANAGEMENT_POINTS
 }
 @export var app_skill_to_unlock: AppSkills = AppSkills.HIRING_APP
 
@@ -36,6 +43,9 @@ var _is_initializing_from_globals: bool = false
 @export var job_mod_amount: int = 1
 @export var work_bonus_amount: float = 0.50
 @export var work_amount:int = 1
+@export var exp_boost:float = 0.05
+@export var rent_finder_boost:float = -0.10
+@export var points_per_level: int = 5 # How many category points gained per skill level
 
 @export_category("Visual Settings")
 @export var unlocked_color: Color = Color.WHITE
@@ -54,7 +64,6 @@ var level: int = 0:
 			_update_visual_state()
 			_unlock_app_skill()
 
-
 var parent_skill: SkillNode = null
 var is_mouse_over: bool = false
 var _children_skills: Array[SkillNode] = []
@@ -68,31 +77,22 @@ func _ready() -> void:
 			if level_costs[i] == 0:
 				level_costs[i] = 1
 	
-	# Find all child skills
 	_find_child_skills()
-	
-	# Wait a frame to ensure Globals are loaded
 	await get_tree().process_frame
-	
-	# Check if this skill should be unlocked based on Globals
 	_check_global_unlock_status()
 	visibility_changed.connect(_on_visibility_changed)
-	
-	# Wait for parent to be ready
 	await get_tree().process_frame
 	
 	var parent_node = get_parent()
 	if parent_node is SkillNode:
 		parent_skill = parent_node
 		_connect_to_parent(parent_skill)
-	
 
 func _find_child_skills() -> void:
 	_children_skills.clear()
 	for child in get_children():
 		if child is SkillNode:
 			_children_skills.append(child)
-
 
 func _on_visibility_changed() -> void:
 	if visible:
@@ -101,169 +101,100 @@ func _on_visibility_changed() -> void:
 
 func _check_global_unlock_status() -> void:
 	_is_initializing_from_globals = true
-	
 	var should_update_level = false
 	var new_level = level
 
 	match app_skill_to_unlock:
-		AppSkills.HIRING_APP:
-			if Globals.has_hireing_app:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.INFO_APP:
-			if Globals.has_info_app:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.BANK_APP:
-			if Globals.has_bank_app:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.MANAGER_APP:
-			if Globals.has_manager_app:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.RENT_HOUSES:
-			if Globals.rent_houses:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.UNLOCK_BUSINESS:
-			if Globals.unlock_business:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.HAS_MARKET_APP:
-			if Globals.has_market_app:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.JOB_MANAGER:
-			if Globals.job_manager:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.JOB_BONUS:
-			if Globals.Job_bonus:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.BUSINESS_BONUS:
-			if Globals.business_bonus:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.CREDIT_APP:
-			if Globals.credit_app:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.STOCK_APP:
-			if Globals.has_stock_app:
-				new_level = max_level
-				should_update_level = true
-		AppSkills.RENT_FINDER_UPGRADE:
-			if Globals.rent_finder_upgrade:
-				new_level = max_level
-				should_update_level = true
+		AppSkills.HIRING_APP: if Globals.has_hireing_app: new_level = max_level; should_update_level = true
+		AppSkills.INFO_APP: if Globals.has_info_app: new_level = max_level; should_update_level = true
+		AppSkills.BANK_APP: if Globals.has_bank_app: new_level = max_level; should_update_level = true
+		AppSkills.MANAGER_APP: if Globals.has_manager_app: new_level = max_level; should_update_level = true
+		AppSkills.RENT_HOUSES: if Globals.rent_houses: new_level = max_level; should_update_level = true
+		AppSkills.UNLOCK_BUSINESS: if Globals.unlock_business: new_level = max_level; should_update_level = true
+		AppSkills.HAS_MARKET_APP: if Globals.has_market_app: new_level = max_level; should_update_level = true
+		AppSkills.JOB_MANAGER: if Globals.job_manager: new_level = max_level; should_update_level = true
+		AppSkills.JOB_BONUS: if Globals.Job_bonus: new_level = max_level; should_update_level = true
+		AppSkills.BUSINESS_BONUS: if Globals.business_bonus: new_level = max_level; should_update_level = true
+		AppSkills.CREDIT_APP: if Globals.credit_app: new_level = max_level; should_update_level = true
+		AppSkills.STOCK_APP: if Globals.has_stock_app: new_level = max_level; should_update_level = true
+		AppSkills.RENT_FINDER_UPGRADE: if Globals.rent_finder_upgrade: new_level = max_level; should_update_level = true
+		
+		# --- CHECKING JOB POINTS ---
+		AppSkills.LABOR_POINTS:
+			new_level = int(Globals.labor_points / points_per_level)
+			should_update_level = true
+		AppSkills.SERVICES_POINTS:
+			new_level = int(Globals.services_points / points_per_level)
+			should_update_level = true
+		AppSkills.TRADE_POINTS:
+			new_level = int(Globals.trade_points / points_per_level)
+			should_update_level = true
+		AppSkills.FINANCE_POINTS:
+			new_level = int(Globals.finance_points / points_per_level)
+			should_update_level = true
+		AppSkills.MANAGEMENT_POINTS:
+			new_level = int(Globals.management_points / points_per_level)
+			should_update_level = true
 
 		AppSkills.WORK_AMOUNT:
 			if work_amount > 0:
-				if Globals.has_method("get") and Globals.get("work_amount") != null:
-					var calculated_level = min(int(Globals.work_amount / work_amount), max_level)
-					new_level = calculated_level
-					should_update_level = true
-		
+				new_level = min(int(Globals.work_amount / work_amount), max_level)
+				should_update_level = true
 		AppSkills.WORK_BONUS:
 			if work_bonus_amount > 0:
-				if Globals.has_method("get") and Globals.get("work_bonus") != null:
-					var calculated_level = min(int(Globals.work_bonus / work_bonus_amount), max_level)
-					new_level = calculated_level
-					should_update_level = true
-		
+				new_level = min(int(Globals.work_bonus / work_bonus_amount), max_level)
+				should_update_level = true
+		AppSkills.EXP_BOOST:
+			if Globals.exp_boost > 1.0:
+				new_level = min(int((Globals.exp_boost - 1.0) / exp_boost), max_level)
+				should_update_level = true
 		AppSkills.JOB_MANAGER_LEVEL:
 			if job_mod_amount > 0:
-				if Globals.has_method("get") and Globals.get("job_manager_level") != null:
-					var calculated_level = min(int(Globals.job_manager_level / job_mod_amount), max_level)
-					new_level = calculated_level
-					should_update_level = true
-					
-		AppSkills.RENT_BOOST:
-			if Globals.rent_bost > 0:
-				if Globals.has_method("get") and Globals.get("rent_bost") != null:
-					var calculated_level = min(int(Globals.rent_bost / rent_boost_amount), max_level)
-					new_level = calculated_level
-					should_update_level = true
+				new_level = min(int(Globals.job_manager_level / job_mod_amount), max_level)
+				should_update_level = true
 	
 	if should_update_level:
 		level = new_level
-
-	# Force visual updates regardless of level change
 	_update_display()
 	_update_visual_state()
-	
 	_is_initializing_from_globals = false
-
 
 func _unlock_app_skill() -> void:
 	if level == 0 or _is_initializing_from_globals:
 		return
 	
 	match app_skill_to_unlock:
-		AppSkills.HIRING_APP:
-			Globals.has_hireing_app = true
-
-		AppSkills.INFO_APP:
-			Globals.has_info_app = true
-
-		AppSkills.BANK_APP:
-			Globals.has_bank_app = true
-			
-		AppSkills.STOCK_APP:
-			Globals.has_stock_app = true
+		AppSkills.HIRING_APP: Globals.has_hireing_app = true
+		AppSkills.INFO_APP: Globals.has_info_app = true
+		AppSkills.BANK_APP: Globals.has_bank_app = true
+		AppSkills.STOCK_APP: Globals.has_stock_app = true
+		AppSkills.MANAGER_APP: Globals.has_manager_app = true
+		AppSkills.CREDIT_APP: Globals.credit_app = true
+		AppSkills.RENT_HOUSES: Globals.rent_houses = true
+		AppSkills.RENT_FINDER_UPGRADE: Globals.rent_finder_upgrade = true
+		AppSkills.UNLOCK_BUSINESS: Globals.unlock_business = true
+		AppSkills.HAS_MARKET_APP: Globals.has_market_app = true
+		AppSkills.JOB_MANAGER: Globals.job_manager = true
+		AppSkills.JOB_BONUS: Globals.Job_bonus = true
+		AppSkills.BUSINESS_BONUS: Globals.business_bonus = true
 		
-		AppSkills.MANAGER_APP:
-			Globals.has_manager_app = true
-			
-		AppSkills.CREDIT_APP:
-			Globals.credit_app = true
-			
-		AppSkills.RENT_HOUSES:
-			Globals.rent_houses = true
+		# --- APPLYING JOB CATEGORY POINTS ---
+		AppSkills.LABOR_POINTS: Globals.labor_points = level * points_per_level
+		AppSkills.SERVICES_POINTS: Globals.services_points = level * points_per_level
+		AppSkills.TRADE_POINTS: Globals.trade_points = level * points_per_level
+		AppSkills.FINANCE_POINTS: Globals.finance_points = level * points_per_level
+		AppSkills.MANAGEMENT_POINTS: Globals.management_points = level * points_per_level
 		
-		AppSkills.RENT_FINDER_UPGRADE:
-			Globals.rent_finder_upgrade = true
-			
-		AppSkills.UNLOCK_BUSINESS:
-			Globals.unlock_business = true
-			
-		AppSkills.HAS_MARKET_APP:
-			Globals.has_market_app = true
-			
-		AppSkills.JOB_MANAGER:
-			Globals.job_manager = true
-			
-		AppSkills.JOB_BONUS:
-			Globals.Job_bonus = true
-		
-		AppSkills.BUSINESS_BONUS:
-			Globals.business_bonus = true
-			
-		AppSkills.RENT_BOOST:
-			var total_boost = rent_boost_amount * level
-			Globals.rent_bost = total_boost
-			
-		AppSkills.WORK_BONUS:
-			var total_boost = work_bonus_amount * level
-			Globals.work_bonus = total_boost
-			
-		AppSkills.WORK_AMOUNT:
-			var total_boost = work_amount * level
-			Globals.work_amount = total_boost
-			
-		AppSkills.JOB_MANAGER_LEVEL:
-			var total_jobs = job_mod_amount * level
-			Globals.job_manager_level = total_jobs
+		AppSkills.EXP_BOOST: Globals.exp_boost = 1.0 + (exp_boost * level)
+		AppSkills.RENT_FINDER_BOOST: Globals.rent_finder_boost = 1.0 + (rent_finder_boost * level)
+		AppSkills.WORK_BONUS: Globals.work_bonus = work_bonus_amount * level
+		AppSkills.WORK_AMOUNT: Globals.work_amount = work_amount * level
+		AppSkills.JOB_MANAGER_LEVEL: Globals.job_manager_level = job_mod_amount * level
 
 func _connect_to_parent(parent_node: SkillNode) -> void:
-	if not skill_branch:
-		return
-	
+	if not skill_branch: return
 	var start_point: Vector2 = skill_branch.to_local(parent_node.global_position + parent_node.size / 2)
 	var end_point: Vector2 = skill_branch.to_local(global_position + size / 2)
-	
 	skill_branch.clear_points()
 	skill_branch.add_point(start_point)
 	skill_branch.add_point(end_point)
@@ -273,13 +204,9 @@ func _update_display() -> void:
 		skill_level_label.text = str(level) + "/" + str(max_level)
 
 func _update_visual_state() -> void:
-	if not is_inside_tree():
-		return
-	
-	if level_colors.size() > level:
-		self_modulate = level_colors[level]
-	else:
-		self_modulate = unlocked_color
+	if not is_inside_tree(): return
+	if level_colors.size() > level: self_modulate = level_colors[level]
+	else: self_modulate = unlocked_color
 	
 	var parent_requirements_met = _check_parent_requirements()
 	var has_enough_points = Globals.skillpoints >= get_next_level_cost()
@@ -308,61 +235,49 @@ func _update_children_visuals() -> void:
 			child_skill._update_visual_state()
 
 func _check_parent_requirements() -> bool:
-	if parent_skill == null:
-		return true
-	var requirements_met = parent_skill.level >= parent_skill.max_level
-	return requirements_met
+	if parent_skill == null: return true
+	return parent_skill.level >= parent_skill.max_level
 
 func _on_pressed() -> void:
 	var cost = get_next_level_cost()
-
 	if can_level_up() and Globals.skillpoints >= cost and _check_parent_requirements():
 		Globals.skillpoints -= cost
-		
 		if skill_tree and skill_tree.has_method("on_skill_unlocked"):
 			skill_tree.on_skill_unlocked(skill_name, cost)
-		
 		level += 1
+		_pulse_effect()
 
-func can_level_up() -> bool:
-	return level < max_level
+func can_level_up() -> bool: return level < max_level
+
+func _pulse_effect() -> void:
+	var tween = create_tween()
+	# Scale up to 1.2x size over 0.1 seconds
+	tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# Scale back to normal over 0.2 seconds
+	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
 func get_next_level_cost() -> int:
-	if level < level_costs.size():
-		return level_costs[level]
+	if level < level_costs.size(): return level_costs[level]
 	return 1
 
 func _on_mouse_entered() -> void:
 	is_mouse_over = true
 	await get_tree().create_timer(0.05).timeout
-	if is_mouse_over and skill_tree and skill_tree.has_method("show_info"):
-		_show_skill_info()
+	if is_mouse_over and skill_tree and skill_tree.has_method("show_info"): _show_skill_info()
 
 func _on_mouse_exited() -> void:
 	is_mouse_over = false
 	await get_tree().create_timer(0.05).timeout
-	if not is_mouse_over and skill_tree and skill_tree.has_method("hide_info"):
-		skill_tree.hide_info()
+	if not is_mouse_over and skill_tree and skill_tree.has_method("hide_info"): skill_tree.hide_info()
 
 func _show_skill_info() -> void:
-	var cost_text = ""
+	var cost_text = "Cost: " + str(get_next_level_cost()) + " skill points" if level < max_level else "Already Unlocked"
 	var requirement_text = ""
-	
-	if level < max_level:
-		cost_text = "Cost: " + str(get_next_level_cost()) + " skill points"
-		
-		if parent_skill != null and parent_skill.level < parent_skill.max_level:
-			requirement_text = "\nRequires: " + parent_skill.skill_name + " (Max Level)"
-	else:
-		cost_text = "Already Unlocked"
+	if level < max_level and parent_skill != null and parent_skill.level < parent_skill.max_level:
+		requirement_text = "\nRequires: " + parent_skill.skill_name + " (Max Level)"
 	
 	var description = skill_description
-	if app_skill_to_unlock == AppSkills.RENT_BOOST:
-		description += "\nCurrent Rent Boost: +" + str(Globals.rent_bost * 100) + "%"
-	
-	if requirement_text != "":
-		description += requirement_text
-	
+	if requirement_text != "": description += requirement_text
 	skill_tree.show_info(skill_name, description, level, max_level, cost_text)
 
 func _on_timer_timeout() -> void:

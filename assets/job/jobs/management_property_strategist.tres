@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://cxk7le7p8ik4b"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_ylg8e"]
+
+[resource]
+script = ExtResource("1_ylg8e")
+job_name = "Property Strategist"
+monthly_salary = 35000.0
+required_player_level = 38
+required_skill_points = 40
+category = "Management"
+description = "A standard job in the Management sector."

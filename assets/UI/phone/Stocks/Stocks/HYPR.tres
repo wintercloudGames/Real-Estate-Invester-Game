@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StockData" load_steps=2 format=3 uid="uid://ds8mhxotarlco"]
+
+[ext_resource type="Script" uid="uid://by2chx7k2bww3" path="res://assets/UI/phone/Stocks/stock_data.gd" id="1_ulsi3"]
+
+[resource]
+script = ExtResource("1_ulsi3")
+stock_name = "Hyperion Tech"
+ticker = "HYPR"
+current_price = 320.0
+volatility = 0.15
+dividend_yield = 0.0
+metadata/_custom_type_script = "uid://by2chx7k2bww3"

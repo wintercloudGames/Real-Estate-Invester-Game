@@ -33,8 +33,10 @@ func _ready():
 	load_settings()
 
 func get_save_path() -> String:
-	# user:// is much safer for exported games than the executable path
-	return "user://settings.json"
+	# Gets the folder containing the running .exe or binary
+	var exe_dir = OS.get_executable_path().get_base_dir()
+	# Use path_join to handle slashes correctly across Windows/Linux/Mac
+	return exe_dir.path_join("settings.json")
 
 func save_settings():
 	var settings_data = {
@@ -159,7 +161,7 @@ func apply_graphics_settings():
 	# 4. RENDERING SERVER (Global Quality)
 	RenderingServer.directional_soft_shadow_filter_set_quality(shadows_quality)
 	
-	print("Graphics applied: Resolution %s, Scaling Mode: %d" % [resolution, vp.scaling_3d_mode])
+	
 func reset_to_defaults() -> void:
 	# (Your existing reset values)
 	apply_audio_settings()

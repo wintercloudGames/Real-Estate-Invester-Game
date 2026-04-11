@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="JobData" load_steps=2 format=3 uid="uid://b38m5lg2ehh6b"]
+
+[ext_resource type="Script" uid="uid://inippeg6yhgc" path="res://assets/job/JobData.gd" id="1_f0yll"]
+
+[resource]
+script = ExtResource("1_f0yll")
+job_name = "Private Investigator"
+monthly_salary = 6800.0
+required_player_level = 22
+required_skill_points = 18
+category = "Services"
+description = "A standard job in the Services sector."
