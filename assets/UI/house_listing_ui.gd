@@ -113,7 +113,7 @@ func add_comma_to_int(value: int) -> String:
 
 func _on_loan_button_toggled(toggled_on: bool) -> void:
 	if toggled_on and not can_use_loan:
-		show_floating_label("Cannot use loan: Credit score below 500!", Color.RED)
+		Globals.notify("Cannot use loan: Credit score below 500!", Color.RED)
 		$Loan_button.button_pressed = false  # Reset toggle state
 		loan_status = false  # Ensure loan_status is off
 	else:
@@ -125,26 +125,13 @@ func _on_close_button_pressed() -> void:
 	game.clear_House_ui_data()
 	$Loan_button.button_pressed = false
 
-func show_floating_label(text: String, color: Color = Color.WHITE):
-	var canvas_layer = get_node_or_null("/root/Root/UserInterface/Game/HUD")
-	if canvas_layer:
-		var label = Label.new()
-		label.text = text
-		label.modulate = color
-		label.position = Vector2(700, 500)
-		canvas_layer.add_child(label)
-		var tween = create_tween()
-		tween.tween_property(label, "position:y", label.position.y - 50, 1.5)
-		tween.parallel().tween_property(label, "modulate:a", 0, 1.5)
-		tween.tween_callback(label.queue_free)
-
 func handle_buy(list_for_rent: bool = false) -> void:
 	if not is_instance_valid(house):
-		show_floating_label("Invalid house!", Color.RED)
+		Globals.notify("Invalid house!", Color.RED)
 		return
 	
 	if house.owned:
-		show_floating_label("House already owned!", Color.RED)
+		Globals.notify("House already owned!", Color.RED)
 		return
 	
 	var loan_mod = null
@@ -164,7 +151,7 @@ func handle_buy(list_for_rent: bool = false) -> void:
 			var monthly_payment = calculate_mortgage_payment(calculated_loan_amount, term_months, interest_rate)
 			
 			if monthly_payment <= 0:
-				show_floating_label("Invalid loan terms!", Color.RED)
+				Globals.notify("Invalid loan terms!", Color.RED)
 				return
 			
 			# Deduct down payment
@@ -211,9 +198,9 @@ func handle_buy(list_for_rent: bool = false) -> void:
 			
 			Globals.Propertys += 1
 			Globals.net_worth += full_price
-			show_floating_label("Bought with loan! Down: $" + add_comma_to_int(pay_now_amount), Color.GREEN)
+			Globals.notify("Bought with loan! Down: $" + add_comma_to_int(pay_now_amount), Color.GREEN)
 		else:
-			show_floating_label("Need $" + add_comma_to_int(pay_now_amount) + " for down payment!", Color.RED)
+			Globals.notify("Need $" + add_comma_to_int(pay_now_amount) + " for down payment!", Color.RED)
 			return
 	else:
 		# --- CASH PURCHASE ---
@@ -235,9 +222,9 @@ func handle_buy(list_for_rent: bool = false) -> void:
 			
 			Globals.Propertys += 1
 			Globals.net_worth += full_price
-			show_floating_label("Bought with cash! $" + add_comma_to_int(pay_now_amount), Color.GREEN)
+			Globals.notify("Bought with cash! $" + add_comma_to_int(pay_now_amount), Color.GREEN)
 		else:
-			show_floating_label("Need $" + add_comma_to_int(pay_now_amount) + " in cash!", Color.RED)
+			Globals.notify("Need $" + add_comma_to_int(pay_now_amount) + " in cash!", Color.RED)
 			return
 	
 	# Common post-buy logic
@@ -257,7 +244,7 @@ func rollback_purchase():
 	house.loan_price = 0
 	house.mortgage = 0
 	house.has_loan = false
-	show_floating_label("Loan system error!", Color.RED)
+	Globals.notify("Loan system error!", Color.RED)
 
 func calculate_mortgage_payment(loan_amount: float, months: int, interest_rate: float) -> float:
 	if months <= 0 or loan_amount <= 0 or interest_rate < 0:

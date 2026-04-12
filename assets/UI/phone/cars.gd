@@ -50,11 +50,11 @@ func _on_repaire_button_pressed():
 			Globals.has_car = true
 			Globals.exp += car_level + 5 * Globals.exp_boost
 			is_broken = false
-			show_floating_label("Car Repaired for $" + str(repair_cost), Color.GREEN)
+			Globals.notify("Car Repaired for $" + str(repair_cost), Color.GREEN)
 		else:
-			show_floating_label("Not enough money to repair!", Color.RED)
+			Globals.notify("Not enough money to repair!", Color.RED)
 	else:
-		show_floating_label("Car is not broken!", Color.YELLOW)
+		Globals.notify("Car is not broken!", Color.YELLOW)
 	update_status_label()
 
 func get_repair_cost() -> int:
@@ -69,9 +69,9 @@ func _on_upgrade_button_pressed():
 		breakdown_rate -= 0.1
 		Globals.exp += car_level + 5 * Globals.exp_boost
 		car_level += 1
-		show_floating_label("Upgraded Car to Level %d" % car_level, Color.GREEN)
+		Globals.notify("Upgraded Car to Level %d" % car_level, Color.GREEN)
 	else:
-		show_floating_label("Not enough money to upgrade!", Color.RED)
+		Globals.notify("Not enough money to upgrade!", Color.RED)
 	if car_level >= max_car_level:
 		$Upgrade_Button.visible = false
 		$Upgrade_Cost_Label.visible = false
@@ -103,14 +103,3 @@ func update_status_label():
 	
 	# The Repair button should only be clickable if the car IS broken
 	repair_button.disabled = !is_broken
-func show_floating_label(text: String, color: Color = Color.WHITE):
-	var label = Label.new()
-	label.text = text
-	label.add_theme_color_override("font_color", color)
-	label.set_position(Vector2(0, -50))
-	add_child(label)
-
-	var tween = get_tree().create_tween()
-	tween.tween_property(label, "position:y", label.position.y - 50, 1.5)
-	tween.tween_property(label, "modulate:a", 0, 1.5)
-	tween.tween_callback(label.queue_free)

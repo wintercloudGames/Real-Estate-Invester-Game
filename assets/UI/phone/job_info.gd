@@ -109,7 +109,9 @@ func reset_all_tasks() -> void:
 func complete_task(job_index: int) -> void:
 	var bar = progress_bars[job_index]
 	bar.value = 0
-	Globals.exp += 2 + (job_index * 2) * Globals.exp_boost
+	var earned_exp = (2 + (job_index * 2)) * Globals.exp_boost
+	Globals.exp += earned_exp
+	Globals.notify("EXP + " + str(int(earned_exp)), Color.YELLOW)
 	task_started[job_index] = false
 	job_in_progress = false
 	
@@ -117,7 +119,7 @@ func complete_task(job_index: int) -> void:
 	update_rewards() 
 	
 	Globals.money += rewards[job_index] 
-	show_floating_label("Earned $%s" % add_comma_to_int(rewards[job_index]), Color.SPRING_GREEN)
+	Globals.notify("Earned $%s" % add_comma_to_int(rewards[job_index]), Color.SPRING_GREEN)
 
 func get_adjusted_task_speed() -> float:
 	var health_factor = max(Globals.Player_health / 100.0, 0.2)
@@ -126,24 +128,13 @@ func get_adjusted_task_speed() -> float:
 	var average_factor = (health_factor + hunger_factor + comfort_factor) / 3.0
 	return base_task_speed * average_factor
 
-func show_floating_label(text: String, color: Color = Color.WHITE) -> void:
-	if ui_layer:
-		var label = Label.new()
-		label.text = text
-		label.add_theme_color_override("font_color", color)
-		label.position = Vector2(700, 500)
-		ui_layer.add_child(label)
-		var tween = create_tween()
-		tween.tween_property(label, "position:y", label.position.y - 50, 1.5)
-		tween.parallel().tween_property(label, "modulate:a", 0, 1.5)
-		tween.tween_callback(label.queue_free)
 
 func _on_do_task_button_pressed(job_index: int) -> void:
 	if job_index > Globals.work_amount:
-		show_floating_label("Task %d requires Work Level %d" % [job_index + 1, job_index], Color.RED)
+		Globals.notify("Task %d requires Work Level %d" % [job_index + 1, job_index], Color.RED)
 		return
 	if job_index > 0 and not Globals.has_car:
-		show_floating_label("Need a fixed car for Task %d" % [job_index + 1], Color.RED)
+		Globals.notify("Need a fixed car for Task %d" % [job_index + 1], Color.RED)
 		return
 	if not job_in_progress and not task_started[job_index]:
 		if $"../Car_info".breakdown_timer.is_stopped() and Globals.difficulty > 0:
@@ -165,14 +156,14 @@ func on_work_amount_upgraded() -> void:
 	update_rewards()
 	update_task_availability()
 	if Globals.work_amount > 0 and Globals.work_amount < do_task_buttons.size():
-		show_floating_label("Unlocked Task %d!" % [Globals.work_amount + 1], Color.GREEN)
+		Globals.notify("Unlocked Task %d!" % [Globals.work_amount + 1], Color.GREEN)
 
 func upgrade_work_amount() -> void:
 	if Globals.work_amount < max_work_level:
 		Globals.work_amount += 1
 		on_work_amount_upgraded()
 	else:
-		show_floating_label("Max Level Reached!", Color.YELLOW)
+		Globals.notify("Max Level Reached!", Color.YELLOW)
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)

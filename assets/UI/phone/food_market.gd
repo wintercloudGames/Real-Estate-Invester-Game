@@ -48,21 +48,4 @@ func _on_food_button_pressed(food_name: String) -> void:
 		Globals.Player_hunger += food["hunger"]
 		Globals.Player_health += food["health"]
 		Globals.money_out(food["cost"])
-		spawn_floating_label("Spent " + str(food["cost"]) + "$ on " + food["label"], Vector2(randi_range(500, 700), 500))
-
-# Function to spawn a floating label
-func spawn_floating_label(text: String, start_pos: Vector2) -> void:
-	var canvas_layer = CanvasLayer.new()
-	add_child(canvas_layer)
-	
-	var label = Label.new()
-	label.text = text
-	label.position = start_pos
-	label.modulate = Color(1, 1, 1, 1)  # Fully visible (white)
-
-	canvas_layer.add_child(label)
-	
-	var tween = create_tween()
-	tween.tween_property(label, "position", label.position + Vector2(0, -50), 4.0)  # Move up in 4s
-	tween.tween_property(label, "modulate:a", 0, 4.0)  # Fade out in 4s
-	tween.tween_callback(label.queue_free)  # Remove label after animation
+		Globals.notify("Spent " + str(food["cost"]) + "$ on " + food["label"], Color.DARK_ORANGE)

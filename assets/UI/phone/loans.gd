@@ -102,6 +102,7 @@ func take_loan(amount: int):
 	
 	# 1. Apply effects to Globals 
 	Globals.exp += 10 * Globals.exp_boost
+	Globals.notify("EXP + " + str(10 * Globals.exp_boost), Color.YELLOW)
 	Globals.money += amount
 	Globals.credit_score -= randi_range(30, 60) 
 	Globals.credit_score = clamp(Globals.credit_score, 300, 850) 
@@ -123,7 +124,7 @@ func take_loan(amount: int):
 
 	# 5. Enhanced Message 
 	var msg = "APPROVED: +$%s\n(Rate: %.1f%%)" % [add_comma_to_int(amount), final_rate * 100]
-	show_floating_label(msg, Color.GREEN)
+	Globals.notify(msg, Color.GREEN)
 	
 	# 6. Global Money Update
 	# If your HUD has a 'money changed' signal, trigger it here to flash the money label.
@@ -157,19 +158,6 @@ func refresh_active_loan_mods():
 		if child.has_method("update_ui"):
 			active_loan_mods.append(child)
 
-func show_floating_label(text: String, color: Color = Color.WHITE):
-	if ui_layer and is_instance_valid(ui_layer):
-		var label = Label.new()
-		label.text = text
-		label.add_theme_color_override("font_color", color)
-		label.set_anchors_preset(Control.PRESET_CENTER)
-		label.position = get_global_mouse_position() # Better visibility
-		ui_layer.add_child(label)
-		var tween = get_tree().create_tween()
-		tween.tween_property(label, "position:y", label.position.y - 80, 2.0)
-		tween.parallel().tween_property(label, "modulate:a", 0, 2.0)
-		tween.tween_callback(label.queue_free)
-
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
 	var loop_end: int = 0 if value > -1 else 1
@@ -197,7 +185,7 @@ func _on_take_loan_button_pressed() -> void:
 		var message = "Credit score too low!"
 		if Globals.credit_score >= 300:
 			message = "Max allowed right now: $" + add_comma_to_int(final_max)
-		show_floating_label(message, Color.RED)
+		Globals.notify(message, Color.RED)
 
 func _on_pay_all_payments_pressed() -> void:
 	var total_needed = 0
@@ -210,9 +198,9 @@ func _on_pay_all_payments_pressed() -> void:
 		for mod in list_to_pay:
 			if is_instance_valid(mod) and mod.has_method("_on_make_payment_pressed"):
 				mod._on_make_payment_pressed()
-		show_floating_label("Paid all: $" + add_comma_to_int(int(total_needed)), Color.GREEN)
+		Globals.notify("Paid all loans: -$" + add_comma_to_int(int(total_needed)), Color.GREEN)
 	else:
-		show_floating_label("Not enough money!", Color.RED)
+		Globals.notify("Not enough money!", Color.RED)
 
 func _on_option_button_item_selected(index: int) -> void:
 	var loan_terms = [12, 24, 36, 48, 60]

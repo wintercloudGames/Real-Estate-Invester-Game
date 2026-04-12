@@ -1,4 +1,4 @@
-[gd_scene load_steps=125 format=4 uid="uid://cung7j0rgqmwu"]
+[gd_scene load_steps=124 format=4 uid="uid://cung7j0rgqmwu"]
 
 [ext_resource type="Script" uid="uid://cq2g8tdj47vbe" path="res://assets/game.gd" id="1_f0aps"]
 [ext_resource type="Script" uid="uid://bcsm7nw2fa21b" path="res://addons/zylann.hterrain/hterrain.gd" id="2_6p1yv"]
@@ -78,7 +78,6 @@
 [ext_resource type="Texture2D" uid="uid://de6q8klptn0x6" path="res://3D assets/images/Tree_1.png" id="68_q1u52"]
 [ext_resource type="PackedScene" uid="uid://bx4bskf674t3q" path="res://3D assets/Placeable/tree_1.tscn" id="69_c5ool"]
 [ext_resource type="Texture2D" uid="uid://cipvswyrvv3en" path="res://3D assets/images/pool.png" id="70_2pd84"]
-[ext_resource type="Texture2D" uid="uid://dyj4e3jgyki8u" path="res://assets/UI/icons/info.png" id="71_2ekl0"]
 [ext_resource type="Texture2D" uid="uid://b0p66tco4u1fd" path="res://assets/UI/icons/take-my-money.png" id="71_43td7"]
 [ext_resource type="PackedScene" uid="uid://dl66ja57b77ku" path="res://3D assets/Placeable/pool.tscn" id="71_ojuag"]
 [ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://themes/new_theme.tres" id="72_8whiy"]
@@ -3338,10 +3337,10 @@ text = "Deny"
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 96.0
-offset_top = 10.0
-offset_right = 404.0
-offset_bottom = 108.0
+offset_left = 80.0
+offset_top = 33.0
+offset_right = 388.0
+offset_bottom = 131.0
 grow_horizontal = 2
 theme = ExtResource("23_k076q")
 metadata/_edit_use_anchors_ = true
@@ -3414,7 +3413,7 @@ anchor_right = 1.0
 offset_left = -241.0
 offset_top = 18.0
 offset_right = -23.0
-offset_bottom = 813.0
+offset_bottom = 676.0
 grow_horizontal = 0
 size_flags_horizontal = 8
 size_flags_vertical = 3
@@ -3447,22 +3446,6 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="HUD/Universal_Text_Box/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "GAME INFO"
-horizontal_alignment = 1
-
-[node name="Show_log" type="TextureButton" parent="HUD"]
-anchors_preset = -1
-anchor_left = 0.6484375
-anchor_top = -0.21018519
-anchor_right = 0.6484375
-anchor_bottom = -0.21018519
-offset_left = 599.0
-offset_top = 241.0
-offset_right = 1111.0
-offset_bottom = 753.0
-scale = Vector2(0.1, 0.1)
-toggle_mode = true
-texture_normal = ExtResource("71_2ekl0")
-metadata/_edit_use_anchors_ = true
 
 [node name="MissionWin" type="Panel" parent="HUD"]
 visible = false
@@ -3578,11 +3561,14 @@ script = ExtResource("4_j4nwd")
 metadata/_edit_lock_ = true
 
 [node name="Panel2" type="Panel" parent="HUD/UI"]
-layout_mode = 0
-offset_left = 30.705
-offset_top = 11.525
-offset_right = 719.92004
-offset_bottom = 141.5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.059375
+anchor_right = -0.059375
+offset_left = 20.0
+offset_top = 15.0
+offset_right = 869.0
+offset_bottom = 160.0
 metadata/_edit_use_anchors_ = true
 
 [node name="GridContainer" type="GridContainer" parent="HUD/UI"]
@@ -3638,10 +3624,10 @@ text = "net  = "
 
 [node name="negative_month_count" type="Label" parent="HUD/UI"]
 layout_mode = 0
-offset_left = 512.0
-offset_top = 23.0
-offset_right = 728.0
-offset_bottom = 58.0
+offset_left = 521.0
+offset_top = 24.0
+offset_right = 737.0
+offset_bottom = 59.0
 text = "Months tell Bankrupt: 10/12"
 
 [node name="properties" type="Label" parent="HUD/UI"]
@@ -3664,8 +3650,8 @@ anchor_right = 0.0016744772
 anchor_bottom = 0.007601844
 offset_left = 20.0
 offset_top = 183.0
-offset_right = 444.785
-offset_bottom = 448.79
+offset_right = 470.785
+offset_bottom = 510.79
 scale = Vector2(0.5, 0.5)
 mouse_filter = 2
 theme = ExtResource("32_nggmv")
@@ -3676,10 +3662,10 @@ anchor_left = 0.0010416746
 anchor_top = 0.0018518377
 anchor_right = 0.0010416746
 anchor_bottom = 0.0018518377
-offset_left = 134.99998
-offset_top = 231.00002
-offset_right = 134.99998
-offset_bottom = 231.00002
+offset_left = 144.71
+offset_top = 241.18
+offset_right = 144.71
+offset_bottom = 241.18
 scale = Vector2(0.5, 0.5)
 mouse_filter = 2
 theme = ExtResource("42_drtnu")
@@ -3692,10 +3678,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -205.42004
-offset_top = -82.359955
-offset_right = 168.57996
-offset_bottom = 133.64005
+offset_left = -189.42004
+offset_top = -94.359955
+offset_right = 159.15137
+offset_bottom = 205.64001
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -3713,7 +3699,6 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 value = 100.0
-show_percentage = false
 
 [node name="Hunger_label" type="Label" parent="HUD/UI/Player_stats/VBoxContainer"]
 modulate = Color(0.0627451, 1, 0.317647, 1)
@@ -3728,7 +3713,6 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 value = 100.0
-show_percentage = false
 
 [node name="comfort_label" type="Label" parent="HUD/UI/Player_stats/VBoxContainer"]
 modulate = Color(0.0627451, 1, 0.317647, 1)
@@ -3743,20 +3727,19 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 value = 100.0
-show_percentage = false
 
 [node name="Phone_button" type="TextureButton" parent="HUD/UI" node_paths=PackedStringArray("phone_node", "renters_container")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.040625
-anchor_top = -0.050925925
-anchor_right = -0.040625
-anchor_bottom = -0.050925925
+anchor_left = -0.008333334
+anchor_top = -0.05648148
+anchor_right = -0.008333334
+anchor_bottom = -0.05648148
 offset_left = 368.0
 offset_top = 234.0
 offset_right = 880.0
 offset_bottom = 746.0
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.1, 0.1)
 toggle_mode = true
 texture_normal = ExtResource("4_5akwj")
 script = ExtResource("56_3uwtb")
@@ -3794,15 +3777,15 @@ metadata/_edit_use_anchors_ = true
 [node name="Business_Button" type="TextureButton" parent="HUD/UI"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.010416667
-anchor_top = -0.06111111
-anchor_right = -0.010416667
-anchor_bottom = -0.06111111
+anchor_left = -0.032291666
+anchor_top = -0.062962964
+anchor_right = -0.032291666
+anchor_bottom = -0.062962964
 offset_left = 614.0
 offset_top = 238.0
 offset_right = 1126.0
 offset_bottom = 750.0
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.1, 0.1)
 toggle_mode = true
 texture_normal = ExtResource("17_4mpck")
 metadata/_edit_use_anchors_ = true
@@ -3810,15 +3793,15 @@ metadata/_edit_use_anchors_ = true
 [node name="Show_job_display" type="TextureButton" parent="HUD/UI"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.061979152
-anchor_top = -0.058333334
-anchor_right = -0.061979167
-anchor_bottom = -0.058333334
+anchor_left = -0.06614583
+anchor_top = -0.06111111
+anchor_right = -0.06614583
+anchor_bottom = -0.06111111
 offset_left = 614.0
 offset_top = 238.0
 offset_right = 1126.0
 offset_bottom = 750.0
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.1, 0.1)
 toggle_mode = true
 texture_normal = ExtResource("71_43td7")
 metadata/_edit_use_anchors_ = true
@@ -3826,15 +3809,15 @@ metadata/_edit_use_anchors_ = true
 [node name="Skills_Button" type="TextureButton" parent="HUD/UI"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.053645834
-anchor_top = -0.05185185
-anchor_right = -0.053645834
-anchor_bottom = -0.05185185
+anchor_left = -0.038541667
+anchor_top = -0.058333334
+anchor_right = -0.038541667
+anchor_bottom = -0.058333334
 offset_left = 492.0
 offset_top = 235.0
 offset_right = 1004.0
 offset_bottom = 747.0
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.1, 0.1)
 toggle_mode = true
 texture_normal = ExtResource("44_861v0")
 metadata/_edit_use_anchors_ = true
@@ -3870,10 +3853,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Market_conditions" type="Label" parent="HUD/UI"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.0578125
-anchor_top = 0.0018518518
-anchor_right = -0.0578125
-anchor_bottom = 0.0018518518
+anchor_left = -0.0546875
+anchor_top = 0.0046296297
+anchor_right = -0.0546875
+anchor_bottom = 0.0046296297
 offset_left = 651.0
 offset_top = 65.0
 offset_right = 808.0
@@ -3960,6 +3943,20 @@ anchor_top = 0.043209877
 anchor_right = 0.9411764
 anchor_bottom = 0.043209877
 
+[node name="Skill_tree" parent="HUD/UI" instance=ExtResource("29_me805")]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 503.0
+offset_top = 389.0
+offset_right = 2435.0
+offset_bottom = 1487.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.5, 0.512)
+
 [node name="Drag_Button" parent="HUD/UI" instance=ExtResource("33_dnuxx")]
 visible = false
 layout_mode = 1
@@ -3990,14 +3987,6 @@ theme_override_font_sizes/font_size = 20
 text = "Level: 1"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Skill_tree" parent="HUD/UI" instance=ExtResource("29_me805")]
-visible = false
-layout_mode = 1
-offset_left = 444.0
-offset_top = 369.0
-offset_right = -344.0
-offset_bottom = -111.0
 
 [node name="Game_start" type="Control" parent="HUD"]
 visible = false
@@ -4305,7 +4294,6 @@ transform = Transform3D(0.10650703, 0, -0.9943119, 0, 1, 0, 0.9943119, 0, 0.1065
 [connection signal="pressed" from="HUD/Hostpital_UI/Button2" to="HUD/Hostpital_UI" method="_on_button_2_pressed"]
 [connection signal="pressed" from="HUD/Hostpital_UI/Close_Button" to="HUD/Hostpital_UI" method="_on_close_button_pressed"]
 [connection signal="pressed" from="HUD/event_popup/Relist_house_Button" to="events" method="_on_relist_house_button_pressed"]
-[connection signal="pressed" from="HUD/Show_log" to="HUD/UI" method="_on_show_log_pressed"]
 [connection signal="pressed" from="HUD/MissionWin/MissionWinButton" to="." method="_on_mission_win_button_pressed"]
 [connection signal="value_changed" from="HUD/Speedup/HSlider" to="HUD/Speedup" method="_on_h_slider_value_changed"]
 [connection signal="timeout" from="HUD/UI/Timer" to="HUD/UI" method="_on_timer_timeout"]

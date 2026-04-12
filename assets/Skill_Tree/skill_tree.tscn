@@ -33,77 +33,84 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -18.0
+offset_right = -788.0
+offset_bottom = -480.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_rsuch")
 script = ExtResource("1_nig2w")
 
 [node name="Panel" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(1100, 600)
+layout_mode = 0
+offset_right = 1100.0
+offset_bottom = 600.0
 theme = ExtResource("1_rsuch")
 
 [node name="Panel2" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 679.0
-offset_top = 21.0
-offset_right = -753.0
-offset_bottom = -940.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(250, 75)
+layout_mode = 0
+offset_left = 473.0
+offset_top = 27.0
+offset_right = 723.0
+offset_bottom = 102.0
 theme = ExtResource("1_b6kc5")
 
 [node name="Skill_points_label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 695.0
-offset_top = 29.0
-offset_right = 1154.0
-offset_bottom = 135.0
-theme_override_font_sizes/font_size = 51
+offset_left = 486.0
+offset_top = 45.0
+offset_right = 705.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 25
 text = "Skill points: "
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Level_label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 174.0
-offset_top = 13.0
-offset_right = 526.0
-offset_bottom = 83.0
-theme_override_font_sizes/font_size = 51
+offset_left = 93.0
+offset_top = 15.0
+offset_right = 351.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 25
 text = "Level: 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 layout_mode = 0
-offset_left = 175.0
-offset_top = 87.0
-offset_right = 500.0
-offset_bottom = 124.0
+offset_left = 93.0
+offset_top = 63.0
+offset_right = 367.0
+offset_bottom = 108.0
 theme = ExtResource("4_6rtyb")
 value = 90.0
+show_percentage = false
+
+[node name="Exp_to_level" type="Label" parent="."]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 69.0
+offset_right = 351.0
+offset_bottom = 104.0
+theme_override_font_sizes/font_size = 25
+text = "10/100"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Close_Button" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -276.0
-offset_top = 22.0
-offset_right = -41.0
-offset_bottom = 119.0
+offset_left = -219.0
+offset_top = 15.0
+offset_right = -57.0
+offset_bottom = 81.0
 grow_horizontal = 0
 theme = ExtResource("5_y6xip")
-theme_override_font_sizes/font_size = 61
+theme_override_font_sizes/font_size = 20
 text = "CLOSE"
 
 [node name="Cheat_Button" type="Button" parent="."]
@@ -112,10 +119,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -659.0
-offset_top = 40.0
-offset_right = -449.0
-offset_bottom = 137.0
+offset_left = -674.0
+offset_top = -123.0
+offset_right = -481.0
+offset_bottom = -28.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 61
 text = "CHEAT"
@@ -123,25 +130,25 @@ text = "CHEAT"
 [node name="Drag_Button" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.014583333
-anchor_top = 0.025
-anchor_right = 0.014583333
-anchor_bottom = 0.025
+anchor_left = 0.021201413
+anchor_top = 0.045
+anchor_right = 0.021201413
+anchor_bottom = 0.045
 offset_right = 48.0
 offset_bottom = 48.0
-scale = Vector2(2, 2)
 texture_normal = ExtResource("6_treql")
 script = ExtResource("7_o85cb")
 metadata/_edit_use_anchors_ = true
 
 [node name="TabContainer" type="TabContainer" parent="."]
+custom_minimum_size = Vector2(1000, 425)
 layout_mode = 0
-offset_left = 41.0
-offset_top = 154.0
-offset_right = 1902.0
-offset_bottom = 1039.0
+offset_left = 49.0
+offset_top = 139.0
+offset_right = 1049.0
+offset_bottom = 564.0
 theme = ExtResource("8_ervgt")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 30
 tab_alignment = 1
 current_tab = 0
 tabs_position = 1
@@ -152,10 +159,10 @@ metadata/_tab_index = 0
 
 [node name="Exp_boost" parent="TabContainer/General" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 1543.0
-offset_top = 230.0
-offset_right = 1671.0
-offset_bottom = 358.0
+offset_left = 73.0
+offset_top = 55.0
+offset_right = 143.0
+offset_bottom = 125.0
 texture_normal = ExtResource("10_6rtyb")
 max_level = 20
 skill_name = "exp boost"
@@ -165,10 +172,10 @@ app_skill_to_unlock = 17
 
 [node name="Labor" parent="TabContainer/General" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 203.50247
-offset_top = 358.0
-offset_right = 331.50244
-offset_bottom = 486.0
+offset_left = 200.0
+offset_top = 215.0
+offset_right = 270.0
+offset_bottom = 285.0
 rotation = 0.0117383
 texture_normal = ExtResource("22_qd5qf")
 max_level = 40
@@ -180,10 +187,10 @@ app_skill_to_unlock = 19
 
 [node name="Services" parent="TabContainer/General" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 699.50244
-offset_top = 356.0
-offset_right = 827.50244
-offset_bottom = 484.0
+offset_left = 298.0
+offset_top = 215.0
+offset_right = 368.0
+offset_bottom = 285.0
 rotation = 0.0117383
 texture_normal = ExtResource("12_qd5qf")
 max_level = 60
@@ -195,10 +202,10 @@ app_skill_to_unlock = 20
 
 [node name="Trade" parent="TabContainer/General" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 432.50244
-offset_top = 356.0
-offset_right = 560.50244
-offset_bottom = 484.0
+offset_left = 396.822
+offset_top = 215.0
+offset_right = 466.822
+offset_bottom = 285.0
 rotation = 0.0117383
 texture_normal = ExtResource("13_n77n5")
 max_level = 70
@@ -210,10 +217,10 @@ app_skill_to_unlock = 21
 
 [node name="Finance" parent="TabContainer/General" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 955.50244
-offset_top = 358.0
-offset_right = 1083.5024
-offset_bottom = 486.0
+offset_left = 496.822
+offset_top = 215.0
+offset_right = 566.822
+offset_bottom = 285.0
 rotation = 0.0117383
 texture_normal = ExtResource("25_bqmw5")
 max_level = 100
@@ -225,10 +232,10 @@ app_skill_to_unlock = 22
 
 [node name="Management" parent="TabContainer/General" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 1209.5024
-offset_top = 358.0
-offset_right = 1337.5024
-offset_bottom = 485.9995
+offset_left = 596.822
+offset_top = 215.0
+offset_right = 666.822
+offset_bottom = 285.0
 texture_normal = ExtResource("26_8caw6")
 max_level = 120
 skill_name = "Management"
@@ -245,10 +252,10 @@ metadata/_tab_index = 1
 
 [node name="Rent_houses" parent="TabContainer/House" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 829.0
-offset_top = 614.0
-offset_right = 957.0
-offset_bottom = 742.0
+offset_left = 489.0
+offset_top = 230.0
+offset_right = 559.0
+offset_bottom = 300.0
 texture_normal = ExtResource("9_3avv8")
 skill_name = "Rent house's"
 skill_description = "Be able to rent out house's"
@@ -257,10 +264,10 @@ app_skill_to_unlock = 4
 
 [node name="House_manager" parent="TabContainer/House/Rent_houses" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = -204.0
-offset_top = -155.0
-offset_right = -76.0
-offset_bottom = -27.0
+offset_left = -116.0
+offset_top = -55.0
+offset_right = -46.0
+offset_bottom = 15.0
 texture_normal = ExtResource("9_o85cb")
 skill_name = "house manager"
 skill_description = "you can manage miltible proerties more easely."
@@ -269,10 +276,10 @@ app_skill_to_unlock = 3
 
 [node name="Hireing" parent="TabContainer/House/Rent_houses/House_manager" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = -213.0
-offset_top = -100.0
-offset_right = -85.0
-offset_bottom = 28.0
+offset_left = -80.0
+offset_top = -54.0
+offset_right = -10.0
+offset_bottom = 16.0
 texture_normal = ExtResource("11_62fk7")
 skill_name = "Hireing app"
 skill_description = "unlock an app to hire help for your rental empire."
@@ -280,10 +287,10 @@ level_costs = Array[int]([5])
 
 [node name="rent_find_upgrade" parent="TabContainer/House/Rent_houses/House_manager/Hireing" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = -193.0
-offset_top = -82.0
-offset_right = -65.0
-offset_bottom = 46.0
+offset_left = -97.0
+offset_top = -60.0
+offset_right = -27.0
+offset_bottom = 10.0
 texture_normal = ExtResource("11_2n6q7")
 skill_name = "Upgrade Rent Finder"
 skill_description = "Upgrade Rent finder to get renters faster."
@@ -292,10 +299,10 @@ app_skill_to_unlock = 14
 
 [node name="Bost_rent" parent="TabContainer/House/Rent_houses" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 207.0
-offset_top = -169.0
-offset_right = 335.0
-offset_bottom = -41.0
+offset_left = 88.0
+offset_top = -78.0
+offset_right = 158.0
+offset_bottom = -8.0
 max_level = 5
 skill_name = "Rent Boost"
 skill_description = "Boots your rental income"
@@ -304,10 +311,10 @@ app_skill_to_unlock = 5
 
 [node name="House_stats" parent="TabContainer/House/Rent_houses" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 1.0
-offset_top = -293.0
-offset_right = 129.0
-offset_bottom = -165.0
+offset_left = 0.0
+offset_top = -125.0
+offset_right = 70.0
+offset_bottom = -55.0
 texture_normal = ExtResource("12_guq4v")
 skill_name = "House stats"
 skill_description = "show all house and property stats"
@@ -316,9 +323,9 @@ app_skill_to_unlock = 1
 [node name="rent_finder_boost" parent="TabContainer/House/Rent_houses/House_stats" instance=ExtResource("6_2tli5")]
 layout_mode = 0
 offset_left = 0.0
-offset_top = -176.0
-offset_right = 128.0
-offset_bottom = -48.0
+offset_top = -96.0
+offset_right = 70.0
+offset_bottom = -26.0
 texture_normal = ExtResource("15_7hox8")
 max_level = 10
 skill_name = "Advertise"
@@ -334,10 +341,10 @@ metadata/_tab_index = 2
 
 [node name="Bank" parent="TabContainer/Money" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 1063.0
-offset_top = 556.0
-offset_right = 1191.0
-offset_bottom = 684.0
+offset_left = 674.0
+offset_top = 220.0
+offset_right = 744.0
+offset_bottom = 290.0
 texture_normal = ExtResource("8_treql")
 skill_name = "Bank apps"
 skill_description = "unlockes the savings app opens a saving account and the loans app to take out and manage loans."
@@ -346,10 +353,10 @@ app_skill_to_unlock = 2
 
 [node name="market" parent="TabContainer/Money/Bank" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 99.0
-offset_top = -210.0
-offset_right = 227.0
-offset_bottom = -82.0
+offset_left = 22.0
+offset_top = -123.0
+offset_right = 92.0
+offset_bottom = -53.0
 texture_normal = ExtResource("13_sb7xq")
 skill_name = "Market app"
 skill_description = "Unlockes the market app to see what the market trend is."
@@ -357,10 +364,10 @@ app_skill_to_unlock = 7
 
 [node name="Stock_app" parent="TabContainer/Money/Bank" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 314.0
-offset_top = -156.0
-offset_right = 442.0
-offset_bottom = -28.0
+offset_left = 137.0
+offset_top = -40.0
+offset_right = 207.0
+offset_bottom = 30.0
 texture_normal = ExtResource("16_y6xip")
 skill_name = "Stock app"
 skill_description = "Unlockes the Stock app to Trade stocks."
@@ -369,10 +376,10 @@ app_skill_to_unlock = 16
 
 [node name="Credit_app" parent="TabContainer/Money/Bank" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = -97.0
-offset_top = -208.0
-offset_right = 31.0
-offset_bottom = -80.0
+offset_left = -109.0
+offset_top = -92.0
+offset_right = -39.0
+offset_bottom = -22.0
 texture_normal = ExtResource("15_m6mis")
 skill_name = "Credit App"
 skill_description = "Unlockes the Credit app to see what the players  credit is."
@@ -380,10 +387,10 @@ app_skill_to_unlock = 15
 
 [node name="work_amount" parent="TabContainer/Money" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 442.0
-offset_top = 555.99994
-offset_right = 570.0
-offset_bottom = 683.99994
+offset_left = 212.99998
+offset_top = 204.0
+offset_right = 283.0
+offset_bottom = 274.0
 rotation = 0.0117383
 texture_normal = ExtResource("13_guq4v")
 max_level = 4
@@ -394,10 +401,10 @@ app_skill_to_unlock = 13
 
 [node name="work_bonus" parent="TabContainer/Money/work_amount" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = -17.686981
-offset_top = -228.80809
-offset_right = 110.31302
-offset_bottom = -100.808586
+offset_left = -43.241344
+offset_top = -105.4997
+offset_right = 26.758656
+offset_bottom = -35.499702
 max_level = 5
 skill_name = "work bonus"
 skill_description = "make more money on fast cash per level."
@@ -411,10 +418,10 @@ metadata/_tab_index = 3
 
 [node name="business" parent="TabContainer/Business" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 819.0
-offset_top = 641.0
-offset_right = 947.0
-offset_bottom = 769.0
+offset_left = 404.0
+offset_top = 229.0
+offset_right = 474.0
+offset_bottom = 299.0
 texture_normal = ExtResource("13_guq4v")
 skill_name = "Business"
 skill_description = "Be able to open a business."
@@ -423,10 +430,10 @@ app_skill_to_unlock = 6
 
 [node name="job_manager" parent="TabContainer/Business/business" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 179.0
-offset_top = -270.0
-offset_right = 307.0
-offset_bottom = -142.0
+offset_left = 108.0
+offset_top = -67.0
+offset_right = 178.0
+offset_bottom = 3.0
 texture_normal = ExtResource("11_62fk7")
 skill_name = "job manager"
 skill_description = "Hire a manager to evaluate and manage 2  job opportunities for later acceptance or rejection."
@@ -434,10 +441,10 @@ app_skill_to_unlock = 8
 
 [node name="job_manager_level" parent="TabContainer/Business/business/job_manager" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 136.0
-offset_top = -195.0
-offset_right = 264.0
-offset_bottom = -67.0
+offset_left = 65.0
+offset_top = -80.0
+offset_right = 135.0
+offset_bottom = -10.0
 texture_normal = ExtResource("13_guq4v")
 max_level = 5
 skill_name = "upgrade manager"
@@ -447,10 +454,10 @@ app_skill_to_unlock = 9
 
 [node name="job_pay" parent="TabContainer/Business/business" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = -61.0
-offset_top = -267.0
-offset_right = 67.0
-offset_bottom = -139.0
+offset_left = -69.0
+offset_top = -99.0
+offset_right = 1.0
+offset_bottom = -29.0
 texture_normal = ExtResource("15_yn8ca")
 skill_name = "Increse job pay"
 skill_description = "Job Bonus: Earn 50% More"
@@ -459,16 +466,17 @@ app_skill_to_unlock = 10
 
 [node name="business_exp" parent="TabContainer/Business/business" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = -320.0
-offset_top = -267.0
-offset_right = -192.0
-offset_bottom = -139.0
+offset_left = -153.0
+offset_top = -164.0
+offset_right = -83.0
+offset_bottom = -94.0
 skill_name = "Business Bonus"
 skill_description = "Earn 45-55% More on your business worth per job complete."
 level_costs = Array[int]([5])
 app_skill_to_unlock = 11
 
 [node name="DescriptionPanel" type="Panel" parent="."]
+visible = false
 self_modulate = Color(1.1770635, 1.1770635, 1.1770635, 1)
 z_index = 10
 z_as_relative = false
@@ -476,10 +484,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1453.0
-offset_top = 794.0
-offset_right = 166.0
-offset_bottom = 87.0
+offset_left = 965.0
+offset_top = 426.0
+offset_right = 361.0
+offset_bottom = 146.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -505,10 +513,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 50.0
-offset_top = 104.0
-offset_right = -44.0
-offset_bottom = -22.0
+offset_left = 46.0
+offset_top = 95.0
+offset_right = -48.0
+offset_bottom = -31.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 25

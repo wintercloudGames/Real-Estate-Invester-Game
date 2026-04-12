@@ -96,27 +96,11 @@ func _on_credit_repair_button_pressed() -> void:
 		var boost = randi_range(10, 25)
 		Globals.credit_score = clamp(Globals.credit_score + boost, 300, 850)
 		
-		show_floating_label("Credit Repaired! +%d Points" % boost, Color.CYAN)
+		Globals.notify("Credit Repaired! +%d Points" % boost, Color.CYAN)
 		
 		# Optional: Disable the button for the rest of the month
 		$Credit_Repair_Button.disabled = true
 	elif Globals.credit_score >= 850:
-		show_floating_label("Credit is already perfect!", Color.WHITE)
+		Globals.notify("Credit is already perfect!", Color.WHITE)
 	else:
-		show_floating_label("Not enough money! Need $5,000", Color.RED)
-
-func show_floating_label(text: String, color: Color = Color.WHITE):
-	# We find the HUD dynamically so any script can call this
-	var ui_layer = get_tree().get_root().find_child("HUD", true, false)
-	if ui_layer:
-		var label = Label.new()
-		label.text = text
-		label.add_theme_color_override("font_color", color)
-		# Center it on screen or follow mouse
-		label.position = ui_layer.get_viewport().get_mouse_position() 
-		ui_layer.add_child(label)
-		
-		var tween = ui_layer.get_tree().create_tween()
-		tween.tween_property(label, "position:y", label.position.y - 80, 2.0)
-		tween.parallel().tween_property(label, "modulate:a", 0, 2.0)
-		tween.tween_callback(label.queue_free)
+		Globals.notify("Not enough money! Need $5,000", Color.RED)

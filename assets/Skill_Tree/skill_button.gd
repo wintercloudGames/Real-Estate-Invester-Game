@@ -43,9 +43,9 @@ var _is_initializing_from_globals: bool = false
 @export var job_mod_amount: int = 1
 @export var work_bonus_amount: float = 0.50
 @export var work_amount:int = 1
-@export var exp_boost:float = 0.05
+@export var exp_boost:float = 0.50
 @export var rent_finder_boost:float = -0.10
-@export var points_per_level: int = 5 # How many category points gained per skill level
+@export var points_per_level: int = 5 
 
 @export_category("Visual Settings")
 @export var unlocked_color: Color = Color.WHITE
@@ -69,8 +69,12 @@ var is_mouse_over: bool = false
 var _children_skills: Array[SkillNode] = []
 
 func _ready() -> void:
+	# Ensure pivot is centered for the pulse effect
+	pivot_offset = size / 2
+	
 	_update_display()
 	_update_visual_state()
+	
 	if level_costs.size() < max_level:
 		level_costs.resize(max_level)
 		for i in range(level_costs.size()):
@@ -81,7 +85,6 @@ func _ready() -> void:
 	await get_tree().process_frame
 	_check_global_unlock_status()
 	visibility_changed.connect(_on_visibility_changed)
-	await get_tree().process_frame
 	
 	var parent_node = get_parent()
 	if parent_node is SkillNode:
@@ -119,7 +122,6 @@ func _check_global_unlock_status() -> void:
 		AppSkills.STOCK_APP: if Globals.has_stock_app: new_level = max_level; should_update_level = true
 		AppSkills.RENT_FINDER_UPGRADE: if Globals.rent_finder_upgrade: new_level = max_level; should_update_level = true
 		
-		# --- CHECKING JOB POINTS ---
 		AppSkills.LABOR_POINTS:
 			new_level = int(Globals.labor_points / points_per_level)
 			should_update_level = true
@@ -166,9 +168,15 @@ func _unlock_app_skill() -> void:
 	match app_skill_to_unlock:
 		AppSkills.HIRING_APP: Globals.has_hireing_app = true
 		AppSkills.INFO_APP: Globals.has_info_app = true
-		AppSkills.BANK_APP: Globals.has_bank_app = true
-		AppSkills.STOCK_APP: Globals.has_stock_app = true
-		AppSkills.MANAGER_APP: Globals.has_manager_app = true
+		AppSkills.BANK_APP: 
+			Globals.has_bank_app = true
+			Globals.notify("New App: Bank Access unlocked!", Color.CYAN)
+		AppSkills.STOCK_APP: 
+			Globals.has_stock_app = true
+			Globals.notify("New App: Stock Market unlocked!", Color.GOLD)
+		AppSkills.MANAGER_APP: 
+			Globals.has_manager_app = true
+			Globals.notify("New Feature: Property Manager available.", Color.AQUAMARINE)
 		AppSkills.CREDIT_APP: Globals.credit_app = true
 		AppSkills.RENT_HOUSES: Globals.rent_houses = true
 		AppSkills.RENT_FINDER_UPGRADE: Globals.rent_finder_upgrade = true
@@ -178,7 +186,6 @@ func _unlock_app_skill() -> void:
 		AppSkills.JOB_BONUS: Globals.Job_bonus = true
 		AppSkills.BUSINESS_BONUS: Globals.business_bonus = true
 		
-		# --- APPLYING JOB CATEGORY POINTS ---
 		AppSkills.LABOR_POINTS: Globals.labor_points = level * points_per_level
 		AppSkills.SERVICES_POINTS: Globals.services_points = level * points_per_level
 		AppSkills.TRADE_POINTS: Globals.trade_points = level * points_per_level
@@ -205,8 +212,6 @@ func _update_display() -> void:
 
 func _update_visual_state() -> void:
 	if not is_inside_tree(): return
-	if level_colors.size() > level: self_modulate = level_colors[level]
-	else: self_modulate = unlocked_color
 	
 	var parent_requirements_met = _check_parent_requirements()
 	var has_enough_points = Globals.skillpoints >= get_next_level_cost()
@@ -220,13 +225,14 @@ func _update_visual_state() -> void:
 		self_modulate = Color.DARK_GRAY
 		mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN
 	elif !has_enough_points:
-		disabled = true
+		disabled = false # Keep it clickable so we can show the "Not enough points" notification
 		self_modulate = Color.DARK_RED
-		mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	else:
 		disabled = false
 		self_modulate = Color.WHITE
 		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	
 	_update_children_visuals()
 
 func _update_children_visuals() -> void:
@@ -240,22 +246,41 @@ func _check_parent_requirements() -> bool:
 
 func _on_pressed() -> void:
 	var cost = get_next_level_cost()
-	if can_level_up() and Globals.skillpoints >= cost and _check_parent_requirements():
-		Globals.skillpoints -= cost
-		if skill_tree and skill_tree.has_method("on_skill_unlocked"):
-			skill_tree.on_skill_unlocked(skill_name, cost)
-		level += 1
-		_pulse_effect()
+	
+	# 1. Check Parent Req
+	if not _check_parent_requirements():
+		Globals.notify("Locked: Max out " + parent_skill.skill_name + " first!", Color.ORANGE)
+		return
+		
+	# 2. Check Level Cap
+	if not can_level_up():
+		return
+
+	# 3. Check Points
+	if Globals.skillpoints < cost:
+		Globals.notify("Not enough points! Need " + str(cost), Color.CRIMSON)
+		return
+
+	# 4. Success Logic
+	Globals.skillpoints -= cost
+	level += 1
+	
+	Globals.notify("Unlocked: " + skill_name + " (Lvl " + str(level) + ")", Color.SPRING_GREEN)
+	
+	if skill_tree and skill_tree.has_method("on_skill_unlocked"):
+		skill_tree.on_skill_unlocked(skill_name, cost)
+	
+	_pulse_effect()
 
 func can_level_up() -> bool: return level < max_level
 
 func _pulse_effect() -> void:
 	var tween = create_tween()
-	# Scale up to 1.2x size over 0.1 seconds
-	tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	# Scale back to normal over 0.2 seconds
+	# Bind tween to self for safety
+	tween.tween_property(self, "scale", Vector2(1.15, 1.15), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-
+	
+	
 func get_next_level_cost() -> int:
 	if level < level_costs.size(): return level_costs[level]
 	return 1

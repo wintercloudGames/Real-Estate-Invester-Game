@@ -75,7 +75,7 @@ func add_comma_to_int(value: int) -> String:
 
 func _on_make_payment_pressed() -> void:
 	if Globals.money < payment:
-		show_floating_label("Need $%s!" % add_comma_to_int(int(payment)), Color.RED)
+		Globals.notify("Need $%s!" % add_comma_to_int(int(payment)), Color.RED)
 		return
 	Globals.credit_score += 2
 	var interest_payment = loan_balance * (interest / 12.0)
@@ -105,14 +105,14 @@ func _on_make_payment_pressed() -> void:
 			var tween = create_tween()
 			tween.tween_property(self, "modulate:a", 0, 0.5)
 			tween.tween_callback(queue_free)
-			show_floating_label("LOAN PAID OFF!", Color.GOLD)
+			Globals.notify("LOAN PAID OFF!", Color.GOLD)
 	update_ui()
 	SaveAndLoad.save_game()
 	
 	var ui_layer = get_node("/root/Root/UserInterface/Game/HUD")
 	if ui_layer and is_instance_valid(ui_layer):
 		var label = Label.new()
-	show_floating_label("Paid $" + add_comma_to_int(int(payment)),Color.GREEN)
+	Globals.notify("Paid A Loan -$" + add_comma_to_int(int(payment)),Color.RED)
 	Globals.recalculate_expenses()
 
 func _on_autopay_toggled(toggled: bool) -> void:
@@ -129,10 +129,10 @@ func _on_timer_timeout() -> void:
 		if Globals.money >= payment:
 			_on_make_payment_pressed()
 		else:
-			show_floating_label("Autopay Failed: Insufficient Funds", Color.RED)
+			Globals.notify("Autopay Failed: Insufficient Funds", Color.RED)
 			Globals.credit_score = clamp(Globals.credit_score - 10, 300, 850)
 	else:
-		show_floating_label("Loan Payment Due!", Color.YELLOW)
+		Globals.notify("Loan Payment Due!", Color.YELLOW)
 
 func _on_refinance_pressed() -> void:
 	# 1. Get the current market rate from the main UI script
@@ -143,13 +143,13 @@ func _on_refinance_pressed() -> void:
 
 	# 2. Only allow if the new rate is actually better
 	if current_market_rate >= interest:
-		show_floating_label("Market rates are too high to refinance!", Color.ORANGE)
+		Globals.notify("Market rates are too high to refinance!", Color.ORANGE)
 		return
 
 	# 3. Apply a "Refinance Fee" (e.g., 2% of balance)
 	var fee = loan_balance * 0.02
 	if Globals.money < fee:
-		show_floating_label("Need $%s for Refinance Fee!" % add_comma_to_int(int(fee)), Color.RED)
+		Globals.notify("Need $%s for Refinance Fee!" % add_comma_to_int(int(fee)), Color.RED)
 		return
 
 	Globals.money_out(fee)
@@ -159,12 +159,13 @@ func _on_refinance_pressed() -> void:
 	payment = calculate_mortgage_payment(loan_balance, months, interest)
 	
 	update_ui()
-	show_floating_label("Refinanced to %.1f%%!" % (interest * 100), Color.GREEN)
+	Globals.notify("Refinanced to %.1f%%!" % (interest * 100), Color.GREEN)
 
 func _on_payoff_pressed() -> void:
 	if Globals.money >= loan_balance:
 		Globals.money_out(loan_balance)
 		Globals.exp += 5 * Globals.exp_boost # Bonus exp for paying off loan
+		Globals.notify("EXP + " + 5 * Globals.exp_boost,Color.YELLOW)
 		Globals.credit_score = clamp(Globals.credit_score - 10, 300, 850)
 		
 		if house_ref and is_instance_valid(house_ref):
@@ -180,10 +181,10 @@ func _on_payoff_pressed() -> void:
 			loans_ui.active_loan_mods.erase(self)
 			queue_free()
 		update_ui()
-		show_floating_label("Loan paid off!", Color.GREEN)
+		Globals.notify("Loan paid off!", Color.GREEN)
 	else:
 		push_warning("Insufficient funds to pay off loan: id=%s, balance=%s, money=%s" % [loan_id, loan_balance, Globals.money])
-		show_floating_label("Need $%s to pay off!" % add_comma_to_int(int(loan_balance)), Color.RED)
+		Globals.notify("Need $%s to pay off!" % add_comma_to_int(int(loan_balance)), Color.RED)
 	Globals.recalculate_expenses()
 
 func calculate_mortgage_payment(loan_amount: float, months: int, interest_rate: float) -> float:
@@ -193,19 +194,3 @@ func calculate_mortgage_payment(loan_amount: float, months: int, interest_rate: 
 	var monthly_rate = interest_rate / 12.0
 	var payment = loan_amount * (monthly_rate * pow(1 + monthly_rate, months)) / (pow(1 + monthly_rate, months) - 1)
 	return payment
-
-func show_floating_label(text: String, color: Color = Color.WHITE) -> void:
-	var ui_layer = get_node("/root/Root/UserInterface/Game/HUD")
-	if ui_layer and is_instance_valid(ui_layer):
-		var label = Label.new()
-		label.text = text
-		label.add_theme_color_override("font_color", color)
-		label.set_anchors_preset(Control.PRESET_CENTER)  # Anchor to screen center
-		# Set initial position to the center of the screen
-		var screen_size = get_viewport().size
-		label.position = screen_size / 2
-		ui_layer.add_child(label)
-		var tween = get_tree().create_tween()
-		tween.tween_property(label, "position:y", label.position.y - 50, 1.5)  # Move up 50 pixels
-		tween.tween_property(label, "modulate:a", 0, 1.5)  # Fade out
-		tween.tween_callback(label.queue_free)

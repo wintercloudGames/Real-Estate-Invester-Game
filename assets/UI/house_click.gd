@@ -218,7 +218,7 @@ func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node 
 func sell_house():
 	Globals.money += current_price
 	Globals.Propertys -= 1
-	
+	Globals.notify("house sold",Color.GREEN)
 	remove_tenant()
 	
 	if has_loan:

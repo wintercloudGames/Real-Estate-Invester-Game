@@ -340,6 +340,120 @@ func add_starter_loan():
 			null                     # no house ref
 		)
 
+func notify_action(message: String, color: Color = Color.WHITE, action_target: Node = null) -> void:
+	var list = get_tree().get_first_node_in_group("notification_list")
+	if not list: return
+
+	var hbox = HBoxContainer.new()
+	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
+	var new_label = Label.new()
+	new_label.text = "> " + message
+	new_label.add_theme_color_override("font_color", color)
+	new_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	new_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hbox.add_child(new_label)
+	
+	if action_target != null:
+		var btn = Button.new()
+		btn.text = "Relist"
+		hbox.add_child(btn)
+		btn.pressed.connect(func():
+			if is_instance_valid(action_target):
+				action_target._on_relist_house_button_pressed()
+			if is_instance_valid(hbox):
+				hbox.queue_free()
+		)
+
+	list.add_child(hbox)
+	
+	var scroll = list.get_parent()
+	if scroll is ScrollContainer:
+		await get_tree().process_frame
+		if is_instance_valid(list):
+			scroll.scroll_vertical = int(list.size.y)
+		
+	var wait_time = 20.0 if action_target else 10.0
+	get_tree().create_timer(wait_time).timeout.connect(func():
+		# Safety check: ensure game isn't closing and node still exists
+		if is_instance_valid(hbox) and hbox.is_inside_tree():
+			var tween = hbox.create_tween() # Bind tween to the node
+			tween.tween_property(hbox, "modulate:a", 0, 0.5)
+			tween.tween_callback(hbox.queue_free)
+	)
+
+func notify(message: String, color: Color = Color.WHITE) -> void:
+	var list = get_tree().get_first_node_in_group("notification_list") 
+	
+	if not list:
+		list = get_node_or_null("/root/Root/UserInterface/Game/HUD/Universal_Text_Box/MarginContainer/ScrollContainer/VBoxContainer")
+
+	if not list or not is_instance_valid(list):
+		return
+
+	# --- DEEP STACKING LOGIC ---
+	# We look back through the last 5 notifications to find a match
+	var children = list.get_children()
+	var search_depth = min(children.size(), 5) 
+	var found_match = false
+	
+	for i in range(1, search_depth + 1):
+		var target = children[children.size() - i]
+		if is_instance_valid(target) and target.get_meta("raw_message", "") == message:
+			# Match found! Update it
+			var count = target.get_meta("count", 1) + 1
+			target.set_meta("count", count)
+			target.text = "> " + message + " (x" + str(count) + ")"
+			
+			# Move it to the bottom so the player sees the "newest" update
+			list.move_child(target, list.get_child_count() - 1)
+			
+			_setup_notification_timer(target)
+			found_match = true
+			break
+			
+	if found_match:
+		_scroll_to_bottom(list)
+		return
+	# --- END DEEP STACKING LOGIC ---
+
+	# Create new label if no match was found in the last 5 lines
+	var new_label = Label.new()
+	new_label.text = "> " + message
+	new_label.add_theme_color_override("font_color", color)
+	new_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	
+	new_label.set_meta("raw_message", message)
+	new_label.set_meta("count", 1)
+	
+	list.add_child(new_label)
+	_scroll_to_bottom(list)
+	_setup_notification_timer(new_label)
+
+func _scroll_to_bottom(list):
+	var scroll_container = list.get_parent()
+	if scroll_container is ScrollContainer:
+		await get_tree().process_frame
+		if is_instance_valid(list):
+			scroll_container.scroll_vertical = int(list.size.y)
+
+func _setup_notification_timer(node: Label) -> void:
+	# Kill existing timer if it exists to reset lifespan
+	if node.has_meta("fade_tween"):
+		var old_tween = node.get_meta("fade_tween")
+		if old_tween and old_tween.is_valid(): old_tween.kill()
+
+	var timer_duration = randi_range(20, 35)
+	
+	# We use a SceneTreeTimer for the delay, then a Tween for the fade
+	get_tree().create_timer(timer_duration).timeout.connect(func():
+		if is_instance_valid(node) and node.is_inside_tree():
+			var tween = node.create_tween()
+			node.set_meta("fade_tween", tween) # Store to kill it if message stacks again
+			tween.tween_property(node, "modulate:a", 0, 0.5)
+			tween.tween_callback(node.queue_free)
+	)
+
 func caculate_networth():
 	pass
 
@@ -347,6 +461,8 @@ func monthy():
 	money += job_income
 	money -= Expenses
 	record_credit_score()
+	if credit_app == true:
+		notify("Credit Score: " + str(credit_score), Color.DEEP_SKY_BLUE)
 	if exp_boost > 0:
 		exp += job_exp_per_month * exp_boost
 	else:

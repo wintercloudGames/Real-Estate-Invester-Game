@@ -78,28 +78,15 @@ func tenant_pays_rent():
 	if Globals.hasagent and rent_collect_timer:
 		rent_collect_timer.start(2.0)
 
-func show_floating_label(message: String, color: Color) -> void:
-	var canvas_layer = CanvasLayer.new()
-	add_child(canvas_layer)
-	var label = Label.new()
-	label.text = message
-	label.position = Vector2(700, 500)
-	label.modulate = color
-	canvas_layer.add_child(label)
-	var tween = create_tween()
-	tween.tween_property(label, "position", label.position + Vector2(0, -50), 4.0)
-	tween.tween_property(label, "modulate:a", 0, 4.0)
-	tween.tween_callback(label.queue_free)
 
 func collect_rent():
-	
 	if Globals.rent_bost > 0.0 and stored_cash > 0:
 		var boosted_amount = stored_cash * (1.0 + Globals.rent_bost)
 		Globals.money += boosted_amount
-		show_floating_label("Collected Rent: $" + str(boosted_amount) + " (" + str(accumulated_months) + " months)", Color.GREEN)
+		Globals.notify("Collected Rent: $" + str(boosted_amount) + " (" + str(accumulated_months) + " months)", Color.GREEN)
 	elif stored_cash > 0:
 		Globals.money += stored_cash
-		show_floating_label("Collected Rent: $" + str(stored_cash) + " (" + str(accumulated_months) + " months)", Color.GREEN)
+		Globals.notify("Collected Rent: $" + str(stored_cash) + " (" + str(accumulated_months) + " months)", Color.GREEN)
 	
 	var months_collected = accumulated_months
 	stored_cash = 0

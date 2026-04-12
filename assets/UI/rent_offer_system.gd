@@ -41,7 +41,7 @@ func _process(delta):
 
 func on_market_condition_changed(market_condition: float):
 	# Visual feedback
-	show_floating_label("Market Change: %s%.1f%%" % [
+	Globals.notify("Market Change: %s%.1f%%" % [
 		"+" if market_condition > 1.0 else "", 
 		(market_condition - 1.0) * 100
 	], Color.SKY_BLUE)
@@ -164,7 +164,7 @@ func _on_renter_selected(rent_amount: int, renter_stats: Dictionary):
 			60: duration_text = "5-year lease"
 			_: duration_text = "%d-month" % renter_stats.lease_length
 		
-		show_floating_label("Tenant Added! (%s lease)" % duration_text, Color.GREEN)
+		Globals.notify("Tenant Added! (%s lease)" % duration_text, Color.GREEN)
 		
 
 func clear_offers_ui():
@@ -181,9 +181,7 @@ func generate_renter_name() -> String:
 
 func auto_generate_and_add_tenant():
 	if not house: 
-
 		return
-	
 	# Generate rent amount
 	var house_value = house.current_price
 	var annual_min = house_value * 0.05
@@ -200,7 +198,7 @@ func auto_generate_and_add_tenant():
 	house.payment_punctuality = renter_stats.payment_punctuality
 	
 	# Show notification
-	show_floating_label("Auto-rented: $" + str(monthly_rent), Color.GREEN)
+	Globals.notify("Auto-rented: $" + str(monthly_rent), Color.GREEN)
 	
 
 # In rent_offer_system.gd
@@ -242,19 +240,6 @@ func generate_renter_stats() -> Dictionary:
 		"lease_length": selected_lease
 	}
 
-
-
-func show_floating_label(text: String, color: Color = Color.WHITE):
-	if ui_layer:
-		var label = Label.new()
-		label.text = text
-		label.modulate = color
-		ui_layer.add_child(label)
-		
-		var tween = create_tween()
-		tween.tween_property(label, "position:y", label.position.y - 50, 1.5)
-		tween.parallel().tween_property(label, "modulate:a", 0, 1.5)
-		tween.tween_callback(label.queue_free)
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)

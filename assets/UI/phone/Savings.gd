@@ -30,41 +30,26 @@ func _on_remove_funds():
 	if amount > 0 and Globals.Savings_balance >= amount:
 		remove_savings(amount)
 	else:
-		show_floating_label("Insufficient savings or invalid amount!", Color.RED)
+		Globals.notify("Insufficient savings or invalid amount!", Color.RED)
 
 func _on_deposit_funds():
 	var amount = savings_amount_input.text.to_int()
 	if amount > 0 and Globals.money >= amount:
 		deposit_savings(amount)
 	else:
-		show_floating_label("Insufficient funds or invalid amount!", Color.RED)
+		Globals.notify("Insufficient funds or invalid amount!", Color.RED)
 
 func remove_savings(amount: int):
 	Globals.money += amount  # Add to cash
 	Globals.Savings_balance -= amount  # Remove from savings
-	show_floating_label("Took Out $" + add_comma_to_int(amount) + " From Savings", Color.RED)
+	Globals.notify("Took Out $" + add_comma_to_int(amount) + " From Savings", Color.RED)
 
 func deposit_savings(amount: int):
 	Globals.money -= amount  # Remove from cash
 	Globals.Savings_balance += amount  # Add to savings
 
-	show_floating_label("Deposited $" + add_comma_to_int(amount) + " to Savings", Color.GREEN)
+	Globals.notify("Deposited $" + add_comma_to_int(amount) + " to Savings", Color.GREEN)
 
-
-# Creates a floating label that moves up and fades out
-func show_floating_label(text: String, color: Color = Color.WHITE):
-	if ui_layer:
-		var label = Label.new()
-		label.text = text
-		label.add_theme_color_override("font_color", color)
-		label.set_anchors_preset(Control.PRESET_CENTER)
-		label.set_position(Vector2(100, 100))
-		ui_layer.add_child(label)
-
-		var tween = get_tree().create_tween()
-		tween.tween_property(label, "position:y", label.position.y - 50, 1.5)
-		tween.tween_property(label, "modulate:a", 0, 1.5)
-		tween.tween_callback(label.queue_free)
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
@@ -77,7 +62,7 @@ func _on_remove_all_funds_button_pressed() -> void:
 	if Globals.Savings_balance > 0:
 		remove_savings(Globals.Savings_balance)
 	else:
-		show_floating_label("No savings to withdraw!", Color.RED)
+		Globals.notify("No savings to withdraw!", Color.RED)
 
 func _on_send_intrest_to_toggled(toggled_on: bool) -> void:
 	Globals.send_to_account = toggled_on

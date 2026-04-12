@@ -111,27 +111,27 @@ func update_ui():
 	if $"../Phone/house_manager/ScrollContainer/Rental_mod_Container".get_child_count() < 0:
 		push_warning("Rental_mod_Container has negative child count, which should be impossible")
 
-func spawn_floating_label(start_pos: Vector2) -> void:
-	var canvas_layer = CanvasLayer.new()
-	add_child(canvas_layer)
-	
-	var label = Label.new()
-	if Globals.cashflow < 0:
-		label.text = "Paid Expenses " + add_comma_to_int(Globals.cashflow) + "$"
-	else:
-		label.text = "Cashflow: +" + add_comma_to_int(Globals.cashflow) + "$"
-	
-	label.position = start_pos + Vector2(200, 150)
-	label.modulate = Color(1, 1, 1, 1)
-	canvas_layer.add_child(label)
-
-	var tween = create_tween()
-	tween.tween_property(label, "position", label.position + Vector2(0, -50), 1.0)
-	tween.tween_property(label, "modulate:a", 0, 4.0)
-	tween.tween_callback(label.queue_free)
-
 func _on_timer_timeout() -> void:
+	# Save the game and process monthly income/expenses
 	$"../Quit_menu".save_game()
 	Globals.monthy()
-	spawn_floating_label(Vector2(500, 200))
+	
+	# Determine the message and color based on cashflow
+	var message: String = ""
+	var msg_color: Color = Color.WHITE
+	
+	if Globals.cashflow < 0:
+		message = "Monthly Expenses Paid: " + add_comma_to_int(Globals.cashflow) + "$"
+		msg_color = Color.LIGHT_CORAL # Reddish for expenses
+	else:
+		message = "Monthly Cashflow: +" + add_comma_to_int(Globals.cashflow) + "$"
+		msg_color = Color.SPRING_GREEN # Green for profit
+	
+	# Use your new sidebar system instead of the floating label
+	Globals.notify(message, msg_color)
+	
+	# Restart the cycle
 	$Timer.start()
+
+func _on_show_log_pressed() -> void:
+	$"../Universal_Text_Box".visible = !$"../Universal_Text_Box".visible

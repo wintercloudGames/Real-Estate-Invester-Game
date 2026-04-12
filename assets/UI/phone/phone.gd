@@ -101,20 +101,6 @@ func get_out():
 	visible = true
 	$AnimationPlayer.play("get_out")
 
-func show_floating_label(text: String, color: Color = Color.WHITE):
-	if ui_layer:
-		var label = Label.new()
-		label.text = text
-		label.add_theme_color_override("font_color", color)
-		label.set_anchors_preset(Control.PRESET_CENTER)
-		label.set_position(Vector2(0, -50))
-		ui_layer.add_child(label)
-
-		var tween = get_tree().create_tween()
-		tween.tween_property(label, "position:y", label.position.y - 50, 1.5)
-		tween.tween_property(label, "modulate:a", 0, 1.5)
-		tween.tween_callback(label.queue_free)
-
 func _on_texture_button_pressed() -> void:
 	put_away()
 
@@ -132,9 +118,6 @@ func _on_house_info_pressed() -> void:
 	$house_info.visible = true
 
 func _on_job_pressed() -> void:
-	if Globals.player_has_employees == false and Business_UI.job_time > 0:
-		show_floating_label("You Have Business Work And No Employees")
-	else:
 		$job_info.visible = true
 		
 func _on_player_stats_pressed() -> void:

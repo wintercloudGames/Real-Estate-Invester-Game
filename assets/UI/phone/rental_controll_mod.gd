@@ -98,15 +98,15 @@ func _on_remove_tenent_button_pressed():
 	
 func _on_refinance_button_pressed() -> void:
 	if not is_instance_valid(house):
-		show_floating_label("Invalid house!", Color.RED)
+		Globals.notify("Invalid house!", Color.RED)
 		return
 	
 	if not house.owned:
-		show_floating_label("You don't own this house!", Color.RED)
+		Globals.notify("You don't own this house!", Color.RED)
 		return
 	
 	if not house.has_loan:
-		show_floating_label("No existing mortgage to refinance!", Color.RED)
+		Globals.notify("No existing mortgage to refinance!", Color.RED)
 		return
 	
 	# Locate the Loans UI and find the mortgage for this house
@@ -115,7 +115,7 @@ func _on_refinance_button_pressed() -> void:
 		loans_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans")
 	
 	if not loans_ui or not is_instance_valid(loans_ui):
-		show_floating_label("Loan system unavailable!", Color.RED)
+		Globals.notify("Loan system unavailable!", Color.RED)
 		return
 	
 	var loan_mod = null
@@ -125,7 +125,7 @@ func _on_refinance_button_pressed() -> void:
 			break
 	
 	if not loan_mod or not is_instance_valid(loan_mod):
-		show_floating_label("No active mortgage found for this house!", Color.RED)
+		Globals.notify("No active mortgage found for this house!", Color.RED)
 		return
 	
 	# ────────────────────────────────────────────────
@@ -143,14 +143,14 @@ func _on_refinance_button_pressed() -> void:
 	elif Globals.credit_score >= 500:
 		new_interest_rate = 0.06
 	else:
-		show_floating_label("Credit score too low to refinance!", Color.RED)
+		Globals.notify("Credit score too low to refinance!", Color.RED)
 		return
 	
 	# Optional: small guaranteed improvement if already good rate
 	# new_interest_rate = min(new_interest_rate, loan_mod.interest - 0.005)
 	
 	if new_interest_rate >= loan_mod.interest and new_months >= loan_mod.months:
-		show_floating_label("No better terms available right now.", Color.YELLOW)
+		Globals.notify("No better terms available right now.", Color.YELLOW)
 		return
 	var current_balance: float = loan_mod.loan_balance
 	# Calculate new payment
@@ -162,7 +162,7 @@ func _on_refinance_button_pressed() -> void:
 	var new_payment: float = calculate_mortgage_payment(current_balance, new_months, new_interest_rate)
 	
 	if new_payment <= 0 or is_nan(new_payment) or is_inf(new_payment):
-		show_floating_label("Invalid refinance terms!", Color.RED)
+		Globals.notify("Invalid refinance terms!", Color.RED)
 		return
 	
 	# Update loan module
@@ -188,8 +188,7 @@ func _on_refinance_button_pressed() -> void:
 	if savings > 0:
 		msg += "\nMonthly savings: $%s" % add_comma_to_int(savings)
 	
-	show_floating_label(msg, Color.GREEN)
-	
+	Globals.notify(msg, Color.GREEN)
 	
 	var popup_sound = get_node_or_null("../popupsound")
 	if popup_sound:
@@ -213,25 +212,10 @@ func calculate_mortgage_payment(loan_amount: float, months: int, interest_rate: 
 	
 	return round(payment * 100.0) / 100.0  # round to nearest cent
 
-func show_floating_label(text: String, color: Color = Color.WHITE) -> void:
-	var ui_layer = get_node("/root/Root/UserInterface/Game/HUD")
-	if ui_layer and is_instance_valid(ui_layer):
-		var label = Label.new()
-		label.text = text
-		label.add_theme_color_override("font_color", color)
-		label.set_anchors_preset(Control.PRESET_CENTER)
-		var screen_size = get_viewport().size
-		label.position = screen_size / 2
-		ui_layer.add_child(label)
-		var tween = get_tree().create_tween()
-		tween.tween_property(label, "position:y", label.position.y - 50, 1.5)
-		tween.tween_property(label, "modulate:a", 0, 1.5)
-		tween.tween_callback(label.queue_free)
 
 func _on_sell_button_pressed() -> void:
 	if house:
 		house.sell_house()
-		
 
 func _on_more_button_pressed() -> void:
 	house_info_UI.visible = true
@@ -250,6 +234,4 @@ func _on_collect_rent_button_pressed() -> void:
 		house.paid_rent = false
 		house.Collect_Rent.house = house
 		house.Collect_Rent.collect_rent()
-		
-		
 		

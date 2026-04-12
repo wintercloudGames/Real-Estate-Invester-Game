@@ -5,6 +5,7 @@ extends Control
 @onready var skill_name_label: Label = $DescriptionPanel/Skill_name
 
 @onready var skill_points_label: Label = $Skill_points_label
+@onready var exp_to_level: Label = $Exp_to_level
 
 func _ready() -> void:
 	hide_info()
@@ -73,6 +74,10 @@ func add_skill_points(amount: int) -> void:
 func _update_skill_points_display() -> void:
 	if skill_points_label:
 		skill_points_label.text = "Skill Points: " + str(Globals.skillpoints)
+		
+	if exp_to_level:
+		exp_to_level.text = str(Globals.exp) + " / " + str(Globals.exp_to_level)
+	
 
 # Optional: Refresh display when skill tree is shown
 func _on_visibility_changed() -> void:

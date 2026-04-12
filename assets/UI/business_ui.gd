@@ -159,13 +159,13 @@ func _complete_job() -> void:
 		else:
 			business_worth += job_pay_when_done / 50
 		Globals.Business_worth = business_worth
-		show_floating_label("Job Completed! Earned: $" + add_comma_to_int(job_pay_when_done), Color.GREEN)
+		Globals.notify("Business Job Completed! Earned: $" + add_comma_to_int(job_pay_when_done), Color.GREEN)
 		job_completed.emit(job_pay_when_done, true)
 	else:
 		Globals.money += job_pay_when_done
 		business_worth += job_pay_when_done / 50
 		Globals.business_worth = business_worth
-		show_floating_label("Job Completed! Lost: $" + add_comma_to_int(-job_pay_when_done), Color.RED)
+		Globals.notify("Business Job Completed! Lost: $" + add_comma_to_int(-job_pay_when_done), Color.RED)
 		job_completed.emit(job_pay_when_done, false)
 	
 	_reset_job()
@@ -186,11 +186,11 @@ func add_comma_to_int(value: int) -> String:
 
 func start_business(name: String) -> void:
 	if name.is_empty():
-		show_floating_label("Business Name Can't Be Blank", Color.RED)
+		Globals.notify("Business Name Can't Be Blank", Color.RED)
 		return
 		
 	if Globals.money < startup_cost:
-		show_floating_label("Not enough money to start business", Color.RED)
+		Globals.notify("Not enough money to start business", Color.RED)
 		return
 	
 	Globals.money -= startup_cost
@@ -202,7 +202,7 @@ func start_business(name: String) -> void:
 	$job_progress.visible = true
 	$ProgressBar.visible = true
 	business_worth = expense
-	show_floating_label("Business Created: " + business_name, Color.GREEN)
+	Globals.notify("Business Created: " + business_name, Color.GREEN)
 	business_started.emit(business_name)
 	Globals.recalculate_expenses()
 
@@ -221,7 +221,7 @@ func pay_salaries() -> void:
 	if monthly_cost > 0:
 		Globals.money -= monthly_cost
 		var color = Color.GREEN if Globals.money >= 0 else Color.RED
-		show_floating_label("Paid salaries: $" + add_comma_to_int(salary), color)
+		Globals.notify("Paid salaries: $" + add_comma_to_int(salary), color)
 
 func _update_jobs() -> void:
 	# Add randomness to job duration with weighted probabilities
@@ -362,7 +362,7 @@ func load_business(name: String) -> void:
 	$TabContainer.visible = true
 	$job_progress.visible = true
 	$ProgressBar.visible = true
-	show_floating_label("Business LOADED: " + business_name, Color.GREEN)
+	Globals.notify("Business LOADED: " + business_name, Color.GREEN)
 
 func add_job_mod(payment: int, time: int) -> void:
 	var mod_scene = preload("res://assets/UI/job_offer_mod.tscn")
@@ -407,7 +407,7 @@ func _on_take_job_pressed(payment: int, time: int) -> void:
 	job_time = time
 	job_payment = payment
 	job_pay_when_done = job_payment
-	show_floating_label("Accepted Job", Color.GREEN)
+	Globals.notify("Accepted Job", Color.GREEN)
 	$"../Job_offer_ui".visible = false
 	job_accepted.emit(payment, time)
 	
@@ -415,25 +415,9 @@ func _on_take_job_pressed(payment: int, time: int) -> void:
 	job_offer_timer.stop()
 
 func _on_deny_job_pressed() -> void:
-	show_floating_label("Rejected Job", Color.RED)
+	Globals.notify("Rejected Job", Color.RED)
 	$"../Job_offer_ui".visible = false
 	job_offer_timer.start()
-
-func show_floating_label(text: String, color: Color = Color.WHITE) -> void:
-	if not ui_layer:
-		return
-		
-	var label = Label.new()
-	label.text = text
-	label.add_theme_color_override("font_color", color)
-	label.set_anchors_preset(Control.PRESET_CENTER)
-	label.position.y = -50
-	ui_layer.add_child(label)
-
-	var tween = create_tween()
-	tween.tween_property(label, "position:y", label.position.y - 50, 1.5)
-	tween.parallel().tween_property(label, "modulate:a", 0.0, 1.5)
-	tween.tween_callback(label.queue_free)
 
 func _on_start_a_business_button_pressed() -> void:
 	var business_name_input = $Start_Business/Name_of_Business.text
@@ -444,7 +428,7 @@ func _on_stop_job_button_pressed() -> void:
 	$TabContainer/Job_info/stop_job_button.visible = false
 	if Globals.job_manager == false:
 		$TabContainer/Job_info/Find_jobs_button.visible = true
-	show_floating_label("Job Cancelled", Color.YELLOW)
+	Globals.notify("Job Cancelled", Color.YELLOW)
 
 func _on_find_jobs_button_pressed() -> void:
 	$TabContainer/Job_info/Find_jobs_button.visible = false
@@ -458,12 +442,12 @@ func _on_add_employee_pressed() -> void:
 	var max_employees = get_max_employees()
 	
 	if employees >= max_employees:
-		show_floating_label("Max employees reached for this business tier", Color.RED)
+		Globals.notify("Max employees reached for this business tier", Color.RED)
 		return
 	employees += 1
 	Globals.employees = employees
 	salary += BASE_SALARY
-	show_floating_label("Hired 1 Employee", Color.GREEN)
+	Globals.notify("Hired 1 Employee", Color.GREEN)
 	employee_changed.emit(employees)
 
 func _on_remove_employee_pressed() -> void:
@@ -473,7 +457,7 @@ func _on_remove_employee_pressed() -> void:
 	employees -= 1
 	Globals.employees = employees
 	salary -= BASE_SALARY
-	show_floating_label("Fired 1 Employee", Color.RED)
+	Globals.notify("Fired 1 Employee", Color.RED)
 	employee_changed.emit(employees)
 
 func _on_close_button_pressed() -> void:
@@ -481,7 +465,7 @@ func _on_close_button_pressed() -> void:
 
 func _on_sell_business_button_pressed() -> void:
 	Globals.money += business_worth
-	show_floating_label("Sold Business for: " + add_comma_to_int(business_worth), Color.GREEN)
+	Globals.notify("Sold Business for: " + add_comma_to_int(business_worth), Color.GREEN)
 	business_sold.emit(business_worth)
 	
 	# Reset business state
