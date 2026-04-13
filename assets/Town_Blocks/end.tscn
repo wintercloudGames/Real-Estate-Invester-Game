@@ -124,7 +124,7 @@ size = Vector3(0.12440137, 1, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nw3m1"]
 size = Vector3(1, 1, 0.123046875)
 
-[node name="End" type="Node3D"]
+[node name="End" type="Node3D" groups=["level_grid"]]
 
 [node name="road_endRound" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)

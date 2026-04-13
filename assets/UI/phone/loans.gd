@@ -35,7 +35,6 @@ func _process(_delta: float) -> void:
 func update_ui():
 	var heat = get_market_heat()
 	var amount = loan_amount_input.text.to_int()
-	
 	# --- 1. Calculate the Interest Rate (Matches take_loan logic) ---
 	var base_rate = 0.12
 	if Globals.credit_score >= 750: base_rate = 0.05
@@ -70,9 +69,9 @@ func update_ui():
 	else:
 		monthly_preview_label.text = "Enter an amount to see payment"
 		monthly_preview_label.modulate = Color.GRAY
-	# 2. Calculate Dynamic Max Loan
+
 	if max_loan_label:
-		var base_max = 500
+		var base_max = 1000
 		var credit_cat = "Below Poor"
 		
 		if Globals.credit_score >= 750: base_max = 100000; credit_cat = "Great"
@@ -80,9 +79,14 @@ func update_ui():
 		elif Globals.credit_score >= 620: base_max = 25000; credit_cat = "Fair"
 		elif Globals.credit_score >= 500: base_max = 10000; credit_cat = "Poor"
 		
-		# Banks lend more in a boom, but tighten up significantly in a crash
+		# Calculate multiplier
 		var market_multiplier = heat if heat > 0.8 else heat * 0.4
-		var final_max = int(base_max * market_multiplier)
+		
+		# Calculate raw max and apply a minimum floor of $500
+		var raw_max = max(base_max * market_multiplier, 500)
+		
+		# Round to closest 50
+		var final_max = int(round(raw_max / 50.0) * 50)
 		
 		max_loan_label.text = "Max Loan: $%s\n(Credit: %s | Market: x%.2f)" % [
 			add_comma_to_int(final_max), credit_cat, market_multiplier

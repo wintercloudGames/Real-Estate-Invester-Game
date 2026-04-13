@@ -1,16 +1,20 @@
 extends Node3D
 
-# Camera movement settings
+# --- Camera Movement Settings ---
 @export var move_speed: float = 10.0
-@export var drag_sensitivity: float = 0.05 # Adjusted for drag feel
+@export var drag_sensitivity: float = 0.02
 @export var zoom_speed: float = 5.0
 @export var min_zoom_distance: float = 5.0
 @export var max_zoom_distance: float = 50.0
-@export var edge_scroll_speed: float = 20.0
+@export var edge_scroll_speed: float = 15.0
 @export var edge_margin: int = 20
 @export var max_distance: float = 30.0
 
-# FRUSTUM CULLING SETTINGS
+# --- Inertia / Throw Settings ---
+@export var friction: float = 0.93          # 0.9 is snappy, 0.98 is very "slidery"
+@export var momentum_multiplier: float = 1.5 # How much "kick" the throw has
+
+# --- Frustum Culling Settings ---
 @export var enable_frustum_culling: bool = true
 @export var cull_check_interval: float = 0.2
 @export var cull_distance_multiplier: float = 1.5
@@ -18,14 +22,11 @@ extends Node3D
 # Internal variables
 var _target_zoom_distance: float = 10.0
 var _cull_timer: float = 0.0
-var _process_interval: float = 0.0
-var _process_timer: float = 0.0
-
-# Drag variables
+var _velocity: Vector3 = Vector3.ZERO # Stores the "throw" momentum
 var _is_dragging: bool = false
+var initial_position: Vector3
 
 @onready var cam = $Camera3D
-var initial_position: Vector3
 
 func _ready():
 	_target_zoom_distance = cam.position.distance_to(self.position)
@@ -35,50 +36,57 @@ func _ready():
 		perform_frustum_culling()
 
 func _process(delta):
-	_process_timer += delta
-	if _process_timer >= _process_interval:
-		_process_timer = 0.0
-		_process_interval = max(0.016, Engine.get_frames_per_second() / 1000.0)
+	# 1. Apply Momentum (The Glide)
+	if _velocity.length() > 0.01:
+		var new_pos = position + _velocity * delta
+		
+		# Keep within boundaries
+		if new_pos.distance_to(initial_position) <= max_distance:
+			position = new_pos
+		else:
+			_velocity = Vector3.ZERO # Instant stop at border
+		
+		# 2. Apply Friction (Gradual slowdown)
+		if not _is_dragging:
+			_velocity *= friction
 	
 	# Only allow keyboard/edge movement if not currently dragging
 	if not _is_dragging:
 		handle_movement(delta)
-		handle_edge_scroll(delta)
+		#handle_edge_scroll(delta)
 		
 	handle_zoom(delta)
 	
+	# Frustum Culling Timer
 	if enable_frustum_culling:
 		_cull_timer += delta
 		if _cull_timer >= cull_check_interval:
 			_cull_timer = 0.0
 			perform_frustum_culling()
 
-func _input(event):
-	# Toggle Culling
-	if event.is_action_pressed("ui_page_up"):
-		enable_frustum_culling = !enable_frustum_culling
-		if enable_frustum_culling:
-			perform_frustum_culling()
+var _last_mouse_pos: Vector2 = Vector2.ZERO
 
+func _input(event):
 	# Handle Drag Initiation
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			_is_dragging = event.pressed
-			# Optional: Capture mouse to prevent hitting screen edges while dragging
 			if _is_dragging:
-				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-			else:
-				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+				# Store position when we first click so we don't "jump"
+				_last_mouse_pos = get_viewport().get_mouse_position()
+				_velocity = Vector3.ZERO 
 
 	# Handle Drag Motion
 	if event is InputEventMouseMotion and _is_dragging:
-		handle_drag_pan(event.relative)
+		var current_mouse_pos = event.position
+		var relative_motion = current_mouse_pos - _last_mouse_pos
+		_last_mouse_pos = current_mouse_pos # Update for next frame
+		
+		handle_drag_pan(relative_motion)
 
 func handle_drag_pan(relative_motion: Vector2):
-	if Globals.yard_edit:
-		return
+	if Globals.yard_edit: return
 		
-	# Get camera direction vectors (normalized for horizontal movement)
 	var forward = -transform.basis.z
 	forward.y = 0
 	forward = forward.normalized()
@@ -87,46 +95,40 @@ func handle_drag_pan(relative_motion: Vector2):
 	right.y = 0
 	right = right.normalized()
 
-	# Scale movement by zoom level so it doesn't feel too fast when zoomed in
 	var zoom_factor = _target_zoom_distance / 10.0
+	
+	# Calculate move vector (inverted relative_motion to pull the world)
 	var move_vec = (right * -relative_motion.x + forward * relative_motion.y) * drag_sensitivity * zoom_factor
 	
-	var new_position = position + move_vec
+	# Set velocity for the "throw"
+	_velocity = (move_vec / get_process_delta_time()) * momentum_multiplier
 	
-	# Keep within boundaries
+	var new_position = position + move_vec
 	if new_position.distance_to(initial_position) <= max_distance:
 		position = new_position
 
 func handle_movement(delta: float):
-	var direction = Vector3.ZERO
-	if Globals.yard_edit:
+	if Globals.yard_edit or Globals.Editing_Business_Text:
 		return
 	
-	if Globals.Editing_Business_Text == false:
-		if Input.is_action_pressed("move_forward"):
-			direction.z -= 1
-		if Input.is_action_pressed("move_back"):
-			direction.z += 1
-		if Input.is_action_pressed("move_left"):
-			direction.x -= 1
-		if Input.is_action_pressed("move_right"):
-			direction.x += 1
+	var direction = Vector3.ZERO
+	if Input.is_action_pressed("move_forward"): direction.z -= 1
+	if Input.is_action_pressed("move_back"): direction.z += 1
+	if Input.is_action_pressed("move_left"): direction.x -= 1
+	if Input.is_action_pressed("move_right"): direction.x += 1
 
 	if direction.length() > 0:
 		direction = direction.normalized()
-
-	var speed_multiplier = 2.0 if Input.is_action_pressed("faster") else 1.0
-	var new_position = position + direction * move_speed * speed_multiplier * delta
-	
-	if new_position.distance_to(initial_position) <= max_distance:
-		position = new_position
+		var speed_multiplier = 2.0 if Input.is_action_pressed("faster") else 1.0
+		var new_position = position + direction * move_speed * speed_multiplier * delta
+		
+		if new_position.distance_to(initial_position) <= max_distance:
+			position = new_position
 
 func handle_zoom(delta: float):
 	var zoom_direction = 0
-	if Input.is_action_pressed("zoom_in"):
-		zoom_direction -= 1
-	if Input.is_action_pressed("zoom_out"):
-		zoom_direction += 1
+	if Input.is_action_pressed("zoom_in"): zoom_direction -= 1
+	if Input.is_action_pressed("zoom_out"): zoom_direction += 1
 
 	_target_zoom_distance += zoom_direction * zoom_speed
 	_target_zoom_distance = clamp(_target_zoom_distance, min_zoom_distance, max_zoom_distance)
@@ -136,21 +138,17 @@ func handle_zoom(delta: float):
 	cam.position = cam.position.normalized() * new_distance
 
 func handle_edge_scroll(delta: float):
-	if Globals.yard_edit:
-		return
+	if Globals.yard_edit: return
+	
 	var viewport_size = get_viewport().get_visible_rect().size
 	var mouse_pos = get_viewport().get_mouse_position()
 	var edge_direction = Vector3.ZERO
 	
 	if DisplayServer.window_is_focused():
-		if mouse_pos.x < edge_margin:
-			edge_direction.x -= 1
-		if mouse_pos.x > viewport_size.x - edge_margin:
-			edge_direction.x += 1
-		if mouse_pos.y < edge_margin:
-			edge_direction.z -= 1
-		if mouse_pos.y > viewport_size.y - edge_margin:
-			edge_direction.z += 1
+		if mouse_pos.x < edge_margin: edge_direction.x -= 1
+		if mouse_pos.x > viewport_size.x - edge_margin: edge_direction.x += 1
+		if mouse_pos.y < edge_margin: edge_direction.z -= 1
+		if mouse_pos.y > viewport_size.y - edge_margin: edge_direction.z += 1
 
 	if edge_direction.length() > 0:
 		edge_direction = edge_direction.normalized()
@@ -180,21 +178,15 @@ func _get_camera_frustum() -> Array:
 	
 	var camera_transform = cam.global_transform
 	var camera_position = camera_transform.origin
-	var fov = deg_to_rad(cam.fov)
-	var aspect = float(get_viewport().size.x) / float(get_viewport().size.y)
 	
-	frustum.append({
-		"normal": camera_transform.basis.z,
-		"distance": -camera_transform.basis.z.dot(camera_position + camera_transform.basis.z * cam.near)
-	})
-	frustum.append({
-		"normal": -camera_transform.basis.z,
-		"distance": camera_transform.basis.z.dot(camera_position + camera_transform.basis.z * cam.far)
-	})
+	# Far and Near planes
+	frustum.append({"normal": camera_transform.basis.z, "distance": -camera_transform.basis.z.dot(camera_position + camera_transform.basis.z * cam.near)})
+	frustum.append({"normal": -camera_transform.basis.z, "distance": camera_transform.basis.z.dot(camera_position + camera_transform.basis.z * cam.far)})
 	return frustum
 
 func _is_object_in_frustum(obj: Node3D, frustum: Array) -> bool:
 	var obj_pos = obj.global_position
+	# Fast distance check
 	if obj_pos.distance_to(cam.global_position) > cam.far * cull_distance_multiplier:
 		return false
 	

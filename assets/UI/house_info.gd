@@ -50,10 +50,8 @@ func _process(delta: float) -> void:
 		loan_display.text = "Loan: " + add_comma_to_int(house.loan_price)
 		mortgage_label.text = "Mortgage: " + add_comma_to_int(house.mortgage)
 		
-		
 		var cashflow = house.rent - house.mortgage
 		cashflow_label.text = "CashFlow: " + add_comma_to_int(cashflow)
-		
 		
 		income_label.text = "Income: " + add_comma_to_int(house.rent)
 			
@@ -82,8 +80,7 @@ func _input(event: InputEvent) -> void:
 	if visible == false:
 		pass
 	if Input.is_action_just_pressed("buyandrent"):
-		if Globals.rent_houses == true:
-			_on_tenent_button_pressed()
+		_on_tenent_button_pressed()
 
 func _on_remove_tenent_pressed() -> void:
 	house.remove_tenant()
@@ -91,29 +88,28 @@ func _on_remove_tenent_pressed() -> void:
 
 func update_tenant_buttons():
 
-	if Globals.rent_houses == false:
-			$Remove_Tenent.visible = false
+	if house:
+		if house.has_tenant:
+			$Remove_Tenent.visible = true
 			$Tenent_button.visible = false
 			$Label_islistedforrent.visible = false
-	else: 
-		if house:
-			if house.has_tenant:
-				$Remove_Tenent.visible = true
-				$Tenent_button.visible = false
-				$Label_islistedforrent.visible = false
-			if house.is_listed and not house.has_tenant:
-				$Remove_Tenent.visible = false
-				$Tenent_button.visible = false
-				$Label_islistedforrent.visible = true
-			if not house.is_listed and not house.has_tenant:
-				$Remove_Tenent.visible = false
-				$Tenent_button.visible = true
-				$Label_islistedforrent.visible = false
+		elif house.is_listed:
+			$Remove_Tenent.visible = false
+			$Tenent_button.visible = false
+			$Label_islistedforrent.visible = true
+		else:
+			# Show the button even if they don't have the skill
+			# This allows them to click it and see your error message
+			$Remove_Tenent.visible = false
+			$Tenent_button.visible = true
+			$Label_islistedforrent.visible = false
 
 func _on_tenent_button_pressed() -> void:
-	if house:
+	if house and Globals.rent_houses:
 		house.is_listed = true
 		update_tenant_buttons()
+	else:
+		Globals.notify("Need Renting skill to rent houses",Color.RED)
 
 func _on_close_button_pressed() -> void:
 	visible = false

@@ -180,9 +180,7 @@ rotation = 0.0117383
 texture_normal = ExtResource("22_qd5qf")
 max_level = 40
 skill_name = "Labor"
-skill_description = "Focuses on physical endurance and site management. Higher levels unlock heavy machinery operation and construction oversight roles.
-
- +5 pts "
+skill_description = "Higher levels unlock heavy machinery and construction oversight."
 app_skill_to_unlock = 19
 
 [node name="Services" parent="TabContainer/General" instance=ExtResource("6_2tli5")]
@@ -195,7 +193,7 @@ rotation = 0.0117383
 texture_normal = ExtResource("12_qd5qf")
 max_level = 60
 skill_name = "Services"
-skill_description = "Master the art of hospitality and client relations. Required for high-end concierge, estate management, and luxury service careers.  
+skill_description = "Required for high-end concierge, estate management, and luxury service careers.  
 
 +5 pts "
 app_skill_to_unlock = 20
@@ -210,7 +208,7 @@ rotation = 0.0117383
 texture_normal = ExtResource("13_n77n5")
 max_level = 70
 skill_name = "Trade"
-skill_description = "Develop technical expertise in infrastructure and design. Essential for specialized contractors, structural inspectors, and architects.  
+skill_description = " Essential for specialized contractors, structural inspectors, and architects.  
 
 +5 pts "
 app_skill_to_unlock = 21
@@ -225,7 +223,7 @@ rotation = 0.0117383
 texture_normal = ExtResource("25_bqmw5")
 max_level = 100
 skill_name = "Finance"
-skill_description = "Analyze market trends and manage complex capital. Unlock positions in banking, stock brokerage, and high-level investment funds.  
+skill_description = "Unlock positions in banking, stock brokerage, and high-level investment funds.  
 
 +5 pts "
 app_skill_to_unlock = 22
@@ -239,7 +237,7 @@ offset_bottom = 285.0
 texture_normal = ExtResource("26_8caw6")
 max_level = 120
 skill_name = "Management"
-skill_description = "Learn the logistics of corporate hierarchy and property strategy. Required for district managers, directors, and C-suite executive roles.  
+skill_description = "Required for district managers, directors, and C-suite executive roles.  
 
 +5 pts "
 app_skill_to_unlock = 23
@@ -425,7 +423,7 @@ offset_bottom = 299.0
 texture_normal = ExtResource("13_guq4v")
 skill_name = "Business"
 skill_description = "Be able to open a business."
-level_costs = Array[int]([10])
+level_costs = Array[int]([7])
 app_skill_to_unlock = 6
 
 [node name="job_manager" parent="TabContainer/Business/business" instance=ExtResource("6_2tli5")]
@@ -498,10 +496,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 46.0
-offset_top = 40.0
-offset_right = -48.0
-offset_bottom = -152.0
+offset_left = 25.0
+offset_top = 5.0
+offset_right = -22.0
+offset_bottom = -260.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
@@ -513,10 +511,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 46.0
-offset_top = 95.0
-offset_right = -48.0
-offset_bottom = -31.0
+offset_left = 33.0
+offset_top = 84.0
+offset_right = -29.0
+offset_bottom = -23.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 25

@@ -1,108 +1,102 @@
-extends CharacterBody3D
+extends PathFollow3D
 
-enum State {DRIVING, RECOVERING}
-var _state = State.DRIVING
-
-@export_group("Movement Settings")
-@export var max_speed: float = 12.0
+@export_group("Movement")
+@export var max_speed: float = 5.0
 @export var acceleration: float = 4.0
-@export var friction: float = 10.0
-@export var gravity: float = 20.0
+@export var braking_strength: float = 12.0
+@export var stop_distance: float = 6.0
 
 @export_group("AI Intelligence")
-@export var look_ahead_dist: float = 10.0
-@export var side_buffer: float = 3.5
-@export var steer_speed: float = 4.0
-@export var stop_distance: float = 5.0
+@export var search_radius: float = 3.5  
+@export var switch_threshold: float = 0.96 
 
-# Ensure these names match your Scene Tree exactly!
-@onready var left_whisker = $LeftWhisker
-@onready var right_whisker = $RightWhisker
-@onready var front_ray = $FrontRay
-@onready var ground_ray = $GroundRay
+@onready var front_ray: RayCast3D = $AICar/FrontRay
 
 var _current_speed: float = 0.0
-var _target_speed: float = 0.0
-var _steer_angle: float = 0.0
-var _vertical_vel: float = 0.0
-var _recovery_timer: float = 0.0
+var _is_switching: bool = false
 
 func _ready():
-	# SAFETY CHECK: Verify nodes exist
-	if not left_whisker or not right_whisker or not front_ray:
-		push_error("AI Car Error: RayCast nodes not found. Check your node names!")
-		set_physics_process(false) # Stop the script so it doesn't crash
-		return
+	loop = false
+	cubic_interp = true
+	# Give cars slightly different speeds for natural traffic
+	max_speed += randf_range(-1.5, 2.0)
 
-	# Randomize personality
-	max_speed += randf_range(-2.0, 3.0)
+func _physics_process(delta: float):
+	var target_speed = max_speed
 	
-	# Configure Rays via code
-	front_ray.target_position = Vector3(0, 0, -look_ahead_dist)
-	left_whisker.target_position = Vector3(-side_buffer, 0, -side_buffer)
-	right_whisker.target_position = Vector3(side_buffer, 0, -side_buffer)
-
-func _physics_process(delta):
-	apply_gravity(delta)
-	
-	match _state:
-		State.DRIVING:
-			drive_logic(delta)
-		State.RECOVERING:
-			recover_logic(delta)
-
-	velocity = -global_transform.basis.z * _current_speed
-	velocity.y = _vertical_vel
-	
-	if move_and_slide() and _current_speed > 2.0 and get_real_velocity().length() < 0.5:
-		start_recovery()
-
-func drive_logic(delta):
-	_target_speed = max_speed
-	var target_steer = 0.0
-	
-	# 1. FRONT PERCEPTION
+	# 1. TRAFFIC SENSING
 	if front_ray.is_colliding():
-		var obj = front_ray.get_collider()
 		var dist = global_position.distance_to(front_ray.get_collision_point())
-		
-		if obj is CharacterBody3D: 
-			_target_speed = lerp(0.0, max_speed, dist / stop_distance)
-		else: 
-			_target_speed = max_speed * 0.4 
-			target_steer += 1.0 if get_dist(left_whisker) > get_dist(right_whisker) else -1.0
+		target_speed = lerp(0.0, max_speed, (dist - 2.0) / stop_distance)
+		target_speed = clamp(target_speed, 0.0, max_speed)
 
-	# 2. LANE KEEPING
-	var l_dist = get_dist(left_whisker)
-	var r_dist = get_dist(right_whisker)
-	target_steer += (side_buffer - l_dist) / side_buffer
-	target_steer -= (side_buffer - r_dist) / side_buffer
-
-	# 3. EXECUTION
-	_steer_angle = lerp(_steer_angle, target_steer, steer_speed * delta)
-	rotation.y += _steer_angle * delta * (2.0 if _current_speed < 5.0 else 1.2)
+	# 2. MOVEMENT LOGIC
+	var accel_rate = acceleration if target_speed > _current_speed else braking_strength
+	_current_speed = move_toward(_current_speed, target_speed, accel_rate * delta)
 	
-	var accel_rate = acceleration if _target_speed > _current_speed else friction
-	_current_speed = move_toward(_current_speed, _target_speed, accel_rate * delta)
+	progress += _current_speed * delta
 
-func get_dist(ray: RayCast3D) -> float:
-	if ray.is_colliding():
-		return global_position.distance_to(ray.get_collision_point())
-	return side_buffer
-
-func start_recovery():
-	_state = State.RECOVERING
-	_recovery_timer = 1.5
-	_current_speed = 0.0
-
-func recover_logic(delta):
-	_recovery_timer -= delta
-	_current_speed = -max_speed * 0.3
-	rotation.y += 1.5 * delta 
+	# 3. MODULAR HANDOFF
+	if progress_ratio >= switch_threshold and not _is_switching:
+		_attempt_group_switch()
+func _attempt_group_switch():
+	_is_switching = true
 	
-	if _recovery_timer <= 0:
-		_state = State.DRIVING
+	var all_tiles = get_tree().get_nodes_in_group("level_grid")
+	
+	var forward_straight: Array[Path3D] = []
+	var forward_turns: Array[Path3D] = []
+	var uturn_paths: Array[Path3D] = [] # Last resort
+	
+	var car_forward = -global_transform.basis.z 
 
-func apply_gravity(delta):
-	if is_on_floor(): _vertical_vel = 0.0
-	else: _vertical_vel -= gravity * delta
+	for tile in all_tiles:
+		if global_position.distance_to(tile.global_position) < 10.0:
+			for child in tile.get_children():
+				if child is Path3D and child != get_parent():
+					var path_curve = child.curve
+					var path_start_pos = child.to_global(path_curve.get_point_position(0))
+					
+					if global_position.distance_to(path_start_pos) < search_radius:
+						# Get the direction the new path is heading
+						var path_forward = child.to_global(path_curve.get_point_position(1)) - path_start_pos
+						path_forward = path_forward.normalized()
+						
+						# Check if it's facing forward or backward
+						var alignment = car_forward.dot(path_forward)
+						
+						if alignment > 0.2: # Forward or Side-Turn
+							if "straight" in child.name.to_lower():
+								forward_straight.append(child)
+							else:
+								forward_turns.append(child)
+						else: # It's facing behind the car (Potential U-Turn)
+							uturn_paths.append(child)
+
+	# --- SELECTION LOGIC ---
+	var chosen_path: Path3D = null
+
+	# 1. Try to go Straight or Turn (70/30)
+	if forward_straight.size() > 0 or forward_turns.size() > 0:
+		var roll = randf()
+		if forward_straight.size() > 0 and forward_turns.size() > 0:
+			chosen_path = forward_straight.pick_random() if roll < 0.70 else forward_turns.pick_random()
+		elif forward_straight.size() > 0:
+			chosen_path = forward_straight.pick_random()
+		else:
+			chosen_path = forward_turns.pick_random()
+			
+	# 2. IF NOTHING FOUND: Check for U-Turns
+	elif uturn_paths.size() > 0:
+		print("Dead end found! Performing U-turn.")
+		chosen_path = uturn_paths.pick_random()
+
+	# --- EXECUTE ---
+	if chosen_path:
+		reparent(chosen_path)
+		progress = 0
+		_is_switching = false
+	else:
+		if progress_ratio >= 0.999:
+			_current_speed = 0
+		_is_switching = false

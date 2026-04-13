@@ -62,10 +62,10 @@ text = "Job List"
 [node name="job_list" type="TabContainer" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 261.0
-offset_top = 71.0
-offset_right = 701.0
-offset_bottom = 344.0
+offset_left = 207.0
+offset_top = 36.0
+offset_right = 674.0
+offset_bottom = 316.0
 current_tab = 0
 
 [node name="Labor" type="ScrollContainer" parent="job_list"]

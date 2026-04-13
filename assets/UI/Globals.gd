@@ -59,7 +59,7 @@ var yard_edit = false
 var skillpoints: int = 1
 var exp: float = 0
 var exp_to_level: int = 100
-var level: int = 0
+var level: int = 1
 # Skills to unlock
 var has_hireing_app: bool = false
 var has_info_app: bool = false
@@ -133,7 +133,7 @@ func reset():
 	skillpoints = 1
 	exp = 0
 	exp_to_level = 100
-	level = 0
+	level = 1
 	has_hireing_app = false
 	has_info_app = false
 	has_bank_app = false
@@ -284,8 +284,8 @@ func add_comma_to_int(value: int) -> String:
 	return str_value
 
 func recalculate_expenses() -> void:
-	Expenses = 0  # your base living expenses (adjust if different)
-
+	Expenses = 250 + (difficulty * 250)
+		
 	# Fixed monthly costs
 	if employees > 0:
 		Expenses += employees * 1000  # or whatever BASE_SALARY is in Business_UI
@@ -324,7 +324,7 @@ func add_starter_loan():
 		3: payment_amount = 1500  # Extreme
 		
 	#add starter money
-	money += payment_amount
+	money += payment_amount * 5
 	
 	var loan_amount = payment_amount * 24
 	var interest_rate = 0.10  # 10% annual
@@ -465,8 +465,10 @@ func monthy():
 		notify("Credit Score: " + str(credit_score), Color.DEEP_SKY_BLUE)
 	if exp_boost > 0:
 		exp += job_exp_per_month * exp_boost
+		notify("EXP + " + str(job_exp_per_month * exp_boost), Color.YELLOW)
 	else:
 		exp += job_exp_per_month
+		notify("EXP + " + str(job_exp_per_month), Color.YELLOW)
 	if money < 0:
 		negative_month_count += 1
 		credit_score -= 10
@@ -487,6 +489,28 @@ func monthy():
 			Savings_balance += interest
 
 	credit_score = clamp(credit_score, 300, 850)  # Ensure score stays in range
+
+
+var cursor_normal = load("res://assets/UI/mouse/hand_thin_point.png")
+var cursor_click = load("res://assets/UI/mouse/hand_thin_small_point.png")
+var cursor_Grab = load("res://assets/UI/mouse/hand_small_closed.png")
+var hs = Vector2(24, 12)
+
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				# Fixed: Added Input.CURSOR_ARROW as the 2nd argument
+				Input.set_custom_mouse_cursor(cursor_click, Input.CURSOR_ARROW, hs)
+			else:
+				Input.set_custom_mouse_cursor(cursor_normal, Input.CURSOR_ARROW, hs)
+				
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if event.pressed:
+				# Use cursor_Grab here if you want a "grabbing" visual for right-click
+				Input.set_custom_mouse_cursor(cursor_Grab, Input.CURSOR_ARROW, hs)
+			else:
+				Input.set_custom_mouse_cursor(cursor_normal, Input.CURSOR_ARROW, hs)
 
 func money_in(amount):
 	money += amount

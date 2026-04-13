@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://sod4y76qe486"]
+[gd_scene load_steps=6 format=3 uid="uid://sod4y76qe486"]
 
 [ext_resource type="Script" uid="uid://ck20l4y7wgq8u" path="res://Menu/loading_screen.gd" id="1_1r6iy"]
 [ext_resource type="Texture2D" uid="uid://cgwm7cq3uakc2" path="res://Loading_Screen.png" id="2_1jjgs"]
+[ext_resource type="Script" uid="uid://binj2d38m00js" path="res://Menu/tips.gd" id="3_gbdgt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1j4rd"]
 bg_color = Color(0, 0, 0, 0.513726)
@@ -28,6 +29,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_1jjgs")
+
+[node name="Tips" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 1898.0
+offset_bottom = 417.0
+theme_override_font_sizes/font_size = 60
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_gbdgt")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15

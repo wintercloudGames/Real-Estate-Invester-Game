@@ -108,9 +108,6 @@ func update_ui():
 			fps_counter.visible = false
 			
 	
-	if $"../Phone/house_manager/ScrollContainer/Rental_mod_Container".get_child_count() < 0:
-		push_warning("Rental_mod_Container has negative child count, which should be impossible")
-
 func _on_timer_timeout() -> void:
 	# Save the game and process monthly income/expenses
 	$"../Quit_menu".save_game()

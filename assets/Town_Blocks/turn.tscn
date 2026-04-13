@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://cajj0231mp44r"]
+[gd_scene load_steps=25 format=4 uid="uid://cajj0231mp44r"]
 
 [ext_resource type="PackedScene" uid="uid://becmtoi0fi6ux" path="res://assets/Town_Blocks/Textured Houses/house_type_06.tscn" id="1_g5cnc"]
 [ext_resource type="PackedScene" uid="uid://cbwk6hpcpxlsd" path="res://assets/Town_Blocks/Textured Houses/house_type_07.tscn" id="2_w6ycp"]
@@ -332,19 +332,21 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_w3fus")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_qhu7a"]
-size = Vector3(0.16241455, 1.0322266, 3.41333)
+[sub_resource type="Curve3D" id="Curve3D_qhu7a"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 7.050203, 0.016393065, 0, 0, 0, 0, 0, 0, 0, 3.7389178, 0.06793797, -0.05217731, 0, 0, 0, 0, 0, 0, 3.6803555, 0.02712965, -3.3594654),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ahop3"]
-size = Vector3(0.16241455, 1.0322266, 1.2247314)
+[sub_resource type="Curve3D" id="Curve3D_ahop3"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -3.6747007, -0.007421583, -3.714329, 0, 0, 0, 0, 0, 0, -3.5726469, -0.016785622, -0.1303004, 0, 0, 0, 0, 0, 0, 0.0140628815, 0.05853638, -0.006290257),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_w3fus"]
-size = Vector3(3.6392365, 1.0322266, 0.29309082)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_5584o"]
-size = Vector3(3.1193008, 1.0322266, 0.29309082)
-
-[node name="Turn" type="Node3D"]
+[node name="Turn" type="Node3D" groups=["level_grid"]]
 
 [node name="road_straight" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
@@ -390,6 +392,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.951
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.77364, 0.0256488, 1.90527)
 
 [node name="decore" type="Node3D" parent="."]
+visible = false
 
 [node name="tree_small2" parent="decore" instance=ExtResource("4_qhu7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.639555, 0, 0.595077)
@@ -477,25 +480,10 @@ spot_range = 10.775
 spot_angle = 55.27
 spot_angle_attenuation = 1.31951
 
-[node name="StaticBody3D5" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7435622, 0, -2.5163922)
+[node name="North_straight_path" type="Path3D" parent="."]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, -3.5414054, 0, -0.27361012)
+curve = SubResource("Curve3D_qhu7a")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24281263, -0.016113281, 0.4432373)
-shape = SubResource("BoxShape3D_qhu7a")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2492617, -0.016113281, 0.4432373)
-shape = SubResource("BoxShape3D_qhu7a")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D5"]
-transform = Transform3D(0.88215977, 0, 0.4709503, 0, 1, 0, -0.4709503, 0, 0.88215977, 0.5002424, -0.016113281, 2.5603986)
-shape = SubResource("BoxShape3D_ahop3")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3993702, -0.016113281, 2.999997)
-shape = SubResource("BoxShape3D_w3fus")
-
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="StaticBody3D5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6989925, -0.01611352, 2.0115485)
-shape = SubResource("BoxShape3D_5584o")
+[node name="South_straight_path" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5345159, 0, 0.20543599)
+curve = SubResource("Curve3D_ahop3")

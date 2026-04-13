@@ -28,7 +28,8 @@ func _ready() -> void:
 	$Market.apply_difficulty_settings()
 	$Market.update_label()
 	$HUD/Phone/Car_info.load_info()
-
+	Globals.recalculate_expenses()
+	$HUD/UI/JobDisplay.update_stats()
 	if Globals.business_name != "":
 		$"HUD/Business_UI".Set_difficulty()
 		$HUD/Business_UI.Load_info()
@@ -125,7 +126,8 @@ func _process(delta: float) -> void:
 	Globals.Income = 0
 	Globals.listed_houses = 0
 	Globals.total_property_value = 0
-	# Savings as asset
+	
+	
 	Globals.net_worth += Globals.Savings_balance
 	if Globals.send_to_account == true:
 		Globals.Income += Globals.interest

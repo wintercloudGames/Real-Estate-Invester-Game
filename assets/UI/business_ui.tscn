@@ -74,6 +74,7 @@ offset_left = 78.0
 offset_top = 197.0
 offset_right = 352.0
 offset_bottom = 228.0
+mouse_default_cursor_shape = 0
 theme = ExtResource("3_pwkvr")
 
 [node name="Cost_Label" type="Label" parent="Start_Business"]

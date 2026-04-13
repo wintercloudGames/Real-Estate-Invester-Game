@@ -1310,6 +1310,7 @@ offset_left = 52.0
 offset_top = 298.0
 offset_right = 273.0
 offset_bottom = 329.0
+mouse_default_cursor_shape = 0
 theme = ExtResource("36_xes8p")
 
 [node name="DepositFundsButton" type="Button" parent="Savings/TabContainer/Add_to_Savings"]

@@ -30,7 +30,9 @@ func get_qualified_house_amount():
 		max_house_price = down_payment / down_payment_percent  # With loan
 	else:
 		max_house_price = down_payment  # Cash only for low credit
-	
+	max_house_price = round(max_house_price / 50.0) * 50
+	# Cast to int to ensure compatibility with your comma function
+	var rounded_price_int = int(max_house_price)
 	# Update house qualify label
 	var house_qualify_label = $VBoxContainer/house_qualify
 	var stats_label = $VBoxContainer/stats  # New stats label for feedback

@@ -3411,10 +3411,10 @@ metadata/_edit_use_anchors_ = true
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -241.0
-offset_top = 18.0
-offset_right = -23.0
-offset_bottom = 813.0
+offset_left = -253.0
+offset_top = 34.0
+offset_right = -35.0
+offset_bottom = 829.0
 grow_horizontal = 0
 size_flags_horizontal = 8
 size_flags_vertical = 3
@@ -3455,10 +3455,10 @@ anchor_left = 0.6484375
 anchor_top = -0.21018519
 anchor_right = 0.6484375
 anchor_bottom = -0.21018519
-offset_left = 599.0
-offset_top = 241.0
-offset_right = 1111.0
-offset_bottom = 753.0
+offset_left = 578.0
+offset_top = 272.0
+offset_right = 1090.0
+offset_bottom = 784.0
 scale = Vector2(0.1, 0.1)
 toggle_mode = true
 texture_normal = ExtResource("71_2ekl0")
@@ -3500,10 +3500,12 @@ script = ExtResource("36_6lwa0")
 
 [node name="HSlider" type="HSlider" parent="HUD/Speedup"]
 layout_mode = 0
-offset_left = 805.0
-offset_top = 133.0
-offset_right = 947.0
-offset_bottom = 149.0
+offset_left = 781.0
+offset_top = 135.0
+offset_right = 917.0
+offset_bottom = 167.0
+scale = Vector2(1.5, 1.5)
+theme = ExtResource("32_nggmv")
 
 [node name="GameSpeed_text" type="Label" parent="HUD/Speedup"]
 layout_mode = 1
@@ -3511,9 +3513,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = 787.0
-offset_top = 111.0
+offset_top = 101.0
 offset_right = 922.0
-offset_bottom = 134.0
+offset_bottom = 124.0
 grow_horizontal = 2
 theme = ExtResource("32_nggmv")
 text = "Speed Up"
@@ -3810,7 +3812,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Show_job_display" type="TextureButton" parent="HUD/UI"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.061979152
+anchor_left = -0.061979167
 anchor_top = -0.058333334
 anchor_right = -0.061979167
 anchor_bottom = -0.058333334
@@ -3895,10 +3897,10 @@ vertical_alignment = 1
 
 [node name="FPS_counter" type="Label" parent="HUD/UI"]
 layout_mode = 0
-offset_left = 775.0
-offset_top = 69.0
-offset_right = 838.0
-offset_bottom = 87.0
+offset_left = 860.0
+offset_top = 74.0
+offset_right = 923.0
+offset_bottom = 92.0
 theme_override_font_sizes/font_size = 15
 text = "FPS: 000"
 
@@ -3971,10 +3973,10 @@ anchor_bottom = 0.0701754
 
 [node name="ProgressBar" type="ProgressBar" parent="HUD/UI"]
 layout_mode = 0
-offset_left = 796.0
-offset_top = 12.0
-offset_right = 1038.0
-offset_bottom = 56.0
+offset_left = 784.0
+offset_top = 13.0
+offset_right = 1026.0
+offset_bottom = 57.0
 theme = ExtResource("25_p75sm")
 theme_override_font_sizes/font_size = 15
 value = 90.0
@@ -3994,10 +3996,10 @@ vertical_alignment = 1
 [node name="Skill_tree" parent="HUD/UI" instance=ExtResource("29_me805")]
 visible = false
 layout_mode = 1
-offset_left = 444.0
-offset_top = 369.0
-offset_right = -344.0
-offset_bottom = -111.0
+offset_left = 411.0
+offset_top = 294.0
+offset_right = -377.0
+offset_bottom = -186.0
 
 [node name="Game_start" type="Control" parent="HUD"]
 visible = false
@@ -4170,20 +4172,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, -16)
 [node name="StraghtWay5" parent="Town" instance=ExtResource("53_drtnu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, -23)
 
-[node name="StraghtWay13" parent="Town" instance=ExtResource("53_drtnu")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -13, 0, -16)
-
-[node name="StraghtWay12" parent="Town" instance=ExtResource("53_drtnu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -23)
-
 [node name="StraghtWay6" parent="Town" instance=ExtResource("53_drtnu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 0, -23)
 
 [node name="StraghtWay3" parent="Town" instance=ExtResource("53_drtnu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, -9)
 
-[node name="StraghtWay9" parent="Town" instance=ExtResource("53_drtnu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 0, -9)
+[node name="StraghtWay23" parent="Town" instance=ExtResource("53_drtnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.966541, 0, -2.0203876)
+
+[node name="StraghtWay24" parent="Town" instance=ExtResource("53_drtnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -2)
 
 [node name="StraghtWay2" parent="Town" instance=ExtResource("53_drtnu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, -16)
@@ -4230,14 +4229,23 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -83, 0
 [node name="Turn4" parent="Town" instance=ExtResource("54_me805")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -13, 0, -9)
 
+[node name="Turn5" parent="Town" instance=ExtResource("54_me805")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -19.98914, 0, -2.0181637)
+
+[node name="Turn6" parent="Town" instance=ExtResource("54_me805")]
+transform = Transform3D(1, 0, 1.0658141e-14, 0, 1, 0, -1.0658141e-14, 0, 1, -41, 0, -2)
+
 [node name="Turn3" parent="Town" instance=ExtResource("54_me805")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -13, 0, -23)
 
-[node name="Turn2" parent="Town" instance=ExtResource("54_me805")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -20, 0, -16)
-
 [node name="Fourway" parent="Town" instance=ExtResource("55_861v0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, -16)
+
+[node name="Fourway4" parent="Town" instance=ExtResource("55_861v0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.992077, 0, -9.009401)
+
+[node name="Fourway5" parent="Town" instance=ExtResource("55_861v0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.992077, 0, -16.009401)
 
 [node name="Fourway2" parent="Town" instance=ExtResource("55_861v0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 0, -16)
@@ -4245,11 +4253,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 0, -16)
 [node name="Fourway3" parent="Town" instance=ExtResource("55_861v0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83, 0, -16)
 
-[node name="Threeway" parent="Town" instance=ExtResource("56_n6l5q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -9)
-
 [node name="Threeway3" parent="Town" instance=ExtResource("56_n6l5q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 0, -9)
+
+[node name="Threeway7" parent="Town" instance=ExtResource("56_n6l5q")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -41, 0, -9)
 
 [node name="Threeway6" parent="Town" instance=ExtResource("56_n6l5q")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -55.000004, 0, -23)
@@ -4259,6 +4267,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83, 0, -9)
 
 [node name="Threeway2" parent="Town" instance=ExtResource("56_n6l5q")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -34, 0, -23)
+
+[node name="Threeway8" parent="Town" instance=ExtResource("56_n6l5q")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -20, 0, -23)
+
+[node name="Threeway9" parent="Town" instance=ExtResource("56_n6l5q")]
+transform = Transform3D(-4.371141e-08, 0, 1, 0, 1, 0, -1, 0, -4.371141e-08, -13, 0, -16)
 
 [node name="End3" parent="Town" instance=ExtResource("57_6lwa0")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -90, 0, -16)
