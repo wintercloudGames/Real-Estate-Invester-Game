@@ -1,22 +1,20 @@
 extends AudioStreamPlayer
 
 var songs: Array = [
+	"res://music/background-music-piano-soft-380590.mp3",
 	"res://music/chill-happy.mp3",
 	"res://music/emotional-inspiring.mp3",
-	"res://music/Endless Dreams.mp3",
-	"res://music/genres-hiphop.mp3",
-	"res://music/guitar-jazz-2.mp3",
 	"res://music/happiness-upbeat.mp3",
-	"res://music/havana-jazz.mp3",
 	"res://music/in-the-heavens.mp3",
 	"res://music/lo-fi-hip-hop-galaxy.mp3",
 	"res://music/smooth-chill-jazzy.mp3",
-	"res://music/Sweet Lullaby.mp3"
+
 ]
 var current_song: String = ""
 
 func _ready():
 	update_volume()
+	play_random_song()
 
 func play_random_song():
 	if songs.is_empty():
@@ -33,8 +31,6 @@ func play_random_song():
 	if stream_res:
 		stream = stream_res
 		play()
-		$"../song_label".text = "     Now playing: " + current_song.get_file()
-		Globals.notify("Now playing: " + str(current_song.get_file(),Color.YELLOW))
 	else:
 		print("Failed to load song:", current_song)
 

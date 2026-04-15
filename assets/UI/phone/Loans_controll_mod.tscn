@@ -17,6 +17,12 @@ grow_vertical = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_y1v00")
 script = ExtResource("2_y1v00")
+loan_balance = null
+months = null
+payment = null
+interest = null
+loan_id = null
+loan_type_str = null
 
 [node name="Panel" type="TextureRect" parent="."]
 self_modulate = Color(0.172833, 0.172833, 0.172833, 1)

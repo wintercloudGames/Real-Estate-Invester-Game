@@ -138,3 +138,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00201004, -0.0221247, 1.24
 
 [node name="house_base" parent="." instance=ExtResource("3_82fil")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.014072299, 0, 0.12841392)
+
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="house_base"]

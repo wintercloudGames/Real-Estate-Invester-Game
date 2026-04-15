@@ -1,11 +1,9 @@
 extends Node3D
 
-
 var house = null
 
 @onready var House_ui = $HUD/House_info
 @onready var Listing_ui = $HUD/House_listing_ui
-@onready var EventPopup = $HUD/event_popup
 
 @onready var mission_win_panel: Control = $HUD/MissionWin
 @onready var game_over_panel: Control = $HUD/GAME_OVER
@@ -41,28 +39,9 @@ func _ready() -> void:
 	if mission_win_panel: mission_win_panel.visible = false
 	if game_over_panel:   game_over_panel.visible   = false
 
-
 func apply_loaded_data_deferred() -> void:
 	SaveAndLoad.apply_loaded_data()
-	
-	await get_tree().process_frame
-	
-	
-	if Globals.mission_active and Globals.year > Globals.mission_deadline_year:
 
-		if game_over_panel:
-			game_over_panel.visible = true
-			var info = game_over_panel.get_node_or_null("Info")
-			if info:
-				info.text = "Mission Failed!\n" + Globals.mission_desc + "\nTime ran out!"
-		Engine.time_scale = 0
-
-func add_comma_to_int(value: int) -> String:
-	var str_value: String = str(value)
-	var loop_end: int = 0 if value > -1 else 1
-	for i in range(str_value.length() - 3, loop_end, -3):
-		str_value = str_value.insert(i, ",")
-	return str_value
 
 func _process(delta: float) -> void:
 	if Globals.mission_active and not Globals.mission_completed:
@@ -118,60 +97,10 @@ func _process(delta: float) -> void:
 	get_qualified_house_amount()
 
 	# Reset globals before recalculating
-	Globals.Propertys = 0
-	Globals.net_worth = 0.0
-	Globals.total_debt = 0.0           # Reset debt every frame
-	Globals.total_loan_amount = 0
-	Globals.houses_with_tenants = 0
-	Globals.Income = 0
-	Globals.listed_houses = 0
-	Globals.total_property_value = 0
-	
-	
-	Globals.net_worth += Globals.Savings_balance
-	if Globals.send_to_account == true:
-		Globals.Income += Globals.interest
-	
-	#add job income
-	if Globals.has_car == true:
-		Globals.Income += Globals.job_income
-	# House stats loop
-	var owned_houses = get_tree().get_nodes_in_group("houses")
-
-	for house in owned_houses:
-		if house.owned and house.owner_type == "player":
-			var house_value = house.current_price
-			var mortgage_remaining = house.loan_price
-			
-			var house_equity = house.current_price - house.loan_price
-			Globals.total_property_value += house.current_price
-			Globals.net_worth += house_equity
-			Globals.total_debt += mortgage_remaining
-			Globals.total_loan_amount += mortgage_remaining
-			
-			Globals.Propertys += 1
-			
-			if house.has_tenant:
-				Globals.houses_with_tenants += 1
-				Globals.Income += house.rent * (Globals.rent_bost + 1 if Globals.rent_bost > 0 else 1)
-			
-			if house.is_listed:
-				Globals.listed_houses += 1
-
-	var loans_ui = $HUD/Phone/Loans
-	if loans_ui:
-		for mod in loans_ui.active_loan_mods:
-			if is_instance_valid(mod):
-				var balance = mod.loan_balance
-				if typeof(balance) == TYPE_FLOAT or typeof(balance) == TYPE_INT:
-					Globals.total_debt += float(balance)  # force float
-
-	if typeof(Globals.total_debt) == TYPE_FLOAT or typeof(Globals.total_debt) == TYPE_INT:
-		Globals.net_worth -= float(Globals.total_debt)
-
-	Globals.total_debt = 0.0  # emergency reset
-	# Final net worth = assets - all debt
-	Globals.net_worth -= Globals.total_debt
+	Globals.last_economy_update_time += delta
+	if Globals.last_economy_update_time >= Globals.ECONOMY_UPDATE_INTERVAL:
+		Globals.last_economy_update_time = 0.0
+		Globals.update_economy()
 
 	# Final age / health game over
 	if Globals.year >= 100 or Globals.Player_health <= 0:
@@ -180,7 +109,6 @@ func _process(delta: float) -> void:
 			if game_over_panel.has_method("message"):
 				game_over_panel.message("You died")
 		Engine.time_scale = 0
-	
 	
 	
 func get_qualified_house_amount():
@@ -214,7 +142,7 @@ func get_qualified_house_amount():
 	
 	if house_qualify_label and stats_label:
 		if Globals.money >= 1000:
-			house_qualify_label.text = "Qualified Amount: $" + add_comma_to_int(int(max_house_price))
+			house_qualify_label.text = "Qualified Amount: $" + Globals.add_comma_to_int(int(max_house_price))
 			stats_label.text = "Credit eligible for loans." if can_use_loan else "Low credit! Cash only."
 		else:
 			house_qualify_label.text = "Qualified Amount: $0"
@@ -286,7 +214,7 @@ func clear_House_ui_data():
 func set_listing_UI():
 	if not house: return
 	Listing_ui.down_payment = house.current_price * 0.2
-	Listing_ui.loan_display.text = "Loan\n80% Financed\nDown Payment: \n" + add_comma_to_int(int(Listing_ui.list_price * 0.2))
+	Listing_ui.loan_display.text = "Loan\n80% Financed\nDown Payment: \n" + Globals.add_comma_to_int(int(Listing_ui.list_price * 0.2))
 	Listing_ui.full_price = house.current_price
 	Listing_ui.pay_now_amount = house.current_price
 	Listing_ui.list_price = house.current_price

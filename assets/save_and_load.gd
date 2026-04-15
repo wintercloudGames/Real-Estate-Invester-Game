@@ -77,7 +77,7 @@ func save_game() -> bool:
 		},
 		"Skills": {
 			"skillpoints": Globals.skillpoints,
-			"exp": Globals.exp,
+			"EXP": Globals.EXP,
 			"exp_to_level": Globals.exp_to_level,
 			"level": Globals.level,
 			"has_hireing_app": Globals.has_hireing_app,
@@ -528,7 +528,7 @@ func create_new_profile(slot: int) -> bool:
 			"mission_completed": false,
 		},
 		"Skills": {
-			"exp": 0,
+			"EXP": 0,
 			"level": 1,
 			"skillpoints": 1,
 			"exp_to_level": 100,

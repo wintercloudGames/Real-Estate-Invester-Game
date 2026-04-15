@@ -1,5 +1,11 @@
 extends Node
 
+signal month_ended
+signal money_in_detect(in_value)
+signal money_out_detect(out_value)
+signal skill_points_changed 
+signal stats_changed
+
 var money = 0
 var ai_money = 10000000
 var brokerage_balance: float = 0.0
@@ -13,7 +19,6 @@ var first_start = false
 var active_loans: Array = []
 var save_name: String = "My Save"
 var has_car = true
-var total_property_value: int = 0
 var car_level = 1
 var net_worth = 0
 var Savings_balance = 0
@@ -45,7 +50,14 @@ var mission_desc: String = ""  # Formatted desc (e.g. "Own 23 houses")
 var mission_completed: bool = false
 
 var total_loan_amount = 0
-var houses_with_tenants = 0
+var total_property_value: int = 0:
+	set(value):
+		total_property_value = value
+		stats_changed.emit() # This tells the UI to update!
+var houses_with_tenants: int = 0:
+	set(value):
+		houses_with_tenants = value
+		stats_changed.emit()
 var Income = 0
 var Expenses = 0
 var cashflow = 0
@@ -57,7 +69,10 @@ var wallpaper = ""
 var yard_edit = false
 
 var skillpoints: int = 1
-var exp: float = 0
+var EXP: float = 0.0:
+	set(value):
+		EXP = value
+		emit_signal("skill_points_changed") # This refreshes the bar and labels
 var exp_to_level: int = 100
 var level: int = 1
 # Skills to unlock
@@ -131,7 +146,7 @@ func reset():
 	
 	#skills
 	skillpoints = 1
-	exp = 0
+	EXP = 0
 	exp_to_level = 100
 	level = 1
 	has_hireing_app = false
@@ -142,11 +157,11 @@ func reset():
 	rent_bost = 0.00
 	
 	#job category Skills
-	labor_points
-	services_points
-	trade_points
-	finance_points
-	management_points
+	labor_points = 0
+	services_points = 0
+	trade_points = 0
+	finance_points = 0
+	management_points = 0
 	
 	rent_houses = false
 	unlock_business = false
@@ -184,11 +199,6 @@ var interest = Savings_balance * interest_rate
 var player_has_employees: bool = false
 
 
-signal month_ended
-signal money_in_detect(in_value)
-signal money_out_detect(out_value)
-
-
 func handle_overflow(current_value: float, add_amount: float, max_value: float) -> Dictionary:
 	var total = current_value + add_amount
 	var overflow = max(0, total - max_value)
@@ -211,15 +221,15 @@ func record_credit_score():
 	if credit_history.size() > 15:
 		credit_history.pop_front()
 
-func _process(delta: float) -> void:
-	if exp >= exp_to_level:
-		var overflow = exp - exp_to_level
-		exp = overflow
+func _process(_delta: float) -> void:
+	if EXP >= exp_to_level:
+		var overflow = EXP - exp_to_level
+		EXP = overflow
 		skillpoints += 1
 		exp_to_level += 10
 		level += 1
 
-	exp = max(0, exp)
+	EXP = max(0, EXP)
 
 	cashflow = Income - Expenses
 	clamp_stats()
@@ -296,13 +306,13 @@ func recalculate_expenses() -> void:
 	if renter_finder:
 		Expenses += 500
 
-	# Business difficulty overhead
 	if business_name != "":
 		match difficulty:
-			0: Expenses += 10000 / 4
-			1: Expenses += 10000 / 3
-			2: Expenses += 10000 / 2
-			3: Expenses += 10000
+			0: Expenses += 10000.0 / 4.0
+			1: Expenses += 10000.0 / 3.0
+			2: Expenses += 10000.0 / 2.0
+			3: Expenses += 10000.0
+
 
 	# Loan autopay payments – add once per loan
 	var loans_ui = get_tree().get_first_node_in_group("loans_ui")  # adjust path if needed
@@ -311,23 +321,22 @@ func recalculate_expenses() -> void:
 			if is_instance_valid(mod) and mod.autopay_enabled:
 				Expenses += mod.payment
 
-
 func add_starter_loan():
 	if difficulty < 0 or difficulty > 3:
 		return  # safety
 
 	var payment_amount = 500
 	match difficulty:
-		0: payment_amount = 500   # Easy
-		1: payment_amount = 500   # Medium
-		2: payment_amount = 1000  # Hard
-		3: payment_amount = 1500  # Extreme
+		0: payment_amount = 100   # Easy
+		1: payment_amount = 200   # Medium
+		2: payment_amount = 500  # Hard
+		3: payment_amount = 800  # Extreme
 		
 	#add starter money
 	money += payment_amount * 5
 	
 	var loan_amount = payment_amount * 24
-	var interest_rate = 0.10  # 10% annual
+	interest_rate = 0.10
 	
 	var loans_ui = get_tree().get_first_node_in_group("loans_ui")  # or your path: /root/.../Loans
 	if loans_ui and loans_ui.has_method("add_loan_mod"):
@@ -339,10 +348,46 @@ func add_starter_loan():
 			1,                       # LOAN_TYPE_PERSONAL
 			null                     # no house ref
 		)
+var pending_rent_total: float = 0.0
+var pending_rent_count: int = 0
+var rent_batch_timer: SceneTreeTimer = null
+
+func notify_batched_rent(amount: float):
+	pending_rent_total += amount
+	pending_rent_count += 1
+	
+	# If a timer isn't already running, start one for 2 seconds
+	if rent_batch_timer == null:
+		rent_batch_timer = get_tree().create_timer(2.0)
+		rent_batch_timer.timeout.connect(_on_rent_batch_finished)
+
+func _on_rent_batch_finished():
+	if pending_rent_count > 0:
+		var msg = "Agent collected $%s from %d houses." % [add_comma_to_int(int(pending_rent_total)), pending_rent_count]
+		notify(msg, Color.GREEN)
+		
+	# Reset for the next batch
+	pending_rent_total = 0.0
+	pending_rent_count = 0
+	rent_batch_timer = null
 
 func notify_action(message: String, color: Color = Color.WHITE, action_target: Node = null) -> void:
+	# 1. If the player has the Renter Finder, we don't need a "Relist" button 
+	# because the agent handles it automatically.
+	if Globals.renter_finder and action_target != null:
+		# Just send a standard silent notification instead of a button
+		notify(message, color)
+		return
+
 	var list = get_tree().get_first_node_in_group("notification_list")
 	if not list: return
+
+	# 2. CAP THE STACK: If there are already 10+ notifications, 
+	# remove the oldest one before adding a new one to prevent UI overflow.
+	if list.get_child_count() > 10:
+		var oldest = list.get_child(0)
+		if is_instance_valid(oldest):
+			oldest.queue_free()
 
 	var hbox = HBoxContainer.new()
 	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -357,42 +402,33 @@ func notify_action(message: String, color: Color = Color.WHITE, action_target: N
 	if action_target != null:
 		var btn = Button.new()
 		btn.text = "Relist"
+		# Optional: Style the button to fit the phone theme
+		btn.custom_minimum_size = Vector2(60, 0) 
 		hbox.add_child(btn)
+		
 		btn.pressed.connect(func():
-			if is_instance_valid(action_target):
+			if is_instance_valid(action_target) and is_instance_valid(hbox):
 				action_target._on_relist_house_button_pressed()
-			if is_instance_valid(hbox):
 				hbox.queue_free()
 		)
 
 	list.add_child(hbox)
+	_scroll_to_bottom(list)
 	
-	var scroll = list.get_parent()
-	if scroll is ScrollContainer:
-		await get_tree().process_frame
-		if is_instance_valid(list):
-			scroll.scroll_vertical = int(list.size.y)
-		
+	# 3. Use the bound Tween (Safety first!)
 	var wait_time = 20.0 if action_target else 10.0
-	get_tree().create_timer(wait_time).timeout.connect(func():
-		# Safety check: ensure game isn't closing and node still exists
-		if is_instance_valid(hbox) and hbox.is_inside_tree():
-			var tween = hbox.create_tween() # Bind tween to the node
-			tween.tween_property(hbox, "modulate:a", 0, 0.5)
-			tween.tween_callback(hbox.queue_free)
-	)
+	var timer_tween = hbox.create_tween()
+	timer_tween.tween_interval(wait_time)
+	timer_tween.tween_property(hbox, "modulate:a", 0, 0.5)
+	timer_tween.tween_callback(hbox.queue_free)
 
 func notify(message: String, color: Color = Color.WHITE) -> void:
 	var list = get_tree().get_first_node_in_group("notification_list") 
-	
 	if not list:
 		list = get_node_or_null("/root/Root/UserInterface/Game/HUD/Universal_Text_Box/MarginContainer/ScrollContainer/VBoxContainer")
 
-	if not list or not is_instance_valid(list):
-		return
+	if not is_instance_valid(list): return
 
-	# --- DEEP STACKING LOGIC ---
-	# We look back through the last 5 notifications to find a match
 	var children = list.get_children()
 	var search_depth = min(children.size(), 5) 
 	var found_match = false
@@ -400,12 +436,9 @@ func notify(message: String, color: Color = Color.WHITE) -> void:
 	for i in range(1, search_depth + 1):
 		var target = children[children.size() - i]
 		if is_instance_valid(target) and target.get_meta("raw_message", "") == message:
-			# Match found! Update it
 			var count = target.get_meta("count", 1) + 1
 			target.set_meta("count", count)
 			target.text = "> " + message + " (x" + str(count) + ")"
-			
-			# Move it to the bottom so the player sees the "newest" update
 			list.move_child(target, list.get_child_count() - 1)
 			
 			_setup_notification_timer(target)
@@ -415,14 +448,11 @@ func notify(message: String, color: Color = Color.WHITE) -> void:
 	if found_match:
 		_scroll_to_bottom(list)
 		return
-	# --- END DEEP STACKING LOGIC ---
 
-	# Create new label if no match was found in the last 5 lines
 	var new_label = Label.new()
 	new_label.text = "> " + message
 	new_label.add_theme_color_override("font_color", color)
 	new_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	
 	new_label.set_meta("raw_message", message)
 	new_label.set_meta("count", 1)
 	
@@ -434,28 +464,76 @@ func _scroll_to_bottom(list):
 	var scroll_container = list.get_parent()
 	if scroll_container is ScrollContainer:
 		await get_tree().process_frame
-		if is_instance_valid(list):
+		if is_instance_valid(list) and is_instance_valid(scroll_container):
 			scroll_container.scroll_vertical = int(list.size.y)
 
 func _setup_notification_timer(node: Label) -> void:
-	# Kill existing timer if it exists to reset lifespan
+	# Kill existing tween if it exists (prevents multiple tweens fighting)
 	if node.has_meta("fade_tween"):
 		var old_tween = node.get_meta("fade_tween")
-		if old_tween and old_tween.is_valid(): old_tween.kill()
+		if old_tween and old_tween.is_valid(): 
+			old_tween.kill()
 
 	var timer_duration = randi_range(20, 35)
 	
-	# We use a SceneTreeTimer for the delay, then a Tween for the fade
-	get_tree().create_timer(timer_duration).timeout.connect(func():
-		if is_instance_valid(node) and node.is_inside_tree():
-			var tween = node.create_tween()
-			node.set_meta("fade_tween", tween) # Store to kill it if message stacks again
-			tween.tween_property(node, "modulate:a", 0, 0.5)
-			tween.tween_callback(node.queue_free)
-	)
+	# create_tween() bound to the node automatically stops if the node is freed!
+	var tween = node.create_tween()
+	node.set_meta("fade_tween", tween)
+	
+	tween.tween_interval(timer_duration)
+	tween.tween_property(node, "modulate:a", 0, 0.5)
+	tween.tween_callback(node.queue_free)
 
-func caculate_networth():
-	pass
+var last_economy_update_time: float = 0.0
+const ECONOMY_UPDATE_INTERVAL: float = 1.0  # seconds, or 0.5 if you need smoother UI
+
+func update_economy() -> void:
+	Propertys = 0
+	net_worth = Savings_balance
+	total_debt = 0.0
+	total_loan_amount = 0
+	houses_with_tenants = 0
+	Income = 0.0
+	listed_houses = 0
+	
+	# --- NEW: Reset and calculate total property value ---
+	var running_property_total: int = 0 
+
+	var all_houses = get_tree().get_nodes_in_group("houses")
+	for house in all_houses:
+		if not house.owned:
+			continue 
+
+		# Use 'current_price' since that's what your script uses for house value
+		var house_value = house.current_price
+		running_property_total += int(house_value) # Add to our new total
+		
+		var mortgage_remaining = house.loan_price
+		
+		net_worth += house_value - mortgage_remaining
+		total_debt += mortgage_remaining
+		total_loan_amount += mortgage_remaining
+		Propertys += 1
+
+		if house.has_tenant:
+			houses_with_tenants += 1
+			Income += house.rent * (1.0 + rent_bost)
+
+		if house.is_listed:
+			listed_houses += 1
+
+	# Update the actual Global variable (this triggers the UI update)
+	total_property_value = running_property_total
+	
+	# Rest of your existing logic...
+	if has_car and job_income > 0:
+		Income += job_income
+	if send_to_account:
+		Income += interest
+		
+	net_worth -= total_debt
+	recalculate_expenses()
+	cashflow = Income - Expenses
 
 func monthy():
 	money += job_income
@@ -464,10 +542,10 @@ func monthy():
 	if credit_app == true:
 		notify("Credit Score: " + str(credit_score), Color.DEEP_SKY_BLUE)
 	if exp_boost > 0:
-		exp += job_exp_per_month * exp_boost
+		EXP += job_exp_per_month * exp_boost
 		notify("EXP + " + str(job_exp_per_month * exp_boost), Color.YELLOW)
 	else:
-		exp += job_exp_per_month
+		EXP += job_exp_per_month
 		notify("EXP + " + str(job_exp_per_month), Color.YELLOW)
 	if money < 0:
 		negative_month_count += 1

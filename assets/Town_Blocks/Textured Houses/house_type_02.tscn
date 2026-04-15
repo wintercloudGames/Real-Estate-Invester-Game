@@ -151,6 +151,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_bqff1")
 
 [node name="house_type02" type="MeshInstance3D"]
+visibility_range_end = 80.0
 mesh = SubResource("ArrayMesh_guefu")
 skeleton = NodePath("")
 script = ExtResource("1_g55ur")

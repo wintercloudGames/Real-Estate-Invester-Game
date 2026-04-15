@@ -62,7 +62,7 @@ func _process(delta: float) -> void:
 		update_ui()
 
 func update_ui():
-	progress_bar.value = Globals.exp
+	progress_bar.value = Globals.EXP
 	progress_bar.max_value = Globals.exp_to_level
 	if level_label != null:
 		level_label.text = "Level: " + str(Globals.level)

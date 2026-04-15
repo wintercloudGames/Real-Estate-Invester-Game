@@ -157,7 +157,7 @@ func _on_yes_sell_pressed() -> void:
 			if loans_ui and is_instance_valid(loans_ui):
 				for mod in loans_ui.active_loan_mods:
 					if mod.house_ref == house:
-						mod._on_payoff_pressed()  # Pays off balance, removes mod, updates credit/exp
+						mod._on_payoff_pressed()  # Pays off balance, removes mod, updates credit/EXP
 						break
 			else:
 				push_warning("No loans_ui found during house sell for " + house.id)

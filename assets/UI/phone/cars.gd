@@ -57,7 +57,7 @@ func _on_repaire_button_pressed():
 		
 		# Math Fix: Proper EXP boost
 		var gained_exp = int((car_level + 5) * Globals.exp_boost)
-		Globals.exp += gained_exp
+		Globals.EXP += gained_exp
 		
 		Globals.notify("Car Repaired! ($%d)" % repair_cost, Color.SPRING_GREEN)
 		Globals.notify("EXP + %d" % gained_exp, Color.YELLOW)
@@ -85,7 +85,7 @@ func _on_upgrade_button_pressed():
 		breakdown_rate = max(0.0, 1.0 - (car_level * 0.1))
 		
 		var gained_exp = int((car_level + 5) * Globals.exp_boost)
-		Globals.exp += gained_exp
+		Globals.EXP += gained_exp
 		
 		Globals.notify("Car Upgraded to Level %d" % car_level, Color.GREEN)
 		Globals.notify("EXP + %d" % gained_exp, Color.YELLOW)

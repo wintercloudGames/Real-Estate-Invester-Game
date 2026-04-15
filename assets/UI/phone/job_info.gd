@@ -110,7 +110,7 @@ func complete_task(job_index: int) -> void:
 	var bar = progress_bars[job_index]
 	bar.value = 0
 	var earned_exp = (2 + (job_index * 2)) * Globals.exp_boost
-	Globals.exp += earned_exp
+	Globals.EXP += earned_exp
 	Globals.notify("EXP + " + str(int(earned_exp)), Color.YELLOW)
 	task_started[job_index] = false
 	job_in_progress = false

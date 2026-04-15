@@ -1,5 +1,7 @@
 extends Node
 
+signal settings_changed
+
 # Audio settings
 var Master: float = 0.8
 var Music: float = 0.7
@@ -17,6 +19,9 @@ var target_fps: int = 60
 var resolution: Vector2i = Vector2i(1280, 720)
 var UI_scale: float = 1.0
 
+# Gameplay settings
+var day_night_cycle: bool = false
+
 # Quality Levels
 var shadows_quality: int = 3
 var msaa: int = Viewport.MSAA_8X
@@ -33,14 +38,13 @@ func _ready():
 	load_settings()
 
 func get_save_path() -> String:
-	# Gets the folder containing the running .exe or binary
 	var exe_dir = OS.get_executable_path().get_base_dir()
-	# Use path_join to handle slashes correctly across Windows/Linux/Mac
 	return exe_dir.path_join("settings.json")
 
 func save_settings():
 	var settings_data = {
 		"audio": { "Master": Master, "Music": Music, "SFX": SFX },
+		"gameplay": { "day_night_cycle": day_night_cycle }, # Save cycle state here
 		"graphics": {
 			"show_fps": showfps,
 			"dynamic_resolution": dynamic_resolution,
@@ -88,6 +92,10 @@ func load_settings():
 		Music = a.get("Music", Music)
 		SFX = a.get("SFX", SFX)
 		
+		# Gameplay Mapping
+		var gp = data.get("gameplay", {})
+		day_night_cycle = gp.get("day_night_cycle", day_night_cycle)
+		
 		# Graphics Mapping
 		var g = data.get("graphics", {})
 		showfps = g.get("show_fps", showfps)
@@ -119,7 +127,6 @@ func load_settings():
 func apply_audio_settings():
 	var buses = ["Master", "Music", "SFX"]
 	var values = [Master, Music, SFX]
-	
 	for i in range(buses.size()):
 		var idx = AudioServer.get_bus_index(buses[i])
 		if idx != -1:
@@ -127,43 +134,39 @@ func apply_audio_settings():
 			AudioServer.set_bus_mute(idx, values[i] < 0.01)
 
 func apply_graphics_settings():
-	# 1. WINDOW / OS SETTINGS
-	# Use get_window() to handle the OS container
 	var win = get_window()
 	DisplayServer.window_set_size(resolution)
 	DisplayServer.window_set_vsync_mode(vsync)
-	
-	# UI Scale (Affects buttons/labels)
 	win.content_scale_factor = UI_scale
 	
-	# 2. VIEWPORT / RENDERING SETTINGS
-	# Use get_viewport() specifically for 3D rendering properties
 	var vp = get_viewport()
-	
-	# Handle Renderer Limitations (FSR2 requires Forward+)
 	var current_renderer = ProjectSettings.get_setting("rendering/renderer/rendering_method")
 	
 	if dynamic_resolution and current_renderer == "forward_plus":
 		vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR2
 	else:
-		# Fallback to Bilinear if using Compatibility/Mobile or if dynamic res is off
 		vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
 	
-	# Use 'set' to safely assign to the viewport 
-	# This prevents the "Base object Window" error if the script loses context
 	vp.set("scaling_3d_value", float(max_render_scale))
 	vp.set("msaa_3d", msaa)
 	vp.set("use_debanding", debanding)
 	
-	# 3. GLOBAL ENGINE SETTINGS
 	Engine.max_fps = target_fps
-	
-	# 4. RENDERING SERVER (Global Quality)
 	RenderingServer.directional_soft_shadow_filter_set_quality(shadows_quality)
 	
+	# After updating variables, inform World_settings to update its cycle state
+	var world_settings = get_node_or_null("/root/Root/UserInterface/Game/World_settings")
+	if world_settings:
+		world_settings.cycle_enabled = day_night_cycle
+		
+	settings_changed.emit()
 	
 func reset_to_defaults() -> void:
-	# (Your existing reset values)
+	Master = 0.8
+	Music = 0.7
+	SFX = 0.9
+	day_night_cycle = true
+	graphics_quality = "Ultra"
 	apply_audio_settings()
 	apply_graphics_settings()
 	save_settings()

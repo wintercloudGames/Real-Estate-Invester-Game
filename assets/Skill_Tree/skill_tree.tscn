@@ -292,7 +292,7 @@ offset_bottom = 10.0
 texture_normal = ExtResource("11_2n6q7")
 skill_name = "Upgrade Rent Finder"
 skill_description = "Upgrade Rent finder to get renters faster."
-level_costs = Array[int]([5])
+level_costs = Array[int]([2])
 app_skill_to_unlock = 14
 
 [node name="Bost_rent" parent="TabContainer/House/Rent_houses" instance=ExtResource("6_2tli5")]

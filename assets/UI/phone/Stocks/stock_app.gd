@@ -12,7 +12,6 @@ extends Control
 @onready var price_label = $TradingView/Stock_price
 @onready var name_label = $TradingView/StockName
 @onready var ticker_label = $TradingView/StockTicker
-@onready var owned_label = $TradingView/SharesOwned 
 @onready var yield_label = $TradingView/DividendYield
 @onready var payout_label = $TradingView/DividendPayout
 
@@ -45,10 +44,6 @@ func _ready():
 	if graph.has_signal("hovered_price"):
 		graph.hovered_price.connect(_on_graph_hovered)
 	graph.mouse_exited.connect(_on_graph_exited)
-	
-	# Connect Funding buttons
-	fund_button.pressed.connect(_on_fund_account_pressed)
-	withdraw_button.pressed.connect(_on_withdraw_pressed)
 	
 	# Connect Popup buttons
 	$TradingView/TradePopup/ConfirmTradeButton.pressed.connect(_on_confirm_trade_pressed)
@@ -89,7 +84,7 @@ func _on_market_tick():
 	if selected_stock:
 		graph.history = selected_stock.price_history
 		graph.queue_redraw()
-		_update_shares_owned_label()
+		
 		
 		# Only update main label if mouse is NOT scrubbing the graph
 		if not graph.get_global_rect().has_point(get_global_mouse_position()):
@@ -135,7 +130,7 @@ func _on_stock_selected(stock: StockData):
 	name_label.text = stock.stock_name
 	ticker_label.text = stock.ticker
 	_update_main_price_label()
-	_update_shares_owned_label()
+
 	
 	graph.history = stock.price_history
 	graph.queue_redraw()
@@ -150,12 +145,6 @@ func _update_main_price_label():
 	if selected_stock:
 		price_label.text = selected_stock.stock_name + "\n$" + str(snapped(selected_stock.current_price, 0.01))
 
-func _update_shares_owned_label():
-	if selected_stock and owned_label:
-		var shares = Globals.portfolio.get(selected_stock.ticker, 0)
-		owned_label.text = "Shares Owned: " + str(shares)
-
-# --- FUNDING LOGIC (WALLET <-> BROKERAGE) ---
 
 func _on_fund_account_pressed():
 	var amount = float(amount_input.text)
@@ -249,7 +238,6 @@ func _on_confirm_trade_pressed():
 
 func _complete_trade():
 	trade_popup.visible = false
-	_update_shares_owned_label()
 	update_portfolio_summary()
 	SaveAndLoad.save_game()
 

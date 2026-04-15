@@ -155,7 +155,7 @@ func _on_renter_selected(rent_amount: int, renter_stats: Dictionary):
 		clear_offers_ui()
 		house.apartment_condition = renter_stats.apartment_condition
 		house.payment_punctuality = renter_stats.payment_punctuality
-		Globals.exp += 5 * Globals.exp_boost
+		Globals.EXP += 5 * Globals.exp_boost
 		var duration_text = ""
 		match renter_stats.lease_length:
 			6: duration_text = "6-month"

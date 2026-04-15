@@ -177,3 +177,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.413318, -0.0177401, 0.98428
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.413318, -0.0177401, 1.29025)
 
 [node name="house_base" parent="." instance=ExtResource("4_xv1p3")]
+
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]

@@ -91,7 +91,7 @@ func update_market_value(market_change_percent: float) -> void:
 	
 	current_price = max(round(current_price / 500.0) * 500, 500)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Reset top labels every frame
 	$Label3D5.text = ""            
 	$Label3D3.text = ""         
@@ -201,7 +201,7 @@ func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node 
 	$Label3D5.text = ""
 	bought_price = buy_price
 	has_loan = use_loan
-	Globals.exp += buy_price/100000 * Globals.exp_boost
+	Globals.EXP += buy_price/100000 * Globals.exp_boost
 	Globals.net_worth += buy_price
 	Listing_ui.visible = false
 	time_on_market = 0

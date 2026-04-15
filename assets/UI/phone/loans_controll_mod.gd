@@ -73,10 +73,13 @@ func add_comma_to_int(value: int) -> String:
 		str_value = str_value.insert(i, ",")
 	return str_value
 
-func _on_make_payment_pressed() -> void:
+func _on_make_payment_pressed(is_manual: bool = true) -> void:
 	if Globals.money < payment:
-		Globals.notify("Need $%s!" % add_comma_to_int(int(payment)), Color.RED)
+		# Only notify of failure if the player actually clicked this specific button
+		if is_manual:
+			Globals.notify("Need $%s!" % add_comma_to_int(int(payment)), Color.RED)
 		return
+
 	Globals.credit_score += 2
 	var interest_payment = loan_balance * (interest / 12.0)
 	var principal_payment = payment - interest_payment
@@ -84,10 +87,10 @@ func _on_make_payment_pressed() -> void:
 	loan_balance -= principal_payment
 	Globals.money -= principal_payment
 	months -= 1
+
 	if is_instance_valid(house_ref):
 		house_ref.loan_price = loan_balance
 	else:
-		# If the house is gone but this is a mortgage, the loan should probably vanish
 		if loan_type_str == "Mortgage":
 			queue_free()
 			return
@@ -106,13 +109,14 @@ func _on_make_payment_pressed() -> void:
 			tween.tween_property(self, "modulate:a", 0, 0.5)
 			tween.tween_callback(queue_free)
 			Globals.notify("LOAN PAID OFF!", Color.GOLD)
+
 	update_ui()
 	SaveAndLoad.save_game()
 	
-	var ui_layer = get_node("/root/Root/UserInterface/Game/HUD")
-	if ui_layer and is_instance_valid(ui_layer):
-		var label = Label.new()
-	Globals.notify("Paid A Loan -$" + add_comma_to_int(int(payment)),Color.RED)
+	# Only notify for the individual payment if it was a manual click
+	if is_manual:
+		Globals.notify("Paid A Loan -$" + add_comma_to_int(int(payment)), Color.RED)
+	
 	Globals.recalculate_expenses()
 
 func _on_autopay_toggled(toggled: bool) -> void:
@@ -127,7 +131,7 @@ func _on_autopay_toggled(toggled: bool) -> void:
 func _on_timer_timeout() -> void:
 	if autopay_enabled:
 		if Globals.money >= payment:
-			_on_make_payment_pressed()
+			_on_make_payment_pressed(false)
 		else:
 			Globals.notify("Autopay Failed: Insufficient Funds", Color.RED)
 			Globals.credit_score = clamp(Globals.credit_score - 10, 300, 850)
@@ -164,8 +168,8 @@ func _on_refinance_pressed() -> void:
 func _on_payoff_pressed() -> void:
 	if Globals.money >= loan_balance:
 		Globals.money_out(loan_balance)
-		Globals.exp += 5 * Globals.exp_boost # Bonus exp for paying off loan
-		Globals.notify("EXP + " + 5 * Globals.exp_boost,Color.YELLOW)
+		Globals.EXP += 5 * Globals.exp_boost 
+		Globals.notify("EXP + %d" % (5 * Globals.exp_boost), Color.YELLOW)
 		Globals.credit_score = clamp(Globals.credit_score - 10, 300, 850)
 		
 		if house_ref and is_instance_valid(house_ref):
@@ -187,10 +191,17 @@ func _on_payoff_pressed() -> void:
 		Globals.notify("Need $%s to pay off!" % add_comma_to_int(int(loan_balance)), Color.RED)
 	Globals.recalculate_expenses()
 
-func calculate_mortgage_payment(loan_amount: float, months: int, interest_rate: float) -> float:
-	if months <= 0 or loan_amount <= 0 or interest_rate < 0:
-		push_error("Invalid mortgage parameters: loan_amount=%s, months=%s, interest_rate=%s" % [loan_amount, months, interest_rate])
+func calculate_mortgage_payment(p_amount: float, p_months: int, p_rate: float) -> float:
+	# Use the renamed parameters (p_amount, p_months, p_rate) 
+	# to avoid shadowing the class variables
+	if p_months <= 0 or p_amount <= 0 or p_rate < 0:
+		push_error("Invalid mortgage parameters: loan_amount=%s, months=%s, interest_rate=%s" % [p_amount, p_months, p_rate])
 		return 0.0
-	var monthly_rate = interest_rate / 12.0
-	var payment = loan_amount * (monthly_rate * pow(1 + monthly_rate, months)) / (pow(1 + monthly_rate, months) - 1)
+	
+	var monthly_rate = p_rate / 12.0
+	# Standard mortgage formula
+	var new_payment = p_amount * (monthly_rate * pow(1 + monthly_rate, p_months)) / (pow(1 + monthly_rate, p_months) - 1)
+	
+	# Update the class variable 'payment' with the result
+	payment = new_payment
 	return payment

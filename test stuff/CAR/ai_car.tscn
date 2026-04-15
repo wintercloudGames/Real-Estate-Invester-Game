@@ -4827,32 +4827,17 @@ skeleton = NodePath("")
 [node name="FrontRay" type="RayCast3D" parent="AICar"]
 transform = Transform3D(1, 0, 0, 0, 0.00511377, -0.999987, 0, 0.999987, 0.00511377, 0, 0.126082, -0.13243)
 
-[node name="FrontLeftRay" type="RayCast3D" parent="AICar"]
-transform = Transform3D(0.9417412, 0.33633536, 0.0017199605, -1.9329088e-10, 0.00511377, -0.999987, -0.3363394, 0.9417288, 0.004815847, 0, 0.126082, -0.13243)
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9830891, 0.18312784, 0, -0.18312784, 0.9830891, 0, 0.21781799, -0.09331652)
+spot_range = 2.0188375
+spot_angle = 26.848597
 
-[node name="FrontRightRay" type="RayCast3D" parent="AICar"]
-transform = Transform3D(0.9657906, -0.25932142, -0.0013261244, 0, 0.0051137693, -0.99998695, 0.25932485, 0.96577716, 0.004938826, 0, 0.126082, -0.13243)
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.99686784, 0, -0.07908556, -0.013164502, 0.9860484, 0.1659376, 0.07798219, 0.16645898, -0.9829599, 0, 0.21781799, 0.072812766)
+light_color = Color(0.96875, 0, 0, 1)
+spot_range = 1.7567587
+spot_angle = 30.383696
 
-[node name="LeftRay" type="RayCast3D" parent="AICar"]
-transform = Transform3D(-0.8549403, 0.51568943, 0.056049805, -0.0968361, -0.052512895, -0.993914, -0.50960755, -0.85516524, 0.09483272, 0, 0.126082, -0.13243)
-target_position = Vector3(0, -0.5, 0)
-
-[node name="RightRay" type="RayCast3D" parent="AICar"]
-transform = Transform3D(-0.95681936, -0.25807524, -0.13376562, 0.15856797, -0.07772081, -0.98428506, 0.24362288, -0.96299386, 0.115287215, 0, 0.126082, -0.13243)
-target_position = Vector3(0, -0.5, 0)
-
-[node name="BackRay" type="RayCast3D" parent="AICar"]
-transform = Transform3D(-0.999388, 0.0349688, 0.000178825, 0, 0.00511377, -0.999987, -0.0349693, -0.999375, -0.00511065, 0, 0.126082, -0.13243)
-
-[node name="GroundRay" type="RayCast3D" parent="AICar"]
-transform = Transform3D(-0.999753, -0.0154954, -0.0159247, -0.0164244, 0.998065, 0.0599618, 0.0149648, 0.0602086, -0.998074, -0.0155102, 0.1523, 0.00269707)
-target_position = Vector3(0, -0.3, 0)
-
-[node name="SpotLight3D" type="SpotLight3D" parent="AICar"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0911053, -0.300394)
-spot_angle = 21.6144
-
-[node name="SpotLight3D2" type="SpotLight3D" parent="AICar"]
-transform = Transform3D(-0.9983897, 0, 0.056727562, 0, 1, 0, -0.056727562, 0, -0.9983897, 0, 0.0911053, 0.25728822)
-light_color = Color(0.97265625, 0, 0, 1)
-spot_angle = 21.6144
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.040309727, 0)
+aabb = AABB(-0.1941466, -0.16001338, -0.22882164, 0.35509008, 0.32002676, 0.45764327)

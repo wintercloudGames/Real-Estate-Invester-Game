@@ -1,4 +1,4 @@
-[gd_scene load_steps=125 format=4 uid="uid://cung7j0rgqmwu"]
+[gd_scene load_steps=122 format=4 uid="uid://cung7j0rgqmwu"]
 
 [ext_resource type="Script" uid="uid://cq2g8tdj47vbe" path="res://assets/game.gd" id="1_f0aps"]
 [ext_resource type="Script" uid="uid://bcsm7nw2fa21b" path="res://addons/zylann.hterrain/hterrain.gd" id="2_6p1yv"]
@@ -9,7 +9,6 @@
 [ext_resource type="Resource" uid="uid://c6pgusmhrxv1v" path="res://Hterrain/data.hterrain" id="3_jqctu"]
 [ext_resource type="PackedScene" uid="uid://dlx0ovoxxaxtn" path="res://assets/UI/house_info.tscn" id="3_xv67o"]
 [ext_resource type="Texture2D" uid="uid://bauw01d3wf7vg" path="res://assets/UI/icons/smartphone.png" id="4_5akwj"]
-[ext_resource type="Script" uid="uid://dyrjoiy8782sc" path="res://assets/UI/debug.gd" id="4_cba11"]
 [ext_resource type="Script" uid="uid://ljltqopkpekw" path="res://assets/UI/ui.gd" id="4_j4nwd"]
 [ext_resource type="Script" uid="uid://cbhd6gm7shkm" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="4_mevvh"]
 [ext_resource type="Script" uid="uid://3wrwiufviamv" path="res://assets/UI/market.gd" id="5_5fnqb"]
@@ -20,7 +19,6 @@
 [ext_resource type="Texture2D" uid="uid://dbcg3giehx0jg" path="res://Textures/Terrain/Gravel/Gravel040_1K-JPG_Color.jpg" id="7_prxnp"]
 [ext_resource type="Script" uid="uid://cqdxjp685677v" path="res://assets/UI/game_over.gd" id="8_5mqxr"]
 [ext_resource type="Script" uid="uid://cs5yxfh6pvmdd" path="res://assets/UI/season_system.gd" id="8_embdu"]
-[ext_resource type="Script" uid="uid://ds22gedbs3fqn" path="res://assets/UI/directional_light_3d.gd" id="8_ew414"]
 [ext_resource type="Script" uid="uid://bkuojraxs2kly" path="res://assets/UI/world_settings.gd" id="8_lkgt7"]
 [ext_resource type="Script" uid="uid://bdcd1afp8mya6" path="res://assets/UI/quit_menu.gd" id="9_13hc7"]
 [ext_resource type="Texture2D" uid="uid://cpputofoxp0a7" path="res://shaded-dark/shadedDark34.png" id="10_7f3x1"]
@@ -28,7 +26,6 @@
 [ext_resource type="Script" uid="uid://dnxsck2srpcyu" path="res://assets/UI/hostpital_ui.gd" id="11_mjwdw"]
 [ext_resource type="Texture2D" uid="uid://lq3cgxnta8g0" path="res://shaded-dark/shadedDark35.png" id="11_vwjes"]
 [ext_resource type="Script" uid="uid://bjo53yytepjk5" path="res://assets/UI/phone/player_stats.gd" id="12_5wq64"]
-[ext_resource type="Script" uid="uid://c85ahhgov1iw1" path="res://assets/events/event_popup.gd" id="12_c5sid"]
 [ext_resource type="AudioStream" uid="uid://ll13glidifqd" path="res://effects/sounds/loud-thunder-192165.mp3" id="12_lsqda"]
 [ext_resource type="AudioStream" uid="uid://c6p3mu2uxmndm" path="res://effects/sounds/light-rain-109591.mp3" id="13_yy7cq"]
 [ext_resource type="PackedScene" uid="uid://w86r5fs8wyd" path="res://effects/Rain.tscn" id="14_c828t"]
@@ -2539,9 +2536,6 @@ vertical_alignment = 1
 
 [node name="AI_Invester" type="Node" parent="."]
 
-[node name="Debug" type="Node" parent="."]
-script = ExtResource("4_cba11")
-
 [node name="Market" type="Node" parent="."]
 script = ExtResource("5_5fnqb")
 min_growth_rate = -0.02
@@ -2557,12 +2551,12 @@ script = ExtResource("2_fjej5")
 script = ExtResource("8_embdu")
 
 [node name="Rain" parent="Season_System" instance=ExtResource("14_c828t")]
-transform = Transform3D(70, 0, 0, 0, 10, -1.28746e-06, 0, 4.76837e-07, 27, -380.461, 102.741, -108.304)
+transform = Transform3D(4.591, 0, 0, 0, 0.657, -8.449551e-08, 0, 3.132819e-08, 1.772, -11.82627, 7.069318, -2.9028091)
 one_shot = false
 trail_enabled = false
 
 [node name="Snow" parent="Season_System" instance=ExtResource("11_dg5mb")]
-transform = Transform3D(75.1237, 0, 0, 0, 2.2, 0, 0, 0, 31.7663, -380.461, 102, -108.304)
+transform = Transform3D(4.591, 0, 0, 0, 0.657, 0, 0, 0, 1.772, -11.82627, 6.3283205, -2.9028091)
 
 [node name="ThunderSound" type="AudioStreamPlayer" parent="Season_System"]
 stream = ExtResource("12_lsqda")
@@ -2579,12 +2573,10 @@ script = ExtResource("8_lkgt7")
 environment = SubResource("Environment_bmqof")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World_settings"]
-transform = Transform3D(-0.254491, -0.896333, 0.363073, -0.489908, 0.443186, 0.750717, -0.833801, 0.0131786, -0.551908, -467.896, 73.7311, -221.016)
-light_energy = 2.0
+transform = Transform3D(1, 0, 0, 0, -0.12186929, 0.99254626, 0, -0.99254614, -0.1218693, -19.018143, 61.125084, 7.7650833)
 shadow_enabled = true
 shadow_transmittance_bias = 16.0
-directional_shadow_fade_start = 1.0
-script = ExtResource("8_ew414")
+directional_shadow_mode = 1
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48006, -0.0880737, -6.19686)
@@ -3198,67 +3190,12 @@ offset_bottom = 64.5
 theme = ExtResource("32_cpbdu")
 text = "CLOSE"
 
-[node name="event_popup" type="Control" parent="HUD"]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 887.0
-offset_top = 459.0
-offset_right = 1239.0
-offset_bottom = 769.0
-theme = ExtResource("32_nggmv")
-script = ExtResource("12_c5sid")
-
-[node name="Panel" type="Panel" parent="HUD/event_popup"]
-layout_mode = 0
-offset_right = 349.0
-offset_bottom = 316.0
-
-[node name="Label" type="Label" parent="HUD/event_popup"]
-layout_mode = 0
-offset_left = 10.0
-offset_top = 17.0
-offset_right = 333.0
-offset_bottom = 126.0
-theme_override_font_sizes/font_size = 20
-text = "\"You have a renter interested in a house!\""
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="cost" type="Label" parent="HUD/event_popup"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 135.0
-offset_right = 323.0
-offset_bottom = 219.0
-theme_override_font_sizes/font_size = 20
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Relist_house_Button" type="Button" parent="HUD/event_popup"]
-visible = false
-layout_mode = 0
-offset_left = 114.0
-offset_top = 254.0
-offset_right = 221.0
-offset_bottom = 296.0
-text = "Relist House"
-
 [node name="Business_UI" parent="HUD" instance=ExtResource("16_0rmd6")]
 visible = false
-anchors_preset = 1
-anchor_left = 1.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 0.0
-offset_left = -527.0
-offset_top = 169.0
-offset_right = -136.0
-offset_bottom = 866.0
-grow_horizontal = 0
-grow_vertical = 1
-theme = ExtResource("32_nggmv")
+offset_left = 902.68
+offset_top = 198.08
+offset_right = 1242.0801
+offset_bottom = 748.08
 
 [node name="Job_offer_ui" type="Control" parent="HUD"]
 visible = false
@@ -4318,7 +4255,6 @@ transform = Transform3D(0.10650703, 0, -0.9943119, 0, 1, 0, 0.9943119, 0, 0.1065
 [connection signal="pressed" from="HUD/Hostpital_UI/Button" to="HUD/Hostpital_UI" method="_on_button_pressed"]
 [connection signal="pressed" from="HUD/Hostpital_UI/Button2" to="HUD/Hostpital_UI" method="_on_button_2_pressed"]
 [connection signal="pressed" from="HUD/Hostpital_UI/Close_Button" to="HUD/Hostpital_UI" method="_on_close_button_pressed"]
-[connection signal="pressed" from="HUD/event_popup/Relist_house_Button" to="events" method="_on_relist_house_button_pressed"]
 [connection signal="pressed" from="HUD/Show_log" to="HUD/UI" method="_on_show_log_pressed"]
 [connection signal="pressed" from="HUD/MissionWin/MissionWinButton" to="." method="_on_mission_win_button_pressed"]
 [connection signal="value_changed" from="HUD/Speedup/HSlider" to="HUD/Speedup" method="_on_h_slider_value_changed"]

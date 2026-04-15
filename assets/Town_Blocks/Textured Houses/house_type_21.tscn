@@ -164,3 +164,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.234128, -0.0084269, 0.90871
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.234128, -0.0084269, 1.24904)
 
 [node name="house_base" parent="." instance=ExtResource("3_18yac")]
+
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]

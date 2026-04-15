@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d1s3cupibr4qf"]
+[gd_scene load_steps=12 format=3 uid="uid://d1s3cupibr4qf"]
 
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_7l2q4"]
 [ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://themes/new_theme.tres" id="1_veryn"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://pbljlsxwef84" path="res://effects/sounds/switch.wav" id="7_um3lu"]
 [ext_resource type="AudioStream" uid="uid://ubh812231qff" path="res://music/background-music-piano-soft-380590.mp3" id="8_sfxdn"]
 [ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="8_xcttp"]
+[ext_resource type="Script" uid="uid://7qtmh1l3e83q" path="res://Menu/menu_music.gd" id="11_gk4pn"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -96,7 +97,6 @@ size_flags_vertical = 4
 text = "Quit"
 
 [node name="Settings_menu" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -250,6 +250,18 @@ text = "lightning"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Label7" type="Label" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 603.0
+offset_right = 304.0
+offset_bottom = 672.0
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 50
+text = "Day/Night"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Label3" type="Label" parent="Settings_menu"]
 layout_mode = 0
 offset_left = 82.0
@@ -354,6 +366,17 @@ theme_override_font_sizes/font_size = 50
 text = "On"
 alignment = 1
 
+[node name="DayNightCheck" type="CheckButton" parent="Settings_menu"]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 605.0
+offset_right = 583.0
+offset_bottom = 686.0
+theme = ExtResource("1_7l2q4")
+theme_override_font_sizes/font_size = 50
+text = "On"
+alignment = 1
+
 [node name="WeatherCheck" type="CheckButton" parent="Settings_menu"]
 layout_mode = 0
 offset_left = 382.0
@@ -396,10 +419,10 @@ offset_bottom = 846.0
 
 [node name="ResolutionOptionButton" type="OptionButton" parent="Settings_menu"]
 layout_mode = 0
-offset_left = 144.0
-offset_top = 677.0
-offset_right = 447.0
-offset_bottom = 758.0
+offset_left = 135.0
+offset_top = 744.0
+offset_right = 438.0
+offset_bottom = 825.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_7l2q4")
@@ -520,6 +543,7 @@ stream = ExtResource("8_sfxdn")
 autoplay = true
 bus = &"Music"
 parameters/looping = false
+script = ExtResource("11_gk4pn")
 
 [connection signal="pressed" from="ProfilesContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="ProfilesContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
@@ -530,6 +554,7 @@ parameters/looping = false
 [connection signal="pressed" from="Settings_menu/CloseButton" to="Settings_menu" method="_on_close_button_pressed"]
 [connection signal="pressed" from="Settings_menu/ResetButton" to="Settings_menu" method="_on_reset_button_pressed"]
 [connection signal="toggled" from="Settings_menu/LightningCheck" to="Settings_menu" method="_on_lightning_check_toggled"]
+[connection signal="toggled" from="Settings_menu/DayNightCheck" to="Settings_menu" method="_on_day_night_check_toggled"]
 [connection signal="toggled" from="Settings_menu/WeatherCheck" to="Settings_menu" method="_on_weather_check_toggled"]
 [connection signal="toggled" from="Settings_menu/ShowFPSCheck" to="Settings_menu" method="_on_show_fps_check_toggled"]
 [connection signal="toggled" from="Settings_menu/DynamicResCheck" to="Settings_menu" method="_on_dynamic_res_check_toggled"]

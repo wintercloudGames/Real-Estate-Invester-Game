@@ -150,28 +150,31 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_8s47j")
 
-[node name="house_type04" type="MeshInstance3D"]
+[node name="Node3D" type="Node3D"]
+
+[node name="house_type04" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_ga7xc")
 skeleton = NodePath("")
 script = ExtResource("1_7i2m2")
 
-[node name="path_long2" parent="." instance=ExtResource("2_sdodn")]
+[node name="path_long2" parent="house_type04" instance=ExtResource("2_sdodn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.256766, -0.0221247, 0.110031)
 
-[node name="path_long3" parent="." instance=ExtResource("2_sdodn")]
+[node name="path_long3" parent="house_type04" instance=ExtResource("2_sdodn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.256766, -0.0221247, 0.458833)
 
-[node name="path_long4" parent="." instance=ExtResource("2_sdodn")]
+[node name="path_long4" parent="house_type04" instance=ExtResource("2_sdodn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.256766, -0.0221247, 0.799163)
 
-[node name="driveway_long2" parent="." instance=ExtResource("3_r5plk")]
+[node name="driveway_long2" parent="house_type04" instance=ExtResource("3_r5plk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0525, -0.0177401, 0.111423)
 
-[node name="driveway_long3" parent="." instance=ExtResource("3_r5plk")]
+[node name="driveway_long3" parent="house_type04" instance=ExtResource("3_r5plk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0525, -0.0177401, 0.408638)
 
-[node name="driveway_long4" parent="." instance=ExtResource("3_r5plk")]
+[node name="driveway_long4" parent="house_type04" instance=ExtResource("3_r5plk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0525, -0.0177401, 0.790605)
 
 [node name="house_base" parent="." instance=ExtResource("4_hsk6s")]
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6676523, 0, 0.12841392)
