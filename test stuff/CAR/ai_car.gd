@@ -27,12 +27,6 @@ func _ready() -> void:
 	# INITIAL LIGHT CHECK: Ensure lights match the world state immediately
 	_update_lights()
 	
-	# Connect to the lighting update signal from your World_settings or Season_System
-	# This ensures lights turn on even if the car was off-screen when it turned night
-	var season_sys = get_tree().get_root().find_child("Season_System", true, false)
-	if season_sys:
-		season_sys.lighting_update_requested.connect(_on_night_mode_changed)
-
 	# Make sure the path matches your scene tree
 	var world_settings = get_node_or_null("/root/Root/UserInterface/Game/World_settings")
 	

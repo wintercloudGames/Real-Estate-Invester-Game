@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_qqrkn")
 job_name = "Street Sweeper"
+monthly_salary = 450.0
 description = "A standard job in the Labor sector."

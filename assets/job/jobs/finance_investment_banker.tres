@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_u7qu6")
 job_name = "Investment Banker"
-monthly_salary = 42000.0
+monthly_salary = 28000.0
 required_player_level = 40
 required_skill_points = 50
 category = "Finance"

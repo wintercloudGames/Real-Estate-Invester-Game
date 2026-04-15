@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_p7qil")
 job_name = "Portfolio Manager"
-monthly_salary = 24000.0
+monthly_salary = 17000.0
 required_player_level = 33
 required_skill_points = 35
 category = "Finance"

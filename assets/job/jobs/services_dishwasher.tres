@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_uttpu")
 job_name = "Dishwasher"
-monthly_salary = 750.0
+monthly_salary = 500.0
 category = "Services"
 description = "A standard job in the Services sector."

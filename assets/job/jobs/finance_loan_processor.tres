@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_qh8kl")
 job_name = "Loan Processor"
-monthly_salary = 3800.0
+monthly_salary = 2800.0
 required_player_level = 9
 required_skill_points = 5
 category = "Finance"

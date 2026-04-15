@@ -167,7 +167,7 @@ texture_normal = ExtResource("10_6rtyb")
 max_level = 20
 skill_name = "exp boost"
 skill_description = "level up faster with exp boost"
-level_costs = Array[int]([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10])
+level_costs = Array[int]([0])
 app_skill_to_unlock = 17
 
 [node name="Labor" parent="TabContainer/General" instance=ExtResource("6_2tli5")]
@@ -178,7 +178,7 @@ offset_right = 270.0
 offset_bottom = 285.0
 rotation = 0.0117383
 texture_normal = ExtResource("22_qd5qf")
-max_level = 40
+max_level = 10
 skill_name = "Labor"
 skill_description = "Higher levels unlock heavy machinery and construction oversight."
 app_skill_to_unlock = 19
@@ -191,7 +191,7 @@ offset_right = 368.0
 offset_bottom = 285.0
 rotation = 0.0117383
 texture_normal = ExtResource("12_qd5qf")
-max_level = 60
+max_level = 10
 skill_name = "Services"
 skill_description = "Required for high-end concierge, estate management, and luxury service careers.  
 
@@ -206,7 +206,7 @@ offset_right = 466.822
 offset_bottom = 285.0
 rotation = 0.0117383
 texture_normal = ExtResource("13_n77n5")
-max_level = 70
+max_level = 10
 skill_name = "Trade"
 skill_description = " Essential for specialized contractors, structural inspectors, and architects.  
 
@@ -221,7 +221,7 @@ offset_right = 566.822
 offset_bottom = 285.0
 rotation = 0.0117383
 texture_normal = ExtResource("25_bqmw5")
-max_level = 100
+max_level = 10
 skill_name = "Finance"
 skill_description = "Unlock positions in banking, stock brokerage, and high-level investment funds.  
 
@@ -235,7 +235,7 @@ offset_top = 215.0
 offset_right = 666.822
 offset_bottom = 285.0
 texture_normal = ExtResource("26_8caw6")
-max_level = 120
+max_level = 5
 skill_name = "Management"
 skill_description = "Required for district managers, directors, and C-suite executive roles.  
 
@@ -269,7 +269,7 @@ offset_bottom = 15.0
 texture_normal = ExtResource("9_o85cb")
 skill_name = "house manager"
 skill_description = "you can manage miltible proerties more easely."
-level_costs = Array[int]([5])
+level_costs = Array[int]([3])
 app_skill_to_unlock = 3
 
 [node name="Hireing" parent="TabContainer/House/Rent_houses/House_manager" instance=ExtResource("6_2tli5")]
@@ -281,7 +281,7 @@ offset_bottom = 16.0
 texture_normal = ExtResource("11_62fk7")
 skill_name = "Hireing app"
 skill_description = "unlock an app to hire help for your rental empire."
-level_costs = Array[int]([5])
+level_costs = Array[int]([3])
 
 [node name="rent_find_upgrade" parent="TabContainer/House/Rent_houses/House_manager/Hireing" instance=ExtResource("6_2tli5")]
 layout_mode = 0

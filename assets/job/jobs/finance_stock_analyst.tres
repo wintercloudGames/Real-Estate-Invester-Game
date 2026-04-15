@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_ghlgs")
 job_name = "Stock Analyst"
-monthly_salary = 14500.0
+monthly_salary = 10500.0
 required_player_level = 26
 required_skill_points = 25
 category = "Finance"

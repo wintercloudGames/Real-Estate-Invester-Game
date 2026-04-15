@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_2lcco")
 job_name = "Operations Director"
-monthly_salary = 21000.0
+monthly_salary = 15000.0
 required_player_level = 32
 required_skill_points = 30
 category = "Management"

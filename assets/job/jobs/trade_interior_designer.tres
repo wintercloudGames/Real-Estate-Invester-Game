@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_jwi48")
 job_name = "Interior Designer"
-monthly_salary = 12000.0
+monthly_salary = 8500.0
 required_player_level = 25
 required_skill_points = 25
 category = "Trade"

@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_g4o8q")
 job_name = "Master Plumber"
-monthly_salary = 7800.0
+monthly_salary = 5500.0
 required_player_level = 19
 required_skill_points = 18
 category = "Trade"

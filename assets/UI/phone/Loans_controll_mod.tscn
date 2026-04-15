@@ -100,10 +100,7 @@ text = "intrest rate: %5"
 layout_mode = 2
 text = "months: 10"
 
-[node name="Timer" type="Timer" parent="."]
-
 [connection signal="pressed" from="HBoxContainer/Make_payment" to="." method="_on_make_payment_pressed"]
 [connection signal="pressed" from="HBoxContainer/RefinanceButton" to="." method="_on_refinance_pressed"]
 [connection signal="pressed" from="HBoxContainer/PayoffButton" to="." method="_on_payoff_pressed"]
 [connection signal="pressed" from="HBoxContainer/autopay_toogle" to="." method="_on_list_for_rent_button_pressed"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

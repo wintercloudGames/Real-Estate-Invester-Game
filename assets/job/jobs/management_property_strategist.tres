@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_ylg8e")
 job_name = "Property Strategist"
-monthly_salary = 35000.0
+monthly_salary = 24000.0
 required_player_level = 38
 required_skill_points = 40
 category = "Management"

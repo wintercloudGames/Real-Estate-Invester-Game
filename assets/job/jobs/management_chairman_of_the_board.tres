@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_yx5q1")
 job_name = "Chairman of the Board"
-monthly_salary = 200000.0
+monthly_salary = 135000.0
 required_player_level = 70
 required_skill_points = 120
 category = "Management"

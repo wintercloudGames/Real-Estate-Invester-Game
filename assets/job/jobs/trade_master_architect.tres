@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_nwo46")
 job_name = "Master Architect"
-monthly_salary = 55000.0
+monthly_salary = 35000.0
 required_player_level = 50
 required_skill_points = 70
 category = "Trade"

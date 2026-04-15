@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_oj8kk")
 job_name = "Site Foreman"
-monthly_salary = 9500.0
+monthly_salary = 6000.0
 required_player_level = 28
 required_skill_points = 25
 description = "A standard job in the Labor sector."

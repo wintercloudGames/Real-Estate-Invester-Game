@@ -34,7 +34,8 @@ func play_random_song():
 		stream = stream_res
 		play()
 		$"../song_label".text = "     Now playing: " + current_song.get_file()
-		Globals.notify("Now playing: " + str(current_song.get_file(),Color.YELLOW))
+		var song_name = current_song.get_file().get_basename()
+		Globals.notify("Now playing: " + song_name, Color.CRIMSON)
 	else:
 		print("Failed to load song:", current_song)
 

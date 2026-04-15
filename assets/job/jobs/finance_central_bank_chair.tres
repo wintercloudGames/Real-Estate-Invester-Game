@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_h7l41")
 job_name = "Central Bank Chair"
-monthly_salary = 150000.0
+monthly_salary = 95000.0
 required_player_level = 60
 required_skill_points = 100
 category = "Finance"

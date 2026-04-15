@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_rohit")
 job_name = "Restoration Expert"
-monthly_salary = 30000.0
+monthly_salary = 21000.0
 required_player_level = 40
 required_skill_points = 50
 category = "Trade"

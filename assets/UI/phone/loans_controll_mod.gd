@@ -8,7 +8,6 @@ extends Control
 @onready var Make_payment = $HBoxContainer/Make_payment  # Button
 @onready var autopay_toogle = $HBoxContainer/autopay_toogle  # CheckButton
 @onready var month_display = $HBoxContainer2/months     # Label
-@onready var timer = $Timer
 @onready var refinance_button = $HBoxContainer/RefinanceButton  # Button
 @onready var payoff_button = $HBoxContainer/PayoffButton       # Button
 @onready var loans_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans")
@@ -26,182 +25,138 @@ var autopay_enabled: bool = true
 var house_ref: Node = null   
 
 func _ready() -> void:
-	Globals.recalculate_expenses()
-	# Check for null nodes
-	if not loan_amount or not loan_type or not paymentdisplay or not Intrest or not month_display or not Make_payment or not autopay_toogle or not timer or not refinance_button or not payoff_button or not loans_ui:
-		push_error("One or more nodes are null in Loan_controll_mod.tscn. Check node paths.")
-		return
-	if loan_type_str == "Mortgage":
-		refinance_button.visible = true
-	else:
-		refinance_button.visible = false
-	# Timer for autopay
-	timer.wait_time = 60.0  # 60 seconds
-	timer.start()
-	# Initialize UI
-	update_ui()
+	# Connect to the Global signal so we update whenever the month rolls over
+	if not Globals.month_ended.is_connected(_on_month_ended):
+		Globals.month_ended.connect(_on_month_ended)
 	
-	# Set autopay toggle initial state
+	# Setup UI visibility
+	refinance_button.visible = (loan_type_str == "Mortgage")
+	
 	if autopay_toogle:
 		autopay_toogle.button_pressed = autopay_enabled
-		autopay_toogle.text = "Enable Autopay: " + str(autopay_enabled) 
+	
+	update_ui()
+	Globals.recalculate_expenses()
 
 func update_ui() -> void:
 	if loan_amount: loan_amount.text = "Balance: $" + add_comma_to_int(int(loan_balance))
 	if loan_type: loan_type.text = "Type: " + loan_type_str
 	if paymentdisplay: paymentdisplay.text = "Payment: $" + add_comma_to_int(int(payment))
-	
-	# FIX: Use string formatting to show decimals (e.g., 5.0% or 12.25%)
-	if Intrest: 
-		Intrest.text = "Interest: %.1f%%" % (interest * 100.0)
+	if Intrest: Intrest.text = "Interest: %.1f%%" % (interest * 100.0)
 	if month_display: month_display.text = "Months: " + str(months)
-	if autopay_toogle:
-		autopay_toogle.text = "Enable Autopay: " + str(autopay_enabled)
 	
-	if loan_type_str == "Mortgage"and house_ref == null:
-		queue_free()
-	if loan_type_str == "Mortgage" and not is_instance_valid(house_ref):
-		print("House no longer exists, removing mortgage module.")
-		if loans_ui and loans_ui.active_loan_mods.has(self):
-			loans_ui.active_loan_mods.erase(self)
-		queue_free()
-	
+	# Safety: If the house was sold or deleted, remove the mortgage
+	if loan_type_str == "Mortgage" and (house_ref == null or not is_instance_valid(house_ref)):
+		_self_destruct()
+
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
-	var loop_end: int = 0 if value > -1 else 1
+	var loop_end = 1 if value < 0 else 0
 	for i in range(str_value.length() - 3, loop_end, -3):
 		str_value = str_value.insert(i, ",")
 	return str_value
 
-func _on_make_payment_pressed(is_manual: bool = true) -> void:
+# --- MONTHLY PROCESSING ---
+
+func _on_month_ended():
+	# If Autopay is ON, Globals already subtracted 'payment' via 'Expenses'.
+	# We just need to process the internal math and reduce the balance.
+	if autopay_enabled:
+		process_loan_reduction()
+	else:
+		# If Autopay is OFF, money wasn't taken. Penalty time!
+		Globals.notify("MISSED PAYMENT: %s" % loan_type_str, Color.ORANGE)
+		Globals.credit_score -= 10
+
+func _on_make_payment_pressed() -> void:
 	if Globals.money < payment:
-		# Only notify of failure if the player actually clicked this specific button
-		if is_manual:
-			Globals.notify("Need $%s!" % add_comma_to_int(int(payment)), Color.RED)
+		Globals.notify("Need $%s!" % add_comma_to_int(int(payment)), Color.RED)
 		return
 
-	Globals.credit_score += 2
-	var interest_payment = loan_balance * (interest / 12.0)
-	var principal_payment = payment - interest_payment
+	Globals.money -= payment
+	process_loan_reduction()
 	
-	loan_balance -= principal_payment
-	Globals.money -= principal_payment
+	# Blue notification for "Extra" manual work
+	Globals.notify("Extra Payment: -$" + add_comma_to_int(int(payment)), Color.CYAN)
+	Globals.credit_score += 1
+
+func process_loan_reduction():
+	# Split payment into Interest vs Principal
+	var monthly_interest_rate = interest / 12.0
+	var interest_charge = loan_balance * monthly_interest_rate
+	var principal_reduction = payment - interest_charge
+	
+	loan_balance -= principal_reduction
 	months -= 1
 
 	if is_instance_valid(house_ref):
 		house_ref.loan_price = loan_balance
-	else:
-		if loan_type_str == "Mortgage":
-			queue_free()
-			return
 	
 	if loan_balance <= 0 or months <= 0:
-		loan_balance = 0
-		months = 0
-		payment = 0
-		if house_ref and is_instance_valid(house_ref):
-			house_ref.loan_price = 0
-			house_ref.mortgage = 0
-			house_ref.has_loan = false
-		if loans_ui and is_instance_valid(loans_ui) and loans_ui.active_loan_mods.has(self):
-			loans_ui.active_loan_mods.erase(self)
-			var tween = create_tween()
-			tween.tween_property(self, "modulate:a", 0, 0.5)
-			tween.tween_callback(queue_free)
-			Globals.notify("LOAN PAID OFF!", Color.GOLD)
+		_complete_loan()
+	else:
+		update_ui()
+		# Expenses might change if the balance hit 0, otherwise keep sync
+		Globals.recalculate_expenses()
 
-	update_ui()
-	SaveAndLoad.save_game()
+func _complete_loan():
+	loan_balance = 0
+	months = 0
+	if is_instance_valid(house_ref):
+		house_ref.has_loan = false
+		house_ref.loan_price = 0
 	
-	# Only notify for the individual payment if it was a manual click
-	if is_manual:
-		Globals.notify("Paid A Loan -$" + add_comma_to_int(int(payment)), Color.RED)
-	
-	Globals.recalculate_expenses()
+	Globals.notify("LOAN PAID OFF!", Color.GOLD)
+	_self_destruct()
+
+# --- BUTTON ACTIONS ---
 
 func _on_autopay_toggled(toggled: bool) -> void:
 	autopay_enabled = toggled
-	if loan_type_str == "Mortgage" and house_ref and is_instance_valid(house_ref):
-		if house_ref.has_method("set_autopay_enabled"):
-			house_ref.set_autopay_enabled(toggled)
-	if toggled:
-		Globals.recalculate_expenses()
+	# This is vital: Recalculating expenses tells Globals whether to 
+	# include this payment in the monthly deduction or not.
+	Globals.recalculate_expenses()
 	update_ui()
-
-func _on_timer_timeout() -> void:
-	if autopay_enabled:
-		if Globals.money >= payment:
-			_on_make_payment_pressed(false)
-		else:
-			Globals.notify("Autopay Failed: Insufficient Funds", Color.RED)
-			Globals.credit_score = clamp(Globals.credit_score - 10, 300, 850)
-	else:
-		Globals.notify("Loan Payment Due!", Color.YELLOW)
-
-func _on_refinance_pressed() -> void:
-	# 1. Get the current market rate from the main UI script
-	var current_market_rate = 0.05 # Default fallback
-	if loans_ui and loans_ui.has_method("get_base_rate_from_credit"):
-		var heat = loans_ui.get_market_heat()
-		current_market_rate = loans_ui.get_base_rate_from_credit() * heat
-
-	# 2. Only allow if the new rate is actually better
-	if current_market_rate >= interest:
-		Globals.notify("Market rates are too high to refinance!", Color.ORANGE)
-		return
-
-	# 3. Apply a "Refinance Fee" (e.g., 2% of balance)
-	var fee = loan_balance * 0.02
-	if Globals.money < fee:
-		Globals.notify("Need $%s for Refinance Fee!" % add_comma_to_int(int(fee)), Color.RED)
-		return
-
-	Globals.money_out(fee)
-	interest = current_market_rate
-	# Reset term or keep current months? Usually, people reset to 360 (30 years)
-	months = 360 
-	payment = calculate_mortgage_payment(loan_balance, months, interest)
-	
-	update_ui()
-	Globals.notify("Refinanced to %.1f%%!" % (interest * 100), Color.GREEN)
 
 func _on_payoff_pressed() -> void:
 	if Globals.money >= loan_balance:
-		Globals.money_out(loan_balance)
-		Globals.EXP += 5 * Globals.exp_boost 
-		Globals.notify("EXP + %d" % (5 * Globals.exp_boost), Color.YELLOW)
-		Globals.credit_score = clamp(Globals.credit_score - 10, 300, 850)
-		
-		if house_ref and is_instance_valid(house_ref):
-			house_ref.has_loan = false
-			house_ref.loan_price = 0.0
-			house_ref.mortgage = 0.0
-			if house_ref.has_method("set_remaining_months"):
-				house_ref.set_remaining_months(0)
-			if house_ref.has_method("set_house_UI"):
-				house_ref.set_house_UI()
-			
-		if loans_ui and is_instance_valid(loans_ui) and loans_ui.active_loan_mods.has(self):
-			loans_ui.active_loan_mods.erase(self)
-			queue_free()
-		update_ui()
-		Globals.notify("Loan paid off!", Color.GREEN)
+		Globals.money -= loan_balance
+		Globals.notify("Loan fully settled!", Color.GREEN)
+		_complete_loan()
 	else:
-		push_warning("Insufficient funds to pay off loan: id=%s, balance=%s, money=%s" % [loan_id, loan_balance, Globals.money])
-		Globals.notify("Need $%s to pay off!" % add_comma_to_int(int(loan_balance)), Color.RED)
+		Globals.notify("Need $%s to payoff!" % add_comma_to_int(int(loan_balance)), Color.RED)
+
+func _on_refinance_pressed() -> void:
+	var current_market_rate = 0.05 
+	if loans_ui and loans_ui.has_method("get_base_rate_from_credit"):
+		current_market_rate = loans_ui.get_base_rate_from_credit()
+	
+	if current_market_rate >= interest:
+		Globals.notify("Market rates aren't better!", Color.ORANGE)
+		return
+
+	var fee = loan_balance * 0.02
+	if Globals.money < fee:
+		Globals.notify("Refinance Fee: $%s" % add_comma_to_int(int(fee)), Color.RED)
+		return
+
+	Globals.money -= fee
+	interest = current_market_rate
+	months = 360 # Reset to 30 years
+	payment = calculate_mortgage_payment(loan_balance, months, interest)
+	
+	Globals.notify("Refinanced to %.1f%%" % (interest * 100), Color.GREEN)
+	update_ui()
 	Globals.recalculate_expenses()
 
 func calculate_mortgage_payment(p_amount: float, p_months: int, p_rate: float) -> float:
-	# Use the renamed parameters (p_amount, p_months, p_rate) 
-	# to avoid shadowing the class variables
-	if p_months <= 0 or p_amount <= 0 or p_rate < 0:
-		push_error("Invalid mortgage parameters: loan_amount=%s, months=%s, interest_rate=%s" % [p_amount, p_months, p_rate])
-		return 0.0
-	
-	var monthly_rate = p_rate / 12.0
-	# Standard mortgage formula
-	var new_payment = p_amount * (monthly_rate * pow(1 + monthly_rate, p_months)) / (pow(1 + monthly_rate, p_months) - 1)
-	
-	# Update the class variable 'payment' with the result
-	payment = new_payment
-	return payment
+	if p_months <= 0: return 0.0
+	var m_rate = p_rate / 12.0
+	return p_amount * (m_rate * pow(1 + m_rate, p_months)) / (pow(1 + m_rate, p_months) - 1)
+
+func _self_destruct():
+	if loans_ui and loans_ui.active_loan_mods.has(self):
+		loans_ui.active_loan_mods.erase(self)
+	queue_free()
+	# Call this last so the total expenses remove this specific payment
+	Globals.recalculate_expenses()

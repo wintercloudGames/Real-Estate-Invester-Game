@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_0fg7d")
 job_name = "Painter"
-monthly_salary = 1700.0
+monthly_salary = 1200.0
 required_player_level = 4
 required_skill_points = 2
 category = "Trade"

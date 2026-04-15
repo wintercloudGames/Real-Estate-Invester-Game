@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_j8i55")
 job_name = "Landscaping Assistant"
-monthly_salary = 1800.0
+monthly_salary = 1200.0
 required_player_level = 6
 required_skill_points = 4
 description = "A standard job in the Labor sector."

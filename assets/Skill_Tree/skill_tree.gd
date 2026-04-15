@@ -36,25 +36,11 @@ func show_info(skill_name: String, info: String, current_level: int = 0, max_lev
 	skill_name_label.text = skill_name
 	description_panel.visible = true
 	
-	# Call this if you want the tooltip to follow the mouse
-	_position_panel_near_mouse()
 
 func hide_info() -> void:
 	if is_instance_valid(description_panel):
 		description_panel.visible = false
 
-func _position_panel_near_mouse() -> void:
-	var mouse_pos = get_global_mouse_position()
-	var viewport_size = get_viewport().get_visible_rect().size
-	var panel_pos = mouse_pos + Vector2(20, 20)
-	
-	if panel_pos.x + description_panel.size.x > viewport_size.x:
-		panel_pos.x = viewport_size.x - description_panel.size.x - 20
-	
-	if panel_pos.y + description_panel.size.y > viewport_size.y:
-		panel_pos.y = viewport_size.y - description_panel.size.y - 20
-	
-	description_panel.position = panel_pos - global_position
 
 func _update_skill_points_display() -> void:
 	if is_instance_valid(skill_points_label):

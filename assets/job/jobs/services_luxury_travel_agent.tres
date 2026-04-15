@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_5wumy")
 job_name = "Luxury Travel Agent"
-monthly_salary = 10500.0
+monthly_salary = 7500.0
 required_player_level = 30
 required_skill_points = 25
 category = "Services"

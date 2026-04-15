@@ -33,6 +33,7 @@ func save_game() -> bool:
 			"save_name": Globals.save_name,
 			"money": Globals.money,
 			"current_job_name": Globals.current_job_name,
+			"current_job_category":Globals.current_job_category,
 			"job_income": Globals.job_income,
 			"job_exp_per_month": Globals.job_exp_per_month,
 			"labor_points": Globals.labor_points,
@@ -81,6 +82,7 @@ func save_game() -> bool:
 			"exp_to_level": Globals.exp_to_level,
 			"level": Globals.level,
 			"has_hireing_app": Globals.has_hireing_app,
+			"jop_exp_gain_per_month": Globals.jop_exp_gain_per_month,
 			"has_info_app": Globals.has_info_app,
 			"has_stock_app":Globals.has_stock_app,
 			"has_market_app":Globals.has_market_app,
@@ -229,6 +231,7 @@ func load_game() -> bool:
 		Globals.save_name = g.get("save_name", "My Save")
 		Globals.money = g.get("money", 5000)
 		Globals.current_job_name = g.get("current_job_name", "Unemployed")
+		Globals.current_job_category = g.get("current_job_category","Labor")
 		Globals.job_income = g.get("job_income", 0.0)
 		Globals.job_exp_per_month = g.get("job_exp_per_month", 0.0)
 		Globals.labor_points = g.get("labor_points", 0)

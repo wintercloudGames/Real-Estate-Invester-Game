@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_lmshi")
 job_name = "Pipefitter"
-monthly_salary = 2400.0
+monthly_salary = 1800.0
 required_player_level = 7
 required_skill_points = 5
 category = "Trade"

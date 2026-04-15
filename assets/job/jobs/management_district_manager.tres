@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_eo5rv")
 job_name = "District Manager"
-monthly_salary = 13000.0
+monthly_salary = 9000.0
 required_player_level = 25
 required_skill_points = 22
 category = "Management"

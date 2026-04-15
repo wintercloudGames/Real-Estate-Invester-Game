@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_ay4kb")
 job_name = "Concierge"
-monthly_salary = 3100.0
+monthly_salary = 2200.0
 required_player_level = 11
 required_skill_points = 8
 category = "Services"

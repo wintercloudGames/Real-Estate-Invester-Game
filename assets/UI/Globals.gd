@@ -30,7 +30,9 @@ var total_debt: float = 0.0
 
 #Job vars
 var current_job_name: String = "Unemployed"
+var current_job_category: String = "None"
 var job_exp_per_month: float = 10
+var jop_exp_gain_per_month = 0
 var job_income: float = 0.0
 
 #mission vars
@@ -294,7 +296,7 @@ func add_comma_to_int(value: int) -> String:
 	return str_value
 
 func recalculate_expenses() -> void:
-	Expenses = 250 + (difficulty * 250)
+	Expenses = 100 + (difficulty * 200)
 		
 	# Fixed monthly costs
 	if employees > 0:
@@ -496,7 +498,6 @@ func update_economy() -> void:
 	Income = 0.0
 	listed_houses = 0
 	
-	# --- NEW: Reset and calculate total property value ---
 	var running_property_total: int = 0 
 
 	var all_houses = get_tree().get_nodes_in_group("houses")
@@ -536,38 +537,51 @@ func update_economy() -> void:
 	cashflow = Income - Expenses
 
 func monthy():
-	money += job_income
-	money -= Expenses
-	record_credit_score()
-	if credit_app == true:
-		notify("Credit Score: " + str(credit_score), Color.DEEP_SKY_BLUE)
-	if exp_boost > 0:
-		EXP += job_exp_per_month * exp_boost
-		notify("EXP + " + str(job_exp_per_month * exp_boost), Color.YELLOW)
-	else:
-		EXP += job_exp_per_month
-		notify("EXP + " + str(job_exp_per_month), Color.YELLOW)
-	if money < 0:
-		negative_month_count += 1
-		credit_score -= 10
-	else:
-		negative_month_count = 0
-	emit_signal("month_ended")
-
+	update_economy()
+	
+	money += cashflow
 	month += 1
-	if month >= 12:
+	if month > 12:
 		year += 1
 		month = 1
-
+	
 	if Savings_balance > 0:
 		last_savings_paid = interest
 		if send_to_account:
 			money += interest
 		else:
 			Savings_balance += interest
+	record_credit_score()
+	apply_monthly_job_exp()
+	if money < 0:
+		negative_month_count += 1
+		credit_score -= 10
+	else:
+		negative_month_count = 0
+	
+	if credit_app:
+		notify("Credit Score: " + str(credit_score), Color.DEEP_SKY_BLUE)
+	credit_score = clamp(credit_score, 300, 850)
+	emit_signal("month_ended")
 
-	credit_score = clamp(credit_score, 300, 850)  # Ensure score stays in range
+func apply_monthly_job_exp():
+	if current_job_name == "Unemployed":
+		return
+		
+	# Add the gain to the current category
+	match current_job_category:
+		"Labor": labor_points += jop_exp_gain_per_month
+		"Services": services_points += jop_exp_gain_per_month
+		"Trade": trade_points += jop_exp_gain_per_month
+		"Finance": finance_points += jop_exp_gain_per_month
+		"Management": management_points += jop_exp_gain_per_month
+	
+	# Also add to general EXP if that's part of your design
+	EXP += job_exp_per_month
 
+	# Tell the UI to refresh
+	emit_signal("stats_changed")
+	emit_signal("skill_points_changed")
 
 var cursor_normal = load("res://assets/UI/mouse/hand_thin_point.png")
 var cursor_click = load("res://assets/UI/mouse/hand_thin_small_point.png")

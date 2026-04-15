@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_8vxiq")
 job_name = "Assistant Principal"
-monthly_salary = 7500.0
+monthly_salary = 5200.0
 required_player_level = 18
 required_skill_points = 15
 category = "Management"
