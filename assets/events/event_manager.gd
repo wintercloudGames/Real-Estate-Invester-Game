@@ -26,22 +26,30 @@ func _trigger_random_event():
 	event_timer.wait_time = event_interval + randf_range(-15, 15)
 	
 	var roll = randf()
-	if roll < 0.12:
+	if roll < 0.10:
 		event_tenant_moves_out(owned_houses)
-	elif roll < 0.25:
+	elif roll < 0.20:
 		event_maintenance(owned_houses)
-	elif roll < 0.35:
+	elif roll < 0.30:
 		event_market_shift(owned_houses)
-	elif roll < 0.45:
+	elif roll < 0.38:
 		event_tax_season()
-	elif roll < 0.55:
+	elif roll < 0.45:
 		event_rent_logic(owned_houses)
-	elif roll < 0.65:
+	elif roll < 0.52:
 		event_hoa_incident()
-	elif roll < 0.75:
+	elif roll < 0.58:
 		event_squatter_incident(owned_houses)
-	elif roll < 0.85:
+	elif roll < 0.65:
 		event_disaster(owned_houses)
+	elif roll < 0.72:
+		event_gentrification(owned_houses) # NEW
+	elif roll < 0.80:
+		event_public_works(owned_houses)   # NEW
+	elif roll < 0.88:
+		event_vandalism(owned_houses)      # NEW
+	elif roll < 0.94:
+		event_energy_upgrade(owned_houses) # NEW
 	else:
 		event_random_bonus()
 
@@ -57,24 +65,25 @@ func event_tenant_moves_out(owned_houses: Array):
 func tenant_moves_out(house: Node):
 	if not is_instance_valid(house): return
 	
-	# Use your house's built-in function to handle the logic
 	if house.has_method("remove_tenant"):
 		house.remove_tenant()
 	else:
-		# Fallback if the function name changes
 		house.has_tenant = false
 	
-	# Track for the relist button
-	houses_needing_relist.append(house)
-	
-	# UI Notification
-	Globals.notify_action(
-		"VACANCY: A Tenant moved out! The house is now empty.", 
-		Color.ORANGE, 
-		self 
-	)
+	# If player has no agent, they must relist manually
+	if not Globals.renter_finder:
+		houses_needing_relist.append(house)
+		Globals.notify_action(
+			"VACANCY: A Tenant moved out! The house is now empty.", 
+			Color.ORANGE, 
+			self 
+		)
+	else:
+		# Agent handles it automatically 
+		house.is_listed = true
+		Globals.notify("AGENT: Tenant moved out, but your agent already relisted it.", Color.SKY_BLUE)
 
-# --- 2. MAINTENANCE EVENTS ---
+# --- 2. MAINTENANCE & CRIME ---
 
 func event_maintenance(owned_houses: Array):
 	var house = owned_houses.pick_random()
@@ -89,9 +98,15 @@ func event_maintenance(owned_houses: Array):
 	var cost = randi_range(repair["min"], repair["max"])
 	
 	Globals.money -= cost
-	Globals.notify("REPAIR: %s at a House. Cost: -$%d" % [repair["name"], cost], Color.LIGHT_CORAL)
+	Globals.notify("REPAIR: %s. Cost: -$%s" % [repair["name"], Globals.add_comma_to_int(cost)], Color.LIGHT_CORAL)
 
-# --- 3. MARKET EVENTS ---
+func event_vandalism(owned_houses: Array):
+	var house = owned_houses.pick_random()
+	var cost = randi_range(200, 900)
+	Globals.money -= cost
+	Globals.notify("CRIME: Vandalism reported. Cleanup cost: -$%s" % Globals.add_comma_to_int(cost), Color.CHOCOLATE)
+
+# --- 3. MARKET & NEIGHBORHOOD ---
 
 func event_market_shift(owned_houses: Array):
 	var house = owned_houses.pick_random()
@@ -100,13 +115,27 @@ func event_market_shift(owned_houses: Array):
 	if randf() > 0.4:
 		var gain = house.current_price * percent
 		house.current_price += gain
-		Globals.notify("MARKET: Local property values spiked! A House gained $%d in value." % int(gain), Color.CYAN)
+		Globals.notify("MARKET: Property values spiked! House gained $%s in value." % Globals.add_comma_to_int(int(gain)), Color.CYAN)
 	else:
 		var loss = house.current_price * percent
 		house.current_price -= loss
-		Globals.notify("MARKET: Economic downturn. A House lost value.", Color.ORANGE_RED)
+		Globals.notify("MARKET: Economic downturn. A house lost value.", Color.ORANGE_RED)
 
-# --- 4. GOVERNMENT / TAX ---
+func event_gentrification(owned_houses: Array):
+	var house = owned_houses.pick_random()
+	var boost = randi_range(15000, 45000)
+	house.current_price += boost
+	Globals.notify("NEIGHBORHOOD: A trendy cafe opened nearby! Value: +$%s" % Globals.add_comma_to_int(boost), Color.DEEP_PINK)
+
+func event_public_works(owned_houses: Array):
+	# Infrastructure helps value but can temporarily hurt rent
+	var house = owned_houses.pick_random()
+	house.current_price += 10000
+	if house.has_tenant:
+		house.rent -= 50
+	Globals.notify("CITY: New subway line construction. Value up, but rent temporarily down.", Color.MEDIUM_PURPLE)
+
+# --- 4. GOVERNMENT & LEGAL ---
 
 func event_tax_season():
 	var total_value = 0
@@ -116,15 +145,24 @@ func event_tax_season():
 	var tax = total_value * 0.006
 	if tax > 100:
 		Globals.money -= tax
-		Globals.notify("TAXES: Annual property taxes collected. Total: -$%d" % int(tax), Color.CRIMSON)
+		Globals.notify("TAXES: Annual property taxes collected. Total: -$%s" % Globals.add_comma_to_int(int(tax)), Color.CRIMSON)
 
 func event_hoa_incident():
 	var cost = [150, 250, 500].pick_random()
 	var reasons = ["Uncut Grass", "Illegal Parking", "Trash Cans left out"]
 	Globals.money -= cost
-	Globals.notify("HOA FINE: %s. Paid: -$%d" % [reasons.pick_random(), cost], Color.CORAL)
+	Globals.notify("HOA FINE: %s. Paid: -$%s" % [reasons.pick_random(), Globals.add_comma_to_int(cost)], Color.CORAL)
 
-# --- 5. RENT LOGIC ---
+func event_squatter_incident(owned_houses: Array):
+	var vacant = owned_houses.filter(func(h): return !h.has_tenant)
+	if vacant.is_empty(): return
+	
+	var house = vacant.pick_random()
+	var legal_fees = randi_range(1000, 2500)
+	Globals.money -= legal_fees
+	Globals.notify("SQUATTERS: Someone broke into a vacant house! Legal fees: -$%s" % Globals.add_comma_to_int(legal_fees), Color.DARK_ORANGE)
+
+# --- 5. RENT & UPGRADES ---
 
 func event_rent_logic(owned_houses: Array):
 	var occupied = owned_houses.filter(func(h): return h.has_tenant)
@@ -134,18 +172,17 @@ func event_rent_logic(owned_houses: Array):
 	if randf() > 0.6: 
 		var increase = randi_range(100, 400)
 		house.rent += increase
-		Globals.notify("RENT: A Tenant signed a lease renewal at +$%d/mo!" % increase, Color.SPRING_GREEN)
+		Globals.notify("RENT: A Tenant signed a lease renewal at +$%s/mo!" % Globals.add_comma_to_int(increase), Color.SPRING_GREEN)
 	else:
 		Globals.notify("RENT: A Tenant requested an upgrade, but you declined.", Color.KHAKI)
 
-func event_squatter_incident(owned_houses: Array):
-	var vacant = owned_houses.filter(func(h): return !h.has_tenant)
-	if vacant.is_empty(): return
-	
-	var house = vacant.pick_random()
-	var legal_fees = randi_range(1000, 2500)
-	Globals.money -= legal_fees
-	Globals.notify("SQUATTERS: Someone broke into a vacant house! Legal fees: -$%d" % legal_fees, Color.DARK_ORANGE)
+func event_energy_upgrade(owned_houses: Array):
+	var house = owned_houses.pick_random()
+	var cost = 5000
+	if Globals.money > cost:
+		Globals.money -= cost
+		house.rent += 250
+		Globals.notify("UPGRADE: Solar panels installed. Rent increased: +$250/mo", Color.YELLOW)
 
 # --- 6. DISASTER / BONUS ---
 
@@ -153,12 +190,12 @@ func event_disaster(owned_houses: Array):
 	var house = owned_houses.pick_random()
 	var cost = randi_range(3000, 7000)
 	Globals.money -= cost
-	Globals.notify("DISASTER: Severe damage hit a House! Repairs: -$%d" % cost, Color.RED)
+	Globals.notify("DISASTER: severe weather damage reported! Repairs: -$%s" % Globals.add_comma_to_int(cost), Color.RED)
 
 func event_random_bonus():
 	var amt = randi_range(1000, 4000)
 	Globals.money += amt
-	Globals.notify("BONUS: A lucky investment paid off! Received: +$%d" % amt, Color.GOLD)
+	Globals.notify("BONUS: A local grant was awarded to your business! Received: +$%s" % Globals.add_comma_to_int(amt), Color.GOLD)
 
 # --- ACTION HANDLERS ---
 

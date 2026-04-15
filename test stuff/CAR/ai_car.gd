@@ -12,7 +12,7 @@ extends PathFollow3D
 
 @onready var front_ray: RayCast3D = $AICar/FrontRay
 # Grouping lights for easy access
-@onready var car_lights: Array = [$AICar/SpotLight3D, $AICar/SpotLight3D2]
+@onready var car_lights: Array = [$SpotLight3D,$SpotLight3D2]
 
 var _current_speed: float = 0.0
 var _is_switching: bool = false

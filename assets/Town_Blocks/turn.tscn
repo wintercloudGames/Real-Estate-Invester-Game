@@ -347,3 +347,7 @@ curve = SubResource("Curve3D_qhu7a")
 [node name="South_straight_path" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5345159, 0, 0.20543599)
 curve = SubResource("Curve3D_ahop3")
+
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.33451498, 0, -0.64712787)
+aabb = AABB(-3.3112564, -1, -3.1770782, 6.622513, 2, 6.3541565)

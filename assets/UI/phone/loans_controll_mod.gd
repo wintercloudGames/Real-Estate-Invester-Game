@@ -68,17 +68,21 @@ func _on_month_ended():
 		Globals.notify("MISSED PAYMENT: %s" % loan_type_str, Color.ORANGE)
 		Globals.credit_score -= 10
 
-func _on_make_payment_pressed() -> void:
+# Add is_manual as a parameter with a default value of true
+func _on_make_payment_pressed(is_manual: bool = true) -> void:
 	if Globals.money < payment:
-		Globals.notify("Need $%s!" % add_comma_to_int(int(payment)), Color.RED)
+		# Only show the "Need Money" error if the player manually clicked it
+		if is_manual:
+			Globals.notify("Need $%s!" % add_comma_to_int(int(payment)), Color.RED)
 		return
 
 	Globals.money -= payment
 	process_loan_reduction()
 	
-	# Blue notification for "Extra" manual work
-	Globals.notify("Extra Payment: -$" + add_comma_to_int(int(payment)), Color.CYAN)
-	Globals.credit_score += 1
+	if is_manual:
+		# Blue notification and credit boost for manual extra payments
+		Globals.notify("Extra Payment: -$" + add_comma_to_int(int(payment)), Color.CYAN)
+		Globals.credit_score += 1
 
 func process_loan_reduction():
 	# Split payment into Interest vs Principal

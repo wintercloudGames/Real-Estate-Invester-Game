@@ -360,3 +360,6 @@ curve = SubResource("Curve3D_1jsfw")
 
 [node name="car" parent="South_straight_path" instance=ExtResource("7_hccl2")]
 transform = Transform3D(0.0033678515, 0, 0.99999446, 0, 0.99999905, 0, -0.9999946, 0, 0.0033678513, 7.050203, 0.03099367, 0.023745462)
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+aabb = AABB(-3.56663, -1, -3.0613954, 7.13326, 2, 6.122791)

@@ -4839,5 +4839,5 @@ spot_range = 1.7567587
 spot_angle = 30.383696
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.040309727, 0)
-aabb = AABB(-0.1941466, -0.16001338, -0.22882164, 0.35509008, 0.32002676, 0.45764327)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18855953, 0)
+aabb = AABB(-0.09381111, -0.18231481, -0.29133227, 0.18762222, 0.36462963, 0.58266455)

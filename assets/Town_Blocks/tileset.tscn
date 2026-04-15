@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://bg2ds0br8cdkv"]
+
+[ext_resource type="PackedScene" uid="uid://be6xahrqbrede" path="res://assets/Town_Blocks/fourway.tscn" id="1_5rnv2"]
+[ext_resource type="PackedScene" uid="uid://b07iqv37k8uxs" path="res://assets/Town_Blocks/straight_way.tscn" id="2_rydej"]
+[ext_resource type="PackedScene" uid="uid://b1vogh7xv8ycb" path="res://assets/Town_Blocks/threeway.tscn" id="3_euuph"]
+[ext_resource type="PackedScene" uid="uid://cajj0231mp44r" path="res://assets/Town_Blocks/turn.tscn" id="4_mg7ru"]
+[ext_resource type="PackedScene" uid="uid://2cqm1robps1o" path="res://assets/Town_Blocks/end.tscn" id="5_o2fr6"]
+
+[node name="Tileset" type="Node3D"]
+
+[node name="Fourway" parent="." instance=ExtResource("1_5rnv2")]
+
+[node name="StraghtWay" parent="." instance=ExtResource("2_rydej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+
+[node name="Threeway" parent="." instance=ExtResource("3_euuph")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 0)
+
+[node name="Turn" parent="." instance=ExtResource("4_mg7ru")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 0)
+
+[node name="End" parent="." instance=ExtResource("5_o2fr6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)

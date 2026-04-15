@@ -75,7 +75,6 @@ func _process_season() -> void:
 	current_season = Season.values()[season_index]
 	
 	if season_label: season_label.text = Season.keys()[current_season]
-	Globals.notify("Season: " + Season.keys()[current_season], Color.CYAN)
 	
 	update_environment_for_season()
 	_update_lighting_values()

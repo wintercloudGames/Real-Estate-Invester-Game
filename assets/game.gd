@@ -13,7 +13,8 @@ func _ready() -> void:
 	$camera/Camera3D.current = true
 	Globals.yard_edit = false
 	Globals.month_ended.connect(simulate_market_buyers)
-	
+	var all_houses = get_tree().get_nodes_in_group("houses")
+	Globals.notify(str(all_houses.size()) + " : houses", Color.WHITE)
 	if Globals.first_start == false:
 		$HUD/Game_start.visible = true
 		for house in get_tree().get_nodes_in_group("houses"):

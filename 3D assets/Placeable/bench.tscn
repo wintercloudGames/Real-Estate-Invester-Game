@@ -76,7 +76,7 @@ albedo_color = Color(0.3359375, 0.22833252, 0, 1)
 size = Vector3(2.0422668, 0.7183838, 0.73361206)
 
 [node name="bench" type="Node3D"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 
 [node name="bench" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_8g5va")

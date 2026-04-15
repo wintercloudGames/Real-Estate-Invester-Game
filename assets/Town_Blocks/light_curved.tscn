@@ -99,6 +99,7 @@ skeleton = NodePath("")
 script = ExtResource("1_tqp8v")
 
 [node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
+aabb = AABB(-0.31119004, -0.6892683, -0.41871396, 0.5676926, 1.3785366, 0.7807873)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(0.99958384, -0.019080272, -0.021641744, 0.019080274, -0.12548909, 0.99191165, -0.021641742, -0.9919116, -0.1250728, 0.003719402, 0.6701284, 0.19335775)
