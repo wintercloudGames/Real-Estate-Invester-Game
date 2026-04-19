@@ -1,21 +1,21 @@
-# root.gd
 extends Node
-
+#root
 @onready var ui_layer = get_node("%UserInterface")
 
 func _ready() -> void:
 	_display_main_menu()
 
+
+
 func _display_main_menu() -> void:
 	await _clear_user_interface_with_fade()
 	var node = load("res://Menu/MainMenu.tscn").instantiate()
 	node.profile_loaded.connect(_on_profile_loaded)
-	node.profile_created.connect(_on_profile_created)
+	node.profile_created.connect(_on_profile_created) # This connection will now work
 	ui_layer.add_child(node)
 
 func _display_game() -> void:
 	await _clear_user_interface_with_fade()
-
 	var loading_screen = load("res://Menu/LoadingScreen.tscn").instantiate()
 	var progress_bar = loading_screen.get_node("MarginContainer/VBoxContainer/ProgressBar")
 	ui_layer.add_child(loading_screen)
@@ -54,10 +54,23 @@ func _clear_user_interface_with_fade() -> void:
 
 func _on_profile_loaded(slot: int) -> void:
 	SaveAndLoad.current_save_slot = slot
-	if await SaveAndLoad.load_game():
+	
+	# If we are already in MISSION mode but active_mission is null, 
+	# it means we are in the middle of picking a new mission from the menu.
+	# We don't want to call load_game() yet because it will overwrite 
+	# the mission we just clicked!
+	
+	if Globals.current_game_mode == Globals.GameMode.MISSION and Globals.active_mission != null:
+		# Data is already set by the menu, just go!
 		_display_game()
 	else:
-		push_error("Failed to load profile in slot: ", slot)
+		# Standard load for Freeplay/Story or Resuming an existing mission
+		if await SaveAndLoad.load_game():
+			_display_game()
+		else:
+			push_error("Failed to load profile in slot: ", slot)
 
-func _on_profile_created() -> void:
+func _on_profile_created(slot: int) -> void:
+	SaveAndLoad.current_save_slot = slot
+	# This is for brand new profiles, data is already in Globals
 	_display_game()

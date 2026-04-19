@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://cbktc2i5k4nkd"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_t84kw"]
+
+[resource]
+script = ExtResource("1_t84kw")
+id = "m_23"
+title = "Centurion Goal"
+unlock_id_needed = "m_22"
+target_rented_houses = 100
+target_player_level = 60
+time_limit_year = 30

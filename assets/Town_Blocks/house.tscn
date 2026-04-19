@@ -23,7 +23,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.12841392)
 script = ExtResource("1_ah82t")
 
 [node name="Yard_center_for_camera" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.95918083, 0.2827935, 0, -0.2827935, 0.95918083, 0, 0, -1.2362484)
+transform = Transform3D(1, 0, 0, 0, 0.95918083, 0.2827935, 0, -0.2827935, 0.95918083, 0, 0, -0.13834202)
 
 [node name="Area3D" type="Area3D" parent="."]
 
@@ -88,6 +88,26 @@ wait_time = 60.0
 autostart = true
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.011588694, 0.9999329, 0, -0.9999329, 0.011588694, 0, 2.0902097, -1.8323548)
+visible = false
+light_energy = 1.5
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.1476368, 0.9890416, 0, -0.9890416, -0.1476368, 0, 2.3495605, 1.1895092)
+visible = false
+light_energy = 1.5
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+transform = Transform3D(0.046740383, -0.99884003, 0.011576026, 5.551116e-17, 0.011588692, 0.9999329, -0.9989071, -0.046737246, 0.0005416599, -1.5092807, 2.0902097, -0.39204437)
+visible = false
+light_energy = 1.5
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="."]
+transform = Transform3D(0.04674038, -0.9879607, -0.14747544, 0, -0.1476368, 0.9890416, -0.9989071, -0.04622818, -0.0069005997, 1.5092807, 2.3495605, -0.25080127)
+visible = false
+light_energy = 1.5
 
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="input_event" from="Collect_Rent/Dollar_sign/Rent_collect" to="Collect_Rent/Dollar_sign" method="_on_rent_collect_input_event"]

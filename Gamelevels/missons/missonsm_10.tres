@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://bs8ms8ifiptxr"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_lq305"]
+
+[resource]
+script = ExtResource("1_lq305")
+id = "m_10"
+title = "Local Legend"
+unlock_id_needed = "m_09"
+target_money = 100000
+target_rented_houses = 12
+time_limit_year = 20

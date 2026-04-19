@@ -6,6 +6,10 @@ signal money_out_detect(out_value)
 signal skill_points_changed 
 signal stats_changed
 
+enum GameMode { STORY, MISSION, FREEPLAY }
+var current_game_mode: GameMode = GameMode.FREEPLAY
+var active_mission_id
+var completed_missions: Array = []
 var money = 0
 var ai_money = 10000000
 var brokerage_balance: float = 0.0
@@ -15,7 +19,7 @@ var credit_history: Array = [600]
 var portfolio: Dictionary = {} 
 var all_stocks: Array = []
 var listed_houses = 0
-var first_start = false
+var first_start = true
 var active_loans: Array = []
 var save_name: String = "My Save"
 var has_car = true
@@ -32,24 +36,15 @@ var total_debt: float = 0.0
 var current_job_name: String = "Unemployed"
 var current_job_category: String = "None"
 var job_exp_per_month: float = 10
-var jop_exp_gain_per_month = 0
+var job_exp_gain_per_month = 0
 var job_income: float = 0.0
+var labor_points = 0
+var services_points = 0
+var trade_points = 0
+var finance_points = 0
+var management_points = 0
 
-#mission vars
-var mission_templates = [
-	{"type": "houses",       "min_target": 5,  "max_target": 50,  "min_deadline": 5,  "max_deadline": 30, "desc_base": "Own %d houses"},
-	{"type": "tenants",      "min_target": 5, "max_target": 25, "min_deadline": 6,  "max_deadline": 25, "desc_base": "%d houses with tenants"},
-	{"type": "net_worth",    "min_target": 50000,  "max_target": 5000000, "min_deadline": 7,  "max_deadline": 20, "desc_base": "Net Worth $%s"},
-	{"type": "business_rank","min_target": 3,  "max_target": 20,  "min_deadline": 8,  "max_deadline": 25, "desc_base": "Business Rank %d"},
-	{"type": "credit_max",   "min_target": 700, "max_target": 850, "min_deadline": 5,  "max_deadline": 15, "desc_base": "Credit Score %d"},
-]
-
-var mission_active: bool = false
-var mission_type: String = ""
-var mission_target: int = 0  # int for most; net_worth can be float→int
-var mission_deadline_year: int = 999
-var mission_desc: String = ""  # Formatted desc (e.g. "Own 23 houses")
-var mission_completed: bool = false
+var active_mission: MissionData = null
 
 var total_loan_amount = 0
 var total_property_value: int = 0:
@@ -96,12 +91,14 @@ var work_amount = 0
 var exp_boost = 1.0
 var rent_finder_boost = 1.0
 var credit_app = false
+
+
 	#job category Skills
-var labor_points = 0
-var services_points = 0
-var trade_points = 0
-var finance_points = 0
-var management_points = 0
+var labor_skill_points = 0
+var services_skill_points = 0
+var trade_skill_points = 0
+var finance_skill_points = 0
+var management_skill_points = 0
 
 var difficulty:int = 1
 
@@ -109,77 +106,107 @@ var hasagent = false
 var hascleaner = false
 var renter_finder = false
 
-func reset():
+func reset(target_mode: GameMode = GameMode.FREEPLAY) -> void:
+	# Failure Conditions & Survival
+	negative_month_count = 0
+	Player_health = 100
+	Player_hunger = 100
+	Player_comfort = 100
+	last_economy_update_time = 0.0
+	
+	# Basic Info
 	money = 0
-	Propertys = 0
-	credit_score = 600
 	year = 1
-	car_level = 1
-	job_income = 0
-	current_job_name = "Unemployed"
-	job_exp_per_month = 10
 	month = 1
-	Savings_balance = 0
+	
+	active_mission = null
+	current_game_mode = target_mode
+	# Real Estate & Debt
+	Propertys = 0
 	listed_houses = 0
-	net_worth = 0
-	wallpaper = ""
-	total_loan_amount = 0
 	houses_with_tenants = 0
+	total_loan_amount = 0
+	total_debt = 0.0
+	total_property_value = 0
+	active_loans = [] 
+	
+	# Banking & Stocks
+	Savings_balance = 0
+	brokerage_balance = 0.0
+	portfolio = {}
+	credit_score = 600
+	credit_history = [600]
+	
+	# Career
+	current_job_name = "Unemployed"
+	current_job_category = "None"
+	job_income = 0
+	job_exp_per_month = 10
+	net_worth = 0
 	Income = 0
 	Expenses = 1000
 	cashflow = 0
-	first_start = false
+	job_exp_gain_per_month = 0
+	unlocked_jobs = ["Unemployed"]
+	# Business
 	business_name = ""
 	Business_worth = 30000
 	max_job_time = 0
 	job_pay = 0
 	job_time = 0
 	employees = 0
+	business_bonus = false
+	player_has_employees = false
+	
+	# Assets & Help
+	has_car = true
+	car_level = 1
+	wallpaper = ""
 	hasagent = false
 	hascleaner = false
 	renter_finder = false
-
-	#Misson mode
-	mission_active = false
-	mission_type = ""
-	mission_target = 0
-	mission_deadline_year = 999
-	mission_completed = false
 	
-	#skills
-	skillpoints = 1
+	# Skills & Levels
+	level = 1
 	EXP = 0
 	exp_to_level = 100
-	level = 1
+	skillpoints = 1
+	exp_boost = 1.0
+	
+	# Skill Unlocks (Apps/Perks)
 	has_hireing_app = false
 	has_info_app = false
 	has_bank_app = false
 	has_stock_app = false
 	has_manager_app = false
+	has_market_app = false
+	credit_app = false
+	rent_houses = false
+	unlock_business = false
+	job_manager = false
+	rent_finder_upgrade = false
+	work_amount = 0
+	work_bonus = 0.0
+	rent_finder_boost = 1.0
 	rent_bost = 0.00
-	
-	#job category Skills
 	labor_points = 0
 	services_points = 0
 	trade_points = 0
 	finance_points = 0
 	management_points = 0
+	# Point Distributions
+	labor_points = 0
+	services_points = 0
+	trade_points = 0
+	finance_points = 0
+	management_points = 0
+	labor_skill_points = 0
+	services_skill_points = 0
+	trade_skill_points = 0
+	finance_skill_points = 0
+	management_skill_points = 0
 	
-	rent_houses = false
-	unlock_business = false
-	has_market_app = false
-	job_manager = false
-	job_manager_level = 0
-	Job_bonus = false
-	business_bonus = false
-	work_bonus = 0
-	work_amount = 0
-	rent_finder_upgrade = false
-	credit_app = false
-	has_stock_app = false
-	exp_boost = 1.0
-	rent_finder_boost = 1.0
-
+	first_start = true
 
 #Businessinfo
 var business_name = ""
@@ -246,46 +273,6 @@ func _process(_delta: float) -> void:
 	credit_score = clamp(credit_score, 300, 850)
 	last_savings_paid = interest
 
-# Generate random mission (call on new game)
-func generate_random_mission():
-	var template = mission_templates[randi() % mission_templates.size()]
-	var difficulty_mult = [1.0, 1.2, 1.5, 2.0][difficulty]  # Easy=1x, Nightmare=2x harder
-
-	mission_type = template.type
-	mission_target = randi_range(template.min_target, template.max_target) * int(difficulty_mult)
-
-	# Generate base deadline
-	var base_deadline = randi_range(template.min_deadline, template.max_deadline)
-
-	# Make it relative to current year + safety minimum
-	mission_deadline_year = Globals.year + base_deadline
-	mission_deadline_year = max(Globals.year + 5, mission_deadline_year)  # never allow instant or very soon fail
-
-	# Optional: harder difficulty shortens the remaining time (but still safe)
-	var remaining_years = mission_deadline_year - Globals.year
-	remaining_years = int(remaining_years / difficulty_mult)  # higher diff → shorter time
-	mission_deadline_year = Globals.year + max(5, remaining_years)
-
-	# Format desc (net_worth → commas)
-	if mission_type == "net_worth":
-		mission_desc = template.desc_base % add_comma_to_int(mission_target)  # use your comma func
-	elif mission_type == "business_rank":
-		mission_desc = "Get " % mission_target + " Business Employees"
-	else:
-		mission_desc = template.desc_base % mission_target
-
-	mission_active = true
-	mission_completed = false
-
-func is_mission_complete() -> bool:
-	if not mission_active or mission_completed: return true
-	match mission_type:
-		"houses": return Propertys >= mission_target
-		"business_rank": return employees >= mission_target
-		"net_worth": return net_worth >= mission_target
-		"credit_max": return credit_score >= mission_target
-		"tenants": return houses_with_tenants >= mission_target
-	return false
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
@@ -552,7 +539,10 @@ func monthy():
 		else:
 			Savings_balance += interest
 	record_credit_score()
-	apply_monthly_job_exp()
+	if exp_boost > 0:
+		EXP += job_exp_per_month * exp_boost
+	else:
+		EXP += job_exp_per_month
 	if money < 0:
 		negative_month_count += 1
 		credit_score -= 10
@@ -563,25 +553,48 @@ func monthy():
 		notify("Credit Score: " + str(credit_score), Color.DEEP_SKY_BLUE)
 	credit_score = clamp(credit_score, 300, 850)
 	emit_signal("month_ended")
-
-func apply_monthly_job_exp():
-	if current_job_name == "Unemployed":
-		return
-		
-	# Add the gain to the current category
-	match current_job_category:
-		"Labor": labor_points += jop_exp_gain_per_month
-		"Services": services_points += jop_exp_gain_per_month
-		"Trade": trade_points += jop_exp_gain_per_month
-		"Finance": finance_points += jop_exp_gain_per_month
-		"Management": management_points += jop_exp_gain_per_month
 	
-	# Also add to general EXP if that's part of your design
-	EXP += job_exp_per_month
 
-	# Tell the UI to refresh
-	emit_signal("stats_changed")
-	emit_signal("skill_points_changed")
+var unlocked_jobs: Array[String] = []
+const JOBS_FOLDER = "res://assets/job/jobs/"
+
+func check_for_new_unlocks():
+	var dir = DirAccess.open(JOBS_FOLDER)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			# 1. Skip directories and the .import files immediately
+			if not dir.current_is_dir() and not file_name.ends_with(".import"):
+				
+				# 2. Handle the .remap extension for exported builds
+				var clean_name = file_name.replace(".remap", "")
+				var clean_path = JOBS_FOLDER + clean_name
+				
+				var job_res = load(clean_path)
+				if job_res is JobData:
+					var player_points = int(get_points_for_cat(job_res.category))
+					var level_met = Globals.level >= job_res.required_player_level
+					var skill_met = player_points >= job_res.required_skill_points
+					
+					if level_met and skill_met:
+						if not unlocked_jobs.has(job_res.job_name):
+							unlocked_jobs.append(job_res.job_name)
+							notify("New Job Available: " + job_res.job_name, Color.CHARTREUSE)
+			
+			# 3. MOVE TO NEXT FILE (Must be outside the IF block)
+			file_name = dir.get_next()
+		
+		dir.list_dir_end() # Clean up the directory access
+
+func get_points_for_cat(cat: String) -> float:
+	match cat:
+		"Labor": return labor_points
+		"Services": return services_points
+		"Trade": return trade_points
+		"Finance": return finance_points
+		"Management": return management_points
+	return 0.0
 
 var cursor_normal = load("res://assets/UI/mouse/hand_thin_point.png")
 var cursor_click = load("res://assets/UI/mouse/hand_thin_small_point.png")
@@ -592,14 +605,12 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
-				# Fixed: Added Input.CURSOR_ARROW as the 2nd argument
 				Input.set_custom_mouse_cursor(cursor_click, Input.CURSOR_ARROW, hs)
 			else:
 				Input.set_custom_mouse_cursor(cursor_normal, Input.CURSOR_ARROW, hs)
 				
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.pressed:
-				# Use cursor_Grab here if you want a "grabbing" visual for right-click
 				Input.set_custom_mouse_cursor(cursor_Grab, Input.CURSOR_ARROW, hs)
 			else:
 				Input.set_custom_mouse_cursor(cursor_normal, Input.CURSOR_ARROW, hs)

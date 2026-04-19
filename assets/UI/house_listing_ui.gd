@@ -21,23 +21,23 @@ func _ready() -> void:
 	update_prices()
 
 func _input(event: InputEvent) -> void:
-	if visible == false:
-		pass
-	if Input.is_action_just_pressed("buy"):
+	# 1. If not visible, EXIT the function immediately
+	if not is_visible_in_tree():
+		return
+	
+	# 2. Process inputs only if we survived the check above
+	if event.is_action_pressed("buy"):
 		handle_buy(false)
 	
-	if Input.is_action_just_pressed("buyandrent"):
-		if Globals.rent_houses == true:
+	if event.is_action_pressed("buyandrent"):
+		if Globals.rent_houses:
 			handle_buy(true)
 	
-	if Input.is_action_just_pressed("loantoggle"):
-		if loan_status == true:
-			$Loan_button.button_pressed = false
-			_on_loan_button_toggled(false)
-		elif loan_status == false:
-			$Loan_button.button_pressed = true
-			_on_loan_button_toggled(true)
-		
+	if event.is_action_pressed("loantoggle"):
+		# Toggling logic
+		var new_status = !loan_status
+		$Loan_button.button_pressed = new_status
+		_on_loan_button_toggled(new_status)
 
 func update_prices() -> void:
 	if not house:
@@ -234,6 +234,8 @@ func handle_buy(list_for_rent: bool = false) -> void:
 		house.is_listed = true
 	$Loan_button.button_pressed = false
 	visible = false
+	game.house = house
+	game.set_house_UI()
 	SaveAndLoad.save_game()
 
 # Helper function to handle rollbacks if loan creation fails

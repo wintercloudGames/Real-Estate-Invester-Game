@@ -5,7 +5,9 @@
 [resource]
 script = ExtResource("1_ae6tl")
 job_name = "Heavy Equipment Op"
-monthly_salary = 4200.0
 required_player_level = 20
 required_skill_points = 18
+monthly_salary = 4200.0
+Exp_gain_per_month = 45.0
+job_exp_gain_per_month = 0.06
 description = "A standard job in the Labor sector."

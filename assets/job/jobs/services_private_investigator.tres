@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_f0yll")
 job_name = "Private Investigator"
-monthly_salary = 4800.0
+category = "Services"
 required_player_level = 22
 required_skill_points = 18
-category = "Services"
+monthly_salary = 4800.0
+Exp_gain_per_month = 55.0
+job_exp_gain_per_month = 0.07
 description = "A standard job in the Services sector."

@@ -5,7 +5,9 @@
 [resource]
 script = ExtResource("1_yqcho")
 job_name = "Furniture Mover"
-monthly_salary = 600.0
 required_player_level = 2
 required_skill_points = 1
+monthly_salary = 600.0
+Exp_gain_per_month = 12.0
+job_exp_gain_per_month = 0.01
 description = "A standard job in the Labor sector."

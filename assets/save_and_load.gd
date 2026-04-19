@@ -2,7 +2,7 @@ extends Node
 
 const SAVE_DIR = "saves"
 var current_save_slot = 0
-var loaded_data: Dictionary = {}  # Store parsed save data for deferred application
+var loaded_data: Dictionary = {} 
 
 # Loan type constants
 const LOAN_TYPE_MORTGAGE: int = 0
@@ -18,6 +18,7 @@ func save_file_exists(slot: int) -> bool:
 func save_game() -> bool:
 	var save_path = get_save_path(current_save_slot)
 	var save_dir = save_path.get_base_dir()
+
 	if not DirAccess.dir_exists_absolute(save_dir):
 		var dir = DirAccess.open(save_dir.get_base_dir())
 		if not dir:
@@ -32,6 +33,9 @@ func save_game() -> bool:
 		"Globals": {
 			"save_name": Globals.save_name,
 			"money": Globals.money,
+			"completed_missions": Globals.completed_missions, 
+			"active_mission_id": Globals.active_mission.id if Globals.active_mission else "",
+			"current_game_mode": int(Globals.current_game_mode),
 			"current_job_name": Globals.current_job_name,
 			"current_job_category":Globals.current_job_category,
 			"job_income": Globals.job_income,
@@ -69,12 +73,6 @@ func save_game() -> bool:
 			"renter_finder": Globals.renter_finder,
 			"hasagent": Globals.hasagent,
 			"hascleaner": Globals.hascleaner,
-			"mission_active": Globals.mission_active,
-			"mission_type": Globals.mission_type,
-			"mission_target": Globals.mission_target,
-			"mission_deadline_year": Globals.mission_deadline_year,
-			"mission_desc": Globals.mission_desc,
-			"mission_completed": Globals.mission_completed,
 		},
 		"Skills": {
 			"skillpoints": Globals.skillpoints,
@@ -82,7 +80,7 @@ func save_game() -> bool:
 			"exp_to_level": Globals.exp_to_level,
 			"level": Globals.level,
 			"has_hireing_app": Globals.has_hireing_app,
-			"jop_exp_gain_per_month": Globals.jop_exp_gain_per_month,
+			"job_exp_gain_per_month": Globals.job_exp_gain_per_month,
 			"has_info_app": Globals.has_info_app,
 			"has_stock_app":Globals.has_stock_app,
 			"has_market_app":Globals.has_market_app,
@@ -100,7 +98,12 @@ func save_game() -> bool:
 			"rent_finder_upgrade": Globals.rent_finder_upgrade,
 			"exp_boost": Globals.exp_boost,
 			"rent_finder_boost":Globals.rent_finder_boost,
-			"credit_app": Globals.credit_app
+			"credit_app": Globals.credit_app,
+			"labor_skill_points": Globals.labor_skill_points,        # Changed from labor_points
+			"services_skill_points": Globals.services_skill_points,  # Changed from services_points
+			"trade_skill_points": Globals.trade_skill_points,        # Changed from trade_points
+			"finance_skill_points": Globals.finance_skill_points,    # Changed from finance_points
+			"management_skill_points": Globals.management_skill_points # Changed from management_points
 		},
 		"Houses": [],
 		"Loans": [],
@@ -194,6 +197,7 @@ func save_game() -> bool:
 		push_error("Failed to open save file for writing: %s" % FileAccess.get_open_error())
 		return false
 	file.store_string(JSON.stringify(data, "\t"))
+	file.flush()
 	file.close()
 
 	return true
@@ -201,35 +205,36 @@ func save_game() -> bool:
 func load_game() -> bool:
 	var save_path = get_save_path(current_save_slot)
 	if not FileAccess.file_exists(save_path):
-		push_error("Save file does not exist at path: %s" % save_path)
+		push_error("Save file does not exist: %s" % save_path)
 		return false
 
 	var file = FileAccess.open(save_path, FileAccess.READ)
-	if not file:
-		push_error("Failed to open save file. Error: %s" % FileAccess.get_open_error())
-		return false
+	if not file: return false
 
 	var json = JSON.new()
 	var parse_result = json.parse(file.get_as_text())
 	file.close()
 
-	if parse_result != OK:
-		push_error("JSON parse failed. Error: %s" % json.get_error_message())
-		return false
+	if parse_result != OK: return false
 
 	loaded_data = json.get_data()
-	if not loaded_data or not loaded_data is Dictionary:
-		push_error("No valid data parsed from JSON")
-		return false
+	if not loaded_data is Dictionary: return false
+	
 
-
-	# Load non-node-dependent data
+	# --- LOAD GLOBALS DATA ---
 	if loaded_data.has("Globals"):
 		var g = loaded_data["Globals"]
+		
+		# Set Game Mode
+		Globals.current_game_mode = g.get("current_game_mode", Globals.GameMode.FREEPLAY) as Globals.GameMode
 
+		Globals.completed_missions = g.get("completed_missions", [])
+			
 		# Existing important ones (add more as needed)
 		Globals.save_name = g.get("save_name", "My Save")
+		
 		Globals.money = g.get("money", 5000)
+		Globals.current_game_mode = g.get("current_game_mode", 0)
 		Globals.current_job_name = g.get("current_job_name", "Unemployed")
 		Globals.current_job_category = g.get("current_job_category","Labor")
 		Globals.job_income = g.get("job_income", 0.0)
@@ -269,14 +274,6 @@ func load_game() -> bool:
 		Globals.renter_finder = g.get("renter_finder", false)
 		Globals.hasagent = g.get("hasagent", false)
 		Globals.hascleaner = g.get("hascleaner", false)
-
-		# Critical: explicitly set mission vars
-		Globals.mission_active         = g.get("mission_active", false)
-		Globals.mission_type           = g.get("mission_type", "")
-		Globals.mission_target         = g.get("mission_target", 0)
-		Globals.mission_deadline_year  = g.get("mission_deadline_year", 0)
-		Globals.mission_desc           = g.get("mission_desc", "")
-		Globals.mission_completed      = g.get("mission_completed", false)
 
 
 	# 1. Safely Load Market Data (Price and History)
@@ -322,7 +319,8 @@ func apply_loaded_data() -> void:
 	var houses = get_tree().get_nodes_in_group("houses")
 	for house in houses:
 		if is_instance_valid(house) and house.id != "":
-			house_registry[house.id] = house
+			var actual_id = house.id if house.id != "" else house.name
+			house_registry[actual_id] = house
 			#print("Registered house: id=%s, name=%s, owned=%s" % [house.id, house.name, house.owned])
 		else:
 			push_warning("Invalid house or empty id: name=%s, id=%s" % [house.name, house.id])
@@ -491,7 +489,7 @@ func create_new_profile(slot: int) -> bool:
 	if save_file_exists(slot):
 		push_error("Save file already exists in slot %d" % slot)
 		return false
-
+	Globals.completed_missions = []
 	var data = {
 		"Globals": {
 			"save_name": Globals.save_name,

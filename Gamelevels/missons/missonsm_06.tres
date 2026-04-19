@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://c4scsy2webagh"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_2ujoj"]
+
+[resource]
+script = ExtResource("1_2ujoj")
+id = "m_06"
+title = "Career Climber"
+unlock_id_needed = "m_05"
+target_player_level = 10
+time_limit_year = 12

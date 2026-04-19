@@ -5,7 +5,8 @@
 [resource]
 script = ExtResource("1_f7muj")
 job_name = "Construction Director"
-monthly_salary = 9500.0
 required_player_level = 40
 required_skill_points = 40
+monthly_salary = 9500.0
+Exp_gain_per_month = 85.0
 description = "A standard job in the Labor sector."

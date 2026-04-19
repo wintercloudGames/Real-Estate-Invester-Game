@@ -5,7 +5,9 @@
 [resource]
 script = ExtResource("1_1km8d")
 job_name = "Concrete Finisher"
-monthly_salary = 3100.0
 required_player_level = 15
 required_skill_points = 12
+monthly_salary = 3100.0
+Exp_gain_per_month = 35.0
+job_exp_gain_per_month = 0.05
 description = "A standard job in the Labor sector."

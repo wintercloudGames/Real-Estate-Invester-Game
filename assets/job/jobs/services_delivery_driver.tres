@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_dip33")
 job_name = "Delivery Driver"
-monthly_salary = 1050.0
+category = "Services"
 required_player_level = 5
 required_skill_points = 2
-category = "Services"
+monthly_salary = 1050.0
+Exp_gain_per_month = 18.0
+job_exp_gain_per_month = 0.02
 description = "A standard job in the Services sector."

@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_prh1p")
 job_name = "Shift Lead"
-monthly_salary = 1600.0
+category = "Management"
 required_player_level = 5
 required_skill_points = 2
-category = "Management"
+monthly_salary = 1600.0
+Exp_gain_per_month = 20.0
+job_exp_gain_per_month = 0.05
 description = "A standard job in the Management sector."

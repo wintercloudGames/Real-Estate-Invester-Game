@@ -1,22 +1,40 @@
 extends Control
 
-
-func _on_button_pressed() -> void:
+func _on_exit_button_pressed() -> void:
 	Engine.time_scale = 1
-	SaveAndLoad.delete_save_file(SaveAndLoad.current_save_slot)
-	$"../.."._on_yes_pressed()
-
-func _on_button_2_pressed() -> void:
-	$"../event_popup".visible = false
-	$"../event_popup/Relist_house_Button".visible = false
-	$"../Quit_menu".visible = false
-	$".".visible = false
-	var save_path = SaveAndLoad.get_save_path(SaveAndLoad.current_save_slot)
-	if save_path:
-		await get_tree().create_timer(5).timeout
-		#SaveAndLoad.load_game()
-		if Globals.business_name != "":
-			$HUD/Business_UI.Load_info()
 	
-func message(text):
-	$Info.text = str(text)
+	# 1. Clean up the world objects
+	for house in get_tree().get_nodes_in_group("houses"): 
+		house.sell_house()
+
+	var loan_container = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans/TabContainer/Loans/ScrollContainer/loan_mod_Container") 
+	if loan_container:
+		for child in loan_container.get_children():
+			child.queue_free()
+
+	var loans_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans") 
+	if loans_ui and "active_loan_mods" in loans_ui:
+		loans_ui.active_loan_mods.clear()
+
+	Globals.active_mission = null 
+	
+	Globals.current_game_mode = Globals.GameMode.FREEPLAY
+	
+	# 4. Save the current state (Money and previous Missions are preserved)
+	SaveAndLoad.save_game()
+	
+	_goto_menu()
+
+func _goto_menu():
+	# We use self.get_tree() to be explicit 
+	var tree = self.get_tree()
+	if tree:
+		var ui_node = tree.get_current_scene().get_node_or_null("UserInterface")
+		if ui_node:
+			var parent_node = ui_node.get_parent()
+			if parent_node and parent_node.has_method("_display_main_menu"):
+				parent_node._display_main_menu()
+				return
+		
+		# Fallback if the hierarchy is different or UserInterface is missing 
+		tree.change_scene_to_file("res://Menu/MainMenu.tscn")

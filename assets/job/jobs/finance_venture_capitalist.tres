@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_8d6dd")
 job_name = "Venture Capitalist"
-monthly_salary = 65000.0
+category = "Finance"
 required_player_level = 50
 required_skill_points = 80
-category = "Finance"
+monthly_salary = 65000.0
+Exp_gain_per_month = 450.0
+job_exp_gain_per_month = 0.8
 description = "A standard job in the Finance sector."

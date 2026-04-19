@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_uolch")
 job_name = "Regional VP"
-monthly_salary = 38000.0
+category = "Management"
 required_player_level = 44
 required_skill_points = 55
-category = "Management"
+monthly_salary = 38000.0
+Exp_gain_per_month = 280.0
+job_exp_gain_per_month = 0.6
 description = "A standard job in the Management sector."

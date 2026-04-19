@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_tm1st")
 job_name = "Security Guard"
-monthly_salary = 1550.0
+category = "Services"
 required_player_level = 8
 required_skill_points = 5
-category = "Services"
+monthly_salary = 1550.0
+Exp_gain_per_month = 24.0
+job_exp_gain_per_month = 0.03
 description = "A standard job in the Services sector."

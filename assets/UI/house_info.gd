@@ -11,6 +11,8 @@ extends Control
 @onready var aparmant_condition = $Label_condition
 @onready var game = $"../.."
 @onready var punctuality = $Label_punctuality
+@onready var rent_slider: HSlider = $Rent_HSlider
+@onready var rent_slider_info: Label = $Rent_slider_info
 
 var price = 0
 var mortgage = 0
@@ -32,54 +34,157 @@ func add_comma_to_int(value: int) -> String:
 	return str_value
 
 var previous_visible := true
-
 func _process(delta: float) -> void:
 	if visible != previous_visible:
 		previous_visible = visible
 		if visible:
 			$"../popupsound".play()
+			setup_slider() 
 	if house:
+		$Upgrade_label.text = str(house.upgrade_amount) + " / " + str(house.upgrade_max)
 		update_tenant_buttons()
-		if house.is_building == true:
-			$Edit_yard_button.visible = false
-		else:
-			pass
-			#$Edit_yard_button.visible = true
-		price_display.text = "House Worth: " + add_comma_to_int(house.current_price)
-		label_bought_price.text = "Original House price: " + add_comma_to_int(house.bought_price)
-		loan_display.text = "Loan: " + add_comma_to_int(house.loan_price)
-		mortgage_label.text = "Mortgage: " + add_comma_to_int(house.mortgage)
-		
-		var cashflow = house.rent - house.mortgage
-		cashflow_label.text = "CashFlow: " + add_comma_to_int(cashflow)
-		
-		income_label.text = "Income: " + add_comma_to_int(house.rent)
-			
-		aparmant_condition.text = "%.0f%% condition" % (house.apartment_condition * 100)
-		if house.has_tenant:
-			lease_stat.text = "lease amount: " + add_comma_to_int(house.lease_length)
-			punctuality.text = "%.0f%% punctuality" % (house.payment_punctuality * 100)
-		else:
-			lease_stat.text = ""
-			punctuality.text = ""
-		sell_amount_label.text = add_comma_to_int(house.current_price) + " - " + add_comma_to_int(house.loan_price) + "\n" + add_comma_to_int(house.current_price - house.loan_price)
-		if house.has_tenant == false and house.is_listed == false:
-			$Tenent_button.visible = true
-			
+		$Edit_yard_button.visible = !house.is_building
 		if house.upgrade_amount >= house.upgrade_max:
 			$Upgrade.visible = false
 			$Upgrade_label.visible = false
 		else:
 			$Upgrade.visible = true
 			$Upgrade_label.visible = true
+		# --- CORE HOUSE DATA ---
+		price_display.text = "House Worth: " + add_comma_to_int(int(house.current_price))
+		label_bought_price.text = "Original Price: " + add_comma_to_int(int(house.bought_price))
+		loan_display.text = "Loan: " + add_comma_to_int(int(house.loan_price))
+		mortgage_label.text = "Mortgage: " + add_comma_to_int(int(house.mortgage))
+		
+		# --- RENTER NUMBERS (Actual Ledger) ---
+		var current_income: int = int(house.rent) if house.has_tenant else 0
+		var current_mortgage: int = int(house.mortgage)
+		var current_cashflow: int = current_income - current_mortgage
+		
+		income_label.text = "Income: " + add_comma_to_int(current_income)
+		cashflow_label.text = "CashFlow: " + add_comma_to_int(current_cashflow)
+		
+		# --- STRATEGIC LOSS VISUALS ---
+		if house.has_tenant:
+			income_label.modulate = Color.GREEN
+			if current_cashflow < 0:
+				# Use a "Warning Gold" or "Investment Blue" instead of just Red 
+				# to show this might be a choice.
+				cashflow_label.modulate = Color.ORANGE_RED 
+			else:
+				cashflow_label.modulate = Color.LAWN_GREEN
+		else:
+			income_label.modulate = Color.WHITE
+			cashflow_label.modulate = Color.RED if current_mortgage > 0 else Color.WHITE
+
+		# --- LEASE & PLANNING LOGIC ---
+		if house.has_tenant:
+			rent_slider.editable = false
+			rent_slider_info.text = "Lease Active\nRent: " + add_comma_to_int(int(house.rent))
+			rent_slider_info.modulate = Color.GREEN
+			
+			# Lease length is a clean Int
+			lease_stat.text = "Lease: " + str(int(house.lease_length)) + " Months"
+			punctuality.text = "%.0f%% punctuality" % (house.payment_punctuality * 100)
+		else:
+			rent_slider.editable = true
+			lease_stat.text = "Status: VACANT"
+			punctuality.text = ""
+			
+			# Show sentiment and ASKING amount on a new line
+			update_rent_slider_feedback(int(rent_slider.value))
+
+		# --- CONDITION & EQUITY ---
+		aparmant_condition.text = "%.0f%% condition" % (house.apartment_condition * 100)
+		var equity: int = int(house.current_price - house.loan_price)
+		sell_amount_label.text = "Equity: " + add_comma_to_int(equity)
+
+# Helper for the 'Strategic Pricing' feedback
+func update_rent_slider_feedback(asking_val: int):
+	var fair_rent = house.current_price * 0.007
+	var ratio = asking_val / fair_rent
+	var sentiment = ""
 	
-	if loan_price <= 0:
-		mortgage = 0
+	if asking_val < house.mortgage:
+		# Encourage the player!
+		sentiment = "Supper competitive"
+		rent_slider_info.modulate = Color.CYAN # Cool blue for "Strategic"
+	elif ratio > 1.3:
+		sentiment = "High Risk: Property Damage Likely"
+		rent_slider_info.modulate = Color.ORANGE
+	elif ratio < 0.9:
+		sentiment = "Premium Tenant Search"
+		rent_slider_info.modulate = Color.LAWN_GREEN
+	else:
+		sentiment = "Market: Fair Price"
+		rent_slider_info.modulate = Color.WHITE
+		
+	rent_slider_info.text = sentiment + "\nAsking: $" + add_comma_to_int(int(asking_val))
+	
+# Inside House_info script
+func _on_rent_h_slider_value_changed(value: float) -> void:
+	if house:
+		# 1. Update the specific house data
+		house.rent = int(value)
+		
+		# 2. Update the UI labels immediately so it feels responsive
+		# This calls the helper function we made earlier
+		update_rent_slider_feedback(int(value))
+		
+
+func setup_slider():
+	if house:
+		# 1. Configure the visual limits
+		rent_slider.step = 25
+		rent_slider.min_value = 25
+		# Ensure max_value is at least something so the slider isn't broken
+		var max_rent = snapped(house.current_price * 0.02, 25)
+		rent_slider.max_value = max(max_rent, 500) 
+		
+		# 2. PULL DATA CAREFULLY
+		if house.rent > 0:
+			# This house has a value from the save file or a previous session.
+			# KEEP IT. Do not overwrite it.
+			rent_slider.value = house.rent
+		elif not house.has_tenant and house.owned:
+			# ONLY set a default if it's truly empty AND has no saved rent value.
+			# We check house.mortgage; if it's 0, we use a fallback fair market price.
+			var base_target = house.mortgage if house.mortgage > 0 else (house.current_price * 0.007)
+			var safe_start = snapped(base_target * 1.1, 25)
+			
+			rent_slider.value = safe_start
+			house.rent = safe_start
+
+func update_rent_info_label():
+	if not house: return
+	
+	# Calculate Fair Rent (e.g., 0.7% of value)
+	var fair_rent = house.current_price * 0.007
+	var ratio = house.rent / fair_rent
+	var cashflow = house.rent - house.mortgage
+	
+	# Update the display label
+	rent_slider_info.text = "Target Rent: $" + add_comma_to_int(house.rent)
+	
+	# Color coding and Market Sentiment
+	if house.rent < house.mortgage:
+		rent_slider_info.text += " (Losing Money!)"
+		rent_slider_info.modulate = Color.RED
+	elif ratio > 1.3:
+		rent_slider_info.text += " (Hard to Rent)"
+		rent_slider_info.modulate = Color.ORANGE
+	elif ratio < 0.8:
+		rent_slider_info.text += " (High Demand)"
+		rent_slider_info.modulate = Color.GREEN
+	else:
+		rent_slider_info.text += " (Fair Price)"
+		rent_slider_info.modulate = Color.WHITE
 
 func _input(event: InputEvent) -> void:
-	if visible == false:
-		pass
-	if Input.is_action_just_pressed("buyandrent"):
+	if not is_visible_in_tree():
+		return 
+
+	if event.is_action_pressed("buyandrent"):
 		_on_tenent_button_pressed()
 
 func _on_remove_tenent_pressed() -> void:
@@ -176,11 +281,12 @@ func _on_no_sell_pressed() -> void:
 func _on_upgrade_pressed() -> void:
 	var upgrade_cost = 10000
 	var upgrade_value = 15000
-	
-	if Globals.money >= upgrade_cost:
+
+	if Globals.money >= upgrade_cost and  house.upgrade_amount < house.upgrade_max:
 		Globals.money -= upgrade_cost
 		house.upgrade_amount += 1
 		house.current_price += upgrade_value
+	
 
 func _on_refinance_button_pressed() -> void:
 	# 1. Basic Validations

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://ccs574g4ub3gf"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_3q274"]
+
+[resource]
+script = ExtResource("1_3q274")
+target_money = 10000
+target_houses = 1

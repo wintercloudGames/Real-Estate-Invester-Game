@@ -2,12 +2,15 @@ extends Node3D
 
 @export var placement_offset: Vector3 = Vector3(0, 0, 0)
 @export var rotation_speed: float = 3.0 
+@export var mouse_sensitivity: float = 0.005
+
 
 @onready var ray_node: RayCast3D = $RayCast3D 
 @onready var yard_camera: Camera3D = $Yard_camera
 @onready var ui_canvas: CanvasLayer = $CanvasLayer
 @onready var hint_label: Label = $CanvasLayer/UI/tips/Controlls
 @onready var context_menu: Control = $CanvasLayer/ContextMenu
+@onready var world_settings = $"../World_settings"
 
 var target_pivot_node: Node3D = null
 var target_house: Node3D = null 
@@ -18,6 +21,7 @@ var current_packed_scene_path: String = ""
 var current_price: int = 0
 var is_dragging: bool = false
 var is_edit_mode: bool = false
+var is_rotating: bool = false
 
 func _ready():
 	add_to_group("YardEditor")
@@ -33,9 +37,12 @@ func _ready():
 
 func _process(delta):
 	if not is_edit_mode: return
-	$CanvasLayer/UI/House_value.text = "house value: " + Globals.add_comma_to_int(target_house.current_price) 
 	
-	# 1. CAMERA ROTATION (Using your 'move_left/right' Input Map)
+	# Update House Value UI
+	if target_house:
+		$CanvasLayer/UI/House_value.text = "house value: " + Globals.add_comma_to_int(target_house.current_price) 
+	
+	# 1. KEYBOARD CAMERA ROTATION
 	var rot_input = Input.get_axis("move_right", "move_left")
 	if rot_input != 0:
 		var focus_owner = get_viewport().gui_get_focus_owner()
@@ -61,23 +68,36 @@ func update_ray_to_mouse():
 	var ray_origin = yard_camera.project_ray_origin(mouse_pos)
 	var ray_dir = yard_camera.project_ray_normal(mouse_pos)
 	
-	# Move the actual RayCast node to the camera's position
 	ray_node.global_position = ray_origin
-	
-	# Point it 100 meters into the screen
 	var world_target = ray_origin + (ray_dir * 100.0)
 	ray_node.target_position = ray_node.to_local(world_target)
-	
 	ray_node.force_raycast_update()
 
 func _input(event):
 	if not is_edit_mode: return
 
+	# Handle Right Click Drag Rotation
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if event.pressed:
+				is_rotating = true
+			else:
+				is_rotating = false
+				# If we weren't moving much, handle the "Cancel/Close" logic
+				if not is_dragging:
+					context_menu.visible = false
+				elif is_dragging and event.button_index == MOUSE_BUTTON_RIGHT:
+					# Optional: only delete if it was a quick click, not a long drag
+					# For now, keeping your original logic: Right click cancels dragging
+					delete_current_preview()
+
+	# Apply Mouse Motion to Rotation
+	if event is InputEventMouseMotion and is_rotating:
+		rotate_y(-event.relative.x * mouse_sensitivity)
+
 	# Left Click Handling
 	if event.is_action_pressed("mouse_left"):
-		# If the context menu is open and we click away, hide it
 		if context_menu.visible:
-			# Give UI a chance to process the button click first
 			await get_tree().process_frame 
 			if not Rect2(context_menu.global_position, context_menu.size).has_point(get_viewport().get_mouse_position()):
 				context_menu.visible = false
@@ -88,18 +108,11 @@ func _input(event):
 		else:
 			handle_selection_click()
 
-	# Right Click / Cancel
-	if event.is_action_pressed("mouse_right"):
-		if is_dragging:
-			delete_current_preview()
-		else:
-			context_menu.visible = false
-
-	# Mouse Wheel Rotation
+	# Mouse Wheel Rotation (Object Rotation)
 	if is_dragging and is_instance_valid(preview_instance):
-		if event.is_action_pressed("zoom_in"): # Mouse Wheel Up
+		if event.is_action_pressed("zoom_in"):
 			preview_instance.rotate_y(deg_to_rad(15))
-		elif event.is_action_pressed("zoom_out"): # Mouse Wheel Down
+		elif event.is_action_pressed("zoom_out"):
 			preview_instance.rotate_y(deg_to_rad(-15))
 
 func handle_selection_click():
@@ -108,24 +121,19 @@ func handle_selection_click():
 	
 	if ray_node.is_colliding():
 		var collider = ray_node.get_collider()
-		
 		var current_node = collider
 		while current_node != null:
-
 			if current_node.get_parent() and current_node.get_parent().name == "YardObjects":
 				selected_object = current_node
 				show_context_menu()
 				return
 			current_node = current_node.get_parent()
-		
-
 
 func show_context_menu():
 	var mouse_pos = get_viewport().get_mouse_position()
 	context_menu.global_position = mouse_pos
 	context_menu.visible = true
 	
-	# Optional: Ensure the menu doesn't go off-screen
 	var screen_size = get_viewport().get_visible_rect().size
 	if context_menu.global_position.x + context_menu.size.x > screen_size.x:
 		context_menu.global_position.x -= context_menu.size.x
@@ -140,7 +148,6 @@ func _on_move_pressed():
 
 func _on_sell_pressed():
 	context_menu.visible = false
-	
 	if is_instance_valid(selected_object):
 		var original_price = selected_object.get_meta("price", 0)
 		var refund_amount = int(original_price * 0.5)
@@ -150,14 +157,13 @@ func _on_sell_pressed():
 		selected_object = null
 		SaveAndLoad.save_game()
 
-# --- Core Placement Logic ---
-
 func pick_up_placed_object(obj: Node3D):
 	current_packed_scene_path = obj.get_meta("scene_path", "")
 	var saved_transform = obj.global_transform
 	
 	preview_instance = obj
-	obj.get_parent().remove_child(obj)
+	if obj.get_parent():
+		obj.get_parent().remove_child(obj)
 	get_tree().root.add_child(preview_instance)
 	
 	preview_instance.global_transform = saved_transform
@@ -234,9 +240,9 @@ func apply_ghost_effect(node):
 func update_controls_hint():
 	if not hint_label: return
 	if is_dragging:
-		hint_label.text = "[LMB] Place | [RMB] Delete\n[Wheel] Rotate | [A/D] Orbit"
+		hint_label.text = "[LMB] Place | [RMB Drag] Orbit\n[Wheel] Rotate Object"
 	else:
-		hint_label.text = "[LMB] Select Object\n[A/D] Rotate View"
+		hint_label.text = "[LMB] Select Object\n[RMB Drag / A-D] Orbit View"
 
 func _on_tips_toggled(toggled_on: bool) -> void:
 	if hint_label:
@@ -244,26 +250,65 @@ func _on_tips_toggled(toggled_on: bool) -> void:
 
 func enter_edit_mode():
 	if not target_house: return
-	target_pivot_node = target_house.get_node_or_null("Yard_center_for_camera")
+	
+	# Connect to the night mode signal to react to time changes while editing
+	if world_settings.has_signal("night_mode_changed"):
+		if not world_settings.night_mode_changed.is_connected(_on_night_mode_changed):
+			world_settings.night_mode_changed.connect(_on_night_mode_changed)
+
+	# If it's currently night, turn the lights on immediately 
+	_update_house_lights()
+
+	target_pivot_node = target_house.get_node_or_null("Yard_center_for_camera") 
 	if target_pivot_node:
-		self.global_position = target_pivot_node.global_position
-		self.global_rotation.y = target_pivot_node.global_rotation.y
+		self.global_position = target_pivot_node.global_position 
+		self.global_rotation.y = target_pivot_node.global_rotation.y 
 	else:
-		self.global_position = target_house.global_position
+		self.global_position = target_house.global_position 
 	
-	gameplay_camera = get_viewport().get_camera_3d()
-	if yard_camera: yard_camera.make_current()
+	gameplay_camera = get_viewport().get_camera_3d() 
+	if yard_camera: yard_camera.make_current() 
 	
-	is_edit_mode = true
-	ui_canvas.visible = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	is_edit_mode = true 
+	ui_canvas.visible = true 
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE 
 	Globals.yard_edit = true
 
 func exit_edit_mode():
-	$"../HUD/Phone".get_out()
-	is_edit_mode = false
-	ui_canvas.visible = false
-	context_menu.visible = false
-	if is_instance_valid(gameplay_camera): gameplay_camera.make_current()
-	target_house = null
+	# Turn off lights when leaving the editor 
+	if is_instance_valid(target_house):
+		_set_lights_visible(false)
+
+	# Disconnect the signal
+	if world_settings.night_mode_changed.is_connected(_on_night_mode_changed):
+		world_settings.night_mode_changed.disconnect(_on_night_mode_changed)
+
+	$"../HUD/Phone".get_out() 
+	is_edit_mode = false 
+	ui_canvas.visible = false 
+	context_menu.visible = false 
+	if is_instance_valid(gameplay_camera): gameplay_camera.make_current() 
+	target_house = null 
 	Globals.yard_edit = false
+
+func _on_night_mode_changed(is_night: bool):
+	if is_edit_mode and is_instance_valid(target_house):
+		_update_house_lights()
+
+func _update_house_lights():
+	# Logic: If you are in the editor, lights turn on if it is night
+	# You can also change this to 'true' if you want lights on in editor regardless of time
+	var should_be_on = world_settings.is_night # Assumes WorldSettings has an 'is_night' property
+	_set_lights_visible(should_be_on)
+
+func _set_lights_visible(visible_state: bool):
+	if is_instance_valid(target_house):
+		# target_house is a house_click.gd instance which has these lights 
+		if target_house.has_node("SpotLight3D"):
+			target_house.get_node("SpotLight3D").visible = visible_state
+		if target_house.has_node("SpotLight3D2"):
+			target_house.get_node("SpotLight3D2").visible = visible_state
+		if target_house.has_node("SpotLight3D3"):
+			target_house.get_node("SpotLight3D3").visible = visible_state
+		if target_house.has_node("SpotLight3D4"):
+			target_house.get_node("SpotLight3D4").visible = visible_state

@@ -21,29 +21,41 @@ var Collect_Rent = null
 
 func _process(_delta: float) -> void:
 	if house:
-		morgage.text = "mortgage: " + add_comma_to_int(house.mortgage)
+		# 1. Basic Data Display
+		morgage.text = "Mortgage: " + add_comma_to_int(int(house.mortgage))
+		house_value.text = "Value: " + add_comma_to_int(int(house.current_price))
+		
+		# 2. Rental Status Logic
 		if house.has_tenant:
 			rental_status.add_theme_color_override("font_color", Color.GREEN)
 			rental_status.text = "Status: Rented"
 		elif house.is_listed:
-	# It's on the market, but waiting for a tenant
 			rental_status.add_theme_color_override("font_color", Color.YELLOW) 
 			rental_status.text = "Status: Seeking Tenant..."
 		else:
-	# The player forgot to click 'List for Rent'
 			rental_status.add_theme_color_override("font_color", Color.CRIMSON)
 			rental_status.text = "Status: Unlisted"
-			
-		rent = house.rent
-		house_value.text = "Value: " + add_comma_to_int(house.current_price)
-		mortgage = house.mortgage
-		var flow = house.rent - house.mortgage
-		if flow <0:
-			cash_flow.add_theme_color_override("font_color",Color.RED)
+
+		# 3. Cash Flow Calculation
+		# If there's no tenant, income is 0, so cashflow is just -mortgage
+		var current_income = house.rent if house.has_tenant else 0
+		var flow = current_income - house.mortgage
+		
+		# 4. Cash Flow Coloring
+		if flow < 0:
+			# Red if losing money (even if vacant)
+			cash_flow.add_theme_color_override("font_color", Color.CRIMSON)
+		elif flow > 0:
+			# Green if making profit
+			cash_flow.add_theme_color_override("font_color", Color.LAWN_GREEN)
 		else:
-			cash_flow.add_theme_color_override("font_color",Color.GREEN)
-		cash_flow.text = "cashflow: " + add_comma_to_int(flow)
-	update_tenant_buttons()
+			# White if breaking even
+			cash_flow.add_theme_color_override("font_color", Color.WHITE)
+			
+		cash_flow.text = "Cashflow: " + add_comma_to_int(int(flow))
+		
+		# 5. Handle Buttons
+		update_tenant_buttons()
 
 func update_tenant_buttons() -> void:
 	if not house:

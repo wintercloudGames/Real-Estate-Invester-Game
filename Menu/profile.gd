@@ -1,7 +1,7 @@
 extends TextureButton
 
 signal profile_loaded(slot: int)
-signal profile_created()
+signal profile_created(slot: int) 
 signal delete_requested(slot: int)
 signal rename_requested(slot: int)
 
@@ -13,11 +13,10 @@ func _ready() -> void:
 	update_display()
 
 func update_display() -> void:
-	var label = get_node("%Label") as Label
+	var label = get_node("%Label") as Label #
 	var texture = get_node("%TextureRect") as TextureRect
 	
 	if SaveAndLoad.save_file_exists(save_slot):
-		# Get the custom save name
 		var save_name = get_save_name(save_slot)
 		label.text = save_name
 		texture.texture = load("res://assets/UI/icons/village.png")
@@ -35,45 +34,40 @@ func get_save_name(slot: int) -> String:
 
 func get_save_data(slot: int) -> Dictionary:
 	var save_path = SaveAndLoad.get_save_path(slot)
-	
 	if not FileAccess.file_exists(save_path):
 		return {}
 	
 	var file = FileAccess.open(save_path, FileAccess.READ)
-	if not file:
-		return {}
+	if not file: return {}
 	
 	var json = JSON.new()
 	var parse_result = json.parse(file.get_as_text())
 	file.close()
 	
-	if parse_result != OK:
-		return {}
+	if parse_result != OK: return {}
 	
 	var data = json.get_data()
-	if not data or not data.has("Globals"):
-		return {}
+	if not data or not data.has("Globals"): return {}
 	
-	# Return specific stats for display
+	var g = data["Globals"]
+	
+	# Returning cleaned data for the stats display
 	return {
-		"save_name": data["Globals"].get("save_name", "Profile " + str(slot + 1)),
-		"money": data["Globals"].get("money", 0),
-		"year": data["Globals"].get("year", 1),
-		"difficulty": data["Globals"].get("difficulty", 1)
+		"save_name": g.get("save_name", "Profile " + str(slot + 1)),
+		"current_game_mode": int(g.get("current_game_mode", 0)), # Force to int
+		"year": g.get("year", 1)
 	}
 
 func _on_pressed() -> void:
 	if SaveAndLoad.save_file_exists(save_slot):
 		profile_loaded.emit(save_slot)
 	else:
-		profile_created.emit()
+		profile_created.emit(save_slot)
 
 func _on_mouse_entered() -> void:
 	var tween = create_tween()
 	tween.parallel().tween_property(self, "scale", Vector2(1.05, 1.05), 0.15)
 	tween.parallel().tween_property(self, "modulate", Color(1.1, 1.1, 1.1), 0.15)
-	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_SINE)
 	
 	if SaveAndLoad.save_file_exists(save_slot):
 		$Game_stats.visible = true
@@ -83,30 +77,25 @@ func _on_mouse_exited() -> void:
 	var tween = create_tween()
 	tween.parallel().tween_property(self, "scale", Vector2(1.0, 1.0), 0.2)
 	tween.parallel().tween_property(self, "modulate", Color(1.0, 1.0, 1.0), 0.2)
-	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_SINE)
 	$Game_stats.visible = false
 
 func update_game_stats() -> void:
 	var stats = get_save_data(save_slot)
 	var game_stats_label = $Game_stats/MarginContainer/Label as Label
+	
 	if game_stats_label:
-		var money = stats.get("money", 0)
+		# Use int() to ensure we can match against the numbers
+		var mode_int = int(stats.get("current_game_mode", 0)) 
 		var year = stats.get("year", 1)
-		var difficulty = stats.get("difficulty", 1)
-		# Map difficulty integer to descriptive string
-		var difficulty_text = ["Easy", "Normal", "Hard", "Nightmare"][difficulty]
-		game_stats_label.text = "Money: $%s\nYear: %d\nDifficulty: %s" % [
-			add_comma_to_int(money), year, difficulty_text
-		]
-
-
-func add_comma_to_int(value: int) -> String:
-	var str_value: String = str(value)
-	var loop_end: int = 0 if value > -1 else 1
-	for i in range(str_value.length() - 3, loop_end, -3):
-		str_value = str_value.insert(i, ",")
-	return str_value
+		
+		var mode_text = ""
+		match mode_int:
+			0: mode_text = "Story"
+			1: mode_text = "Mission"
+			2: mode_text = "Freeplay"
+			_: mode_text = "Unknown"
+		
+		game_stats_label.text = "Mode: %s\nYear: %d" % [mode_text, year]
 
 func _on_delete_button_pressed() -> void:
 	delete_requested.emit(save_slot)

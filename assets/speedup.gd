@@ -10,6 +10,8 @@ var max_time_scale: float = 20.0   # Maximum allowed speed
 var time_scale_step: float = 1.0   # Slider increment/decrement step
 
 func _ready() -> void:
+	if OS.is_debug_build():
+		visible = true
 	# Initialize slider properties
 	h_slider.min_value = min_time_scale
 	h_slider.max_value = max_time_scale

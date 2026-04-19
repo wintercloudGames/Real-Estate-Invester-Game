@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://5gafdw2vhffp"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_rrf8s"]
+
+[resource]
+script = ExtResource("1_rrf8s")
+id = "m_18"
+title = "Steady Growth"
+unlock_id_needed = "m_17"
+target_money = 500000
+target_rented_houses = 35
+time_limit_year = 40

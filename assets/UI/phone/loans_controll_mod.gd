@@ -92,7 +92,7 @@ func process_loan_reduction():
 	
 	loan_balance -= principal_reduction
 	months -= 1
-
+	Globals.credit_score += 2
 	if is_instance_valid(house_ref):
 		house_ref.loan_price = loan_balance
 	

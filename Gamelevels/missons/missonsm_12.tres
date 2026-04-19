@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://c4rg5gi0318ae"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_7smma"]
+
+[resource]
+script = ExtResource("1_7smma")
+id = "m_12"
+title = "Early Retirement"
+unlock_id_needed = "m_11"
+target_savings = 100000
+target_car_level = 8
+time_limit_year = 25

@@ -15,8 +15,29 @@ script = ExtResource("2_rbwtn")
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
 offset_left = -4.0
-offset_right = 674.0
-offset_bottom = 395.0
+offset_right = 687.0
+offset_bottom = 400.0
+
+[node name="Stats" type="Label" parent="."]
+layout_mode = 0
+offset_left = 540.0
+offset_top = 10.0
+offset_right = 661.0
+offset_bottom = 335.0
+theme_override_font_sizes/font_size = 14
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 458.0
+offset_bottom = 288.0
+theme_override_font_sizes/font_size = 25
+text = "Current Job title"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="Drag_Button" parent="." instance=ExtResource("2_lr5qw")]
 layout_mode = 0
@@ -39,24 +60,12 @@ theme = ExtResource("3_tixg6")
 theme_override_font_sizes/font_size = 26
 text = "CLOSE"
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 208.0
-offset_top = 31.0
-offset_right = 646.0
-offset_bottom = 303.0
-theme_override_font_sizes/font_size = 25
-text = "Current Job title"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
 [node name="job_list_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 295.0
-offset_right = 213.0
-offset_bottom = 359.0
+offset_left = 22.0
+offset_top = 303.0
+offset_right = 211.0
+offset_bottom = 367.0
 text = "Job List"
 
 [node name="job_list" type="TabContainer" parent="."]
@@ -66,9 +75,10 @@ offset_left = 207.0
 offset_top = 36.0
 offset_right = 674.0
 offset_bottom = 316.0
-current_tab = 0
+current_tab = 1
 
 [node name="Labor" type="ScrollContainer" parent="job_list"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -79,7 +89,6 @@ size_flags_vertical = 3
 theme = ExtResource("4_tixg6")
 
 [node name="Services" type="ScrollContainer" parent="job_list"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -121,14 +130,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("4_tixg6")
-
-[node name="Stats" type="Label" parent="."]
-layout_mode = 0
-offset_left = 21.0
-offset_top = 67.0
-offset_right = 119.0
-offset_bottom = 267.0
-vertical_alignment = 1
 
 [connection signal="pressed" from="Close_Button" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="job_list_button" to="." method="_on_apply_for_job_pressed"]

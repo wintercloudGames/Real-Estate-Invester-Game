@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_el34h")
 job_name = "Electrician"
-monthly_salary = 3800.0
+category = "Trade"
 required_player_level = 14
 required_skill_points = 12
-category = "Trade"
+monthly_salary = 3800.0
+Exp_gain_per_month = 50.0
+job_exp_gain_per_month = 0.08
 description = "A standard job in the Trade sector."

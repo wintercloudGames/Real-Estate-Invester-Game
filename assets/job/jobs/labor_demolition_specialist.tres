@@ -5,7 +5,9 @@
 [resource]
 script = ExtResource("1_o66b7")
 job_name = "Demolition Specialist"
-monthly_salary = 2300.0
 required_player_level = 12
 required_skill_points = 8
+monthly_salary = 2300.0
+Exp_gain_per_month = 28.0
+job_exp_gain_per_month = 0.04
 description = "A standard job in the Labor sector."

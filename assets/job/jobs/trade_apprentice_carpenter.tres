@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_8ee1a")
 job_name = "Apprentice Carpenter"
-monthly_salary = 850.0
+category = "Trade"
 required_player_level = 2
 required_skill_points = 1
-category = "Trade"
+monthly_salary = 850.0
+Exp_gain_per_month = 15.0
+job_exp_gain_per_month = 0.02
 description = "A standard job in the Trade sector."

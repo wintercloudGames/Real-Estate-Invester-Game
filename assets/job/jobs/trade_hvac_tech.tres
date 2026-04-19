@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_s8m55")
 job_name = "HVAC Tech"
-monthly_salary = 2600.0
+category = "Trade"
 required_player_level = 10
 required_skill_points = 8
-category = "Trade"
+monthly_salary = 2600.0
+Exp_gain_per_month = 38.0
+job_exp_gain_per_month = 0.06
 description = "A standard job in the Trade sector."

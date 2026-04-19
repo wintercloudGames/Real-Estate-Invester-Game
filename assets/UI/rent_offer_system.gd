@@ -92,31 +92,38 @@ func _on_timer_timeout():
 	check_and_start_timer()
 
 func generate_and_display_offers():
-	if not house: 
+	if not house: return
+	
+	# 1. Calculate Fair Market Rent (adjusted by condition)
+	# Use float casting to ensure precision during the ratio check
+	var fair_rent: float = float(house.current_price) * 0.007 * float(house.apartment_condition)
+	if fair_rent <= 0: fair_rent = 1.0 # Prevent division by zero
+	
+	var rent_ratio: float = float(house.rent) / fair_rent
+	
+	# 2. Probability check: High rent = fewer or no offers
+	var chance_of_no_offer = 0.0
+	if rent_ratio > 1.4: chance_of_no_offer = 0.9 
+	elif rent_ratio > 1.2: chance_of_no_offer = 0.5
+	
+	if randf() < chance_of_no_offer:
+		Globals.notify("No interest in " + house.id + ". Rent is too high!", Color.ORANGE)
 		return
-	
-	# Get current market-adjusted house value
-	var house_value = house.current_price
-	
-	# Calculate realistic rent range (5-10% annual value)
-	var annual_min = house_value * 0.05
-	var annual_max = house_value * 0.10
-	var monthly_min = annual_min / 12
-	var monthly_max = annual_max / 12
-	
-	# Apply market conditions
-	if has_node("../Market") and $"../Market".has_method("get_market_condition"):
-		var market = $"../Market".get_market_condition()
-		monthly_min *= (1 + (market * 0.05))
-		monthly_max *= (1 + (market * 0.3))
-	
-	# Generate 1-5 offers in this range
-	rent_offers = []
-	for i in range(randi_range(1, 5)):
-		var offer = snapped(randf_range(monthly_min, monthly_max), 25)
-		rent_offers.append(int(offer))
-	
 
+	# 3. Generate 1-3 offers around the player's ASKING price
+	rent_offers = []
+	var offer_count = 1 if rent_ratio > 1.1 else randi_range(1, 3)
+	
+	for i in range(offer_count):
+		# Potential tenants might try to haggle slightly below the slider value
+		var raw_offer: float = float(house.rent) * randf_range(0.95, 1.0)
+		
+		# CRITICAL: Snap to 25 to match the slider grid
+		var snapped_offer = int(snapped(raw_offer, 25))
+		
+		# Ensure we never offer $0
+		rent_offers.append(max(25, snapped_offer))
+	
 	display_rent_offers()
 
 func display_rent_offers():
@@ -180,28 +187,32 @@ func generate_renter_name() -> String:
 	return "%s %s" % [first, last]
 
 func auto_generate_and_add_tenant():
-	if not house: 
-		return
-	# Generate rent amount
-	var house_value = house.current_price
-	var annual_min = house_value * 0.05
-	var annual_max = house_value * 0.10
-	var monthly_rent = snapped(randf_range(annual_min/12, annual_max/12), 25)
+	if not house: return
 	
-	# Generate renter stats
-	var renter_stats = generate_renter_stats()
+	# 1. Calculate what the market considers "Fair"
+	var fair_rent: float = float(house.current_price) * 0.007 * float(house.apartment_condition)
+	if fair_rent <= 0: fair_rent = 1.0
 	
-	# Directly add tenant without UI
-	house.add_tenant(int(monthly_rent), renter_stats.lease_length)
-	house.is_listed = false  # Mark as not listed
-	house.apartment_condition = renter_stats.apartment_condition
-	house.payment_punctuality = renter_stats.payment_punctuality
+	# 2. Define the Agent's "Cap" (e.g., 30% above fair market value)
+	var max_acceptable_rent: float = fair_rent * 1.3
+	var final_rent: int = int(house.rent)
 	
-	# Show notification
-	Globals.notify("Auto-rented: $" + str(monthly_rent), Color.GREEN)
-	
+	# 3. Negotiation Logic:
+	# If the player's price is too high, the Agent forces it down to the max limit
+	if final_rent > max_acceptable_rent:
+		# We round to the nearest 25 to keep it consistent with your UI
+		final_rent = int(round(max_acceptable_rent / 25.0) * 25.0)
+		Globals.notify("Agent negotiated " + house.id + " down to $" + add_comma_to_int(final_rent), Color.GOLDENROD)
+	else:
+		Globals.notify("Agent rented " + house.id + " for $" + add_comma_to_int(final_rent), Color.GREEN)
 
-# In rent_offer_system.gd
+	# 4. Finalize the Renter
+	var stats = generate_renter_stats()
+	
+	house.add_tenant(final_rent, stats.lease_length)
+	house.is_listed = false
+	house.apartment_condition = stats.apartment_condition
+	house.payment_punctuality = stats.payment_punctuality
 func generate_renter_stats() -> Dictionary:
 	var lease_options = [
 		{"duration": 6, "weight": 0.2},
@@ -239,7 +250,6 @@ func generate_renter_stats() -> Dictionary:
 		"apartment_condition": randf_range(0.7, 1.0),
 		"lease_length": selected_lease
 	}
-
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)

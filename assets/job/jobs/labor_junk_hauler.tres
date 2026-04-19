@@ -5,7 +5,9 @@
 [resource]
 script = ExtResource("1_alvbv")
 job_name = "Junk Hauler"
-monthly_salary = 850.0
 required_player_level = 4
 required_skill_points = 2
+monthly_salary = 850.0
+Exp_gain_per_month = 15.0
+job_exp_gain_per_month = 0.02
 description = "A standard job in the Labor sector."

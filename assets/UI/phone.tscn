@@ -725,6 +725,7 @@ script = ExtResource("9_3hjvo")
 
 [node name="options" type="Control" parent="."]
 visible = false
+custom_minimum_size = Vector2(356, 640)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -732,24 +733,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_wyu3u")
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="Panel" parent="options"]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 13.0
-offset_right = 353.0
-offset_bottom = 633.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 358.00003
+offset_bottom = 651.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="options"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = -40.9998
-offset_right = 345.0
-offset_bottom = 703.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 28.00003
+offset_top = 8.0
+offset_right = 331.00003
+offset_bottom = 645.0
 vertical_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="options/ScrollContainer"]
@@ -1170,6 +1168,7 @@ offset_left = 8.0
 offset_top = 1.0
 offset_right = 352.0
 offset_bottom = 634.0
+theme = ExtResource("1_rrag5")
 
 [node name="Label" type="Label" parent="Stock_app/PortfolioSummary"]
 layout_mode = 0
@@ -1206,10 +1205,10 @@ theme = ExtResource("36_xes8p")
 
 [node name="DividendTimerLabel" type="Label" parent="Stock_app/PortfolioSummary"]
 layout_mode = 0
-offset_left = 190.0
+offset_left = 145.0
 offset_top = 47.0
-offset_right = 312.0
-offset_bottom = 91.0
+offset_right = 252.0
+offset_bottom = 66.0
 
 [node name="MarketList" type="ScrollContainer" parent="Stock_app"]
 layout_mode = 0
@@ -1730,14 +1729,14 @@ offset_bottom = 483.0
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-text = "JOBS"
+text = "Quick Money Taskes"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="job 6" type="Label" parent="job_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
-text = "Do online survey"
+text = "Do Task 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1752,7 +1751,7 @@ text = "Do Job"
 [node name="job 2" type="Label" parent="job_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
-text = "Take trash to recycle"
+text = "Do Task 2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1767,7 +1766,7 @@ text = "Do Job"
 [node name="job 3" type="Label" parent="job_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
-text = "Taxi Driver"
+text = "Do Task 3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1782,7 +1781,7 @@ text = "Do Job"
 [node name="job 4" type="Label" parent="job_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
-text = "Delivery Driver"
+text = "Do Task 4"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1797,7 +1796,7 @@ text = "Do Job"
 [node name="job 5" type="Label" parent="job_info/VBoxContainer"]
 modulate = Color(1, 1, 0.317647, 1)
 layout_mode = 2
-text = "Clean a house"
+text = "Do Task 5"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -2207,9 +2206,9 @@ texture_normal = ExtResource("15_22kuw")
 [node name="TextureButton2" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 150.0
-offset_top = 598.00024
+offset_top = 605.0
 offset_right = 230.0
-offset_bottom = 678.00024
+offset_bottom = 685.0
 scale = Vector2(0.8, 0.8)
 texture_normal = ExtResource("43_uwkqi")
 

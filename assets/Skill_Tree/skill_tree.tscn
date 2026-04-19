@@ -33,8 +33,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -788.0
-offset_bottom = -480.0
+offset_right = -816.0
+offset_bottom = -460.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_rsuch")
@@ -104,10 +104,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -219.0
-offset_top = 15.0
-offset_right = -57.0
-offset_bottom = 81.0
+offset_left = -204.0
+offset_top = 14.0
+offset_right = -52.0
+offset_bottom = 68.0
 grow_horizontal = 0
 theme = ExtResource("5_y6xip")
 theme_override_font_sizes/font_size = 20
@@ -150,10 +150,11 @@ offset_bottom = 564.0
 theme = ExtResource("8_ervgt")
 theme_override_font_sizes/font_size = 30
 tab_alignment = 1
-current_tab = 0
+current_tab = 2
 tabs_position = 1
 
 [node name="General" type="Control" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -303,7 +304,7 @@ offset_right = 158.0
 offset_bottom = -8.0
 max_level = 5
 skill_name = "Rent Boost"
-skill_description = "Boots your rental income"
+skill_description = "Boost your rental income"
 level_costs = Array[int]([1, 2, 2, 2, 3, 5])
 app_skill_to_unlock = 5
 
@@ -332,7 +333,6 @@ level_costs = Array[int]([1, 1, 2, 2, 3, 3, 4, 4, 5, 5])
 app_skill_to_unlock = 18
 
 [node name="Money" type="Control" parent="TabContainer"]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 metadata/_tab_index = 2

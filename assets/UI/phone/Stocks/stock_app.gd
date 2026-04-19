@@ -115,8 +115,8 @@ func update_portfolio_summary():
 				break
 	
 	var account_total = total_stock_value + Globals.brokerage_balance
-	var text = "BROKERAGE CASH: $" + str(snapped(Globals.brokerage_balance, 0.01)) + "\n"
-	text += "TOTAL ACCT VALUE: $" + str(snapped(account_total, 0.01))
+	var text = "BROKERAGE CASH: $" + Globals.add_comma_to_int(snapped(Globals.brokerage_balance, 0.01)) + "\n"
+	text += "TOTAL ACCT VALUE: $" + Globals.add_comma_to_int(snapped(account_total, 0.01))
 	summary_label.text = text
 
 # --- NAVIGATION & UI HELPERS ---

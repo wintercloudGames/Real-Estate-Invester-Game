@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://6gpam0c06oyx"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_mk3ci"]
+
+[resource]
+script = ExtResource("1_mk3ci")
+id = "m_04"
+title = "Mobile Mogul"
+unlock_id_needed = "m_03"
+target_money = 15000
+target_car_level = 3
+time_limit_year = 7

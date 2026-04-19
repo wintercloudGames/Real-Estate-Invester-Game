@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://bx2b4yhtxxt85"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_1o2ud"]
+
+[resource]
+script = ExtResource("1_1o2ud")
+id = "m_05"
+title = "Small Landlord"
+unlock_id_needed = "m_04"
+target_rented_houses = 4
+time_limit_year = 10

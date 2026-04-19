@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://cgln5hwk2hrke"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_yw5in"]
+
+[resource]
+script = ExtResource("1_yw5in")
+id = "m_09"
+title = "Credit Master"
+unlock_id_needed = "m_08"
+target_savings = 40000
+target_credit_score = 750
+time_limit_year = 18

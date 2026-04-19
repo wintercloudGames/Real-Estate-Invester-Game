@@ -9,71 +9,128 @@ var house = null
 @onready var game_over_panel: Control = $HUD/GAME_OVER
 
 func _ready() -> void:
-	call_deferred("apply_loaded_data_deferred")
+	# 1. Immediate Setup (Things that don't depend on saved data)
 	$camera/Camera3D.current = true
 	Globals.yard_edit = false
-	Globals.month_ended.connect(simulate_market_buyers)
-	var all_houses = get_tree().get_nodes_in_group("houses")
-	Globals.notify(str(all_houses.size()) + " : houses", Color.WHITE)
-	if Globals.first_start == false:
+	
+	if not Globals.month_ended.is_connected(_check_mission_status):
+		Globals.month_ended.connect(_check_mission_status)
+
+	# 2. Defer everything else to ensure SaveAndLoad has finished its job
+	call_deferred("initialize_game_logic")
+
+func initialize_game_logic() -> void:
+	# 1. Exact path check - Ensure this matches your SaveAndLoad.gd exactly!
+	var save_path = "user://savegame.save" 
+	var has_save = FileAccess.file_exists(save_path)
+	
+	# 2. DEFAULT STATE: Assume the popup is hidden
+	$HUD/Game_start.visible = false
+	
+	# 3. LOADING LOGIC
+	if has_save:
+		SaveAndLoad.apply_loaded_data()
+		# After loading, check the variable again
+		print("Data loaded. first_start is: ", Globals.first_start)
+	
+	# FINAL UI DECISION
+	if Globals.active_mission != null:
+		$HUD/Game_start.visible = false
+		setup_mission_start()
+	elif has_save and Globals.first_start == false:
+		# We have a save and the player already clicked 'Start' once before
+		$HUD/Game_start.visible = false
+	else:
+		# Truly a new game
 		$HUD/Game_start.visible = true
-		for house in get_tree().get_nodes_in_group("houses"):
-			if not house.owned:
-				house.for_sale = randf() < 0.30
-				house.current_price *= randf_range(0.85, 1.15)
-		Globals.reset()
-	# Setup systems
+
+	# 5. UI VISIBILITY (The final decision)
+	if Globals.active_mission != null:
+		$HUD/UI/MissionDisplay.visible = true
+		setup_mission_start() 
+		# Ensure popup is hidden during missions
+		$HUD/Game_start.visible = false 
+	else:
+		# Show popup ONLY if first_start is still true
+		$HUD/Game_start.visible = Globals.first_start
+
+	# --- 6. SETUP REMAINING SYSTEMS (Difficulty, Phone, Business) ---
 	$Market.difficulty = Globals.difficulty
 	$Market.apply_difficulty_settings()
 	$Market.update_label()
-	$HUD/Phone/Car_info.load_info()
-	Globals.recalculate_expenses()
-	$HUD/UI/JobDisplay.update_stats()
-	if Globals.business_name != "":
-		$"HUD/Business_UI".Set_difficulty()
-		$HUD/Business_UI.Load_info()
 	
+	$HUD/Phone/Car_info.load_info()
 	$HUD/Phone/Car_info.car_level = Globals.car_level 
 	$HUD/Phone/Backgrounds.load_wallpaper_texture()
 	
-	# Ensure panels start hidden
-	if mission_win_panel: mission_win_panel.visible = false
-	if game_over_panel:   game_over_panel.visible   = false
+	Globals.recalculate_expenses()
+	$HUD/UI/JobDisplay.update_stats()
+	
+	if Globals.business_name != "":
+		$HUD/Business_UI.Set_difficulty()
+		$HUD/Business_UI.Load_info()
 
-func apply_loaded_data_deferred() -> void:
-	SaveAndLoad.apply_loaded_data()
+func setup_mission_start() -> void:
+	if Globals.active_mission == null:
+		push_error("Mission Mode started but no mission data was found!")
+		return
+	
+	# 1. Store the mission in a local variable 'm' BEFORE resetting
+	var m = Globals.active_mission
+	
+	# 2. Reset the globals (This might clear Globals.active_mission)
+	Globals.reset(Globals.GameMode.MISSION)
+	
+	# 3. Restore the mission back to Globals so the rest of the game can see it
+	Globals.active_mission = m
+	
+	# 4. Setup UI
+	$HUD/Game_start.visible = false 
+	$HUD/UI/MissionDisplay.visible = true
+	$HUD/UI/MissionDisplay.update_mission_ui()
+	
+	# Now 'm' is guaranteed to exist
+	Globals.notify("MISSION START: " + m.title, Color.YELLOW)
+	
+	SaveAndLoad.save_game()
+	
 
+func _check_mission_status():
+	if Globals.current_game_mode != Globals.GameMode.MISSION or Globals.active_mission == null:
+		return
+
+	var m = Globals.active_mission
+
+	# 1. Check for FAILURE (Time limit)
+	if Globals.year > m.time_limit_year:
+		$HUD/GAME_OVER.visible = true
+		$HUD/GAME_OVER/Info.text = "You failed to reach the goals by Year " + str(m.time_limit_year)
+		return
+
+	# 2. Check for SUCCESS
+	var has_money = Globals.money >= m.target_money
+	var has_houses = Globals.Propertys >= m.target_houses
+	var has_savings = Globals.Savings_balance >= m.target_savings
+
+	if has_money and has_houses and has_savings:
+		_trigger_mission_win()
+
+func _trigger_mission_win():
+	# 1. Get the current ID safely
+	var current_id = Globals.active_mission.id
+	
+	# 2. Add to the list in GLOBALS (not SaveAndLoad)
+	if not Globals.completed_missions.has(current_id):
+		Globals.completed_missions.append(current_id)
+		
+		# 3. Tell your Save script to write the current Global state to disk
+		SaveAndLoad.save_game() 
+	
+	mission_win_panel.visible = true
+	Engine.time_scale = 0
+	
 
 func _process(delta: float) -> void:
-	if Globals.mission_active and not Globals.mission_completed:
-		# ─── WIN CHECK ────────────────────────────────────────
-		if Globals.is_mission_complete():
-			Globals.mission_completed = true
-			if mission_win_panel:
-				mission_win_panel.visible = true
-			Engine.time_scale = 0
-			
-			return   # early out so we don't accidentally check fail
-
-		# ─── LOSE CHECK ───────────────────────────────────────
-		# Fail if we've passed the end of the deadline year
-		var past_deadline = false
-		
-		if Globals.year > Globals.mission_deadline_year:
-			past_deadline = true
-		elif Globals.year == Globals.mission_deadline_year and Globals.month > 12:
-			past_deadline = true 
-			
-		if past_deadline:
-			Globals.mission_completed = true 
-			if game_over_panel:
-				game_over_panel.visible = true
-				var info = game_over_panel.get_node_or_null("Info")
-				if info:
-					info.text = "Mission Failed!\n" + Globals.mission_desc + "\nTime's up!"
-
-			Engine.time_scale = 0
-			
 	# UI scale
 	$HUD.scale = Vector2(Settings.UI_scale, Settings.UI_scale)
 
@@ -110,7 +167,6 @@ func _process(delta: float) -> void:
 			if game_over_panel.has_method("message"):
 				game_over_panel.message("You died")
 		Engine.time_scale = 0
-	
 	
 func get_qualified_house_amount():
 	var down_payment = Globals.money
@@ -158,49 +214,6 @@ func get_qualified_house_amount():
 		
 		house.create_label(can_afford and is_available)
 
-func simulate_market_buyers() -> void:
-	# 1. Get current market 'heat' from your Market node
-	# If price is high relative to base, market is 'Hot'
-	var market_node = $Market
-	var heat = clamp(market_node.current_price / market_node.base_price, 0.5, 2.0)
-	
-	var all_houses = get_tree().get_nodes_in_group("houses")
-	
-	for house in all_houses:
-		if house.owned or house.is_in_group("ai_owned"): continue
-		
-		if house.for_sale:
-			# TICK THE CLOCK
-			house.time_on_market += 1
-			
-			# --- NPC BUYING LOGIC (Demand) ---
-			# Hotter market = Higher chance NPCs buy it immediately
-			var buy_chance = 0.1 + (heat * 0.2) 
-			
-			# If the house is a 'Steal' (Price < Base), NPCs are more likely to grab it
-			if house.current_price < house.base_price:
-				buy_chance += 0.15
-
-			if randf() < buy_chance:
-				house.for_sale = false
-				house.time_on_market = 0
-				
-			
-			elif house.time_on_market >= 4:
-				house.current_price *= 0.95
-				# Round to nearest 500 for realism
-				house.current_price = round(house.current_price / 500.0) * 500
-				
-				
-		else:
-			# --- NEW LISTING LOGIC ---
-			var list_chance = 0.15 + (1.0 - heat) * 0.2 
-			
-			if randf() < clamp(list_chance, 0.05, 0.25): 
-				house.for_sale = true
-				house.time_on_market = 0
-				house.current_price = house.base_price * heat * randf_range(0.9, 1.1)
-	
 func clear_House_ui_data():
 	House_ui.price = 0
 	House_ui.loan_price = 0
@@ -227,6 +240,7 @@ func set_house_UI():
 	if not house or not House_ui: return
 	House_ui.price = house.current_price
 	House_ui.house = house
+	House_ui.setup_slider()
 	if not house.edit_mode:
 		House_ui.visible = true
 	if house.has_tenant:
@@ -263,10 +277,49 @@ func _on_skills_button_pressed() -> void:
 func _on_business_button_pressed() -> void:
 	$HUD/Business_UI.visible = !$HUD/Business_UI.visible
 
+
 func _on_mission_win_button_pressed() -> void:
-	Engine.time_scale = 1.0                    # Unpause the game
-	SaveAndLoad.delete_save_file(SaveAndLoad.current_save_slot)  # Delete current save (fresh start)
-	Globals.reset()
-	get_tree().reload_current_scene()
+	Engine.time_scale = 1
 	
+	# 1. Physical Cleanup
+	for house in get_tree().get_nodes_in_group("houses"): 
+		house.sell_house()
+
+	var loan_container = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans/TabContainer/Loans/ScrollContainer/loan_mod_Container") 
+	if loan_container:
+		for child in loan_container.get_children():
+			child.queue_free()
+
+	# 2. Update Progress
+	if Globals.active_mission != null:
+		var mid = Globals.active_mission.id
+		if not Globals.completed_missions.has(mid):
+			Globals.completed_missions.append(mid)
+
+	# 3. PREPARE THE DATA FOR SAVING
+	# We clear the active mission object, but KEEP the mode as MISSION
+	Globals.active_mission = null 
+	Globals.current_game_mode = Globals.GameMode.MISSION 
 	
+	# 4. SAVE NOW
+	# Because current_game_mode is MISSION, the save file will record it correctly
+	SaveAndLoad.save_game()
+	
+	# 5. NOW RESET AND EXIT
+	# We call reset LAST so it doesn't mess up the save we just made
+	Globals.reset() 
+	_goto_menu()
+
+func _goto_menu():
+	# We use self.get_tree() to be explicit 
+	var tree = self.get_tree()
+	if tree:
+		var ui_node = tree.get_current_scene().get_node_or_null("UserInterface")
+		if ui_node:
+			var parent_node = ui_node.get_parent()
+			if parent_node and parent_node.has_method("_display_main_menu"):
+				parent_node._display_main_menu()
+				return
+		
+		# Fallback if the hierarchy is different or UserInterface is missing 
+		tree.change_scene_to_file("res://Menu/MainMenu.tscn")

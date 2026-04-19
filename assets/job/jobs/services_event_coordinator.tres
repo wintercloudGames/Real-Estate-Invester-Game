@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_dku1a")
 job_name = "Event Coordinator"
-monthly_salary = 3200.0
+category = "Services"
 required_player_level = 16
 required_skill_points = 12
-category = "Services"
+monthly_salary = 3200.0
+Exp_gain_per_month = 40.0
+job_exp_gain_per_month = 0.05
 description = "A standard job in the Services sector."

@@ -13,7 +13,7 @@ anchor_bottom = 1.0
 offset_left = 324.0
 offset_top = 71.0
 offset_right = -1137.0
-offset_bottom = -566.0
+offset_bottom = -539.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_56k8e")
@@ -95,24 +95,24 @@ text = "Purchase and rent
 
 [node name="Close_Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 350.0
-offset_top = 17.0
-offset_right = 433.0
-offset_bottom = 64.0
+offset_left = 342.0
+offset_top = -51.0
+offset_right = 443.0
+offset_bottom = 4.0
 theme = ExtResource("4_56k8e")
 text = "CLOSE"
 
 [node name="Drag_Button" parent="." instance=ExtResource("4_cckjx")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.10478649
-anchor_top = 0.09702936
-anchor_right = 0.10478649
-anchor_bottom = 0.09702936
-offset_left = -24.097008
-offset_top = -23.984005
-offset_right = 23.902992
-offset_bottom = 24.015995
+anchor_left = 0.054891076
+anchor_top = 0.0473386
+anchor_right = 0.054891076
+anchor_bottom = 0.0473386
+offset_left = -24.195011
+offset_top = -23.971
+offset_right = 23.804989
+offset_bottom = 24.029
 
 [connection signal="toggled" from="Loan_button" to="." method="_on_loan_button_toggled"]
 [connection signal="pressed" from="Buy_button" to="." method="_on_buy_button_pressed"]

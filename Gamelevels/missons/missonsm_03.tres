@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://i3knh2c6iv21"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_exbwp"]
+
+[resource]
+script = ExtResource("1_exbwp")
+id = "m_03"
+title = "Safety Net"
+unlock_id_needed = "m_02"
+time_limit_year = 6

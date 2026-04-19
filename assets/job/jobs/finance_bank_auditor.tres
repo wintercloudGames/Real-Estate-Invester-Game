@@ -5,8 +5,9 @@
 [resource]
 script = ExtResource("1_fs3eu")
 job_name = "Bank Auditor"
-monthly_salary = 4500.0
+category = "Finance"
 required_player_level = 14
 required_skill_points = 10
-category = "Finance"
+monthly_salary = 4500.0
+Exp_gain_per_month = 60.0
 description = "A standard job in the Finance sector."

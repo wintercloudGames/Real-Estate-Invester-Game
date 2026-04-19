@@ -2,12 +2,14 @@ extends Label
 
 ## List of tips for your game
 @export var tips: Array[String] = [
-	"Right click to drag the camera",
-	"Get a job as soon as posible",
+	"Right-click to drag the camera",
+	"Get a job as soon as possible",
 	"WASD or arrow keys to move camera",
 	"Remember to use the Skill Tree",
-	"The game saves",
-	"Loans help build credit"
+	"The game saves automatically",
+	"Loans help build credit",
+	"Press R to reset the market graph",
+	"Release quick money tasks in the yellow zone for a bonus"
 ]
 
 ## How long to show each tip in seconds

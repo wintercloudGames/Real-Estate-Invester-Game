@@ -28,18 +28,18 @@ theme = ExtResource("1_wy6uo")
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 170.0
-offset_right = 511.0
-offset_bottom = 188.0
+offset_left = 12.0
+offset_top = 135.0
+offset_right = 513.0
+offset_bottom = 153.0
 color = Color(0.104056, 0.115702, 0.21575, 1)
 
 [node name="ColorRect3" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 10.0
-offset_top = 371.0
+offset_top = 379.0
 offset_right = 511.0
-offset_bottom = 389.0
+offset_bottom = 397.0
 color = Color(0.104056, 0.115702, 0.21575, 1)
 
 [node name="Label_list_price" type="Label" parent="."]
@@ -64,68 +64,78 @@ horizontal_alignment = 1
 
 [node name="Label_loan" type="Label" parent="."]
 layout_mode = 0
-offset_left = 70.0
-offset_top = 98.0
-offset_right = 104.0
-offset_bottom = 121.0
-text = "loan
-"
+offset_left = 59.0
+offset_top = 76.0
+offset_right = 143.0
+offset_bottom = 99.0
+text = "loan"
 
 [node name="Label_morgage" type="Label" parent="."]
 layout_mode = 0
-offset_left = 63.0
-offset_top = 131.0
-offset_right = 149.0
-offset_bottom = 154.0
+offset_left = 67.0
+offset_top = 107.0
+offset_right = 153.0
+offset_bottom = 130.0
 text = "Morgage = "
 
 [node name="Label_Income" type="Label" parent="."]
+visible = false
 layout_mode = 0
-offset_left = 32.0
-offset_top = 197.0
-offset_right = 107.0
-offset_bottom = 220.0
+offset_left = 369.0
+offset_top = 279.0
+offset_right = 444.0
+offset_bottom = 302.0
 text = "Income = "
 
 [node name="Label_lease_stat" type="Label" parent="."]
 layout_mode = 0
-offset_left = 342.0
-offset_top = 198.0
-offset_right = 448.0
-offset_bottom = 221.0
+offset_left = 355.0
+offset_top = 164.0
+offset_right = 461.0
+offset_bottom = 187.0
 text = "lease amount"
 
 [node name="Label_condition" type="Label" parent="."]
 layout_mode = 0
-offset_left = 343.0
-offset_top = 235.0
-offset_right = 457.0
-offset_bottom = 258.0
+offset_left = 354.0
+offset_top = 202.0
+offset_right = 468.0
+offset_bottom = 225.0
 text = "condition: 90%"
 
 [node name="Label_punctuality" type="Label" parent="."]
 layout_mode = 0
-offset_left = 341.0
-offset_top = 264.0
-offset_right = 455.0
-offset_bottom = 287.0
+offset_left = 354.0
+offset_top = 243.0
+offset_right = 468.0
+offset_bottom = 266.0
 text = "condition: 90%"
 
 [node name="Label_islistedforrent" type="Label" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 216.0
-offset_top = 189.0
-offset_right = 326.0
-offset_bottom = 212.0
+offset_left = 214.0
+offset_top = 129.0
+offset_right = 324.0
+offset_bottom = 152.0
 text = "Listed for rent"
+
+[node name="Rent_slider_info" type="Label" parent="."]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 176.0
+offset_right = 219.0
+offset_bottom = 255.0
+text = "Rent info "
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Label_cashflow" type="Label" parent="."]
 layout_mode = 0
-offset_left = 27.0
-offset_top = 234.0
-offset_right = 117.0
-offset_bottom = 257.0
+offset_left = 233.0
+offset_top = 335.0
+offset_right = 323.0
+offset_bottom = 358.0
 text = "cash flow = "
 
 [node name="Buy_button" type="Button" parent="."]
@@ -139,68 +149,79 @@ text = "Pay off Loan"
 
 [node name="Refinance_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 366.0
-offset_top = 106.0
-offset_right = 491.0
-offset_bottom = 145.0
+offset_left = 371.0
+offset_top = 86.0
+offset_right = 496.0
+offset_bottom = 125.0
 text = "Refinance"
 
 [node name="Tenent_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 26.0
-offset_top = 291.0
-offset_right = 195.0
-offset_bottom = 348.0
+offset_left = 20.0
+offset_top = 320.0
+offset_right = 170.0
+offset_bottom = 377.0
 text = "List House For Rent
 (Spacebar)"
 
 [node name="Remove_Tenent" type="Button" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 27.0
-offset_top = 291.0
-offset_right = 196.0
-offset_bottom = 345.0
+offset_left = 9.0
+offset_top = 322.0
+offset_right = 178.0
+offset_bottom = 376.0
 text = "Remove Tenant"
+
+[node name="Rent_HSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 257.0
+offset_right = 242.0
+offset_bottom = 276.0
+value = 50.0
 
 [node name="Edit_yard_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 38.0
-offset_top = 421.0
-offset_right = 163.0
-offset_bottom = 466.0
+offset_left = 35.0
+offset_top = 426.0
+offset_right = 160.0
+offset_bottom = 475.0
 text = "Edit Yard"
 
 [node name="Sell_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 336.0
-offset_top = 421.0
-offset_right = 461.0
-offset_bottom = 466.0
+offset_left = 355.0
+offset_top = 426.0
+offset_right = 480.0
+offset_bottom = 475.0
 text = "Sell House"
 
 [node name="Upgrade_label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 216.0
-offset_top = 392.0
-offset_right = 276.0
-offset_bottom = 415.0
-text = "$10,000"
+offset_left = 202.0
+offset_top = 398.0
+offset_right = 319.0
+offset_bottom = 421.0
+text = "0/10"
+horizontal_alignment = 1
 
 [node name="Upgrade" type="Button" parent="."]
 layout_mode = 0
-offset_left = 187.0
+offset_left = 197.0
 offset_top = 426.0
-offset_right = 312.0
-offset_bottom = 471.0
-text = "Upgrade"
+offset_right = 322.0
+offset_bottom = 475.0
+text = "$10,000
+Upgrade
+"
 
 [node name="Close_Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 421.0
-offset_top = 16.0
-offset_right = 504.0
-offset_bottom = 63.0
+offset_left = 414.0
+offset_top = -46.0
+offset_right = 497.0
+offset_bottom = 1.0
 theme = ExtResource("4_wy6uo")
 text = "CLOSE"
 
@@ -269,10 +290,10 @@ text = "close"
 [node name="Drag_Button" parent="." instance=ExtResource("4_nshnh")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.09248552
-anchor_top = 0.092753895
-anchor_right = 0.09248552
-anchor_bottom = 0.09330303
+anchor_left = 0.05009631
+anchor_top = 0.040228643
+anchor_right = 0.05009631
+anchor_bottom = 0.04077778
 offset_top = -23.913177
 offset_bottom = 23.814999
 
@@ -280,6 +301,7 @@ offset_bottom = 23.814999
 [connection signal="pressed" from="Refinance_button" to="." method="_on_refinance_button_pressed"]
 [connection signal="pressed" from="Tenent_button" to="." method="_on_tenent_button_pressed"]
 [connection signal="pressed" from="Remove_Tenent" to="." method="_on_remove_tenent_pressed"]
+[connection signal="value_changed" from="Rent_HSlider" to="." method="_on_rent_h_slider_value_changed"]
 [connection signal="pressed" from="Edit_yard_button" to="." method="_on_edit_yard_button_pressed"]
 [connection signal="pressed" from="Sell_button" to="." method="_on_sell_button_pressed"]
 [connection signal="pressed" from="Upgrade" to="." method="_on_upgrade_pressed"]

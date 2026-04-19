@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_a27pj")
 job_name = "Office Manager"
-monthly_salary = 3000.0
+category = "Management"
 required_player_level = 10
 required_skill_points = 6
-category = "Management"
+monthly_salary = 3000.0
+Exp_gain_per_month = 35.0
+job_exp_gain_per_month = 0.08
 description = "A standard job in the Management sector."

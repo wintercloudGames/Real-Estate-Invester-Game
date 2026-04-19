@@ -20,9 +20,6 @@ func _ready() -> void:
 	_update_skill_points_display()
 	_update_progress_bar()
 
-# --- REMOVED _PROCESS ---
-# We use signals now. This saves a lot of CPU power.
-
 func show_info(skill_name: String, info: String, current_level: int = 0, max_level: int = 0, cost_info: String = "") -> void:
 	if not description_panel: return
 	
@@ -46,7 +43,6 @@ func _update_skill_points_display() -> void:
 	if is_instance_valid(skill_points_label):
 		skill_points_label.text = "Skill Points: " + str(Globals.skillpoints)
 	
-	# Always update progress and level when points/exp change
 	_update_progress_bar()
 
 func _update_progress_bar() -> void:

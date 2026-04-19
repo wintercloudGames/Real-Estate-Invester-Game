@@ -13,10 +13,12 @@ extends PathFollow3D
 @onready var front_ray: RayCast3D = $AICar/FrontRay
 # Grouping lights for easy access
 @onready var car_lights: Array = [$SpotLight3D,$SpotLight3D2]
+@onready var ai_car: CharacterBody3D = $AICar
 
 var _current_speed: float = 0.0
 var _is_switching: bool = false
 var _wait_timer: float = 0.0
+var lights_should_be_on = false
 
 func _ready() -> void:
 	loop = false
@@ -78,19 +80,19 @@ func _on_external_light_change(_color: Color, _energy: float) -> void:
 	_update_lights()
 
 func _update_lights() -> void:
-	# Logic: Lights on if energy is low (storming) or if it's night
-	# Using your existing Globals/Settings structure
-	var should_be_on = false
+	# Initialize as false so it has a definitive state
+	var should_be_on: bool = false
 	
-	# Check for night (if you have a day/night cycle)
+	# Check for night
 	if Globals.has_method("is_night") and Globals.is_night():
 		should_be_on = true
 	
-	# Check for weather (if it's dark enough to need lights)
+	# Check for weather
 	var season_sys = get_tree().get_root().find_child("Season_System", true, false)
 	if season_sys and season_sys.rain_node.emitting:
 		should_be_on = true
 
+	# Apply the state to each light in the array
 	for light in car_lights:
 		if light:
 			light.visible = should_be_on
@@ -155,3 +157,22 @@ func _handle_dead_end() -> void:
 	_current_speed = 0
 	_wait_timer = 2.0 
 	# Teleport or despawn logic could go here if you want to remove stuck cars
+
+
+func _on_visible_on_screen_notifier_3d_screen_entered() -> void:
+	if ai_car:
+		ai_car.visible = true
+	
+	if lights_should_be_on:
+		for light in car_lights:
+			if light:
+				light.visible = true
+
+func _on_visible_on_screen_notifier_3d_screen_exited() -> void:
+	if ai_car:
+		ai_car.visible = false
+		
+	# We turn them off here to save performance while off-screen
+	for light in car_lights:
+		if light:
+			light.visible = false

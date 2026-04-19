@@ -8,7 +8,7 @@ signal night_mode_changed(is_night: bool)
 
 enum GAME_QUALITY { LOW, MEDIUM, HIGH, ULTRA }
 var current_quality: GAME_QUALITY = GAME_QUALITY.MEDIUM
-
+var is_night: bool = false
 # --- SETTINGS ---
 @export var cycle_enabled: bool = true
 
@@ -48,13 +48,13 @@ func _process(delta: float) -> void:
 	if not Settings.day_night_cycle:
 		return
 		
-		
 	time_in_state += delta
 	_update_sun_state(delta)
 	
 	var night_check = (current_state == SUN_STATE.NIGHT or current_state == SUN_STATE.SETTING)
 	if night_check != _is_currently_night:
 		_is_currently_night = night_check
+		is_night = night_check
 		_manage_visual_transitions(_is_currently_night)
 
 func _update_sun_state(delta: float) -> void:

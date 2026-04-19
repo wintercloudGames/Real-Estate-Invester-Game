@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_akpna")
 job_name = "Structural Inspector"
-monthly_salary = 13000.0
+category = "Trade"
 required_player_level = 32
 required_skill_points = 35
-category = "Trade"
+monthly_salary = 13000.0
+Exp_gain_per_month = 120.0
+job_exp_gain_per_month = 0.2
 description = "A standard job in the Trade sector."

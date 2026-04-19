@@ -138,6 +138,7 @@ func _on_car_info_pressed() -> void:
 func _on_market_pressed() -> void:
 	var market = $"../Market"
 	market.visible = !market.visible
+	Globals.notify("Prees R to Reset graph",Color.WHITE)
 
 func _on_house_manager_pressed() -> void:
 	$house_manager.visible = true

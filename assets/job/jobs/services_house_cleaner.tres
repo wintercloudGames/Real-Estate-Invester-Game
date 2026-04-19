@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_ds53l")
 job_name = "House Cleaner"
-monthly_salary = 750.0
+category = "Services"
 required_player_level = 3
 required_skill_points = 1
-category = "Services"
+monthly_salary = 750.0
+Exp_gain_per_month = 14.0
+job_exp_gain_per_month = 0.01
 description = "A standard job in the Services sector."

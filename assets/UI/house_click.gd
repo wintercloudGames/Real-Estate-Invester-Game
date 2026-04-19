@@ -3,7 +3,7 @@ extends Node3D
 @export var is_building = false
 @export var plot = false
 var rarity: float = 1.0
-var base_price: float = 0 # Initialized in _ready
+var base_price: float = 0
 var current_price: float = 0
 var previous_price: float = 0
 var mortgage = 0
@@ -23,6 +23,9 @@ var stored_cash = 0
 @onready var House_ui: Node = get_node("/root/Root/UserInterface/Game/HUD/House_info")
 @onready var renter = null
 @onready var game: Node = get_node("/root/Root/UserInterface/Game")
+@onready var spot_light_3d: SpotLight3D = $SpotLight3D
+@onready var spot_light_3d_2: SpotLight3D = $SpotLight3D2
+
 
 var id: String = "" 
 var bought_price = 0
@@ -33,31 +36,32 @@ var has_tenant = false
 var tenant = null
 var paid_rent = false
 var just_bought = false
-var upgrade_max = 10
-var upgrade_amount = 0
+var upgrade_max: int = 10
+var upgrade_amount: int = 0
 var for_sale = false
 var time_on_market = 0
 var owner_type: String = "none"
 
-# --- NEW PERFORMANCE VARIABLES ---
+
 var is_on_screen: bool = true
 var _last_rendered_price: int = -1
 
 func _init():
 	add_to_group("houses")
-
-func _ready() -> void:
-	base_price = randi_range(80000, 500000) * rarity
-	current_price = base_price
+	
+func _enter_tree() -> void:
 	if id == "":
 		id = "house_" + str(get_path().hash())
+
+func _ready() -> void:
+	Globals.month_ended.connect(_on_month_ended)
+	base_price = randi_range(80000, 500000) * rarity
+	current_price = base_price
 	Collect_Rent = $Collect_Rent
 	randomize()
 	previous_price = base_price
 	loan_price = current_price * 0.8
 
-# --- NEW VISIBILITY SIGNALS ---
-# Connect these from your VisibleOnScreenNotifier3D node
 func _on_visible_on_screen_notifier_3d_screen_entered():
 	is_on_screen = true
 	_last_rendered_price = -1 # Force refresh
@@ -102,11 +106,21 @@ func update_market_value(market_change_percent: float) -> void:
 	var noise = randf_range(0.9975, 1.0025)
 	current_price = max(round((previous_price * market_multiplier * noise) / 500.0) * 500, 500)
 
+func _on_month_ended():
+	if owned: return
+	
+
 func _process(_delta: float) -> void:
 
 	if not is_on_screen:
 		return
-
+	if Globals.yard_edit == true:
+		$Label3D.text = ""
+		$Label3D2.text = ""
+		$Label3D3.text = ""
+		$Label3D4.text = ""
+		$Label3D5.text = ""
+		return
 	# Reset top labels only if on screen
 	$Label3D5.text = ""            
 	$Label3D3.text = ""         
@@ -190,7 +204,6 @@ func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Ve
 
 func remove_tenant():
 	has_tenant = false
-	rent = 0
 	tenant_offers = null
 	lease_length = 0
 	is_listed = false

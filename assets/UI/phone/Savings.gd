@@ -10,7 +10,7 @@ extends Control
 @onready var intrest_payment_label: Label = $TabContainer/Savings/IntrestPaymentLabel
 @onready var savings_balance_label2: Label = $TabContainer/Add_to_Savings/SavingsBalanceDisplay
 
-const INTEREST_RATE = 0.05  # Default 5% per month for savings
+const INTEREST_RATE = 0.005  # Default 5% per month for savings
 const LOAN_TERM = 12  # 12 months to repay loans
 
 func _ready():

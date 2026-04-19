@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=4 uid="uid://cung7j0rgqmwu"]
+[gd_scene load_steps=123 format=4 uid="uid://cung7j0rgqmwu"]
 
 [ext_resource type="Script" uid="uid://cq2g8tdj47vbe" path="res://assets/game.gd" id="1_f0aps"]
 [ext_resource type="Script" uid="uid://bcsm7nw2fa21b" path="res://addons/zylann.hterrain/hterrain.gd" id="2_6p1yv"]
@@ -22,9 +22,9 @@
 [ext_resource type="Script" uid="uid://bkuojraxs2kly" path="res://assets/UI/world_settings.gd" id="8_lkgt7"]
 [ext_resource type="Script" uid="uid://bdcd1afp8mya6" path="res://assets/UI/quit_menu.gd" id="9_13hc7"]
 [ext_resource type="Texture2D" uid="uid://cpputofoxp0a7" path="res://shaded-dark/shadedDark34.png" id="10_7f3x1"]
+[ext_resource type="Script" uid="uid://cvcqc5tb4m8si" path="res://Gamelevels/mission_manager.gd" id="10_pkglu"]
 [ext_resource type="PackedScene" uid="uid://0gbosql2344e" path="res://effects/Snow.tscn" id="11_dg5mb"]
 [ext_resource type="Script" uid="uid://dnxsck2srpcyu" path="res://assets/UI/hostpital_ui.gd" id="11_mjwdw"]
-[ext_resource type="Texture2D" uid="uid://lq3cgxnta8g0" path="res://shaded-dark/shadedDark35.png" id="11_vwjes"]
 [ext_resource type="Script" uid="uid://bjo53yytepjk5" path="res://assets/UI/phone/player_stats.gd" id="12_5wq64"]
 [ext_resource type="AudioStream" uid="uid://ll13glidifqd" path="res://effects/sounds/loud-thunder-192165.mp3" id="12_lsqda"]
 [ext_resource type="AudioStream" uid="uid://c6p3mu2uxmndm" path="res://effects/sounds/light-rain-109591.mp3" id="13_yy7cq"]
@@ -78,6 +78,7 @@
 [ext_resource type="Texture2D" uid="uid://dyj4e3jgyki8u" path="res://assets/UI/icons/info.png" id="71_2ekl0"]
 [ext_resource type="Texture2D" uid="uid://b0p66tco4u1fd" path="res://assets/UI/icons/take-my-money.png" id="71_43td7"]
 [ext_resource type="PackedScene" uid="uid://dl66ja57b77ku" path="res://3D assets/Placeable/pool.tscn" id="71_ojuag"]
+[ext_resource type="Theme" uid="uid://moc43gk5ss8p" path="res://themes/job_menu.tres" id="71_pkglu"]
 [ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://themes/new_theme.tres" id="72_8whiy"]
 [ext_resource type="Theme" uid="uid://b8jl6a5r3l2mm" path="res://themes/yellow.tres" id="73_wiy2o"]
 [ext_resource type="PackedScene" uid="uid://dilevjugi3hsg" path="res://assets/Airplane.tscn" id="81_myvto"]
@@ -2534,6 +2535,9 @@ text = "house value = "
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="MissionManager" type="Node" parent="."]
+script = ExtResource("10_pkglu")
+
 [node name="AI_Invester" type="Node" parent="."]
 
 [node name="Market" type="Node" parent="."]
@@ -2583,11 +2587,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48006, -0.0880737, -6.19686
 multimesh = SubResource("MultiMesh_c2bax")
 
 [node name="Yard_editor" type="Node3D" parent="." groups=["YardEditor"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.016412, 0, 14)
 script = ExtResource("62_01a5h")
 
 [node name="Yard_camera" type="Camera3D" parent="Yard_editor" groups=["yard_camera"]]
-transform = Transform3D(1, 0, 0, 0, 0.5879826, 0.80887353, 0, -0.80887353, 0.5879826, 0, 3.877149, 1.4423)
+transform = Transform3D(1, 0, 0, 0, 0.30143777, 0.95348585, 0, -0.95348585, 0.30143777, -0.20017052, 4.85499, 2.3100567)
 
 [node name="RayCast3D" type="RayCast3D" parent="Yard_editor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.176453, 5.34052, -1.51547)
@@ -2953,7 +2957,7 @@ text = "Bankrupt"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="HUD/GAME_OVER"]
+[node name="Exit_Button" type="Button" parent="HUD/GAME_OVER"]
 layout_mode = 0
 offset_left = 162.0
 offset_top = 324.0
@@ -2961,16 +2965,6 @@ offset_right = 704.0
 offset_bottom = 418.0
 theme_override_font_sizes/font_size = 60
 text = "QUIT"
-
-[node name="Button2" type="Button" parent="HUD/GAME_OVER"]
-visible = false
-layout_mode = 0
-offset_left = 530.0
-offset_top = 316.0
-offset_right = 889.0
-offset_bottom = 409.0
-theme_override_font_sizes/font_size = 60
-text = "Reload Save"
 
 [node name="Quit_menu" type="Panel" parent="HUD"]
 visible = false
@@ -3038,15 +3032,6 @@ offset_right = 173.0
 offset_bottom = 152.0
 texture_normal = ExtResource("10_7f3x1")
 
-[node name="Save_Delete" type="TextureButton" parent="HUD/Quit_menu/Save_menu"]
-visible = false
-layout_mode = 0
-offset_left = 197.0
-offset_top = 123.0
-offset_right = 246.0
-offset_bottom = 171.0
-texture_normal = ExtResource("11_vwjes")
-
 [node name="yes" type="Button" parent="HUD/Quit_menu"]
 layout_mode = 0
 offset_left = 52.0
@@ -3107,16 +3092,12 @@ offset_left = 0.0
 offset_top = 0.0
 offset_right = 344.0
 offset_bottom = 620.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="ScrollContainer" parent="HUD/Phone/options" index="1"]
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 325.0
 offset_bottom = 743.9998
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="ScrollContainer" parent="HUD/Phone/Music_player" index="1"]
 grow_horizontal = 1
@@ -3349,10 +3330,10 @@ metadata/_edit_use_anchors_ = true
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -253.0
-offset_top = 34.0
-offset_right = -35.0
-offset_bottom = 829.0
+offset_left = -234.0
+offset_top = 20.0
+offset_right = -16.0
+offset_bottom = 815.0
 grow_horizontal = 0
 size_flags_horizontal = 8
 size_flags_vertical = 3
@@ -3387,16 +3368,28 @@ layout_mode = 2
 text = "GAME INFO"
 horizontal_alignment = 1
 
+[node name="Drag_Button" parent="HUD/Universal_Text_Box" instance=ExtResource("33_dnuxx")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7382364
+anchor_top = -0.50386554
+anchor_right = 3.7382364
+anchor_bottom = -0.50386554
+offset_left = -732.93555
+offset_top = 379.57312
+offset_right = -684.93555
+offset_bottom = 427.57312
+
 [node name="Show_log" type="TextureButton" parent="HUD"]
 anchors_preset = -1
 anchor_left = 0.6484375
 anchor_top = -0.21018519
 anchor_right = 0.6484375
 anchor_bottom = -0.21018519
-offset_left = 578.0
-offset_top = 272.0
-offset_right = 1090.0
-offset_bottom = 784.0
+offset_left = 156.0
+offset_top = 253.0
+offset_right = 668.0
+offset_bottom = 765.0
 scale = Vector2(0.1, 0.1)
 toggle_mode = true
 texture_normal = ExtResource("71_2ekl0")
@@ -3430,6 +3423,7 @@ offset_bottom = 174.0
 text = "Menu"
 
 [node name="Speedup" type="Control" parent="HUD"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -3845,10 +3839,11 @@ text = "FPS: 000"
 [node name="MissionDisplay" type="Panel" parent="HUD/UI"]
 visible = false
 layout_mode = 0
-offset_left = 1481.0
-offset_top = 17.0
-offset_right = 1838.0
-offset_bottom = 179.0
+offset_left = 1343.0
+offset_top = 104.0
+offset_right = 1643.0
+offset_bottom = 333.0
+theme = ExtResource("71_pkglu")
 script = ExtResource("47_j8b0p")
 
 [node name="mission" type="Label" parent="HUD/UI/MissionDisplay"]
@@ -3864,29 +3859,29 @@ vertical_alignment = 1
 
 [node name="mission_deadline" type="Label" parent="HUD/UI/MissionDisplay"]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 113.0
-offset_right = 333.0
-offset_bottom = 140.0
+offset_left = 13.0
+offset_top = 170.0
+offset_right = 288.0
+offset_bottom = 197.0
 text = "mission_deadline"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="mission_des" type="Label" parent="HUD/UI/MissionDisplay"]
 layout_mode = 0
-offset_left = 63.0
-offset_top = -2.0
-offset_right = 296.0
-offset_bottom = 60.0
+offset_left = 32.0
+offset_top = 10.0
+offset_right = 272.0
+offset_bottom = 39.0
 text = "mission_des"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="mission_progress" type="Label" parent="HUD/UI/MissionDisplay"]
 layout_mode = 0
-offset_left = 11.0
+offset_left = 12.0
 offset_top = 63.0
-offset_right = 345.0
+offset_right = 295.0
 offset_bottom = 90.0
 text = "mission_progress"
 horizontal_alignment = 1
@@ -3895,10 +3890,10 @@ vertical_alignment = 1
 [node name="Drag_Button" parent="HUD/UI/MissionDisplay" instance=ExtResource("33_dnuxx")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.9411764
-anchor_top = 0.043209877
-anchor_right = 0.9411764
-anchor_bottom = 0.043209877
+anchor_left = 0.9100001
+anchor_top = -0.017964073
+anchor_right = 0.9100001
+anchor_bottom = -0.017964073
 
 [node name="Drag_Button" parent="HUD/UI" instance=ExtResource("33_dnuxx")]
 visible = false
@@ -3943,10 +3938,10 @@ offset_bottom = -186.0
 visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_left = 121.0
-offset_top = 212.0
-offset_right = 1859.0
-offset_bottom = 1045.0
+offset_left = 31.0
+offset_top = 11.0
+offset_right = 1891.0
+offset_bottom = 1056.0
 theme = ExtResource("23_k076q")
 script = ExtResource("25_r1a70")
 
@@ -3988,6 +3983,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="HUD/Game_start/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 5
@@ -4058,23 +4054,6 @@ text = "HARD"
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "NIGHTMARE "
-
-[node name="mission_toggle" type="CheckButton" parent="HUD/Game_start"]
-visible = false
-layout_mode = 0
-offset_left = 1406.0
-offset_top = 85.0
-offset_right = 1571.0
-offset_bottom = 133.0
-
-[node name="MissionLabel" type="Label" parent="HUD/Game_start"]
-visible = false
-layout_mode = 0
-offset_left = 1335.0
-offset_top = 20.0
-offset_right = 1611.0
-offset_bottom = 73.0
-text = "Mission Mode:"
 
 [node name="Hostpital" type="Node3D" parent="."]
 transform = Transform3D(0.3345284, 0, -0.93770367, 0, 0.995589, 0, 0.93770367, 0, 0.3345284, -9.378675, -0.016785508, 6.5368376)
@@ -4311,10 +4290,8 @@ transform = Transform3D(0.10650703, 0, -0.9943119, 0, 1, 0, 0.9943119, 0, 0.1065
 [connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Slide" to="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Slide" method="_pressed"]
 [connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Swing" to="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/Swing" method="_pressed"]
 [connection signal="pressed" from="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/playground" to="Yard_editor/CanvasLayer/UI/TabBar/Fun/GridContainer/playground" method="_pressed"]
-[connection signal="pressed" from="HUD/GAME_OVER/Button" to="HUD/GAME_OVER" method="_on_button_pressed"]
-[connection signal="pressed" from="HUD/GAME_OVER/Button2" to="HUD/GAME_OVER" method="_on_button_2_pressed"]
+[connection signal="pressed" from="HUD/GAME_OVER/Exit_Button" to="HUD/GAME_OVER" method="_on_exit_button_pressed"]
 [connection signal="pressed" from="HUD/Quit_menu/Save_menu/Save_game" to="HUD/Quit_menu" method="_on_save_game_pressed"]
-[connection signal="pressed" from="HUD/Quit_menu/Save_menu/Save_Delete" to="HUD/Quit_menu" method="_on_save_delete_pressed"]
 [connection signal="pressed" from="HUD/Quit_menu/yes" to="." method="_on_yes_pressed"]
 [connection signal="pressed" from="HUD/Quit_menu/NO" to="." method="_on_no_pressed"]
 [connection signal="pressed" from="HUD/House_info/Tenent_button" to="." method="_on_tenent_button_pressed"]
@@ -4335,7 +4312,6 @@ transform = Transform3D(0.10650703, 0, -0.9943119, 0, 1, 0, 0.9943119, 0, 0.1065
 [connection signal="pressed" from="HUD/Game_start/MarginContainer/VBoxContainer/HBoxContainer/Normal_Button" to="HUD/Game_start" method="_on_normal_button_pressed"]
 [connection signal="pressed" from="HUD/Game_start/MarginContainer/VBoxContainer/HBoxContainer/Hard_Button" to="HUD/Game_start" method="_on_hard_button_pressed"]
 [connection signal="pressed" from="HUD/Game_start/MarginContainer/VBoxContainer/HBoxContainer/Nightmare_Button" to="HUD/Game_start" method="_on_nightmare_button_pressed"]
-[connection signal="toggled" from="HUD/Game_start/mission_toggle" to="HUD/Game_start" method="_on_mission_option_toggled"]
 [connection signal="input_event" from="Hostpital/hospital" to="." method="_on_hospital_input_event"]
 
 [editable path="HUD/House_info"]

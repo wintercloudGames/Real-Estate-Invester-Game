@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://bxw6tyhov5rb4"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_6hivs"]
+
+[resource]
+script = ExtResource("1_6hivs")
+id = "m_25"
+title = "Project Master"
+unlock_id_needed = "m_24"
+target_money = 5000000
+target_houses = 150
+target_car_level = 20
+time_limit_year = 70

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://dedbayenilh1l"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_53lim"]
+
+[resource]
+script = ExtResource("1_53lim")
+id = "m_21"
+title = "The Half-Million"
+unlock_id_needed = "m_20"
+target_savings = 500000
+target_car_level = 15
+time_limit_year = 48

@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_e2857")
 job_name = "Tax Preparer"
-monthly_salary = 1500.0
+category = "Finance"
 required_player_level = 5
 required_skill_points = 2
-category = "Finance"
+monthly_salary = 1500.0
+Exp_gain_per_month = 25.0
+job_exp_gain_per_month = 0.05
 description = "A standard job in the Finance sector."

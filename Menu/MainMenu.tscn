@@ -97,6 +97,7 @@ size_flags_vertical = 4
 text = "Quit"
 
 [node name="Settings_menu" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -509,6 +510,7 @@ alignment = 1
 [node name="YesButton" type="Button" parent="Delete_profile_popup/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+theme = ExtResource("8_xcttp")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "YES"
 
@@ -517,6 +519,136 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "NO"
+
+[node name="ModeSelectionPanel" type="Panel" parent="."]
+visible = false
+z_index = 1000
+y_sort_enabled = true
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -241.0
+offset_top = -130.0
+offset_right = 259.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="text" type="Label" parent="ModeSelectionPanel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -43.0
+offset_right = -4.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "Gamemode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ModeSelectionPanel"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 175.0
+offset_right = 495.0
+offset_bottom = 237.0
+alignment = 1
+
+[node name="Freeplay" type="Button" parent="ModeSelectionPanel/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "FREEPLAY"
+
+[node name="Story" type="Button" parent="ModeSelectionPanel/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "STORY (wip)"
+
+[node name="Misson" type="Button" parent="ModeSelectionPanel/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Misson(wip)"
+
+[node name="Close_Button" type="Button" parent="ModeSelectionPanel"]
+layout_mode = 0
+offset_left = 396.0
+offset_top = 16.0
+offset_right = 479.0
+offset_bottom = 63.0
+theme = ExtResource("8_xcttp")
+text = "CLOSE"
+
+[node name="Missons" type="Panel" parent="."]
+visible = false
+z_index = 1000
+y_sort_enabled = true
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -333.0
+offset_top = -164.0
+offset_right = 388.0
+offset_bottom = 191.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="text" type="Label" parent="Missons"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -151.5
+offset_right = -2.0
+offset_bottom = -109.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "pick a misson"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Missons"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 138.0
+offset_right = 710.0
+offset_bottom = 342.0
+
+[node name="MissionListContainer" type="GridContainer" parent="Missons/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="Close_Button" type="Button" parent="Missons"]
+layout_mode = 0
+offset_left = 613.0
+offset_top = -61.0
+offset_right = 696.0
+offset_bottom = -14.0
+theme = ExtResource("8_xcttp")
+text = "CLOSE"
 
 [node name="FPS_Label" type="Label" parent="."]
 visible = false
@@ -565,3 +697,7 @@ script = ExtResource("11_gk4pn")
 [connection signal="value_changed" from="Settings_menu/MaxRenderScaleSpin" to="Settings_menu" method="_on_max_render_scale_spin_value_changed"]
 [connection signal="pressed" from="Delete_profile_popup/HBoxContainer/YesButton" to="." method="_on_yes_delete_profile_pressed"]
 [connection signal="pressed" from="Delete_profile_popup/HBoxContainer/NoButton" to="." method="_on_no_keep_profile_pressed"]
+[connection signal="pressed" from="ModeSelectionPanel/HBoxContainer/Freeplay" to="." method="_on_freeplay_pressed"]
+[connection signal="pressed" from="ModeSelectionPanel/HBoxContainer/Misson" to="." method="_on_misson_pressed"]
+[connection signal="pressed" from="ModeSelectionPanel/Close_Button" to="." method="_on_close_mode_button_pressed"]
+[connection signal="pressed" from="Missons/Close_Button" to="." method="_on_misson_menu_close_button_pressed"]

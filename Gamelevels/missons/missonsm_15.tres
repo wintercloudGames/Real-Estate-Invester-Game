@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://bg8ykwdgux1bp"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_wfp43"]
+
+[resource]
+script = ExtResource("1_wfp43")
+id = "m_15"
+title = "The Quarter Million"
+unlock_id_needed = "m_14"
+target_money = 250000
+target_player_level = 25
+time_limit_year = 32

@@ -45,7 +45,8 @@ var next_crash_months: int = 6
 var last_checked_year := -1
 var last_checked_month := -1
 var post_crash_price: float = 10000.0
-
+var default_size: Vector2
+var default_position: Vector2
 # --- Interaction State ---
 var zoom_level: float = 1.0
 var scroll_offset: int = 0
@@ -78,6 +79,68 @@ func get_market_data() -> Dictionary:
 		"graph_pos_y": market_graph.global_position.y
 	}
 
+
+func simulate_market_buyers() -> void:
+
+	var heat = clamp(current_price / base_price, 0.5, 2.0)
+	
+	var all_houses = get_tree().get_nodes_in_group("houses")
+	
+	for house in all_houses:
+		if house.owned or house.is_in_group("ai_owned"): continue
+		
+		if house.for_sale:
+			# TICK THE CLOCK
+			house.time_on_market += 1
+			
+			# --- NPC BUYING LOGIC (Demand) ---
+			# Hotter market = Higher chance NPCs buy it immediately
+			var buy_chance = 0.1 + (heat * 0.2) 
+			
+			# If the house is a 'Steal' (Price < Base), NPCs are more likely to grab it
+			if house.current_price < house.base_price:
+				buy_chance += 0.15
+
+			if randf() < buy_chance:
+				house.for_sale = false
+				house.time_on_market = 0
+				
+			
+			elif house.time_on_market >= 4:
+				house.current_price *= 0.95
+				# Round to nearest 500 for realism
+				house.current_price = round(house.current_price / 500.0) * 500
+				
+				
+		else:
+			# --- NEW LISTING LOGIC ---
+			var list_chance = 0.15 + (1.0 - heat) * 0.2 
+			
+			if randf() < clamp(list_chance, 0.05, 0.25): 
+				house.for_sale = true
+				house.time_on_market = 0
+				house.current_price = house.base_price * heat * randf_range(0.9, 1.1)
+
+func _input(event: InputEvent) -> void:
+	# Check if 'R' was pressed AND the graph is currently visible to the player
+	if event.is_action_pressed("ui_text_select_all") or (event is InputEventKey and event.keycode == KEY_R and event.pressed):
+		if market_graph.is_visible_in_tree():
+			reset_graph_transform()
+			reset_graph_transform()
+
+func reset_graph_transform() -> void:
+	market_graph.position = default_position
+	market_graph.size = default_size
+
+	resize_graph(int(default_size.x), int(default_size.y))
+	
+	#zoom_level = 1.0
+	#scroll_offset = 0
+	
+	update_graph()
+	
+	print("Market Graph visual reset (Data preserved)")
+
 func set_market_data(data: Dictionary) -> void:
 	if data.is_empty(): return
 	price_history = data.get("price_history", []).duplicate()
@@ -101,10 +164,12 @@ func set_market_data(data: Dictionary) -> void:
 # --- Core Logic ---
 
 func _ready():
+	default_size = market_graph.size
+	default_position = market_graph.position
 	market_graph.mouse_filter = Control.MOUSE_FILTER_STOP
 	market_graph.gui_input.connect(_on_graph_gui_input)
 	market_graph.mouse_exited.connect(_on_mouse_exited)
-	
+	Globals.month_ended.connect(simulate_market_buyers)
 	# FIX: Ensure nearest filtering for sharp lines
 	market_graph.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3 uid="uid://ds2ahxpvsgsss"]
+
+[ext_resource type="Script" uid="uid://w1oli5xptq5r" path="res://Gamelevels/Mission.gd" id="1_fc2ck"]
+
+[resource]
+script = ExtResource("1_fc2ck")
+id = "m_07"
+title = "Urban Scout"
+unlock_id_needed = "m_06"
+target_savings = 25000
+target_houses = 10
+time_limit_year = 15
