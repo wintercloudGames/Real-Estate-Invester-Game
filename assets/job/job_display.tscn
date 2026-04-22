@@ -15,8 +15,8 @@ script = ExtResource("2_rbwtn")
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
 offset_left = -4.0
-offset_right = 687.0
-offset_bottom = 400.0
+offset_right = 682.0
+offset_bottom = 402.0
 
 [node name="Stats" type="Label" parent="."]
 layout_mode = 0
@@ -32,7 +32,7 @@ layout_mode = 0
 offset_left = 20.0
 offset_top = 16.0
 offset_right = 458.0
-offset_bottom = 288.0
+offset_bottom = 184.0
 theme_override_font_sizes/font_size = 25
 text = "Current Job title"
 horizontal_alignment = 1
@@ -62,10 +62,10 @@ text = "CLOSE"
 
 [node name="job_list_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 22.0
-offset_top = 303.0
-offset_right = 211.0
-offset_bottom = 367.0
+offset_left = 15.0
+offset_top = 315.0
+offset_right = 204.0
+offset_bottom = 379.0
 text = "Job List"
 
 [node name="job_list" type="TabContainer" parent="."]

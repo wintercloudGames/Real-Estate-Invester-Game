@@ -18,7 +18,7 @@ func update_mission_ui() -> void:
 	var m = Globals.active_mission
 	if m == null:
 		mission_label.text = ""
-		mission_desc.text = "No Active Mission"
+		mission_desc.text = "No Active Challenge"
 		mission_progress.text = ""
 		mission_deadline.text = ""
 		return
@@ -58,5 +58,5 @@ func update_mission_ui() -> void:
 	mission_progress.text = "\n".join(progress_lines)
 
 # Helper to make numbers look like tycoon money ($1,000)
-func format_currency(amount: float) -> String:
+func format_currency(amount: int) -> String:
 	return "$" + str(Globals.add_comma_to_int(amount))

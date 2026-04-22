@@ -14,8 +14,8 @@ anchor_right = 0.176
 anchor_bottom = -0.051
 offset_left = -332.32
 offset_top = 53.079998
-offset_right = 7.080017
-offset_bottom = 603.08
+offset_right = 42.080017
+offset_bottom = 620.08
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -27,24 +27,20 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 53.0
-offset_bottom = -34.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_tllg2")
 
 [node name="job_progress" type="Label" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 76.0
-offset_top = 9.0
-offset_right = 289.0
-offset_bottom = 32.0
+offset_left = 62.0
+offset_top = 11.0
+offset_right = 275.0
+offset_bottom = 34.0
 text = "Current Job Progress"
 horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
-visible = false
 layout_mode = 0
 offset_left = 76.0
 offset_top = 45.0
@@ -52,14 +48,15 @@ offset_right = 305.0
 offset_bottom = 72.0
 
 [node name="Start_Business" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 2.0
 offset_top = 2.0
-offset_right = 49.0
-offset_bottom = -37.0
+offset_right = -22.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -113,10 +110,15 @@ theme = ExtResource("1_tllg2")
 text = "Start Business"
 
 [node name="Close_Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 311.0
-offset_right = 394.0
-offset_bottom = 47.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -94.0
+offset_top = 5.0
+offset_right = -11.0
+offset_bottom = 52.0
+grow_horizontal = 0
 theme = ExtResource("3_uwgf7")
 text = "CLOSE"
 
@@ -133,16 +135,19 @@ offset_right = -4.0079994
 offset_bottom = 75.671005
 
 [node name="TabContainer" type="TabContainer" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 2.0
-offset_top = 103.0
-offset_right = 394.0
-offset_bottom = 506.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 76.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 
 [node name="info" type="Control" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -178,42 +183,41 @@ offset_right = 323.0
 offset_bottom = 159.0
 
 [node name="employees" type="Control" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
 [node name="Add_Employee" type="Button" parent="TabContainer/employees"]
 layout_mode = 0
-offset_left = 260.0
+offset_left = 240.0
 offset_top = 212.0
-offset_right = 340.0
+offset_right = 320.0
 offset_bottom = 292.0
 theme = ExtResource("1_tllg2")
 text = "ADD"
 
 [node name="Employee_count" type="Label" parent="TabContainer/employees"]
 layout_mode = 0
-offset_left = 141.0
+offset_left = 121.0
 offset_top = 134.0
-offset_right = 247.0
+offset_right = 227.0
 offset_bottom = 169.0
 text = "Workers = 5"
 horizontal_alignment = 1
 
 [node name="Employee_cost" type="Label" parent="TabContainer/employees"]
 layout_mode = 0
-offset_left = 74.0
+offset_left = 54.0
 offset_top = 59.0
-offset_right = 306.0
+offset_right = 286.0
 offset_bottom = 82.0
 text = "Employee cost every month: 0"
 horizontal_alignment = 1
 
 [node name="Remove_Employee" type="Button" parent="TabContainer/employees"]
 layout_mode = 0
-offset_left = 54.0
+offset_left = 34.0
 offset_top = 209.0
-offset_right = 134.0
+offset_right = 114.0
 offset_bottom = 289.0
 theme = ExtResource("1_tllg2")
 text = "Remove"
@@ -288,19 +292,11 @@ horizontal_scroll_mode = 0
 [node name="Job_mod_Container" type="VBoxContainer" parent="TabContainer/Manager/ScrollContainer"]
 layout_mode = 2
 
-[node name="Timers" type="Control" parent="."]
-anchors_preset = 0
-offset_left = 159.0
-offset_top = -36.104996
-offset_right = 159.0
-offset_bottom = -36.104996
-
-[node name="SalaryTimer" type="Timer" parent="Timers"]
-
-[node name="JobOfferTimer" type="Timer" parent="Timers"]
+[node name="JobOfferTimer" type="Timer" parent="."]
 
 [connection signal="focus_entered" from="Start_Business/Name_of_Business" to="." method="_on_name_of_business_focus_entered"]
 [connection signal="focus_exited" from="Start_Business/Name_of_Business" to="." method="_on_name_of_business_focus_exited"]
+[connection signal="text_changed" from="Start_Business/Name_of_Business" to="." method="_on_name_of_business_text_changed"]
 [connection signal="pressed" from="Start_Business/Start_A_Business_Button" to="." method="_on_start_a_business_button_pressed"]
 [connection signal="pressed" from="Close_Button" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="TabContainer/info/Sell_Business_button" to="." method="_on_sell_business_button_pressed"]

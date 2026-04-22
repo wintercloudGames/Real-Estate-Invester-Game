@@ -91,7 +91,7 @@ func update_game_stats() -> void:
 		var mode_text = ""
 		match mode_int:
 			0: mode_text = "Story"
-			1: mode_text = "Mission"
+			1: mode_text = "Challenge"
 			2: mode_text = "Freeplay"
 			_: mode_text = "Unknown"
 		

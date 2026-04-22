@@ -90,7 +90,17 @@ expand_margin_top = 2.0
 expand_margin_bottom = 2.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8odd0"]
-bg_color = Color(0.359375, 0.359375, 0.359375, 1)
+bg_color = Color(0.12109375, 0.118255615, 0.118255615, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.18359375, 0.18359375, 0.18359375, 1)
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vt10t"]
 content_margin_left = 15.0

@@ -201,6 +201,23 @@ func refresh_active_loan_mods():
 		if child.has_method("update_ui"):
 			active_loan_mods.append(child)
 
+func remove_loan_by_id(target_id: String) -> void:
+	# Assuming your loan modules are children of 'loan_mod_Container'
+	# as seen in your handle_buy logic.
+	if not loan_mod_Container:
+		return
+		
+	for child in loan_mod_Container.get_children():
+		# Check if the child is a loan module and has the matching ID
+		if "loan_id" in child and child.loan_id == target_id:
+			# Use the module's own cleanup function if it exists, 
+			# otherwise queue_free it manually.
+			if child.has_method("_self_destruct"):
+				child._self_destruct() 
+			else:
+				child.queue_free()
+			break # Exit after finding and removing the match
+
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
 	var loop_end: int = 0 if value > -1 else 1

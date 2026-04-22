@@ -111,13 +111,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 37.0
-offset_top = 27.0
-offset_right = -27.0
-offset_bottom = -27.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_veryn")
 
 [node name="Tital2" type="Label" parent="Settings_menu"]
 layout_mode = 0
@@ -571,6 +566,7 @@ theme_override_font_sizes/font_size = 20
 text = "FREEPLAY"
 
 [node name="Story" type="Button" parent="ModeSelectionPanel/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -582,7 +578,7 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 20
-text = "Misson(wip)"
+text = "Challenge"
 
 [node name="Close_Button" type="Button" parent="ModeSelectionPanel"]
 layout_mode = 0
@@ -604,36 +600,20 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -333.0
-offset_top = -164.0
-offset_right = 388.0
-offset_bottom = 191.0
+offset_left = -497.0
+offset_top = -241.0
+offset_right = 427.0
+offset_bottom = 265.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="text" type="Label" parent="Missons"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -2.0
-offset_top = -151.5
-offset_right = -2.0
-offset_bottom = -109.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 30
-text = "pick a misson"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Missons"]
 layout_mode = 0
-offset_left = 7.0
-offset_top = 138.0
-offset_right = 710.0
-offset_bottom = 342.0
+offset_left = 38.0
+offset_top = 43.0
+offset_right = 884.0
+offset_bottom = 455.0
+horizontal_scroll_mode = 0
 
 [node name="MissionListContainer" type="GridContainer" parent="Missons/ScrollContainer"]
 layout_mode = 2
@@ -643,10 +623,10 @@ columns = 3
 
 [node name="Close_Button" type="Button" parent="Missons"]
 layout_mode = 0
-offset_left = 613.0
-offset_top = -61.0
-offset_right = 696.0
-offset_bottom = -14.0
+offset_left = 787.0
+offset_top = -72.0
+offset_right = 912.0
+offset_bottom = -7.0
 theme = ExtResource("8_xcttp")
 text = "CLOSE"
 

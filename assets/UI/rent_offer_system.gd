@@ -107,7 +107,8 @@ func generate_and_display_offers():
 	elif rent_ratio > 1.2: chance_of_no_offer = 0.5
 	
 	if randf() < chance_of_no_offer:
-		Globals.notify("No interest in " + house.id + ". Rent is too high!", Color.ORANGE)
+		var msg = "No interest in " + house.id + ". Rent is too high!"
+		Globals.notify_action(msg, Color.ORANGE, house) 
 		return
 
 	# 3. Generate 1-3 offers around the player's ASKING price
@@ -193,26 +194,41 @@ func auto_generate_and_add_tenant():
 	var fair_rent: float = float(house.current_price) * 0.007 * float(house.apartment_condition)
 	if fair_rent <= 0: fair_rent = 1.0
 	
-	# 2. Define the Agent's "Cap" (e.g., 30% above fair market value)
+	# 2. Define the Agent's Logic [cite: 5]
+	# Max Cap: 30% above market (High end)
+	# Min Target: Market price (Low end)
 	var max_acceptable_rent: float = fair_rent * 1.3
 	var final_rent: int = int(house.rent)
 	
 	# 3. Negotiation Logic:
-	# If the player's price is too high, the Agent forces it down to the max limit
 	if final_rent > max_acceptable_rent:
-		# We round to the nearest 25 to keep it consistent with your UI
+		# --- PRICE TOO HIGH: Force down to the cap ---
 		final_rent = int(round(max_acceptable_rent / 25.0) * 25.0)
-		Globals.notify("Agent negotiated " + house.id + " down to $" + add_comma_to_int(final_rent), Color.GOLDENROD)
+		Globals.notify("Agent lowered " + house.id + " to $" + add_comma_to_int(final_rent) + " (Market Cap)", Color.GOLDENROD)
+	
+	elif final_rent < (fair_rent * 0.8):
+		# --- PRICE TOO LOW: Agent raises it to Fair Market value to get better profit ---
+		final_rent = int(round(fair_rent / 25.0) * 25.0)
+		Globals.notify("Agent raised " + house.id + " to $" + add_comma_to_int(final_rent) + " (Market Rate)", Color.AQUA)
+	
 	else:
+		# --- PRICE IS GOOD: Proceed as is ---
 		Globals.notify("Agent rented " + house.id + " for $" + add_comma_to_int(final_rent), Color.GREEN)
 
-	# 4. Finalize the Renter
+	# 4. Finalize the Renter [cite: 5]
 	var stats = generate_renter_stats()
 	
+	# Update the actual house object with the negotiated rent [cite: 5]
+	house.rent = final_rent 
 	house.add_tenant(final_rent, stats.lease_length)
 	house.is_listed = false
 	house.apartment_condition = stats.apartment_condition
 	house.payment_punctuality = stats.payment_punctuality
+	
+	# Refresh UI if it's open to show the new rent and tenant status
+	if house.has_method("set_house_UI"):
+		house.set_house_UI()
+
 func generate_renter_stats() -> Dictionary:
 	var lease_options = [
 		{"duration": 6, "weight": 0.2},

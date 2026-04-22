@@ -151,15 +151,17 @@ func update_job_buttons():
 				if job is JobData: update_button_visuals(btn, job)
 
 func update_button_visuals(btn: Button, job: JobData):
-	# Note: Use 'int()' for requirements so decimals don't unlock jobs early
 	var player_points = int(get_player_points_for_category(job.category))
 	var level_met = Globals.level >= job.required_player_level
 	var skill_met = player_points >= job.required_skill_points
 	
 	if level_met and skill_met:
-		if not unlocked_jobs.has(job.job_name):
-			unlocked_jobs.append(job.job_name)
-			Globals.notify("New Job Available: " + job.job_name, Color.CHARTREUSE)
+		# Check Globals instead of the local array
+		if not Globals.unlocked_jobs.has(job.job_name):
+			Globals.unlocked_jobs.append(job.job_name)
+			# Only notify if the game is actually running (not just starting up)
+			if Globals.first_start == false: 
+				Globals.notify("New Job Available: " + job.job_name, Color.CHARTREUSE)
 		
 		btn.text = "%s - $%s/mo" % [job.job_name, str(job.monthly_salary)]
 		btn.disabled = false
@@ -167,7 +169,7 @@ func update_button_visuals(btn: Button, job: JobData):
 	else:
 		btn.text = "LOCKED: %s (Req: Lvl %d, %d Pts)" % [job.job_name, job.required_player_level, job.required_skill_points]
 		btn.disabled = true
-		btn.modulate = Color(1.0, 1.0, 1.0, 0.5) 
+		btn.modulate = Color(1.0, 1.0, 1.0, 0.5)
 
 func get_player_points_for_category(cat: String) -> float:
 	match cat:

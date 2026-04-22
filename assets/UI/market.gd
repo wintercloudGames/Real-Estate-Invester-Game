@@ -192,6 +192,7 @@ func _ready():
 	graph_texture = ImageTexture.create_from_image(graph_image)
 	market_graph.texture = graph_texture
 	apply_difficulty_settings()
+	simulate_market_buyers()
 	randomize()
 	_add_to_history(current_price)
 	next_crash_months = randi_range(min_crash_months, max_crash_months)

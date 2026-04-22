@@ -35,6 +35,7 @@ var total_debt: float = 0.0
 #Job vars
 var current_job_name: String = "Unemployed"
 var current_job_category: String = "None"
+var unlocked_jobs: Array[String] = []
 var job_exp_per_month: float = 10
 var job_exp_gain_per_month = 0
 var job_income: float = 0.0
@@ -361,55 +362,65 @@ func _on_rent_batch_finished():
 	rent_batch_timer = null
 
 func notify_action(message: String, color: Color = Color.WHITE, action_target: Node = null) -> void:
-	# 1. If the player has the Renter Finder, we don't need a "Relist" button 
-	# because the agent handles it automatically.
 	if Globals.renter_finder and action_target != null:
-		# Just send a standard silent notification instead of a button
 		notify(message, color)
 		return
 
 	var list = get_tree().get_first_node_in_group("notification_list")
 	if not list: return
 
-	# 2. CAP THE STACK: If there are already 10+ notifications, 
-	# remove the oldest one before adding a new one to prevent UI overflow.
 	if list.get_child_count() > 10:
 		var oldest = list.get_child(0)
-		if is_instance_valid(oldest):
-			oldest.queue_free()
+		if is_instance_valid(oldest): oldest.queue_free()
 
-	var hbox = HBoxContainer.new()
-	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# 1. Change HBoxContainer to VBoxContainer
+	var vbox = VBoxContainer.new()
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Add a little spacing between the text and the button
+	vbox.add_theme_constant_override("separation", 5) 
 	
+	# 2. Setup the Label
 	var new_label = Label.new()
 	new_label.text = "> " + message
 	new_label.add_theme_color_override("font_color", color)
 	new_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	new_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	hbox.add_child(new_label)
+	vbox.add_child(new_label)
 	
 	if action_target != null:
-		var btn = Button.new()
-		btn.text = "Relist"
-		# Optional: Style the button to fit the phone theme
-		btn.custom_minimum_size = Vector2(60, 0) 
-		hbox.add_child(btn)
-		
-		btn.pressed.connect(func():
-			if is_instance_valid(action_target) and is_instance_valid(hbox):
-				action_target._on_relist_house_button_pressed()
-				hbox.queue_free()
-		)
+		# 3. Create a container for the button to align it 
+		# (Using an HBox inside the VBox allows us to right-align or center the button)
+		var button_row = HBoxContainer.new()
+		button_row.alignment = BoxContainer.ALIGNMENT_END # Puts button on the right side
+		vbox.add_child(button_row)
 
-	list.add_child(hbox)
+		var btn = Button.new()
+		btn.custom_minimum_size = Vector2(100, 30) # Made it slightly larger for better looks
+		button_row.add_child(btn)
+		
+		if "high" in message.to_lower():
+			btn.text = "More Info"
+			btn.pressed.connect(func():
+				if is_instance_valid(action_target):
+					action_target.open_house_ui()
+					vbox.queue_free()
+			)
+		else:
+			btn.text = "Relist"
+			btn.pressed.connect(func():
+				if is_instance_valid(action_target):
+					action_target._on_relist_house_button_pressed()
+					vbox.queue_free()
+			)
+
+	list.add_child(vbox)
 	_scroll_to_bottom(list)
 	
-	# 3. Use the bound Tween (Safety first!)
-	var wait_time = 20.0 if action_target else 10.0
-	var timer_tween = hbox.create_tween()
-	timer_tween.tween_interval(wait_time)
-	timer_tween.tween_property(hbox, "modulate:a", 0, 0.5)
-	timer_tween.tween_callback(hbox.queue_free)
+	# 4. Fade out logic (Updated to reference 'vbox')
+	var timer_tween = vbox.create_tween()
+	timer_tween.tween_interval(15.0)
+	timer_tween.tween_property(vbox, "modulate:a", 0, 0.5)
+	timer_tween.tween_callback(vbox.queue_free)
 
 func notify(message: String, color: Color = Color.WHITE) -> void:
 	var list = get_tree().get_first_node_in_group("notification_list") 
@@ -555,7 +566,7 @@ func monthy():
 	emit_signal("month_ended")
 	
 
-var unlocked_jobs: Array[String] = []
+
 const JOBS_FOLDER = "res://assets/job/jobs/"
 
 func check_for_new_unlocks():
@@ -564,10 +575,7 @@ func check_for_new_unlocks():
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
-			# 1. Skip directories and the .import files immediately
 			if not dir.current_is_dir() and not file_name.ends_with(".import"):
-				
-				# 2. Handle the .remap extension for exported builds
 				var clean_name = file_name.replace(".remap", "")
 				var clean_path = JOBS_FOLDER + clean_name
 				
@@ -580,12 +588,14 @@ func check_for_new_unlocks():
 					if level_met and skill_met:
 						if not unlocked_jobs.has(job_res.job_name):
 							unlocked_jobs.append(job_res.job_name)
-							notify("New Job Available: " + job_res.job_name, Color.CHARTREUSE)
+							
+							# ONLY NOTIFY IF NOT LOADING
+							# If first_start is true, we are just setting up, so be quiet.
+							if not Globals.first_start:
+								notify("New Job Available: " + job_res.job_name, Color.CHARTREUSE)
 			
-			# 3. MOVE TO NEXT FILE (Must be outside the IF block)
 			file_name = dir.get_next()
-		
-		dir.list_dir_end() # Clean up the directory access
+		dir.list_dir_end()
 
 func get_points_for_cat(cat: String) -> float:
 	match cat:

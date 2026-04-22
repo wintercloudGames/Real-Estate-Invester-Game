@@ -63,26 +63,34 @@ func event_tenant_moves_out(owned_houses: Array):
 	tenant_moves_out(house)
 
 func tenant_moves_out(house: Node):
-	if not is_instance_valid(house): return
-	
+	if not is_instance_valid(house): 
+		return
 	if house.has_method("remove_tenant"):
 		house.remove_tenant()
 	else:
+		# Fallback if the method doesn't exist
 		house.has_tenant = false
+		house.rent = 0
 	
-	# If player has no agent, they must relist manually
+	# 3. Notification and Relisting Logic
 	if not Globals.renter_finder:
-		houses_needing_relist.append(house)
+		# PLAYER MANUAL MODE:
+		# We pass 'house' as the action_target so the "More Info" button 
+		# in Globals.notify_action can call house.open_house_ui()
+		var msg = "VACANCY: A tenant moved out of " + house.id + "!"
 		Globals.notify_action(
-			"VACANCY: A Tenant moved out! The house is now empty.", 
+			msg, 
 			Color.ORANGE, 
-			self 
+			house # This ensures buttons target this specific house
 		)
+		
+		house.is_listed = false
 	else:
-		# Agent handles it automatically 
 		house.is_listed = true
-		Globals.notify("AGENT: Tenant moved out, but your agent already relisted it.", Color.SKY_BLUE)
+		var agent_msg = "AGENT: Tenant moved out of " + house.id + ". Relisted automatically."
+		Globals.notify(agent_msg, Color.SKY_BLUE)
 
+	Globals.update_economy()
 # --- 2. MAINTENANCE & CRIME ---
 
 func event_maintenance(owned_houses: Array):

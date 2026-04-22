@@ -20,17 +20,14 @@ func _ready() -> void:
 	call_deferred("initialize_game_logic")
 
 func initialize_game_logic() -> void:
-	# 1. Exact path check - Ensure this matches your SaveAndLoad.gd exactly!
-	var save_path = "user://savegame.save" 
-	var has_save = FileAccess.file_exists(save_path)
-	
-	# 2. DEFAULT STATE: Assume the popup is hidden
+
+	var has_save = SaveAndLoad.save_file_exists(SaveAndLoad.current_save_slot) 
 	$HUD/Game_start.visible = false
 	
-	# 3. LOADING LOGIC
 	if has_save:
-		SaveAndLoad.apply_loaded_data()
-		# After loading, check the variable again
+		SaveAndLoad.load_game() # Ensure data is fetched from disk
+		#Globals.check_for_new_unlocks()
+		SaveAndLoad.apply_loaded_data() # Apply it to the house objects
 		print("Data loaded. first_start is: ", Globals.first_start)
 	
 	# FINAL UI DECISION
@@ -50,6 +47,7 @@ func initialize_game_logic() -> void:
 		setup_mission_start() 
 		# Ensure popup is hidden during missions
 		$HUD/Game_start.visible = false 
+		
 	else:
 		# Show popup ONLY if first_start is still true
 		$HUD/Game_start.visible = Globals.first_start
@@ -215,36 +213,42 @@ func get_qualified_house_amount():
 		house.create_label(can_afford and is_available)
 
 func clear_House_ui_data():
-	House_ui.price = 0
-	House_ui.loan_price = 0
-	House_ui.mortgage = 0
-	House_ui.income = 0
 	House_ui.house = null
-	House_ui.has_tenant = false
+	Listing_ui.house = null
 	Listing_ui.full_price = 0
 	Listing_ui.list_price = 0
-	Listing_ui.house = null
+	House_ui.rent_slider_info.text = ""
 
 func set_listing_UI():
 	if not house: return
+	
+	var ui_cam = Listing_ui.get_node("SubViewportContainer/SubViewport/ListingCam")
+	
+	var house_marker = house.get_node("Camera_Front") 
+	ui_cam.global_transform = house_marker.global_transform
+	
+	Listing_ui.visible = true
+	Listing_ui.house = house
+	
 	Listing_ui.down_payment = house.current_price * 0.2
-	Listing_ui.loan_display.text = "Loan\n80% Financed\nDown Payment: \n" + Globals.add_comma_to_int(int(Listing_ui.list_price * 0.2))
+	Listing_ui.list_price = house.current_price
+	
+	var down_pay_val = int(Listing_ui.list_price * 0.2)
+	Listing_ui.loan_display.text = "Loan\n80% Financed\nDown Payment: \n$" + Globals.add_comma_to_int(down_pay_val)
+	
 	Listing_ui.full_price = house.current_price
 	Listing_ui.pay_now_amount = house.current_price
-	Listing_ui.list_price = house.current_price
+	
 	if not house.edit_mode:
 		Listing_ui.visible = true
 	Listing_ui.house = house
 
 func set_house_UI():
 	if not house or not House_ui: return
-	House_ui.price = house.current_price
 	House_ui.house = house
 	House_ui.setup_slider()
 	if not house.edit_mode:
 		House_ui.visible = true
-	if house.has_tenant:
-		House_ui.income = house.rent
 
 func _on_edit_yard_button_pressed(house):
 	if not house: return

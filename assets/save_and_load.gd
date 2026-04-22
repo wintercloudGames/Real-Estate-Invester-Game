@@ -38,6 +38,7 @@ func save_game() -> bool:
 			"current_game_mode": int(Globals.current_game_mode),
 			"current_job_name": Globals.current_job_name,
 			"current_job_category":Globals.current_job_category,
+			"unlocked_jobs": Globals.unlocked_jobs,
 			"job_income": Globals.job_income,
 			"job_exp_per_month": Globals.job_exp_per_month,
 			"labor_points": Globals.labor_points,
@@ -143,6 +144,7 @@ func save_game() -> bool:
 			"rent": house.rent,
 			"lease_length": house.lease_length,
 			"apartment_condition": house.apartment_condition,
+			"payment_punctuality": house.payment_punctuality,
 			"mortgage_deducted": house.mortgage_deducted,
 			"tenant_offers": house.tenant_offers,
 			"is_listed": house.is_listed,
@@ -236,6 +238,7 @@ func load_game() -> bool:
 		Globals.money = g.get("money", 5000)
 		Globals.current_game_mode = g.get("current_game_mode", 0)
 		Globals.current_job_name = g.get("current_job_name", "Unemployed")
+		Globals.unlocked_jobs = Array(g.get("unlocked_jobs", []), TYPE_STRING, &"", null)
 		Globals.current_job_category = g.get("current_job_category","Labor")
 		Globals.job_income = g.get("job_income", 0.0)
 		Globals.job_exp_per_month = g.get("job_exp_per_month", 0.0)
@@ -350,6 +353,7 @@ func apply_loaded_data() -> void:
 				house.for_sale = saved_house.get("for_sale",house.for_sale)
 				house.time_on_market = saved_house.get("time_on_market",house.time_on_market)
 				house.lease_length = saved_house.get("lease_length", house.lease_length)
+				house.payment_punctuality = saved_house.get("payment_punctuality", house.payment_punctuality)
 				house.apartment_condition = saved_house.get("apartment_condition", house.apartment_condition)
 				house.mortgage_deducted = saved_house.get("mortgage_deducted", house.mortgage_deducted)
 				house.tenant_offers = saved_house.get("tenant_offers", house.tenant_offers)

@@ -53,11 +53,10 @@ func _on_pressed() -> void:
 	if rent_offer_system:
 		rent_offer_system._on_renter_selected(rent_offer)
 
-
-func setup(offer: int, name: String, stats: Dictionary):
+func setup(offer: int, _name: String, stats: Dictionary):
 	# Set basic info
 	$HBoxContainer/renter_info/Rent_Label.text = "$%s/mo" % add_comma_to_int(offer)
-	$HBoxContainer/renter_info/Name_Label.text = name
+	$HBoxContainer/renter_info/Name_Label.text = _name
 	
 	# Set payment punctuality
 	$HBoxContainer/renter_stats/ontime_stat.text = "%.0f%% on time" % (stats.payment_punctuality * 100)

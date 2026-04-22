@@ -1,5 +1,6 @@
 extends Control
 
+@onready var light = $SubViewportContainer/SubViewport/ListingCam/SpotLight3D
 @onready var time_on_market = $Time_on_market
 @onready var price_display = $Label_price
 @onready var loan_display = $Label_loan
@@ -23,8 +24,10 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	# 1. If not visible, EXIT the function immediately
 	if not is_visible_in_tree():
+		light.visible = false
 		return
-	
+	else:
+		light.visible = true
 	# 2. Process inputs only if we survived the check above
 	if event.is_action_pressed("buy"):
 		handle_buy(false)
@@ -77,7 +80,22 @@ func update_prices() -> void:
 	# Set tooltip to explain loan availability
 	$Loan_button.tooltip_text = "Credit score too low for a loan (below 500)" if not can_use_loan else "Toggle to finance with a loan"
 
+func update_listing_box(house_node: Node):
+	var texture_rect = $HouseBox/TextureRect # The 2D box in your UI
+	
+	# Enable the camera on that specific house
+	house_node.set_preview_active(true)
+	
+	# Grab the "Live Feed" and put it in the UI box
+	texture_rect.texture = house_node.get_preview_texture()
+
 func _process(_delta: float) -> void:
+	if not is_visible_in_tree():
+		light.visible = false
+		return
+	else:
+		light.visible = true
+	
 	if Globals.rent_houses:
 		$Buy_button2.visible = true
 	else:
@@ -90,19 +108,28 @@ func _process(_delta: float) -> void:
 	set_meta("previous_visible", visible)
 	
 	if house:
+		# Use standard formatting for main labels
 		price_display.text = "Price: $" + add_comma_to_int(pay_now_amount)
 		time_on_market.text = "Months on market: " + add_comma_to_int(house.time_on_market)
 		$Label_list_price.text = "Listing: $" + add_comma_to_int(house.current_price)
+		
+		# Handle the Loan display logic
 		if can_use_loan and loan_status:
-			loan_display.text = "Loan\n%d%% Financed\nDown Payment: $%s" % [
-				(1.0 - down_payment_percent) * 100, add_comma_to_int(down_payment)
-			]
+			# Calculate the financed percentage clearly
+			var financed_pct = int((1.0 - down_payment_percent) * 100)
+			var down_pay_str = add_comma_to_int(down_payment)
+			
+			# Multiline string using formatting
+			loan_display.text = "Loan\n%d%% Financed\nDown Payment: $%s" % [financed_pct, down_pay_str]
 		else:
+			# Fallback for cash purchase
 			loan_display.text = "No Loan\nFull Payment: $%s" % add_comma_to_int(pay_now_amount)
 	else:
+		# Default 'Empty' state
 		price_display.text = "Price: $0"
+		time_on_market.text = "Months on market: 0"
 		$Label_list_price.text = "Listing: $0"
-		loan_display.text = "No Loan\nDown Payment: $0"
+		loan_display.text = "No House Selected"
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)

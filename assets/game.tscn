@@ -2908,12 +2908,11 @@ theme = ExtResource("32_cpbdu")
 text = "CLOSE"
 
 [node name="camera" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.562708, 9.624304, 12.509378)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.078602, 0, 14.858217)
 script = ExtResource("5_nwxvx")
-max_distance = 50.0
 
 [node name="Camera3D" type="Camera3D" parent="camera" groups=["cameras"]]
-transform = Transform3D(1, 0, 0, 0, 0.49038696, 0.8715048, 0, -0.8715048, 0.49038696, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.49038696, 0.8715048, 0, -0.8715048, 0.49038696, 0, 10, 1)
 current = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -3174,10 +3173,10 @@ text = "CLOSE"
 
 [node name="Business_UI" parent="HUD" instance=ExtResource("16_0rmd6")]
 visible = false
-offset_left = 902.68
-offset_top = 198.08
-offset_right = 1242.0801
-offset_bottom = 748.08
+offset_left = 1001.68
+offset_top = 403.08
+offset_right = 1341.0801
+offset_bottom = 953.08
 
 [node name="Job_offer_ui" type="Control" parent="HUD"]
 visible = false
@@ -3200,7 +3199,6 @@ layout_mode = 0
 offset_left = -9.0
 offset_right = 319.0
 offset_bottom = 293.0
-theme = SubResource("Theme_662pm")
 
 [node name="info" type="Label" parent="HUD/Job_offer_ui"]
 layout_mode = 0
@@ -3241,7 +3239,6 @@ offset_left = 20.0
 offset_top = 219.0
 offset_right = 115.0
 offset_bottom = 256.0
-theme = ExtResource("32_nggmv")
 text = "Eccept"
 
 [node name="Deny_job" type="Button" parent="HUD/Job_offer_ui"]
@@ -3409,7 +3406,7 @@ offset_left = 47.0
 offset_top = 41.0
 offset_right = 318.0
 offset_bottom = 112.0
-text = "Mission Complete! 
+text = "Challenge Complete! 
 YOU WIN!"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -3523,7 +3520,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 0
 offset_left = 52.0
 offset_top = 43.0
-offset_right = 705.0
+offset_right = 698.0
 offset_bottom = 132.0
 theme_override_constants/h_separation = 25
 theme_override_constants/v_separation = 35
@@ -3572,10 +3569,10 @@ text = "net  = "
 
 [node name="negative_month_count" type="Label" parent="HUD/UI"]
 layout_mode = 0
-offset_left = 512.0
-offset_top = 23.0
-offset_right = 728.0
-offset_bottom = 58.0
+offset_left = 494.0
+offset_top = 28.0
+offset_right = 710.0
+offset_bottom = 63.0
 text = "Months tell Bankrupt: 10/12"
 
 [node name="properties" type="Label" parent="HUD/UI"]
@@ -3804,10 +3801,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Market_conditions" type="Label" parent="HUD/UI"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.0578125
-anchor_top = 0.0018518518
-anchor_right = -0.0578125
-anchor_bottom = 0.0018518518
+anchor_left = -0.065625
+anchor_top = -0.0055555557
+anchor_right = -0.065625
+anchor_bottom = -0.0055555557
 offset_left = 651.0
 offset_top = 65.0
 offset_right = 808.0

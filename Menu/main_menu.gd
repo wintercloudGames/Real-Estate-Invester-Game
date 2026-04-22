@@ -136,6 +136,7 @@ func populate_mission_menu() -> void:
 			btn.modulate = Color.GREEN
 			btn.text = mission.title + " (Done)"
 			btn.disabled = true
+			btn.add_theme_font_size_override("font_size", 20)
 		else:
 			# Check unlock requirement
 			var req = mission.unlock_id_needed.strip_edges()
@@ -143,9 +144,11 @@ func populate_mission_menu() -> void:
 			
 			if is_unlocked:
 				btn.text = mission.title
+				btn.add_theme_font_size_override("font_size", 20)
 				btn.pressed.connect(_on_mission_clicked.bind(mission))
 			else:
 				btn.text = mission.title + ": Locked"
+				btn.add_theme_font_size_override("font_size", 20)
 				btn.disabled = true
 				
 		mission_list_container.add_child(btn)
@@ -230,3 +233,6 @@ func _on_misson_menu_close_button_pressed() -> void:
 func _on_close_mode_button_pressed() -> void:
 	main_profiles_panel.visible = true
 	mode_selection.visible = false
+
+func _on_settings_button_pressed() -> void:
+	$Settings_menu.visible = true

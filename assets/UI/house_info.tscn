@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dlx0ovoxxaxtn"]
+[gd_scene load_steps=6 format=3 uid="uid://dlx0ovoxxaxtn"]
 
 [ext_resource type="Script" uid="uid://dchi3h0qr3eto" path="res://assets/UI/house_info.gd" id="1_g1vcf"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_wy6uo"]
+[ext_resource type="Theme" uid="uid://b8jl6a5r3l2mm" path="res://themes/yellow.tres" id="3_wy6uo"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="4_nshnh"]
 [ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="4_wy6uo"]
 
@@ -22,121 +23,256 @@ script = ExtResource("1_g1vcf")
 [node name="ColorRect" type="Panel" parent="."]
 layout_mode = 0
 offset_left = 4.0
-offset_right = 523.0
-offset_bottom = 494.0
+offset_right = 528.0
+offset_bottom = 499.0
+mouse_filter = 2
 theme = ExtResource("1_wy6uo")
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="ColorRect3" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 12.0
-offset_top = 135.0
-offset_right = 513.0
-offset_bottom = 153.0
-color = Color(0.104056, 0.115702, 0.21575, 1)
+offset_left = 17.0
+offset_top = 57.0
+offset_right = 515.0
+offset_bottom = 180.0
+mouse_filter = 2
+theme = ExtResource("3_wy6uo")
 
-[node name="ColorRect3" type="ColorRect" parent="."]
+[node name="ColorRect2" type="Panel" parent="."]
+modulate = Color(1.7368001, 1.7368001, 1.7368001, 1)
 layout_mode = 0
-offset_left = 10.0
-offset_top = 379.0
+offset_left = 17.0
+offset_top = 57.0
+offset_right = 515.0
+offset_bottom = 84.0
+mouse_filter = 2
+theme = ExtResource("3_wy6uo")
+
+[node name="ColorRect4" type="Panel" parent="."]
+modulate = Color(1.7368001, 1.7368001, 1.7368001, 1)
+layout_mode = 0
+offset_left = 371.0
+offset_top = 82.0
+offset_right = 515.0
+offset_bottom = 176.0
+mouse_filter = 2
+theme = ExtResource("3_wy6uo")
+
+[node name="ColorRect5" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 178.0
+offset_right = 515.0
+offset_bottom = 351.0
+mouse_filter = 2
+theme = ExtResource("3_wy6uo")
+
+[node name="ColorRect6" type="Panel" parent="."]
+modulate = Color(1.7368001, 1.7368001, 1.7368001, 1)
+layout_mode = 0
+offset_left = 17.0
+offset_top = 178.0
+offset_right = 515.0
+offset_bottom = 205.0
+mouse_filter = 2
+theme = ExtResource("3_wy6uo")
+
+[node name="ColorRect7" type="Panel" parent="."]
+modulate = Color(1.7368001, 1.7368001, 1.7368001, 1)
+layout_mode = 0
+offset_left = 371.0
+offset_top = 205.0
+offset_right = 515.0
+offset_bottom = 332.0
+mouse_filter = 2
+theme = ExtResource("3_wy6uo")
+
+[node name="ColorRect8" type="Panel" parent="."]
+modulate = Color(1.9258394, 1.9258394, 1.9258394, 0.8039216)
+layout_mode = 0
+offset_left = 51.0
+offset_top = 205.0
+offset_right = 331.0
+offset_bottom = 273.0
+mouse_filter = 2
+theme = ExtResource("3_wy6uo")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 57.0
 offset_right = 511.0
-offset_bottom = 397.0
-color = Color(0.104056, 0.115702, 0.21575, 1)
+offset_bottom = 80.0
+text = "Financhal Summary"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 179.0
+offset_right = 510.0
+offset_bottom = 202.0
+text = "Leasing Status"
+horizontal_alignment = 1
 
 [node name="Label_list_price" type="Label" parent="."]
 layout_mode = 0
-offset_left = 145.0
+offset_left = 283.0
 offset_top = 12.0
-offset_right = 429.0
-offset_bottom = 53.0
-text = "price:
-"
+offset_right = 403.0
+offset_bottom = 35.0
+text = "Label_list_price"
+horizontal_alignment = 1
+
+[node name="Label_list_price2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 12.0
+offset_right = 252.0
+offset_bottom = 35.0
+text = "Current House Value"
 horizontal_alignment = 1
 
 [node name="Label_bought_price" type="Label" parent="."]
 layout_mode = 0
-offset_left = 146.0
-offset_top = 46.0
-offset_right = 433.0
-offset_bottom = 87.0
-text = "price:
-"
+offset_left = 219.0
+offset_top = 98.0
+offset_right = 369.0
+offset_bottom = 121.0
+text = "Label_bought_price"
+horizontal_alignment = 2
+
+[node name="Label_bought_price2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 98.0
+offset_right = 141.0
+offset_bottom = 121.0
+text = "Purchase Price"
 horizontal_alignment = 1
 
 [node name="Label_loan" type="Label" parent="."]
 layout_mode = 0
-offset_left = 59.0
-offset_top = 76.0
-offset_right = 143.0
-offset_bottom = 99.0
+offset_left = 219.0
+offset_top = 122.0
+offset_right = 369.0
+offset_bottom = 145.0
 text = "loan"
+horizontal_alignment = 2
+
+[node name="Label_loan2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 122.0
+offset_right = 132.0
+offset_bottom = 145.0
+text = "Loan Amount"
 
 [node name="Label_morgage" type="Label" parent="."]
 layout_mode = 0
-offset_left = 67.0
-offset_top = 107.0
-offset_right = 153.0
-offset_bottom = 130.0
-text = "Morgage = "
+offset_left = 219.0
+offset_top = 146.0
+offset_right = 369.0
+offset_bottom = 169.0
+text = "Morgage ="
+horizontal_alignment = 2
+
+[node name="Label_morgage2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 151.0
+offset_right = 177.0
+offset_bottom = 174.0
+text = "Morgage"
 
 [node name="Label_Income" type="Label" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 369.0
-offset_top = 279.0
-offset_right = 444.0
-offset_bottom = 302.0
+offset_left = 376.0
+offset_top = 211.0
+offset_right = 512.0
+offset_bottom = 234.0
 text = "Income = "
 
 [node name="Label_lease_stat" type="Label" parent="."]
 layout_mode = 0
-offset_left = 355.0
-offset_top = 164.0
-offset_right = 461.0
-offset_bottom = 187.0
+offset_left = 374.0
+offset_top = 234.0
+offset_right = 511.0
+offset_bottom = 257.0
 text = "lease amount"
 
 [node name="Label_condition" type="Label" parent="."]
 layout_mode = 0
-offset_left = 354.0
-offset_top = 202.0
-offset_right = 468.0
-offset_bottom = 225.0
+offset_left = 374.0
+offset_top = 262.0
+offset_right = 511.0
+offset_bottom = 285.0
 text = "condition: 90%"
 
 [node name="Label_punctuality" type="Label" parent="."]
 layout_mode = 0
-offset_left = 354.0
-offset_top = 243.0
-offset_right = 468.0
-offset_bottom = 266.0
-text = "condition: 90%"
+offset_left = 375.0
+offset_top = 292.0
+offset_right = 511.0
+offset_bottom = 315.0
+text = "punctuality: 90%"
 
 [node name="Label_islistedforrent" type="Label" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 214.0
-offset_top = 129.0
-offset_right = 324.0
-offset_bottom = 152.0
+offset_left = 372.0
+offset_top = 294.0
+offset_right = 512.0
+offset_bottom = 317.0
 text = "Listed for rent"
 
-[node name="Rent_slider_info" type="Label" parent="."]
+[node name="Rent_slider_info" type="LineEdit" parent="."]
 layout_mode = 0
-offset_left = 48.0
-offset_top = 176.0
-offset_right = 219.0
-offset_bottom = 255.0
-text = "Rent info "
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_left = 59.0
+offset_top = 292.0
+offset_right = 292.0
+offset_bottom = 334.0
+theme_override_font_sizes/font_size = 20
+text = "Rent Slider Info"
+alignment = 1
 
 [node name="Label_cashflow" type="Label" parent="."]
 layout_mode = 0
-offset_left = 233.0
-offset_top = 335.0
+offset_left = 59.0
+offset_top = 210.0
 offset_right = 323.0
-offset_bottom = 358.0
+offset_bottom = 245.0
+theme_override_font_sizes/font_size = 25
 text = "cash flow = "
+horizontal_alignment = 1
+
+[node name="Label_cashflow2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 251.0
+offset_right = 308.0
+offset_bottom = 265.0
+theme_override_font_sizes/font_size = 10
+text = "Per Month"
+horizontal_alignment = 1
+
+[node name="Min_rent_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 372.0
+offset_right = 66.0
+offset_bottom = 386.0
+theme_override_font_sizes/font_size = 10
+text = "$25"
+horizontal_alignment = 1
+
+[node name="max_rent_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 243.0
+offset_top = 372.0
+offset_right = 294.0
+offset_bottom = 386.0
+theme_override_font_sizes/font_size = 10
+text = "$5000"
+horizontal_alignment = 1
 
 [node name="Buy_button" type="Button" parent="."]
 visible = false
@@ -149,37 +285,39 @@ text = "Pay off Loan"
 
 [node name="Refinance_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 371.0
-offset_top = 86.0
-offset_right = 496.0
-offset_bottom = 125.0
+offset_left = 380.0
+offset_top = 107.0
+offset_right = 506.0
+offset_bottom = 156.0
 text = "Refinance"
 
 [node name="Tenent_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 320.0
-offset_right = 170.0
-offset_bottom = 377.0
+offset_left = 355.0
+offset_top = 354.0
+offset_right = 505.0
+offset_bottom = 411.0
 text = "List House For Rent
 (Spacebar)"
 
 [node name="Remove_Tenent" type="Button" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 9.0
-offset_top = 322.0
-offset_right = 178.0
-offset_bottom = 376.0
+offset_left = 339.0
+offset_top = 354.0
+offset_right = 508.0
+offset_bottom = 408.0
 text = "Remove Tenant"
 
 [node name="Rent_HSlider" type="HSlider" parent="."]
 layout_mode = 0
-offset_left = 41.0
-offset_top = 257.0
-offset_right = 242.0
-offset_bottom = 276.0
-value = 50.0
+offset_left = 59.0
+offset_top = 351.0
+offset_right = 267.0
+offset_bottom = 367.0
+value = 100.0
+rounded = true
+tick_count = 25
+ticks_on_borders = true
 
 [node name="Edit_yard_button" type="Button" parent="."]
 layout_mode = 0
@@ -191,26 +329,26 @@ text = "Edit Yard"
 
 [node name="Sell_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 355.0
-offset_top = 426.0
-offset_right = 480.0
-offset_bottom = 475.0
+offset_left = 371.0
+offset_top = 434.0
+offset_right = 496.0
+offset_bottom = 483.0
 text = "Sell House"
 
 [node name="Upgrade_label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 202.0
-offset_top = 398.0
-offset_right = 319.0
-offset_bottom = 421.0
+offset_left = 195.0
+offset_top = 474.0
+offset_right = 320.0
+offset_bottom = 497.0
 text = "0/10"
 horizontal_alignment = 1
 
 [node name="Upgrade" type="Button" parent="."]
 layout_mode = 0
-offset_left = 197.0
-offset_top = 426.0
-offset_right = 322.0
+offset_left = 195.0
+offset_top = 418.0
+offset_right = 320.0
 offset_bottom = 475.0
 text = "$10,000
 Upgrade
@@ -297,6 +435,8 @@ anchor_bottom = 0.04077778
 offset_top = -23.913177
 offset_bottom = 23.814999
 
+[connection signal="focus_exited" from="Rent_slider_info" to="." method="_on_rent_input_focus_exited"]
+[connection signal="text_submitted" from="Rent_slider_info" to="." method="_on_rent_input_submitted"]
 [connection signal="pressed" from="Buy_button" to="." method="_on_buy_button_pressed"]
 [connection signal="pressed" from="Refinance_button" to="." method="_on_refinance_button_pressed"]
 [connection signal="pressed" from="Tenent_button" to="." method="_on_tenent_button_pressed"]

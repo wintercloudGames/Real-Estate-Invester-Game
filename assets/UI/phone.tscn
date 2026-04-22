@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://bx85w10pr0a6q"]
+[gd_scene load_steps=71 format=3 uid="uid://bx85w10pr0a6q"]
 
 [ext_resource type="Texture2D" uid="uid://b0vmuqioqojfj" path="res://assets/UI/phone/wallpapers/vines-7859445_1280.jpg" id="1_go8ug"]
 [ext_resource type="Texture2D" uid="uid://dsfynj8pp2hyg" path="res://assets/UI/phone/vecteezy_smart-phone-mobile-electronic-device-transparent-screen_6824674-1-removebg-preview.png" id="1_jm7no"]
@@ -13,12 +13,11 @@
 [ext_resource type="Texture2D" uid="uid://2st8usryltse" path="res://assets/UI/icons/village.png" id="7_xwxf0"]
 [ext_resource type="Texture2D" uid="uid://dxprvpyyx802h" path="res://shaded-dark/shadedDark16.png" id="8_2nic4"]
 [ext_resource type="Texture2D" uid="uid://bauw01d3wf7vg" path="res://assets/UI/icons/smartphone.png" id="8_aue8h"]
-[ext_resource type="Texture2D" uid="uid://bq4i34nk7daor" path="res://assets/UI/icons/money-stack.png" id="8_hqtsb"]
 [ext_resource type="Script" uid="uid://daxx544flatqx" path="res://assets/UI/phone/music_player.gd" id="8_iq4tw"]
 [ext_resource type="Texture2D" uid="uid://bn2y5ckkxsfd8" path="res://assets/UI/icons/wallet.png" id="8_rrag5"]
 [ext_resource type="Texture2D" uid="uid://cvsibdejqx1hm" path="res://assets/UI/phone/icons8-health-100.png" id="8_wo1e0"]
-[ext_resource type="Script" uid="uid://bb25fgxm2mhf1" path="res://assets/UI/phone/firestorm.gd" id="9_3hjvo"]
 [ext_resource type="Texture2D" uid="uid://c38yef4yng1n4" path="res://shaded-dark/shadedDark12.png" id="9_jjmas"]
+[ext_resource type="Texture2D" uid="uid://b0p66tco4u1fd" path="res://assets/UI/icons/take-my-money.png" id="10_g7aor"]
 [ext_resource type="Texture2D" uid="uid://bgidxna3gs0dc" path="res://assets/UI/icons/chart.png" id="11_3pv8a"]
 [ext_resource type="Texture2D" uid="uid://bwtiorjr8en8m" path="res://assets/UI/icons/eating.png" id="11_jhvj4"]
 [ext_resource type="Texture2D" uid="uid://btn64o1bylkwn" path="res://assets/UI/phone/skip.png" id="11_t5vsg"]
@@ -34,7 +33,6 @@
 [ext_resource type="Script" uid="uid://e4ubj8lkmcs7" path="res://assets/UI/phone/job_info.gd" id="18_o2bmf"]
 [ext_resource type="Texture2D" uid="uid://dwib34gx67f43" path="res://assets/UI/icons/files.png" id="19_8qstc"]
 [ext_resource type="Texture2D" uid="uid://bvoer3ihdrn7h" path="res://assets/UI/icons/histogram.png" id="20_gxx0m"]
-[ext_resource type="Texture2D" uid="uid://by8usin4jfy1n" path="res://assets/UI/icons/skills.png" id="22_too7c"]
 [ext_resource type="Script" uid="uid://bjo53yytepjk5" path="res://assets/UI/phone/player_stats.gd" id="24_mgvhx"]
 [ext_resource type="Script" uid="uid://b047v4lmufqyx" path="res://assets/UI/phone/backgrounds.gd" id="26_6pd25"]
 [ext_resource type="Script" uid="uid://ewnuutir7auv" path="res://assets/UI/phone/food_market.gd" id="26_q08sx"]
@@ -294,6 +292,7 @@ offset_bottom = 1994.9998
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.215, 0.215)
+horizontal_scroll_mode = 0
 
 [node name="apps" type="GridContainer" parent="ScrollContainer"]
 layout_mode = 2
@@ -424,7 +423,7 @@ vertical_alignment = 1
 
 [node name="job" type="TextureButton" parent="ScrollContainer/apps"]
 layout_mode = 2
-texture_normal = ExtResource("8_hqtsb")
+texture_normal = ExtResource("10_g7aor")
 
 [node name="Label" type="Label" parent="ScrollContainer/apps/job"]
 layout_mode = 1
@@ -716,12 +715,6 @@ scale = Vector2(0.31, 0.31)
 mouse_filter = 2
 texture = ExtResource("14_ybpqr")
 expand_mode = 1
-
-[node name="firestorm" type="TextureButton" parent="ScrollContainer/apps"]
-visible = false
-layout_mode = 2
-texture_normal = ExtResource("22_too7c")
-script = ExtResource("9_3hjvo")
 
 [node name="options" type="Control" parent="."]
 visible = false
@@ -2234,7 +2227,6 @@ libraries = {
 [connection signal="pressed" from="ScrollContainer/apps/car_carrage" to="." method="_on_car_carrage_pressed"]
 [connection signal="pressed" from="ScrollContainer/apps/Stock_Market" to="." method="_on_stock_market_pressed"]
 [connection signal="pressed" from="ScrollContainer/apps/Credit_display" to="." method="_on_credit_display_pressed"]
-[connection signal="pressed" from="ScrollContainer/apps/firestorm" to="ScrollContainer/apps/firestorm" method="_on_pressed"]
 [connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Master_slider" to="options" method="_on_master_slider_value_changed"]
 [connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Music_slider" to="options" method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="options/ScrollContainer/VBoxContainer/Sound_slider" to="options" method="_on_Sound_slider_value_changed"]

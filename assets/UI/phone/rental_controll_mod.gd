@@ -104,9 +104,7 @@ func _on_list_for_rent_button_pressed() -> void:
 
 func _on_remove_tenent_button_pressed():
 	if house:
-		house.has_tenant = false
-		house.is_listed = true
-		house.rent = 0
+		house.remove_tenant()
 	
 func _on_refinance_button_pressed() -> void:
 	if not is_instance_valid(house):
@@ -208,7 +206,6 @@ func _on_refinance_button_pressed() -> void:
 	
 	SaveAndLoad.save_game()
 	visible = false  
-
 
 func calculate_mortgage_payment(loan_amount: float, months: int, interest_rate: float) -> float:
 	if months <= 0 or loan_amount <= 0 or interest_rate < 0:

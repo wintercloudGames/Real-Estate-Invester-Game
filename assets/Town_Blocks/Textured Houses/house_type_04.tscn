@@ -176,5 +176,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0525, -0.0177401, 0.408638)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0525, -0.0177401, 0.790605)
 
 [node name="house_base" parent="." instance=ExtResource("4_hsk6s")]
-process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6676523, 0, 0.12841392)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48689955, 0, 0.12841392)

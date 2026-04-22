@@ -3,7 +3,7 @@ extends TextureButton
 var dragging := false
 var drag_offset := Vector2.ZERO  # offset between mouse and parent position when dragging starts
 
-func _process(delta):
+func _process(_delta):
 	if dragging and get_parent():
 		# Keep the same offset during drag
 		get_parent().global_position = get_global_mouse_position() - drag_offset

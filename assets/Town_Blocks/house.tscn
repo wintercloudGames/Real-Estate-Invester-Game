@@ -109,6 +109,9 @@ transform = Transform3D(0.04674038, -0.9879607, -0.14747544, 0, -0.1476368, 0.98
 visible = false
 light_energy = 1.5
 
+[node name="Camera_Front" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.946874, 0.32160476, 0, -0.32160476, 0.946874, -0.09505391, 1.2530605, 1.3796637)
+
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="input_event" from="Collect_Rent/Dollar_sign/Rent_collect" to="Collect_Rent/Dollar_sign" method="_on_rent_collect_input_event"]
 [connection signal="timeout" from="payment_delay_timer" to="Collect_Rent" method="_on_payment_delay_timeout"]

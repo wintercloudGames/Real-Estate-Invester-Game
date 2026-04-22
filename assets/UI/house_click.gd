@@ -26,7 +26,6 @@ var stored_cash = 0
 @onready var spot_light_3d: SpotLight3D = $SpotLight3D
 @onready var spot_light_3d_2: SpotLight3D = $SpotLight3D2
 
-
 var id: String = "" 
 var bought_price = 0
 var loan_price = 0.0 
@@ -41,8 +40,7 @@ var upgrade_amount: int = 0
 var for_sale = false
 var time_on_market = 0
 var owner_type: String = "none"
-
-
+var loan_module: Control = null
 var is_on_screen: bool = true
 var _last_rendered_price: int = -1
 
@@ -109,6 +107,23 @@ func update_market_value(market_change_percent: float) -> void:
 func _on_month_ended():
 	if owned: return
 	
+func open_house_ui():
+	# Find the game node using the group you set up in game.gd
+	if game:
+		game.house = self # Update the current house in game.gd 
+		game.set_house_UI() 
+
+func _on_relist_house_button_pressed():
+	is_listed = true
+	Globals.notify("Relisted " + id, Color.LAWN_GREEN)
+
+@onready var camera_front: Marker3D = $Camera_Front
+
+# Instead of returning a texture, we return the location
+func get_camera_location() -> Transform3D:
+	if is_instance_valid(camera_front):
+		return camera_front.global_transform
+	return global_transform # Fallback to house center
 
 func _process(_delta: float) -> void:
 
@@ -214,7 +229,6 @@ func remove_tenant():
 func add_tenant(income: int, lease_duration: int = 12):
 	rent = income
 	lease_length = lease_duration
-	House_ui.income = income
 	has_tenant = true
 	
 func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node = null) -> void:
