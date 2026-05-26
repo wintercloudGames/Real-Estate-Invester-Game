@@ -13,7 +13,7 @@ func _ready() -> void:
 	update_display()
 
 func update_display() -> void:
-	var label = get_node("%Label") as Label #
+	var label = get_node("%Label") as Label 
 	var texture = get_node("%TextureRect") as TextureRect
 	
 	if SaveAndLoad.save_file_exists(save_slot):
@@ -51,11 +51,12 @@ func get_save_data(slot: int) -> Dictionary:
 	
 	var g = data["Globals"]
 	
-	# Returning cleaned data for the stats display
+	# Extracting data from the Globals dictionary in the save file [cite: 1]
 	return {
 		"save_name": g.get("save_name", "Profile " + str(slot + 1)),
-		"current_game_mode": int(g.get("current_game_mode", 0)), # Force to int
-		"year": g.get("year", 1)
+		"current_game_mode": int(g.get("current_game_mode", 0)),
+		"year": int(g.get("year", 1)),
+		"completed_missions_count": g.get("completed_missions", []).size()
 	}
 
 func _on_pressed() -> void:
@@ -84,18 +85,29 @@ func update_game_stats() -> void:
 	var game_stats_label = $Game_stats/MarginContainer/Label as Label
 	
 	if game_stats_label:
-		# Use int() to ensure we can match against the numbers
+		# Mapping integers to the GameMode enum 
 		var mode_int = int(stats.get("current_game_mode", 0)) 
-		var year = stats.get("year", 1)
+		var year = int(stats.get("year", 1))
+		var missions = int(stats.get("completed_missions_count", 0))
 		
 		var mode_text = ""
-		match mode_int:
-			0: mode_text = "Story"
-			1: mode_text = "Challenge"
-			2: mode_text = "Freeplay"
-			_: mode_text = "Unknown"
+		var detail_text = ""
 		
-		game_stats_label.text = "Mode: %s\nYear: %d" % [mode_text, year]
+		match mode_int:
+			0: # Globals.GameMode.STORY 
+				mode_text = "Story"
+				detail_text = "Year: %d" % year
+			1: # Globals.GameMode.MISSION 
+				mode_text = "Mission Mode"
+				detail_text = "Missions Completed: %d" % missions
+			2: # Globals.GameMode.FREEPLAY 
+				mode_text = "Freeplay"
+				detail_text = "Year: %d" % year
+			_: 
+				mode_text = "Unknown"
+				detail_text = ""
+		
+		game_stats_label.text = "Mode: %s\n%s" % [mode_text, detail_text]
 
 func _on_delete_button_pressed() -> void:
 	delete_requested.emit(save_slot)

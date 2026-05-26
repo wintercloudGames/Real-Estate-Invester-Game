@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b6r5o3ytb05fe" path="res://assets/UI/phone/rental_controll_mod.gd" id="1_3sp5a"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_pocl4"]
-[ext_resource type="Texture2D" uid="uid://bql3je3n7nto8" path="res://3D assets/Chads/pool_0.png" id="2_qwxxh"]
+[ext_resource type="Texture2D" uid="uid://bql3je3n7nto8" path="res://3D assets/Me made/pool_0.png" id="2_qwxxh"]
 
 [node name="Rental_controll_mod" type="Control"]
 custom_minimum_size = Vector2(325, 140)

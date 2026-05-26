@@ -65,6 +65,7 @@ mouse_filter = 2
 theme = ExtResource("3_5sbf3")
 
 [node name="Label_price" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 95.0
 offset_top = 186.0
@@ -76,10 +77,10 @@ horizontal_alignment = 1
 
 [node name="Label_list_price" type="Label" parent="."]
 layout_mode = 0
-offset_left = 110.0
-offset_top = 12.0
-offset_right = 347.0
-offset_bottom = 43.0
+offset_left = 108.0
+offset_top = 193.0
+offset_right = 345.0
+offset_bottom = 224.0
 text = "Label list price:"
 horizontal_alignment = 1
 
@@ -97,10 +98,10 @@ vertical_alignment = 1
 
 [node name="Time_on_market" type="Label" parent="."]
 layout_mode = 0
-offset_left = 92.0
-offset_top = 231.0
-offset_right = 336.0
-offset_bottom = 254.0
+offset_left = 105.0
+offset_top = 233.0
+offset_right = 349.0
+offset_bottom = 256.0
 text = "Time on Market"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -150,11 +150,10 @@ offset_bottom = 564.0
 theme = ExtResource("8_ervgt")
 theme_override_font_sizes/font_size = 30
 tab_alignment = 1
-current_tab = 2
+current_tab = 0
 tabs_position = 1
 
 [node name="General" type="Control" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -168,7 +167,7 @@ texture_normal = ExtResource("10_6rtyb")
 max_level = 20
 skill_name = "exp boost"
 skill_description = "level up faster with exp boost"
-level_costs = Array[int]([0])
+level_costs = Array[int]([1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 10, 10])
 app_skill_to_unlock = 17
 
 [node name="Labor" parent="TabContainer/General" instance=ExtResource("6_2tli5")]
@@ -212,6 +211,7 @@ skill_name = "Trade"
 skill_description = " Essential for specialized contractors, structural inspectors, and architects.  
 
 +5 pts "
+level_costs = Array[int]([1, 1, 2, 2, 3, 3, 4, 4, 5, 5])
 app_skill_to_unlock = 21
 
 [node name="Finance" parent="TabContainer/General" instance=ExtResource("6_2tli5")]
@@ -227,6 +227,7 @@ skill_name = "Finance"
 skill_description = "Unlock positions in banking, stock brokerage, and high-level investment funds.  
 
 +5 pts "
+level_costs = Array[int]([2, 2, 2, 2, 3, 3, 3, 4, 4])
 app_skill_to_unlock = 22
 
 [node name="Management" parent="TabContainer/General" instance=ExtResource("6_2tli5")]
@@ -241,6 +242,7 @@ skill_name = "Management"
 skill_description = "Required for district managers, directors, and C-suite executive roles.  
 
 +5 pts "
+level_costs = Array[int]([3, 3, 4, 4, 5])
 app_skill_to_unlock = 23
 
 [node name="House" type="Control" parent="TabContainer"]
@@ -298,10 +300,10 @@ app_skill_to_unlock = 14
 
 [node name="Bost_rent" parent="TabContainer/House/Rent_houses" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 88.0
-offset_top = -78.0
-offset_right = 158.0
-offset_bottom = -8.0
+offset_left = 144.0
+offset_top = -14.0
+offset_right = 214.0
+offset_bottom = 56.0
 max_level = 5
 skill_name = "Rent Boost"
 skill_description = "Boost your rental income"
@@ -310,10 +312,10 @@ app_skill_to_unlock = 5
 
 [node name="House_stats" parent="TabContainer/House/Rent_houses" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 0.0
-offset_top = -125.0
-offset_right = 70.0
-offset_bottom = -55.0
+offset_left = 49.0
+offset_top = -110.0
+offset_right = 119.0
+offset_bottom = -40.0
 texture_normal = ExtResource("12_guq4v")
 skill_name = "House stats"
 skill_description = "show all house and property stats"
@@ -321,10 +323,10 @@ app_skill_to_unlock = 1
 
 [node name="rent_finder_boost" parent="TabContainer/House/Rent_houses/House_stats" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = 0.0
-offset_top = -96.0
-offset_right = 70.0
-offset_bottom = -26.0
+offset_left = 96.0
+offset_top = -93.0
+offset_right = 166.0
+offset_bottom = -23.0
 texture_normal = ExtResource("15_7hox8")
 max_level = 10
 skill_name = "Advertise"
@@ -333,6 +335,7 @@ level_costs = Array[int]([1, 1, 2, 2, 3, 3, 4, 4, 5, 5])
 app_skill_to_unlock = 18
 
 [node name="Money" type="Control" parent="TabContainer"]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 metadata/_tab_index = 2
@@ -452,22 +455,22 @@ app_skill_to_unlock = 9
 
 [node name="job_pay" parent="TabContainer/Business/business" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = -69.0
-offset_top = -99.0
-offset_right = 1.0
-offset_bottom = -29.0
+offset_left = -100.0
+offset_top = -88.0
+offset_right = -30.0
+offset_bottom = -18.0
 texture_normal = ExtResource("15_yn8ca")
 skill_name = "Increse job pay"
 skill_description = "Job Bonus: Earn 50% More"
 level_costs = Array[int]([5])
 app_skill_to_unlock = 10
 
-[node name="business_exp" parent="TabContainer/Business/business" instance=ExtResource("6_2tli5")]
+[node name="business_exp" parent="TabContainer/Business/business/job_pay" instance=ExtResource("6_2tli5")]
 layout_mode = 0
-offset_left = -153.0
-offset_top = -164.0
-offset_right = -83.0
-offset_bottom = -94.0
+offset_left = -108.0
+offset_top = -67.0
+offset_right = -38.0
+offset_bottom = 3.0
 skill_name = "Business Bonus"
 skill_description = "Earn 45-55% More on your business worth per job complete."
 level_costs = Array[int]([5])

@@ -93,7 +93,6 @@ var exp_boost = 1.0
 var rent_finder_boost = 1.0
 var credit_app = false
 
-
 	#job category Skills
 var labor_skill_points = 0
 var services_skill_points = 0
@@ -251,13 +250,52 @@ func record_credit_score():
 	if credit_history.size() > 15:
 		credit_history.pop_front()
 
+var cursor_offset = Vector2(24, 24) 
+
+@onready var cursor_normal = load("res://assets/UI/mouse/hand_thin_point.png")
+@onready var cursor_click = load("res://assets/UI/mouse/hand_thin_small_point.png")
+@onready var cursor_grab = load("res://assets/UI/mouse/hand_thin_small_closed.png")
+
+var _is_left_clicking: bool = false
+var _is_right_clicking: bool = false
+
+func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	update_cursor_visual()
+
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			_is_left_clicking = event.pressed
+			update_cursor_visual()
+		
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			_is_right_clicking = event.pressed
+			update_cursor_visual()
+
+func update_cursor_visual():
+	var texture = cursor_normal
+	
+	if _is_left_clicking:
+		texture = cursor_click
+	elif _is_right_clicking:
+		texture = cursor_grab
+	else:
+		texture = cursor_normal
+	
+	# Apply to all relevant cursor types so it never "swaps back" to default
+	Input.set_custom_mouse_cursor(texture, Input.CURSOR_ARROW, cursor_offset)
+	Input.set_custom_mouse_cursor(texture, Input.CURSOR_POINTING_HAND, cursor_offset)
+	Input.set_custom_mouse_cursor(texture, Input.CURSOR_DRAG, cursor_offset)
+	Input.set_custom_mouse_cursor(texture, Input.CURSOR_MOVE, cursor_offset)
 func _process(_delta: float) -> void:
 	if EXP >= exp_to_level:
 		var overflow = EXP - exp_to_level
-		EXP = overflow
-		skillpoints += 1
-		exp_to_level += 10
 		level += 1
+		skillpoints += 1
+		exp_to_level = 100 + int(pow(level, 1.5) * 10)
+		
+		EXP = overflow
 
 	EXP = max(0, EXP)
 
@@ -605,25 +643,6 @@ func get_points_for_cat(cat: String) -> float:
 		"Finance": return finance_points
 		"Management": return management_points
 	return 0.0
-
-var cursor_normal = load("res://assets/UI/mouse/hand_thin_point.png")
-var cursor_click = load("res://assets/UI/mouse/hand_thin_small_point.png")
-var cursor_Grab = load("res://assets/UI/mouse/hand_small_closed.png")
-var hs = Vector2(24, 12)
-
-func _input(event):
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				Input.set_custom_mouse_cursor(cursor_click, Input.CURSOR_ARROW, hs)
-			else:
-				Input.set_custom_mouse_cursor(cursor_normal, Input.CURSOR_ARROW, hs)
-				
-		if event.button_index == MOUSE_BUTTON_RIGHT:
-			if event.pressed:
-				Input.set_custom_mouse_cursor(cursor_Grab, Input.CURSOR_ARROW, hs)
-			else:
-				Input.set_custom_mouse_cursor(cursor_normal, Input.CURSOR_ARROW, hs)
 
 func money_in(amount):
 	money += amount

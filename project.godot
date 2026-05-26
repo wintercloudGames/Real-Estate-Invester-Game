@@ -42,6 +42,10 @@ mouse_cursor/custom_image_hotspot=Vector2(24, 12)
 
 project/assembly_name="City Investers"
 
+[editor]
+
+movie_writer/movie_file="C:/Users/chad1/Videos/GODOT RECORD.avi"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/zylann.hterrain/plugin.cfg")
@@ -146,18 +150,15 @@ loantoggle={
 ]
 }
 
-[input_devices]
-
-pointing/emulate_touch_from_mouse=true
-
 [rendering]
 
 rendering_device/vsync/frame_queue_size=3
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 anti_aliasing/quality/msaa_3d=1
 limits/opengl/max_renderable_lights=256
-limits/opengl/max_lights_per_object=300
+limits/opengl/max_lights_per_object=1024
 vsync/use_vsync=false
 environment/glow/enabled=true
 

@@ -192,9 +192,7 @@ func complete_task(job_index: int, multiplier: float = 1.0) -> void:
 	var bar = progress_bars[job_index]
 	bar.value = 0
 	
-	# 1. Calculate Rewards with Multiplier
-	# Base EXP: (2 + (job_index * 2))
-	var earned_exp = (2 + (job_index * 2)) * Globals.exp_boost * multiplier
+	var earned_exp = (1 + (job_index * 4)) * Globals.exp_boost * multiplier
 	Globals.EXP += int(earned_exp)
 	
 	# Base Money: from your rewards array
@@ -229,7 +227,7 @@ func update_rewards() -> void:
 	var base_rewards = [10, 50, 100, 400, 600]
 	rewards = []
 	for i in range(base_rewards.size()):
-		var bonus_multiplier = 1.0 + (Globals.work_bonus * 0.1) 
+		var bonus_multiplier = 1.0 + (Globals.work_bonus * 0.5)
 		var final_reward = base_rewards[i] * bonus_multiplier * Globals.market_factor
 		rewards.append(int(final_reward))
 		do_task_buttons[i].tooltip_text = "Task %d: Earn $%s" % [i + 1, add_comma_to_int(rewards[i])]

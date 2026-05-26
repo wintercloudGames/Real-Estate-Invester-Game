@@ -430,10 +430,11 @@ func apply_loaded_data() -> void:
 				var loan_type: int
 				if loan_type_raw is String:
 					loan_type = LOAN_TYPE_MORTGAGE if loan_type_raw == "Mortgage" else LOAN_TYPE_PERSONAL
-				else:  # Handle int or float
+				else:  
 					loan_type = int(loan_type_raw)  # Convert float to int
 					if loan_type != LOAN_TYPE_MORTGAGE and loan_type != LOAN_TYPE_PERSONAL:
 						loan_type = LOAN_TYPE_MORTGAGE  # Fallback
+						
 						push_warning("Invalid loan_type %s for loan_id %s, using default Mortgage" % [loan_type_raw, loan_data.get("loan_id", "")])
 				var loan_mod
 				if loan_type == LOAN_TYPE_PERSONAL:
@@ -453,6 +454,7 @@ func apply_loaded_data() -> void:
 							loan_data.get("payment", 0.0),
 							loan_data.get("interest", 0.0),
 							loan_data.get("months", 12),
+							loan_data.get("house_ref",null),
 							null
 						)
 				else:

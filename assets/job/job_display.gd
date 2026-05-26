@@ -2,16 +2,13 @@ extends Control
 
 @onready var job_list_panel: TabContainer = $job_list
 @onready var description_label = $Label
-@onready var stats: Label = $Stats
+@onready var stats: Label = $VBoxContainer/Stats
 
-@export var labor_bar: ProgressBar
-@export var services_bar: ProgressBar
-@export var trade_bar: ProgressBar
-@export var finance_bar: ProgressBar
-@export var management_bar: ProgressBar
+# Only one single progress bar to handle the active job category tracking
+@export var active_job_bar: ProgressBar
 
 var refresh_timer: Timer
-var work_timer: Timer # New timer for EXP gain
+var work_timer: Timer 
 const JOBS_FOLDER = "res://assets/job/jobs/"
 var unlocked_jobs: Array[String] = []
 
@@ -20,27 +17,19 @@ func _ready():
 	load_jobs_from_folder()
 	job_list_panel.visible = false
 	
-	# Connect signals
 	if not Globals.is_connected("stats_changed", update_stats):
 		Globals.connect("stats_changed", update_stats)
 	
-	# UI Refresh Timer
 	refresh_timer = Timer.new()
 	refresh_timer.wait_time = 2.0
 	refresh_timer.timeout.connect(update_job_buttons) 
 	add_child(refresh_timer)
-	
-	# --- WORK TICK TIMER ---
+
 	work_timer = Timer.new()
-	work_timer.wait_time = 5.0 # Trigger every 5 seconds
+	work_timer.wait_time = 5.0 
 	work_timer.timeout.connect(process_work_tick)
 	add_child(work_timer)
 	work_timer.start() 
-	
-	if Globals.current_job_name != "Unemployed":
-		description_label.text = "CURRENT JOB: %s\nINCOME: $%s/mo" % [Globals.current_job_name, str(Globals.job_income)]
-	else:
-		description_label.text = "You are currently unemployed."
 	
 	update_stats()
 
@@ -51,7 +40,6 @@ func process_work_tick():
 	var total_multiplier = 1.0 + Globals.exp_boost
 	var gain = Globals.job_exp_gain_per_month * total_multiplier
 
-	# 1. Update the points
 	match Globals.current_job_category:
 		"Labor": Globals.labor_points += gain
 		"Services": Globals.services_points += gain
@@ -59,39 +47,42 @@ func process_work_tick():
 		"Finance": Globals.finance_points += gain
 		"Management": Globals.management_points += gain
 	
-	# 2. REMOVE check_for_new_unlocks() from here!
-	# Only call it when the whole number (Level) changes to save performance
 	var current_points = get_player_points_for_category(Globals.current_job_category)
 	if int(current_points) > int(current_points - gain):
-		Globals.check_for_new_unlocks() # Only scans files when you actually level up!
+		Globals.check_for_new_unlocks() 
 
 	update_stats()
 	Globals.emit_signal("stats_changed")
 
 func update_stats():
-	stats.text = "--- JOB SKILLS ---\n"
-	
-	var stat_list = [
-		{"name": "LABOR", "val": Globals.labor_points, "bar": labor_bar},
-		{"name": "SERVICES", "val": Globals.services_points, "bar": services_bar},
-		{"name": "TRADE", "val": Globals.trade_points, "bar": trade_bar},
-		{"name": "FINANCE", "val": Globals.finance_points, "bar": finance_bar},
-		{"name": "MANAGEMENT", "val": Globals.management_points, "bar": management_bar}
-	]
-	
-	for s in stat_list:
-		var total_points = float(s["val"])
-		var whole_points = int(total_points)
-		var progress = total_points - float(whole_points)
+	# Update the main description text layout header box safely
+	if Globals.current_job_name != "Unemployed":
+		description_label.text = "CURRENT JOB: %s\nINCOME: $%s/mo" % [Globals.current_job_name, str(Globals.job_income)]
 		
-		stats.text += "[%s]\n" % s["name"]
-		stats.text += "  Level: %d pts\n" % whole_points
-		# FIX: Use 'snapped' to show only 1 decimal point (e.g. 45.2%)
-		stats.text += "  EXP: %d%%\n\n" % int(snapped(progress, 0.01) * 100)
+		# Pull raw decimal point values for processing the current category
+		var category = Globals.current_job_category
+		var total_points = get_player_points_for_category(category)
 		
-		if is_instance_valid(s["bar"]):
-			s["bar"].max_value = 1.0
-			s["bar"].value = progress
+		var whole_levels = int(total_points)
+		var progress = total_points - float(whole_levels)
+		var exp_percent = int(snapped(progress, 0.01) * 100)
+		
+		# Display the clean isolated stats for just this active job category track
+		stats.text = "Category: %s\nPTS: %d | EXP: %d%%" % [category.to_upper(), whole_levels, exp_percent]
+	
+		# Set up values to reflect inside our single progress bar component smoothly
+		if is_instance_valid(active_job_bar):
+			active_job_bar.visible = true
+			active_job_bar.max_value = 1.0
+			active_job_bar.value = progress
+	else:
+		description_label.text = "You are currently unemployed."
+		stats.text = "TRACK: NONE\nLVL: 0 | EXP: 0%"
+		
+		if is_instance_valid(active_job_bar):
+			active_job_bar.value = 0.0
+			active_job_bar.visible = false
+
 # --- UI LOGIC ---
 
 func initialize_known_jobs():
@@ -156,10 +147,8 @@ func update_button_visuals(btn: Button, job: JobData):
 	var skill_met = player_points >= job.required_skill_points
 	
 	if level_met and skill_met:
-		# Check Globals instead of the local array
 		if not Globals.unlocked_jobs.has(job.job_name):
 			Globals.unlocked_jobs.append(job.job_name)
-			# Only notify if the game is actually running (not just starting up)
 			if Globals.first_start == false: 
 				Globals.notify("New Job Available: " + job.job_name, Color.CHARTREUSE)
 		
@@ -186,9 +175,10 @@ func _on_job_selected(job: JobData):
 	Globals.job_exp_per_month = job.Exp_gain_per_month
 	Globals.job_exp_gain_per_month = job.job_exp_gain_per_month
 	Globals.current_job_category = job.category
-	description_label.text = "CURRENT JOB: %s\nINCOME: $%s/mo" % [job.job_name, str(job.monthly_salary)]
+	
 	job_list_panel.visible = false
 	refresh_timer.stop()
+	update_stats()
 
 func _on_apply_for_job_pressed() -> void:
 	job_list_panel.visible = !job_list_panel.visible

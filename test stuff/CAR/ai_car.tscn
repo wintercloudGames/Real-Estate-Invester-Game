@@ -1,4 +1,4 @@
-[gd_scene load_steps=260 format=4 uid="uid://cbnxqfk0yfkc1"]
+[gd_scene load_steps=261 format=4 uid="uid://cbnxqfk0yfkc1"]
 
 [ext_resource type="Script" uid="uid://blkq1n8m4sfpq" path="res://test stuff/CAR/ai_car.gd" id="1_bvlxt"]
 [ext_resource type="Script" uid="uid://d1p4lxuiuyok5" path="res://test stuff/CAR/car_picker.gd" id="2_bjvq4"]
@@ -4383,7 +4383,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_x1n0k")
 
-[node name="PathFollow3D" type="PathFollow3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_bjvq4"]
+size = Vector3(0.41577148, 0.36517334, 1.087677)
+
+[node name="PathFollow3D" type="PathFollow3D" groups=["AICar"]]
 process_mode = 3
 rotation_mode = 1
 tilt_enabled = false
@@ -4826,7 +4829,15 @@ mesh = SubResource("ArrayMesh_jtrvw")
 skeleton = NodePath("")
 
 [node name="FrontRay" type="RayCast3D" parent="AICar"]
-transform = Transform3D(1, 0, 0, 0, 0.00511377, -0.999987, 0, 0.999987, 0.00511377, 0, 0.126082, -0.13243)
+transform = Transform3D(1, 0, 0, 0, 0.00511377, -0.999987, 0, 0.999987, 0.00511377, 0, 0.126082, -0.33706003)
+
+[node name="DetectionArea" type="Area3D" parent="AICar"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AICar/DetectionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026524842, 0.124717236, -0.26193178)
+shape = SubResource("BoxShape3D_bjvq4")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.98308915, 0.18312785, 0, -0.18312785, 0.98308915, 0, 0.21781799, -0.093316525)
@@ -4840,8 +4851,10 @@ spot_range = 1.7567587
 spot_angle = 30.383696
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18855953, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00011122227, 0.18855947, 0.0033602715)
 aabb = AABB(-0.09381111, -0.18231481, -0.29133227, 0.18762222, 0.36462963, 0.58266455)
 
+[connection signal="area_entered" from="AICar/DetectionArea" to="." method="_on_stop_area_entered"]
+[connection signal="area_exited" from="AICar/DetectionArea" to="." method="_on_stop_area_exited"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]

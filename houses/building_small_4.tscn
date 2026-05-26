@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=4 uid="uid://bfbyalicra033"]
 
 [ext_resource type="Script" uid="uid://885nck1e7d83" path="res://houses/collect_rent.gd" id="3_dqafq"]
-[ext_resource type="ArrayMesh" uid="uid://0pbpieoh3bw5" path="res://3D assets/Chads/Dollar sign.obj" id="4_h523m"]
+[ext_resource type="ArrayMesh" uid="uid://0pbpieoh3bw5" path="res://3D assets/Me made/Dollar sign.obj" id="4_h523m"]
 [ext_resource type="Script" uid="uid://bkms1t16f02un" path="res://houses/dollar_sign.gd" id="5_6w7x1"]
 [ext_resource type="Script" uid="uid://dtdaluqrijy0" path="res://assets/UI/house_click.gd" id="5_bobgr"]
 [ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/Generate_house_texure.gd" id="13_6h30i"]

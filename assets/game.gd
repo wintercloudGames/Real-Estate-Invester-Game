@@ -9,7 +9,6 @@ var house = null
 @onready var game_over_panel: Control = $HUD/GAME_OVER
 
 func _ready() -> void:
-	# 1. Immediate Setup (Things that don't depend on saved data)
 	$camera/Camera3D.current = true
 	Globals.yard_edit = false
 	
@@ -92,7 +91,6 @@ func setup_mission_start() -> void:
 	
 	SaveAndLoad.save_game()
 	
-
 func _check_mission_status():
 	if Globals.current_game_mode != Globals.GameMode.MISSION or Globals.active_mission == null:
 		return

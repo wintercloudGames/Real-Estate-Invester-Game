@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://be6xahrqbrede"]
+[gd_scene load_steps=47 format=4 uid="uid://be6xahrqbrede"]
 
 [ext_resource type="PackedScene" uid="uid://dg5rp46rnxgp2" path="res://assets/Town_Blocks/Textured Houses/house_type_01.tscn" id="1_4kqxo"]
 [ext_resource type="PackedScene" uid="uid://bnykhb0kabgga" path="res://assets/Town_Blocks/Textured Houses/house_type_04.tscn" id="2_muiy8"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://dwgeu0wvtuvc4" path="res://3D assets/Decore/tree_small.glb" id="6_ui647"]
 [ext_resource type="PackedScene" uid="uid://dpjkecffdtmy7" path="res://3D assets/Decore/tree_large.glb" id="7_hiwbu"]
 [ext_resource type="PackedScene" uid="uid://dvmikjd1mjpxp" path="res://assets/Town_Blocks/light_curved.tscn" id="8_hiwbu"]
+[ext_resource type="Script" uid="uid://lrkgrm4dwefj" path="res://assets/Town_Blocks/intersection_holder.gd" id="9_q50cb"]
+[ext_resource type="PackedScene" uid="uid://c7ba5kjyh6xos" path="res://assets/Town_Blocks/trafic_light.tscn" id="9_tnsrj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w8uyk"]
 resource_name = "pavement"
@@ -655,7 +657,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.822
 [node name="decore" type="Node3D" parent="."]
 
 [node name="tree_small2" parent="decore" instance=ExtResource("6_ui647")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.639555, 0, 0.595077)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6296339, 0, 1.3279052)
 
 [node name="tree_large2" parent="decore" instance=ExtResource("7_hiwbu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.571192, 0, 0.618037)
@@ -695,6 +697,26 @@ transform = Transform3D(-0.98995465, 0, 0.1413851, 0, 1, 0, -0.1413851, 0, -0.98
 
 [node name="light_curved5" parent="decore" instance=ExtResource("8_hiwbu")]
 transform = Transform3D(-0.98995465, 0, 0.1413851, 0, 1, 0, -0.1413851, 0, -0.98995465, -1.8846755, -0.0743688, 0.608871)
+
+[node name="TraficLights_controller" type="Node3D" parent="decore"]
+script = ExtResource("9_q50cb")
+
+[node name="TrafficLight_North" parent="decore/TraficLights_controller" instance=ExtResource("9_tnsrj")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.73189723, -0.010655969, -0.5932512)
+
+[node name="TrafficLight_South" parent="decore/TraficLights_controller" instance=ExtResource("9_tnsrj")]
+transform = Transform3D(-0.24999999, 0, -2.1855692e-08, 0, 0.25, 0, 2.1855692e-08, 0, -0.24999999, -0.69928944, -0.010655969, 0.5669774)
+traffic_direction = 1
+
+[node name="TrafficLight_East" parent="decore/TraficLights_controller" instance=ExtResource("9_tnsrj")]
+transform = Transform3D(-1.0927847e-08, 0, -0.25, 0, 0.25, 0, 0.25, 0, -1.0927847e-08, 0.5991256, -0.010655969, 0.6858225)
+traffic_direction = 2
+
+[node name="TrafficLight_West" parent="decore/TraficLights_controller" instance=ExtResource("9_tnsrj")]
+transform = Transform3D(-1.0927846e-08, 0, 0.24999999, 0, 0.25, 0, -0.24999999, 0, -1.0927846e-08, -0.5797399, -0.010655969, -0.716764)
+traffic_direction = 3
+
+[node name="Timer" type="Timer" parent="decore/TraficLights_controller"]
 
 [node name="North_turn_path" type="Path3D" parent="."]
 transform = Transform3D(0.9999999, 0, 0, 0, 1, 0, 0, 0, 0.9999999, 3.4801292, 0.039576292, -0.20355874)

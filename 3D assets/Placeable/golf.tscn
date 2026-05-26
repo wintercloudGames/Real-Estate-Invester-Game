@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=4 uid="uid://cdspaxr0prmki"]
 
-[ext_resource type="Texture2D" uid="uid://dirvaj5qyq4gg" path="res://3D assets/Chads/Golf_0.png" id="1_fw7lo"]
+[ext_resource type="Texture2D" uid="uid://dirvaj5qyq4gg" path="res://3D assets/Me made/Golf_0.png" id="1_fw7lo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3a1on"]
 resource_name = "bricks(Clone)"

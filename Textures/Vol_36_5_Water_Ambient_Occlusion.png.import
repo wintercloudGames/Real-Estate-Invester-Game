@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b4tn4ot5e3w3d"
 path.s3tc="res://.godot/imported/Vol_36_5_Water_Ambient_Occlusion.png-c704931cc46ab0cd32cdd86421efa85a.s3tc.ctex"
+path.etc2="res://.godot/imported/Vol_36_5_Water_Ambient_Occlusion.png-c704931cc46ab0cd32cdd86421efa85a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Textures/Vol_36_5_Water_Ambient_Occlusion.png"
-dest_files=["res://.godot/imported/Vol_36_5_Water_Ambient_Occlusion.png-c704931cc46ab0cd32cdd86421efa85a.s3tc.ctex"]
+dest_files=["res://.godot/imported/Vol_36_5_Water_Ambient_Occlusion.png-c704931cc46ab0cd32cdd86421efa85a.s3tc.ctex", "res://.godot/imported/Vol_36_5_Water_Ambient_Occlusion.png-c704931cc46ab0cd32cdd86421efa85a.etc2.ctex"]
 
 [params]
 

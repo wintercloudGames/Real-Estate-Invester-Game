@@ -125,11 +125,11 @@ horizontal_alignment = 1
 
 [node name="Label_list_price2" type="Label" parent="."]
 layout_mode = 0
-offset_left = 91.0
+offset_left = 72.0
 offset_top = 12.0
-offset_right = 252.0
+offset_right = 237.0
 offset_bottom = 35.0
-text = "Current House Value"
+text = "Current House Value:"
 horizontal_alignment = 1
 
 [node name="Label_bought_price" type="Label" parent="."]
@@ -147,7 +147,7 @@ offset_left = 27.0
 offset_top = 98.0
 offset_right = 141.0
 offset_bottom = 121.0
-text = "Purchase Price"
+text = "Purchase Price:"
 horizontal_alignment = 1
 
 [node name="Label_loan" type="Label" parent="."]
@@ -165,7 +165,7 @@ offset_left = 27.0
 offset_top = 122.0
 offset_right = 132.0
 offset_bottom = 145.0
-text = "Loan Amount"
+text = "Loan Amount:"
 
 [node name="Label_morgage" type="Label" parent="."]
 layout_mode = 0
@@ -182,7 +182,7 @@ offset_left = 27.0
 offset_top = 151.0
 offset_right = 177.0
 offset_bottom = 174.0
-text = "Morgage"
+text = "Morgage:"
 
 [node name="Label_Income" type="Label" parent="."]
 layout_mode = 0
@@ -254,6 +254,18 @@ theme_override_font_sizes/font_size = 10
 text = "Per Month"
 horizontal_alignment = 1
 
+[node name="Label_cashflow3" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 43.0
+offset_top = 418.0
+offset_right = 167.0
+offset_bottom = 465.0
+theme_override_font_sizes/font_size = 15
+text = "New Button
+ Coming Soon"
+horizontal_alignment = 1
+
 [node name="Min_rent_label" type="Label" parent="."]
 layout_mode = 0
 offset_left = 43.0
@@ -277,18 +289,18 @@ horizontal_alignment = 1
 [node name="Buy_button" type="Button" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 383.0
-offset_top = 71.0
-offset_right = 508.0
-offset_bottom = 116.0
+offset_left = 380.0
+offset_top = 93.0
+offset_right = 505.0
+offset_bottom = 127.0
 text = "Pay off Loan"
 
 [node name="Refinance_button" type="Button" parent="."]
 layout_mode = 0
 offset_left = 380.0
-offset_top = 107.0
+offset_top = 135.0
 offset_right = 506.0
-offset_bottom = 156.0
+offset_bottom = 169.0
 text = "Refinance"
 
 [node name="Tenent_button" type="Button" parent="."]

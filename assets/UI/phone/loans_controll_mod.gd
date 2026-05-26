@@ -22,13 +22,13 @@ const LOAN_TYPE_PERSONAL: int = 1
 @export var loan_id: String = ""       
 @export var loan_type_str: String = "" 
 var autopay_enabled: bool = true 
-var house_ref: Node = null   
+var house_ref: Node = null
 
 func _ready() -> void:
 	# Connect to the Global signal so we update whenever the month rolls over
 	if not Globals.month_ended.is_connected(_on_month_ended):
 		Globals.month_ended.connect(_on_month_ended)
-	
+		
 	# Setup UI visibility
 	refinance_button.visible = (loan_type_str == "Mortgage")
 	
@@ -37,6 +37,12 @@ func _ready() -> void:
 	
 	update_ui()
 	Globals.recalculate_expenses()
+	
+	await get_tree().create_timer(2).timeout
+	if not(loan_type_str == "Mortgage" and house_ref != null):
+		_self_destruct()
+	else:
+		print("ERROR No Loan House ID Orphaned loan")
 
 func update_ui() -> void:
 	if loan_amount: loan_amount.text = "Balance: $" + add_comma_to_int(int(loan_balance))

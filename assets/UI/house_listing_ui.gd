@@ -208,6 +208,7 @@ func handle_buy(list_for_rent: bool = false) -> void:
 						loan_mod = loans_ui.add_mortgage_as_loan(monthly_payment, interest_rate, term_months, house)
 						if loan_mod and is_instance_valid(loan_mod):
 							loan_mod.loan_id = "mortgage_" + str(house.id)
+							loan_mod.house_ref = house
 							house.house_buy(true, full_price, calculated_loan_amount, loan_mod)
 							Globals.recalculate_expenses()
 						else:

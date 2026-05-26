@@ -6,11 +6,12 @@
 [ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="3_tixg6"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="4_tixg6"]
 
-[node name="JobDisplay" type="Control"]
+[node name="JobDisplay" type="Control" node_paths=PackedStringArray("active_job_bar")]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_h25pc")
 script = ExtResource("2_rbwtn")
+active_job_bar = NodePath("VBoxContainer/ProgressBar")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
@@ -18,14 +19,23 @@ offset_left = -4.0
 offset_right = 682.0
 offset_bottom = 402.0
 
-[node name="Stats" type="Label" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 540.0
-offset_top = 10.0
-offset_right = 661.0
-offset_bottom = 335.0
+offset_left = 444.0
+offset_top = 71.0
+offset_right = 645.0
+offset_bottom = 164.0
+
+[node name="Stats" type="Label" parent="VBoxContainer"]
+layout_mode = 2
 theme_override_font_sizes/font_size = 14
 vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
+layout_mode = 2
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0

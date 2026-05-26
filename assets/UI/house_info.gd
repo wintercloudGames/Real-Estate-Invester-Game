@@ -32,6 +32,9 @@ func _ready() -> void:
 	rent_slider_info.focus_exited.connect(_on_rent_input_focus_exited)
 
 func _process(_delta: float) -> void:
+	if house:
+		if house.for_sale == false:
+			visible = false
 	if visible != previous_visible:
 		previous_visible = visible
 		if visible:
@@ -328,3 +331,7 @@ func _on_refinance_button_pressed() -> void:
 	Globals.recalculate_expenses()
 	update_ui_elements()
 	SaveAndLoad.save_game()
+
+#pay off 
+func _on_buy_button_pressed() -> void:
+	pass # Replace with function body.
