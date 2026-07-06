@@ -94,23 +94,17 @@ func _update_visual_state(_dummy_var = null) -> void:
 	var parent_requirements_met = _check_parent_requirements()
 	var has_enough_points = Globals.skillpoints >= get_next_level_cost()
 	
-	# Priority 1: Selection Glow (Using self_modulate to avoid affecting text/children)
 	if is_selected:
 		self_modulate = selected_color
-	# Priority 2: Maxed Out
 	elif level >= max_level:
 		self_modulate = maxed_color
-	# Priority 3: Locked by Parent
 	elif !parent_requirements_met:
 		self_modulate = locked_color
-	# Priority 4: Can't Afford
 	elif !has_enough_points:
 		self_modulate = unaffordable_color
-	# Priority 5: Ready to Buy
 	else:
 		self_modulate = affordable_color
 	
-	# Update children without passing the "selected" status
 	for child_skill in _children_skills:
 		if is_instance_valid(child_skill):
 			child_skill._update_visual_state()
@@ -123,30 +117,35 @@ func _pulse_effect() -> void:
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.05)
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.05)
+
 # --- Input & Selection ---
 
-func _on_pressed() -> void:
-	# Check if the device relies heavily on touch input
-	var is_touch_device = DisplayServer.has_feature(DisplayServer.FEATURE_TOUCHSCREEN)
+func _gui_input(event: InputEvent) -> void:
+	# MOUSE HOVER: Catch mouse motions directly here to ensure hover works instantly on PC
+	if event is InputEventMouseMotion:
+		_on_mouse_entered()
+		return
 
-	if is_touch_device:
-		# TOUCH LOGIC: 2-tap process
-		if not is_selected:
-			# FIRST TAP: Select and show info
-			_deselect_all_nodes()
-			is_selected = true 
-			_show_skill_info()
-			_pulse_effect()
-			return
-		
-		# SECOND TAP: Attempt Purchase
-		_attempt_unlock()
-	else:
-		# MOUSE LOGIC: 1-click bypasses selection completely
+	# Handle clicks and taps
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_handle_mouse_click()
+	elif event is InputEventScreenTouch and event.pressed:
+		_handle_touch_tap()
+
+func _handle_mouse_click() -> void:
+	# Snappy 1-click purchase
+	_attempt_unlock()
+
+func _handle_touch_tap() -> void:
+	# Safe 2-tap flow for tablets
+	if not is_selected:
 		_deselect_all_nodes()
-		is_selected = true # Keep true so visuals update correctly during unlock
+		is_selected = true 
+		_show_skill_info()
+		_pulse_effect()
+	else:
 		_attempt_unlock()
-
 
 func _attempt_unlock() -> void:
 	if not _check_parent_requirements():
@@ -161,13 +160,16 @@ func _attempt_unlock() -> void:
 		level += 1
 		_apply_permanent_unlock()
 		_pulse_effect()
-		_show_skill_info() # Update panel with new level info
+		_show_skill_info()
 		
 		if is_instance_valid(skill_tree) and skill_tree.has_method("on_skill_unlocked"):
 			skill_tree.on_skill_unlocked(skill_name, cost)
 		Globals.notify("Unlocked: %s (Lvl %d)" % [skill_name, level], Color.SPRING_GREEN)
 	else:
 		Globals.notify("Not enough points! Need %d" % cost, Color.CRIMSON)
+		
+	if level >= max_level:
+		is_selected = false 
 
 func _deselect_all_nodes() -> void:
 	get_tree().call_group("skill_nodes", "set_selected_state", false)
@@ -189,31 +191,24 @@ func _show_skill_info() -> void:
 # --- Cursor & Platform Logic ---
 
 func _on_mouse_entered() -> void:
-	# Avoid hover calculations executing on touch screens
-	if DisplayServer.has_feature(DisplayServer.FEATURE_TOUCHSCREEN): return
-
-	# Handle cursor changes
+	# FIXED: Removed the feature check that was disabling PC hover!
 	var hs = cursor_offset
 	if level >= max_level or !_check_parent_requirements():
 		Input.set_custom_mouse_cursor(cursor_disabled, Input.CURSOR_ARROW, hs)
 	else:
 		Input.set_custom_mouse_cursor(cursor_hover, Input.CURSOR_ARROW, hs)
 	
-	# MOUSE HOVER FEATURE: Automatically show description details on pointer over
 	_show_skill_info()
 
-
 func _on_mouse_exited() -> void:
-	if DisplayServer.has_feature(DisplayServer.FEATURE_TOUCHSCREEN): return
-
+	# FIXED: Removed feature check here as well
 	Input.set_custom_mouse_cursor(cursor_normal, Input.CURSOR_ARROW, cursor_offset)
-	
-	# Hide info on exit since mouse doesn't rely on sticky selection states
 	if is_instance_valid(skill_tree):
 		skill_tree.hide_info()
 
 func _on_visibility_changed() -> void:
 	is_selected = false
+	_update_visual_state()
 	if is_instance_valid(skill_tree) and !visible:
 		skill_tree.hide_info()
 

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://lvhkojl3ymki"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yk60l"]
+
+[node name="DollorExplosion" type="GPUParticles3D"]
+process_material = SubResource("ParticleProcessMaterial_yk60l")

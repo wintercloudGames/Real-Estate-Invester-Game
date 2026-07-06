@@ -83,6 +83,10 @@ func _physics_process(delta: float) -> void:
 		front_ray.target_position.z = 0.0
 		front_ray.target_position.y = -max(3.5, _current_speed * 1.5)
 		
+		# Check if the current path we are attached to is a turn lane
+		var current_path = get_parent()
+		var _is_on_turn_path: bool = current_path and !"straight" in current_path.name.to_lower()
+		
 		# Check A: Standard Red/Yellow Light Stop
 		if _at_red_light and _is_light_ahead_red():
 			target_speed = 0.0
@@ -93,8 +97,8 @@ func _physics_process(delta: float) -> void:
 			if next_intended_path and not _has_room_on_destination_path(next_intended_path):
 				target_speed = 0.0 
 				
-		# Check C: Advanced Bumper-to-Bumper Queuing
-		else:
+		# Check C: Advanced Bumper-to-Bumper Queuing (Bypassed if turning)
+		elif not _is_on_turn_path:
 			var car_ahead_distance = _get_distance_to_car_ahead()
 			if car_ahead_distance < stop_distance:
 				# 1.2 is the absolute minimum distance (in meters) between bumpers when fully stopped
@@ -103,6 +107,12 @@ func _physics_process(delta: float) -> void:
 				
 				target_speed = lerp(0.0, max_speed, factor)
 				target_speed = clamp(target_speed, 0.0, max_speed)
+		
+		# If on a turn path, maintain normal target speed since _attempt_group_switch 
+		# already verified the turn path was empty before the car entered it.
+		else:
+			target_speed = max_speed
+	
 
 	# 4. STUCK DETECTION
 	var waiting_at_light = _at_red_light and _is_light_ahead_red()
@@ -118,7 +128,7 @@ func _physics_process(delta: float) -> void:
 	# 5. MOVEMENT EXECUTION
 	var accel_rate = acceleration if target_speed > _current_speed else braking_strength
 	_current_speed = move_toward(_current_speed, target_speed, accel_rate * delta)
-	
+	 
 	progress += _current_speed * delta
 
 	# 6. MODULAR HANDOFF (Switching tiles)
@@ -139,10 +149,8 @@ func _toggle_ghost_collision(enable: bool) -> void:
 	if not ai_car: return
 	if enable:
 		ai_car.collision_layer = _original_collision_layer
-		ai_car.modulate.a = 1.0
 	else:
 		ai_car.collision_layer = 0
-		ai_car.modulate.a = 0.5
 
 # Scans a specific path to see if another car is currently using it
 func _is_path_occupied(target_path: Path3D) -> bool:

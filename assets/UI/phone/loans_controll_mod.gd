@@ -38,11 +38,16 @@ func _ready() -> void:
 	update_ui()
 	Globals.recalculate_expenses()
 	
+	# Validation safety check
 	await get_tree().create_timer(2).timeout
-	if not(loan_type_str == "Mortgage" and house_ref != null):
-		_self_destruct()
-	else:
-		print("ERROR No Loan House ID Orphaned loan")
+	_validate_loan_integrity()
+
+func _validate_loan_integrity() -> void:
+	# If it's a mortgage, it MUST have a valid house reference. Otherwise, it's orphaned.
+	if loan_type_str == "Mortgage":
+		if house_ref == null or not is_instance_valid(house_ref):
+			print("ERROR: No Loan House ID. Orphaned mortgage loan self-destructing.")
+			_self_destruct()
 
 func update_ui() -> void:
 	if loan_amount: loan_amount.text = "Balance: $" + add_comma_to_int(int(loan_balance))
@@ -51,7 +56,7 @@ func update_ui() -> void:
 	if Intrest: Intrest.text = "Interest: %.1f%%" % (interest * 100.0)
 	if month_display: month_display.text = "Months: " + str(months)
 	
-	# Safety: If the house was sold or deleted, remove the mortgage
+	# Safety: If the house was sold or deleted mid-game, remove the mortgage
 	if loan_type_str == "Mortgage" and (house_ref == null or not is_instance_valid(house_ref)):
 		_self_destruct()
 
@@ -65,19 +70,23 @@ func add_comma_to_int(value: int) -> String:
 # --- MONTHLY PROCESSING ---
 
 func _on_month_ended():
-	# If Autopay is ON, Globals already subtracted 'payment' via 'Expenses'.
-	# We just need to process the internal math and reduce the balance.
 	if autopay_enabled:
+		# Money already taken via Global expenses background systems
 		process_loan_reduction()
 	else:
-		# If Autopay is OFF, money wasn't taken. Penalty time!
+		# If Autopay is OFF and they didn't manually pay, apply penalty
 		Globals.notify("MISSED PAYMENT: %s" % loan_type_str, Color.ORANGE)
 		Globals.credit_score -= 10
+		
+		# Capitalize the interest (add unpaid interest back to balance)
+		var monthly_interest_rate = interest / 12.0
+		var interest_charge = loan_balance * monthly_interest_rate
+		loan_balance += interest_charge
+		
+		update_ui()
 
-# Add is_manual as a parameter with a default value of true
 func _on_make_payment_pressed(is_manual: bool = true) -> void:
 	if Globals.money < payment:
-		# Only show the "Need Money" error if the player manually clicked it
 		if is_manual:
 			Globals.notify("Need $%s!" % add_comma_to_int(int(payment)), Color.RED)
 		return
@@ -86,12 +95,10 @@ func _on_make_payment_pressed(is_manual: bool = true) -> void:
 	process_loan_reduction()
 	
 	if is_manual:
-		# Blue notification and credit boost for manual extra payments
 		Globals.notify("Extra Payment: -$" + add_comma_to_int(int(payment)), Color.CYAN)
 		Globals.credit_score += 1
 
 func process_loan_reduction():
-	# Split payment into Interest vs Principal
 	var monthly_interest_rate = interest / 12.0
 	var interest_charge = loan_balance * monthly_interest_rate
 	var principal_reduction = payment - interest_charge
@@ -99,6 +106,7 @@ func process_loan_reduction():
 	loan_balance -= principal_reduction
 	months -= 1
 	Globals.credit_score += 2
+	
 	if is_instance_valid(house_ref):
 		house_ref.loan_price = loan_balance
 	
@@ -106,7 +114,6 @@ func process_loan_reduction():
 		_complete_loan()
 	else:
 		update_ui()
-		# Expenses might change if the balance hit 0, otherwise keep sync
 		Globals.recalculate_expenses()
 
 func _complete_loan():
@@ -123,8 +130,6 @@ func _complete_loan():
 
 func _on_autopay_toggled(toggled: bool) -> void:
 	autopay_enabled = toggled
-	# This is vital: Recalculating expenses tells Globals whether to 
-	# include this payment in the monthly deduction or not.
 	Globals.recalculate_expenses()
 	update_ui()
 
@@ -161,12 +166,17 @@ func _on_refinance_pressed() -> void:
 
 func calculate_mortgage_payment(p_amount: float, p_months: int, p_rate: float) -> float:
 	if p_months <= 0: return 0.0
+	if p_rate == 0: return p_amount / p_months # Edge case safety for 0% loans
 	var m_rate = p_rate / 12.0
 	return p_amount * (m_rate * pow(1 + m_rate, p_months)) / (pow(1 + m_rate, p_months) - 1)
 
 func _self_destruct():
-	if loans_ui and loans_ui.active_loan_mods.has(self):
+	if loans_ui and loans_ui.get("active_loan_mods") and loans_ui.active_loan_mods.has(self):
 		loans_ui.active_loan_mods.erase(self)
+	
+	# Disconnect signal to avoid orphan calls during frame cleanup
+	if Globals.month_ended.is_connected(_on_month_ended):
+		Globals.month_ended.disconnect(_on_month_ended)
+		
 	queue_free()
-	# Call this last so the total expenses remove this specific payment
 	Globals.recalculate_expenses()

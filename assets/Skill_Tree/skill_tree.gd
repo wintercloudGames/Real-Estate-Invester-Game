@@ -32,7 +32,6 @@ func show_info(skill_name: String, info: String, current_level: int = 0, max_lev
 	description_label.text = formatted_info
 	skill_name_label.text = skill_name
 	description_panel.visible = true
-	
 
 func hide_info() -> void:
 	if is_instance_valid(description_panel):
@@ -58,6 +57,7 @@ func _update_progress_bar() -> void:
 
 func _on_close_button_pressed() -> void:
 	visible = false
+	hide_info()
 
 func on_skill_unlocked(_skill_name: String, _cost: int) -> void:
 	_update_skill_points_display()
