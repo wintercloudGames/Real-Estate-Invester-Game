@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://md8dkoe233f6"]
+[gd_scene load_steps=8 format=3 uid="uid://md8dkoe233f6"]
 
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_827rr"]
 [ext_resource type="Script" uid="uid://cmkp1i17wqbl6" path="res://Menu/profile.gd" id="1_p3smj"]
 [ext_resource type="Texture2D" uid="uid://b46ulwru5x0bb" path="res://assets/UI/icons/person.png" id="1_pxd1r"]
 [ext_resource type="Texture2D" uid="uid://b2o8cev4c6588" path="res://assets/UI/phone/Sprite-0001.png" id="3_y68pl"]
 [ext_resource type="Texture2D" uid="uid://dtxmxhu4p161o" path="res://assets/UI/icons/pencil_9005388.png" id="4_mnqs0"]
+[ext_resource type="Script" uid="uid://jgbu4mb80yj5" path="res://effects/audio_stream_player.gd" id="6_h7vx2"]
+[ext_resource type="AudioStream" uid="uid://b7332uyq7kqg6" path="res://effects/sounds/194071__potentjello__buttons-and-knobs-10.wav" id="7_8cfuu"]
 
 [node name="Profile" type="TextureButton"]
 custom_minimum_size = Vector2(320, 320)
@@ -142,6 +144,13 @@ offset_right = 44.0
 offset_bottom = 42.0
 texture = ExtResource("4_mnqs0")
 expand_mode = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource("6_h7vx2")
+sound_library = Dictionary[String, AudioStream]({
+"error": null,
+"success": ExtResource("7_8cfuu")
+})
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
