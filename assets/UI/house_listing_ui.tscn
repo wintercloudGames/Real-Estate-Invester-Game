@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://5sf2oo4asb"]
+[gd_scene load_steps=9 format=3 uid="uid://5sf2oo4asb"]
 
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_56k8e"]
 [ext_resource type="Script" uid="uid://dsi3osmfkvip4" path="res://assets/UI/house_listing_ui.gd" id="1_byctf"]
 [ext_resource type="Theme" uid="uid://b8jl6a5r3l2mm" path="res://themes/yellow.tres" id="3_5sbf3"]
 [ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="4_56k8e"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="4_cckjx"]
+[ext_resource type="Script" uid="uid://jgbu4mb80yj5" path="res://effects/audio_stream_player.gd" id="6_qri47"]
+[ext_resource type="AudioStream" uid="uid://b7332uyq7kqg6" path="res://effects/sounds/194071__potentjello__buttons-and-knobs-10.wav" id="8_s5u6y"]
+
+[sub_resource type="Environment" id="Environment_5ou6w"]
 
 [node name="House_listing_ui" type="Control"]
 layout_mode = 3
@@ -167,8 +171,18 @@ size = Vector2i(248, 120)
 render_target_update_mode = 4
 
 [node name="ListingCam" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-0.83319163, 0, -0.5529846, 0, 1, 0, 0.5529846, 0, -0.83319163, -0.22822905, 0.72508454, 0.7191081)
+environment = SubResource("Environment_5ou6w")
+fov = 66.0
 
 [node name="SpotLight3D" type="SpotLight3D" parent="SubViewportContainer/SubViewport/ListingCam"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource("6_qri47")
+sound_library = Dictionary[String, AudioStream]({
+"error": null,
+"success": ExtResource("8_s5u6y")
+})
 
 [connection signal="toggled" from="Loan_button" to="." method="_on_loan_button_toggled"]
 [connection signal="pressed" from="Buy_button" to="." method="_on_buy_button_pressed"]

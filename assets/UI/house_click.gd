@@ -42,7 +42,14 @@ var time_on_market = 0
 var owner_type: String = "none"
 var loan_module: Control = null
 var is_on_screen: bool = true
+
+# Performance Optimization Cache Values
+var _frame_count: int = 0
 var _last_rendered_price: int = -1
+var _last_rendered_cashflow: int = -999999
+var _last_rendered_loan: int = -1
+var _last_player_money: int = -1
+var _last_state_string: String = ""
 
 func _init():
 	add_to_group("houses")
@@ -62,19 +69,27 @@ func _ready() -> void:
 
 func _on_visible_on_screen_notifier_3d_screen_entered():
 	is_on_screen = true
-	_last_rendered_price = -1 # Force refresh
+	_force_ui_refresh()
 
 func _on_visible_on_screen_notifier_3d_screen_exited():
 	is_on_screen = false
-	# Clear labels immediately when off-screen to save draw calls
+	# Completely clear labels when off-screen to remove them from the render queue
 	$Label3D.text = ""
 	$Label3D2.text = ""
 	$Label3D3.text = ""
 	$Label3D4.text = ""
 	$Label3D5.text = ""
 
+func _force_ui_refresh():
+	_last_rendered_price = -1
+	_last_rendered_cashflow = -999999
+	_last_rendered_loan = -1
+	_last_player_money = -1
+	_last_state_string = ""
+
 func add_to_base_price(amount: int):
 	base_price += amount
+	_force_ui_refresh()
 
 func set_as_ai_owned():
 	owned = true
@@ -103,56 +118,69 @@ func update_market_value(market_change_percent: float) -> void:
 	var market_multiplier = 1.0 + market_change_percent
 	var noise = randf_range(0.9975, 1.0025)
 	current_price = max(round((previous_price * market_multiplier * noise) / 500.0) * 500, 500)
+	# Queue an update check because pricing metrics altered
+	_last_rendered_price = -1
 
 func _on_month_ended():
 	if owned: return
 	
 func open_house_ui():
-	# Find the game node using the group you set up in game.gd
 	if game:
-		game.house = self # Update the current house in game.gd 
+		game.house = self 
 		game.set_house_UI() 
 
 func _on_relist_house_button_pressed():
 	is_listed = true
 	Globals.notify("Relisted " + id, Color.LAWN_GREEN)
+	_force_ui_refresh()
 
 @onready var camera_front: Marker3D = $Camera_Front
 
-# Instead of returning a texture, we return the location
 func get_camera_location() -> Transform3D:
 	if is_instance_valid(camera_front):
 		return camera_front.global_transform
-	return global_transform # Fallback to house center
+	return global_transform 
 
 func _process(_delta: float) -> void:
-
+	_frame_count += 1
+	
+	# If completely off-screen, skip visual formatting entirely.
+	# We process background affordability variables on an interval loop (every 15 frames)
 	if not is_on_screen:
+		if _frame_count % 15 == 0:
+			# Check background states if necessary, otherwise skip completely
+			pass
 		return
+
 	if Globals.yard_edit == true:
-		$Label3D.text = ""
-		$Label3D2.text = ""
-		$Label3D3.text = ""
-		$Label3D4.text = ""
-		$Label3D5.text = ""
+		if _last_state_string != "yard_edit":
+			$Label3D.text = ""
+			$Label3D2.text = ""
+			$Label3D3.text = ""
+			$Label3D4.text = ""
+			$Label3D5.text = ""
+			_last_state_string = "yard_edit"
 		return
-	# Reset top labels only if on screen
-	$Label3D5.text = ""            
-	$Label3D3.text = ""         
+		
+	_last_state_string = "active"
 
 	if owned:
 		# --- OWNED PROPERTY LOGIC ---
 		if loan_price > 0:
-			$Label3D.text = "FINANCED PROPERTY"
-			$Label3D.modulate = Color.FIREBRICK
-			$Label3D2.text = "Loan Balance: " + add_comma_to_int(int(loan_price))
-			$Label3D2.visible = true
+			if _last_rendered_loan != int(loan_price):
+				$Label3D.text = "FINANCED PROPERTY"
+				$Label3D.modulate = Color.FIREBRICK
+				$Label3D2.text = "Loan Balance: " + add_comma_to_int(int(loan_price))
+				$Label3D2.visible = true
+				_last_rendered_loan = int(loan_price)
 			has_loan = true
 		else:
-			$Label3D.text = "OWNED PROPERTY"
-			$Label3D.modulate = Color.GREEN
-			$Label3D2.visible = false
-			$Label3D2.text = ""
+			if _last_rendered_loan != 0:
+				$Label3D.text = "OWNED PROPERTY"
+				$Label3D.modulate = Color.GREEN
+				$Label3D2.visible = false
+				$Label3D2.text = ""
+				_last_rendered_loan = 0
 			has_loan = false
 			mortgage = 0
 			loan_price = 0
@@ -162,38 +190,52 @@ func _process(_delta: float) -> void:
 			if Globals.rent_bost > 0.0:
 				effective_rent = rent * (1.0 + Globals.rent_bost)
 			
-			var cashflow = effective_rent - mortgage
-			$Label3D3.text = "CashFlow: " + add_comma_to_int(int(cashflow))
-			$Label3D3.modulate = Color.GREEN if cashflow >= 0 else Color.RED
+			var cashflow = int(effective_rent - mortgage)
+			if _last_rendered_cashflow != cashflow:
+				$Label3D3.text = "CashFlow: " + add_comma_to_int(cashflow)
+				$Label3D3.modulate = Color.GREEN if cashflow >= 0 else Color.RED
+				_last_rendered_cashflow = cashflow
+		else:
+			if _last_rendered_cashflow != 0:
+				$Label3D3.text = ""
+				_last_rendered_cashflow = 0
 		
-		$Label3D4.text = ""
+		$Label3D4.text = "Listed For Rent" if (is_listed and not has_tenant) else ""
+		$Label3D4.modulate = Color.CYAN
+		$Label3D5.text = ""
 
 	else:
 		# --- UNOWNED PROPERTY LOGIC ---
-		$Label3D.text = add_comma_to_int(int(current_price))
+		var price_int = int(current_price)
+		if _last_rendered_price != price_int:
+			$Label3D.text = add_comma_to_int(price_int)
+			$Label3D.modulate = Color.WHITE if for_sale else Color(0.7, 0.7, 0.7)
+			_last_rendered_price = price_int
+			
 		$Label3D2.text = ""
 		$Label3D3.text = ""
 		
+		# Combine state evaluations to reduce processing paths
 		if is_in_group("ai_owned") and for_sale:
 			$Label3D5.text = "Competitor Listing"
 			$Label3D5.modulate = Color.ORANGE
-		
-		if for_sale:
-			$Label3D.modulate = Color.WHITE
+		elif for_sale:
 			$Label3D4.text = "FOR SALE"
 			$Label3D4.modulate = Color.ORANGE
 			
-			var down_payment_needed = current_price * 0.2
-			if Globals.money >= down_payment_needed:
-				$Label3D5.text = "Affordable!"
-				$Label3D5.modulate = Color.ORANGE
+			# Only update affordability text if player bank records change
+			var current_player_money = int(Globals.money)
+			if _last_player_money != current_player_money:
+				var down_payment_needed = current_price * 0.2
+				if current_player_money >= down_payment_needed:
+					$Label3D5.text = "Affordable!"
+					$Label3D5.modulate = Color.ORANGE
+				else:
+					$Label3D5.text = ""
+				_last_player_money = current_player_money
 		else:
-			$Label3D.modulate = Color(0.7, 0.7, 0.7)
-			$Label3D4.text = ""            
-
-	if is_listed and not has_tenant and owned:
-		$Label3D4.text = "Listed For Rent"
-		$Label3D4.modulate = Color.CYAN
+			$Label3D4.text = ""
+			$Label3D5.text = ""
 
 func create_label(is_affordable: bool):
 	if has_node("Label3D5"):
@@ -225,11 +267,13 @@ func remove_tenant():
 	Collect_Rent.collect_rent()
 	if Collect_Rent:
 		Collect_Rent.reset_rent_state(true)
+	_force_ui_refresh()
 
 func add_tenant(income: int, lease_duration: int = 12):
 	rent = income
 	lease_length = lease_duration
 	has_tenant = true
+	_force_ui_refresh()
 	
 func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node = null) -> void:
 	if use_loan and (not loan_mod or not is_instance_valid(loan_mod)):
@@ -252,6 +296,7 @@ func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node 
 		just_bought = true
 		loan_price = 0
 		mortgage = 0
+	_force_ui_refresh()
 
 func sell_house():
 	Globals.money += current_price
@@ -267,6 +312,7 @@ func sell_house():
 	var offer_system = get_tree().root.find_child("Rent_offer_system", true, false)
 	if offer_system:
 		offer_system.clear_offers_ui()
+	_force_ui_refresh()
 
 func _handle_loan_payoff():
 	var loans_ui = get_tree().root.find_child("Loans", true, false)
@@ -303,3 +349,4 @@ func _on_timer_timeout() -> void:
 			loan_price = 0
 			mortgage = 0
 			has_loan = false
+	_force_ui_refresh()

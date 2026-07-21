@@ -477,7 +477,7 @@ offset_right = 250.0
 offset_bottom = 125.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_veryn")
+theme = ExtResource("1_7l2q4")
 
 [node name="text" type="Label" parent="Delete_profile_popup"]
 layout_mode = 1

@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://dlx0ovoxxaxtn"]
+[gd_scene load_steps=9 format=3 uid="uid://dlx0ovoxxaxtn"]
 
 [ext_resource type="Script" uid="uid://dchi3h0qr3eto" path="res://assets/UI/house_info.gd" id="1_g1vcf"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_wy6uo"]
 [ext_resource type="Theme" uid="uid://b8jl6a5r3l2mm" path="res://themes/yellow.tres" id="3_wy6uo"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="4_nshnh"]
 [ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="4_wy6uo"]
+[ext_resource type="Script" uid="uid://jgbu4mb80yj5" path="res://effects/audio_stream_player.gd" id="6_wl2c5"]
+[ext_resource type="AudioStream" uid="uid://b7332uyq7kqg6" path="res://effects/sounds/194071__potentjello__buttons-and-knobs-10.wav" id="8_3mg78"]
+[ext_resource type="AudioStream" uid="uid://disli3m3hvlpa" path="res://effects/sounds/718371__binauralcow__click2.mp3" id="9_kfm12"]
 
 [node name="House_info" type="Control"]
 layout_mode = 3
@@ -446,6 +449,14 @@ anchor_right = 0.05009631
 anchor_bottom = 0.04077778
 offset_top = -23.913177
 offset_bottom = 23.814999
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+script = ExtResource("6_wl2c5")
+sound_library = Dictionary[String, AudioStream]({
+"error": ExtResource("9_kfm12"),
+"success": ExtResource("8_3mg78")
+})
 
 [connection signal="focus_exited" from="Rent_slider_info" to="." method="_on_rent_input_focus_exited"]
 [connection signal="text_submitted" from="Rent_slider_info" to="." method="_on_rent_input_submitted"]

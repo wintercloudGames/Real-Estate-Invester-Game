@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://yl0bxn3mvjem"]
+[gd_scene load_steps=6 format=3 uid="uid://yl0bxn3mvjem"]
 
 [ext_resource type="Script" uid="uid://dj6vww433ca2o" path="res://assets/Skill_Tree/skill_button.gd" id="1_0vius"]
 [ext_resource type="Texture2D" uid="uid://bq4i34nk7daor" path="res://assets/UI/icons/money-stack.png" id="1_ed3xm"]
+[ext_resource type="AudioStream" uid="uid://b7ndw53s4mu8n" path="res://effects/sounds/370962__cabled_mess__click-01_minimal-ui-sounds.wav" id="3_4hxse"]
+[ext_resource type="AudioStream" uid="uid://b7332uyq7kqg6" path="res://effects/sounds/194071__potentjello__buttons-and-knobs-10.wav" id="4_opeju"]
+[ext_resource type="AudioStream" uid="uid://cxxhebwtrm47d" path="res://effects/sounds/ui-pop-sound-316482.mp3" id="5_q2lkl"]
 
 [node name="SkillButton" type="TextureButton"]
 z_index = 1
@@ -15,6 +18,9 @@ texture_normal = ExtResource("1_ed3xm")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_0vius")
+hover_sound = ExtResource("3_4hxse")
+success_sound = ExtResource("4_opeju")
+error_sound = ExtResource("5_q2lkl")
 
 [node name="SkillLevel" type="Label" parent="."]
 layout_mode = 1

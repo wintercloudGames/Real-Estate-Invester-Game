@@ -13,7 +13,7 @@ func _ready() -> void:
 	update_display()
 
 func update_display() -> void:
-	var label = get_node("%Label") as Label 
+	var label = get_node("%Label") as Label
 	var texture = get_node("%TextureRect") as TextureRect
 	
 	if SaveAndLoad.save_file_exists(save_slot):
@@ -64,6 +64,8 @@ func _on_pressed() -> void:
 		profile_loaded.emit(save_slot)
 	else:
 		profile_created.emit(save_slot)
+		Globals.completed_missions = []
+
 
 func _on_mouse_entered() -> void:
 	var tween = create_tween()

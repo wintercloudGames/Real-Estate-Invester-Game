@@ -13,6 +13,7 @@ class_name SkillNode
 @export var locked_color: Color = Color.DIM_GRAY
 @export var affordable_color: Color = Color.WHITE
 @export var unaffordable_color: Color = Color.CRIMSON
+@export_group("Selection Visuals") # Continuation
 @export var maxed_color: Color = Color.DARK_GREEN
 
 @export_group("Value Settings")
@@ -23,6 +24,11 @@ class_name SkillNode
 @export var exp_boost: float = 0.50
 @export var rent_finder_boost: float = 1.0
 @export var points_per_level: int = 5 
+
+@export_group("Audio Assets")
+@export var hover_sound: AudioStream
+@export var success_sound: AudioStream
+@export var error_sound: AudioStream
 
 @export_group("Logic")
 enum AppSkills { 
@@ -46,6 +52,7 @@ var cursor_disabled = load("res://assets/UI/mouse/disabled.png")
 var cursor_offset = Vector2(24, 12)
 
 # --- State Variables ---
+var is_mouse_over: bool = false
 var level: int = 0:
 	set(value):
 		level = clampi(value, 0, max_level)
@@ -121,7 +128,7 @@ func _pulse_effect() -> void:
 # --- Input & Selection ---
 
 func _gui_input(event: InputEvent) -> void:
-	# MOUSE HOVER: Catch mouse motions directly here to ensure hover works instantly on PC
+	# MOUSE HOVER: Tracks motion to keep cursor assets up-to-date
 	if event is InputEventMouseMotion:
 		_on_mouse_entered()
 		return
@@ -134,11 +141,9 @@ func _gui_input(event: InputEvent) -> void:
 		_handle_touch_tap()
 
 func _handle_mouse_click() -> void:
-	# Snappy 1-click purchase
 	_attempt_unlock()
 
 func _handle_touch_tap() -> void:
-	# Safe 2-tap flow for tablets
 	if not is_selected:
 		_deselect_all_nodes()
 		is_selected = true 
@@ -150,9 +155,12 @@ func _handle_touch_tap() -> void:
 func _attempt_unlock() -> void:
 	if not _check_parent_requirements():
 		Globals.notify("Locked: Need %s maxed!" % parent_skill.skill_name, Color.ORANGE)
+		_play_dynamic_sound(error_sound, 0.9)
 		return
 		
-	if level >= max_level: return
+	if level >= max_level: 
+		_play_dynamic_sound(error_sound, 1.0)
+		return
 
 	var cost = get_next_level_cost()
 	if Globals.skillpoints >= cost:
@@ -162,12 +170,16 @@ func _attempt_unlock() -> void:
 		_pulse_effect()
 		_show_skill_info()
 		
+		var purchase_pitch = 1.0 + (float(level) * 0.08)
+		_play_dynamic_sound(success_sound, purchase_pitch)
+		
 		if is_instance_valid(skill_tree) and skill_tree.has_method("on_skill_unlocked"):
 			skill_tree.on_skill_unlocked(skill_name, cost)
 		Globals.notify("Unlocked: %s (Lvl %d)" % [skill_name, level], Color.SPRING_GREEN)
 	else:
 		Globals.notify("Not enough points! Need %d" % cost, Color.CRIMSON)
-		
+		_play_dynamic_sound(error_sound, 1.15)
+
 	if level >= max_level:
 		is_selected = false 
 
@@ -188,26 +200,45 @@ func _show_skill_info() -> void:
 	if is_instance_valid(skill_tree):
 		skill_tree.show_info(skill_name, desc, level, max_level, cost_text)
 
-# --- Cursor & Platform Logic ---
+# --- Cursor, Audio & Platform Logic ---
+
+func _play_dynamic_sound(stream: AudioStream, base_pitch: float = 1.0) -> void:
+	if not stream or not is_inside_tree(): return
+	
+	var audio_player = AudioStreamPlayer.new()
+	add_child(audio_player)
+	audio_player.stream = stream
+	
+	var random_pitch_modifier = randf_range(-0.04, 0.04)
+	audio_player.pitch_scale = base_pitch + random_pitch_modifier
+	
+	audio_player.finished.connect(audio_player.queue_free)
+	audio_player.play()
 
 func _on_mouse_entered() -> void:
-	# FIXED: Removed the feature check that was disabling PC hover!
 	var hs = cursor_offset
 	if level >= max_level or !_check_parent_requirements():
 		Input.set_custom_mouse_cursor(cursor_disabled, Input.CURSOR_ARROW, hs)
 	else:
 		Input.set_custom_mouse_cursor(cursor_hover, Input.CURSOR_ARROW, hs)
 	
-	_show_skill_info()
+	# Gated logic prevents audio from spamming on micro-movements
+	if not is_mouse_over:
+		is_mouse_over = true
+		_show_skill_info()
+		
+		var dynamic_pitch = 1.0 + (float(level) * 0.05)
+		_play_dynamic_sound(hover_sound, dynamic_pitch)
 
 func _on_mouse_exited() -> void:
-	# FIXED: Removed feature check here as well
+	is_mouse_over = false
 	Input.set_custom_mouse_cursor(cursor_normal, Input.CURSOR_ARROW, cursor_offset)
 	if is_instance_valid(skill_tree):
 		skill_tree.hide_info()
 
 func _on_visibility_changed() -> void:
 	is_selected = false
+	is_mouse_over = false
 	_update_visual_state()
 	if is_instance_valid(skill_tree) and !visible:
 		skill_tree.hide_info()

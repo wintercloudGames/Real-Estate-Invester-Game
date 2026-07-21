@@ -1,5 +1,6 @@
 extends Control
 
+@onready var SFX = $AudioStreamPlayer
 # UI elements
 @onready var loan_amount = $HBoxContainer2/loan_amount  # Label
 @onready var loan_type = $HBoxContainer2/loan_type      # Label
@@ -34,6 +35,9 @@ func _ready() -> void:
 	
 	if autopay_toogle:
 		autopay_toogle.button_pressed = autopay_enabled
+		
+	# Connect base hover sounds dynamically to the buttons on load
+	_connect_hover_sounds()
 	
 	update_ui()
 	Globals.recalculate_expenses()
@@ -42,8 +46,17 @@ func _ready() -> void:
 	await get_tree().create_timer(2).timeout
 	_validate_loan_integrity()
 
+# Helper to automatically apply hover sounds to all buttons in this module
+func _connect_hover_sounds() -> void:
+	var buttons = [Make_payment, refinance_button, payoff_button, autopay_toogle]
+	for btn in buttons:
+		if is_instance_valid(btn) and not btn.mouse_entered.is_connected(_on_button_hovered):
+			btn.mouse_entered.connect(_on_button_hovered)
+
+func _on_button_hovered() -> void:
+	SFX.play_sound("hover")
+
 func _validate_loan_integrity() -> void:
-	# If it's a mortgage, it MUST have a valid house reference. Otherwise, it's orphaned.
 	if loan_type_str == "Mortgage":
 		if house_ref == null or not is_instance_valid(house_ref):
 			print("ERROR: No Loan House ID. Orphaned mortgage loan self-destructing.")
@@ -56,7 +69,6 @@ func update_ui() -> void:
 	if Intrest: Intrest.text = "Interest: %.1f%%" % (interest * 100.0)
 	if month_display: month_display.text = "Months: " + str(months)
 	
-	# Safety: If the house was sold or deleted mid-game, remove the mortgage
 	if loan_type_str == "Mortgage" and (house_ref == null or not is_instance_valid(house_ref)):
 		_self_destruct()
 
@@ -71,14 +83,14 @@ func add_comma_to_int(value: int) -> String:
 
 func _on_month_ended():
 	if autopay_enabled:
-		# Money already taken via Global expenses background systems
 		process_loan_reduction()
 	else:
-		# If Autopay is OFF and they didn't manually pay, apply penalty
 		Globals.notify("MISSED PAYMENT: %s" % loan_type_str, Color.ORANGE)
 		Globals.credit_score -= 10
 		
-		# Capitalize the interest (add unpaid interest back to balance)
+		# Unpaid interest penalty sound
+		SFX.play_sound("error", 0.8)
+		
 		var monthly_interest_rate = interest / 12.0
 		var interest_charge = loan_balance * monthly_interest_rate
 		loan_balance += interest_charge
@@ -89,13 +101,15 @@ func _on_make_payment_pressed(is_manual: bool = true) -> void:
 	if Globals.money < payment:
 		if is_manual:
 			Globals.notify("Need $%s!" % add_comma_to_int(int(payment)), Color.RED)
+			SFX.play_sound("error") # Financial rejection sound
 		return
-
+	SFX.play_sound("success",0.8)
 	Globals.money -= payment
 	process_loan_reduction()
 	
 	if is_manual:
 		Globals.notify("Extra Payment: -$" + add_comma_to_int(int(payment)), Color.CYAN)
+		SFX.play_sound("click", 1.1) # Extra payment high-pitch confirmation
 		Globals.credit_score += 1
 
 func process_loan_reduction():
@@ -124,6 +138,7 @@ func _complete_loan():
 		house_ref.loan_price = 0
 	
 	Globals.notify("LOAN PAID OFF!", Color.GOLD)
+	SFX.play_sound("success", 1.3) # Mega-rewarding loan payoff chime!
 	_self_destruct()
 
 # --- BUTTON ACTIONS ---
@@ -132,6 +147,7 @@ func _on_autopay_toggled(toggled: bool) -> void:
 	autopay_enabled = toggled
 	Globals.recalculate_expenses()
 	update_ui()
+	SFX.play_sound("click", 0.95 if toggled else 0.85) # Alternates toggle pitch
 
 func _on_payoff_pressed() -> void:
 	if Globals.money >= loan_balance:
@@ -140,6 +156,7 @@ func _on_payoff_pressed() -> void:
 		_complete_loan()
 	else:
 		Globals.notify("Need $%s to payoff!" % add_comma_to_int(int(loan_balance)), Color.RED)
+		SFX.play_sound("error")
 
 func _on_refinance_pressed() -> void:
 	var current_market_rate = 0.05 
@@ -148,11 +165,13 @@ func _on_refinance_pressed() -> void:
 	
 	if current_market_rate >= interest:
 		Globals.notify("Market rates aren't better!", Color.ORANGE)
+		SFX.play_sound("error", 0.9)
 		return
 
 	var fee = loan_balance * 0.02
 	if Globals.money < fee:
 		Globals.notify("Refinance Fee: $%s" % add_comma_to_int(int(fee)), Color.RED)
+		SFX.play_sound("error")
 		return
 
 	Globals.money -= fee
@@ -161,12 +180,13 @@ func _on_refinance_pressed() -> void:
 	payment = calculate_mortgage_payment(loan_balance, months, interest)
 	
 	Globals.notify("Refinanced to %.1f%%" % (interest * 100), Color.GREEN)
+	SFX.play_sound("success", 1.1) # Upgraded premium interest chime
 	update_ui()
 	Globals.recalculate_expenses()
 
 func calculate_mortgage_payment(p_amount: float, p_months: int, p_rate: float) -> float:
 	if p_months <= 0: return 0.0
-	if p_rate == 0: return p_amount / p_months # Edge case safety for 0% loans
+	if p_rate == 0: return p_amount / p_months
 	var m_rate = p_rate / 12.0
 	return p_amount * (m_rate * pow(1 + m_rate, p_months)) / (pow(1 + m_rate, p_months) - 1)
 
@@ -174,7 +194,6 @@ func _self_destruct():
 	if loans_ui and loans_ui.get("active_loan_mods") and loans_ui.active_loan_mods.has(self):
 		loans_ui.active_loan_mods.erase(self)
 	
-	# Disconnect signal to avoid orphan calls during frame cleanup
 	if Globals.month_ended.is_connected(_on_month_ended):
 		Globals.month_ended.disconnect(_on_month_ended)
 		

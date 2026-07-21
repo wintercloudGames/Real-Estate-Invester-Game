@@ -15,6 +15,8 @@ extends PathFollow3D
 @onready var front_ray: RayCast3D = $AICar/FrontRay
 @onready var car_lights: Array = [$SpotLight3D, $SpotLight3D2]
 @onready var ai_car: CharacterBody3D = $AICar
+# Assuming you add a VisibleOnScreenNotifier3D as a child node
+@onready var visibility_notifier: VisibleOnScreenNotifier3D = $VisibleOnScreenNotifier3D
 
 # Internal State
 var _current_speed: float = 0.0
@@ -25,6 +27,10 @@ var _ghost_mode_timer: float = 0.0
 var _original_collision_layer: int = 0
 var lights_should_be_on: bool = false
 
+# Optimization Performance Cache
+var _frame_count: int = 0
+var _cached_target_speed: float = 3.0
+
 # Traffic Light Tracking States
 var _at_red_light: bool = false 
 var _current_stop_area: Area3D = null
@@ -33,6 +39,7 @@ func _ready() -> void:
 	loop = false
 	cubic_interp = true
 	max_speed += randf_range(-1.5, 2.0)
+	_cached_target_speed = max_speed
 	
 	# Store the original collision layer to restore it later
 	if ai_car:
@@ -56,11 +63,17 @@ func _ready() -> void:
 	else:
 		push_warning("Car couldn't find World_settings! Check the path.")
 
+	# Setup Visibility Signal bindings manually if you haven't in the editor
+	if visibility_notifier:
+		visibility_notifier.screen_entered.connect(_on_visible_on_screen_notifier_3d_screen_entered)
+		visibility_notifier.screen_exited.connect(_on_visible_on_screen_notifier_3d_screen_exited)
+
 func _on_night_mode_changed(enabled: bool) -> void:
 	lights_should_be_on = enabled
-	for light in car_lights:
-		if light:
-			light.visible = enabled
+	if visibility_notifier and visibility_notifier.is_on_screen():
+		for light in car_lights:
+			if light:
+				light.visible = enabled
 
 func _physics_process(delta: float) -> void:
 	# 1. GHOST MODE TIMER
@@ -74,16 +87,50 @@ func _physics_process(delta: float) -> void:
 		_wait_timer -= delta
 		return
 
+	# --- OPTIMIZATION RADAR ---
+	_frame_count += 1
+	var is_visible: bool = visibility_notifier.is_on_screen() if visibility_notifier else true
+	
+	# If visible, process AI logic every single frame. 
+	# If invisible, only run heavy raycast/grid array lookups once every 10 frames.
+	if is_visible or _frame_count % 10 == 0:
+		_cached_target_speed = _calculate_target_speed()
+
+	# 4. STUCK DETECTION
+	var waiting_at_light = _at_red_light and _is_light_ahead_red()
+	var waiting_for_gridlock = progress_ratio > 0.85 and not _is_switching and _peek_next_path() and not _has_room_on_destination_path(_peek_next_path())
+	
+	if _cached_target_speed > 0.5 and _current_speed < 0.2 and _ghost_mode_timer <= 0 and not waiting_at_light and not waiting_for_gridlock:
+		_stuck_timer += delta
+		if _stuck_timer >= stuck_timeout:
+			_trigger_ghost_mode()
+	else:
+		_stuck_timer = 0.0
+
+	# 5. MOVEMENT EXECUTION (Always frame-rate smooth, off or on screen)
+	var accel_rate = acceleration if _cached_target_speed > _current_speed else braking_strength
+	_current_speed = move_toward(_current_speed, _cached_target_speed, accel_rate * delta)
+	 
+	progress += _current_speed * delta
+
+	# 6. MODULAR HANDOFF (Switching tiles)
+	if progress_ratio >= switch_threshold and not _is_switching:
+		_attempt_group_switch()
+	
+	# 7. DEAD END PREVENTION
+	if progress_ratio >= 0.999 and not _is_switching:
+		_handle_dead_end()
+
+
+# Extracted AI Sensing & Queuing logic to minimize overhead when off-screen
+func _calculate_target_speed() -> float:
 	var target_speed = max_speed
 	
-	# 3. TRAFFIC SENSING & QUEUING
 	if _ghost_mode_timer <= 0:
-		# Force the raycast to stay perfectly level and aim straight ahead along the Y axis (-Y is forward)
 		front_ray.target_position.x = 0.0
 		front_ray.target_position.z = 0.0
 		front_ray.target_position.y = -max(3.5, _current_speed * 1.5)
 		
-		# Check if the current path we are attached to is a turn lane
 		var current_path = get_parent()
 		var _is_on_turn_path: bool = current_path and !"straight" in current_path.name.to_lower()
 		
@@ -101,49 +148,22 @@ func _physics_process(delta: float) -> void:
 		elif not _is_on_turn_path:
 			var car_ahead_distance = _get_distance_to_car_ahead()
 			if car_ahead_distance < stop_distance:
-				# 1.2 is the absolute minimum distance (in meters) between bumpers when fully stopped
 				var factor = (car_ahead_distance - 1.2) / (stop_distance - 1.2)
 				factor = clamp(factor, 0.0, 1.0)
 				
 				target_speed = lerp(0.0, max_speed, factor)
 				target_speed = clamp(target_speed, 0.0, max_speed)
-		
-		# If on a turn path, maintain normal target speed since _attempt_group_switch 
-		# already verified the turn path was empty before the car entered it.
 		else:
 			target_speed = max_speed
-	
-
-	# 4. STUCK DETECTION
-	var waiting_at_light = _at_red_light and _is_light_ahead_red()
-	var waiting_for_gridlock = progress_ratio > 0.85 and not _is_switching and _peek_next_path() and not _has_room_on_destination_path(_peek_next_path())
-	
-	if target_speed > 0.5 and _current_speed < 0.2 and _ghost_mode_timer <= 0 and not waiting_at_light and not waiting_for_gridlock:
-		_stuck_timer += delta
-		if _stuck_timer >= stuck_timeout:
-			_trigger_ghost_mode()
-	else:
-		_stuck_timer = 0.0
-
-	# 5. MOVEMENT EXECUTION
-	var accel_rate = acceleration if target_speed > _current_speed else braking_strength
-	_current_speed = move_toward(_current_speed, target_speed, accel_rate * delta)
-	 
-	progress += _current_speed * delta
-
-	# 6. MODULAR HANDOFF (Switching tiles)
-	if progress_ratio >= switch_threshold and not _is_switching:
-		_attempt_group_switch()
-	
-	# 7. DEAD END PREVENTION
-	if progress_ratio >= 0.999 and not _is_switching:
-		_handle_dead_end()
+			
+	return target_speed
 
 func _trigger_ghost_mode() -> void:
 	_stuck_timer = 0.0
 	_ghost_mode_timer = ghost_duration
 	_toggle_ghost_collision(false)
 	_current_speed = max_speed * 0.4
+	_cached_target_speed = _current_speed
 
 func _toggle_ghost_collision(enable: bool) -> void:
 	if not ai_car: return
@@ -152,7 +172,6 @@ func _toggle_ghost_collision(enable: bool) -> void:
 	else:
 		ai_car.collision_layer = 0
 
-# Scans a specific path to see if another car is currently using it
 func _is_path_occupied(target_path: Path3D) -> bool:
 	for child in target_path.get_children():
 		if child is PathFollow3D and child != self:
@@ -160,7 +179,6 @@ func _is_path_occupied(target_path: Path3D) -> bool:
 				return true
 	return false
 
-# Checks if the target lane has physical room for another vehicle (Don't Block the Box)
 func _has_room_on_destination_path(target_path: Path3D) -> bool:
 	var cars_on_path: Array = []
 	for child in target_path.get_children():
@@ -180,7 +198,6 @@ func _has_room_on_destination_path(target_path: Path3D) -> bool:
 		
 	return true
 
-# Safely forecasts the upcoming path selection without executing a hard transition
 func _peek_next_path() -> Path3D:
 	var all_tiles = get_tree().get_nodes_in_group("level_grid")
 	var car_forward = -global_transform.basis.z 
@@ -202,7 +219,6 @@ func _peek_next_path() -> Path3D:
 		return valid_paths[0]
 	return null
 
-# Calculates the true 3D distance to the vehicle directly in front of our bumper
 func _get_distance_to_car_ahead() -> float:
 	if front_ray.is_colliding():
 		var collider = front_ray.get_collider()
@@ -261,6 +277,7 @@ func _attempt_group_switch() -> void:
 	if chosen_path:
 		if is_chosen_a_turn and _is_path_occupied(chosen_path):
 			_current_speed = 0.0
+			_cached_target_speed = 0.0
 			_is_switching = false
 			return 
 
@@ -275,13 +292,12 @@ func _attempt_group_switch() -> void:
 
 func _handle_dead_end() -> void:
 	_current_speed = 0
+	_cached_target_speed = 0
 	_wait_timer = 2.0 
 
 func _on_visible_on_screen_notifier_3d_screen_entered() -> void:
 	if ai_car: ai_car.visible = true
-	if lights_should_be_on:
-		for light in car_lights:
-			if light: light.visible = true
+	_update_lights()
 
 func _on_visible_on_screen_notifier_3d_screen_exited() -> void:
 	if ai_car: ai_car.visible = false
@@ -300,8 +316,12 @@ func _update_lights() -> void:
 	if season_sys and season_sys.rain_node.emitting:
 		should_be_on = true
 
+	lights_should_be_on = should_be_on
+	
+	# Only physically enable visibility if the vehicle is on screen
+	var is_visible = visibility_notifier.is_on_screen() if visibility_notifier else true
 	for light in car_lights:
-		if light: light.visible = should_be_on
+		if light: light.visible = should_be_on if is_visible else false
 
 # --- TRAFFIC LIGHT DETECTION AREA SIGNALS ---
 

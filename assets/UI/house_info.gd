@@ -16,8 +16,18 @@ extends Control
 @onready var upgrade_label = $Upgrade_label
 @onready var upgrade_button = $Upgrade
 @onready var edit_yard_button = $Edit_yard_button
-
 @onready var game = $"../.." 
+@onready var SFX = $AudioStreamPlayer
+
+# Persistent interactive interface controls for structural audio hooking
+@onready var tenent_button: Button = $Tenent_button
+@onready var remove_tenent_button: Button = $Remove_Tenent
+@onready var refinance_button: Button = $Refinance_button
+@onready var sell_button: Button = $Sell_button
+@onready var close_button: Button = $Close_button
+@onready var yes_sell_button: Button = $Sell_home/Yes
+@onready var no_sell_button: Button = $Sell_home/No
+@onready var pay_off_button: Button = $Buy_button # Maps to your pay off node connection
 
 # --- DATA ---
 var house = null
@@ -26,10 +36,26 @@ var previous_visible := true
 # --- INITIALIZATION ---
 func _ready() -> void:
 	rent_slider_info.modulate = Color.WHITE
+	
 	# Connect signals via code to ensure they exist
 	rent_slider.value_changed.connect(_on_slider_value_changed)
 	rent_slider_info.text_submitted.connect(_on_rent_input_submitted)
 	rent_slider_info.focus_exited.connect(_on_rent_input_focus_exited)
+	
+	_connect_layout_hover_sounds()
+
+# Automatically wire standard cursor pointer entries into layout modules
+func _connect_layout_hover_sounds() -> void:
+	var interactive_nodes = [
+		tenent_button, remove_tenent_button, upgrade_button, edit_yard_button, 
+		refinance_button, sell_button, close_button, yes_sell_button, no_sell_button, pay_off_button
+	]
+	for node in interactive_nodes:
+		if is_instance_valid(node) and not node.mouse_entered.is_connected(_on_element_hovered):
+			node.mouse_entered.connect(_on_element_hovered)
+
+func _on_element_hovered() -> void:
+	SFX.play_sound("hover")
 
 func _process(_delta: float) -> void:
 	if house:
@@ -38,29 +64,21 @@ func _process(_delta: float) -> void:
 	if visible != previous_visible:
 		previous_visible = visible
 		if visible:
-			var popup_sound = get_node_or_null("../popupsound")
-			if popup_sound: popup_sound.play()
+			SFX.play_sound("click", 1.05) # Sliding panel view discovery alert
 			setup_slider() 
 	
 	if house and visible:
 		update_ui_elements()
+
 func _unhandled_input(event: InputEvent) -> void:
-	# 1. Check if the Spacebar was just pressed
 	if event.is_action_pressed("ui_accept"):
-		# You can also use: if event is InputEventKey and event.pressed and event.keycode == KEY_SPACE:
-		
-		# 2. Safety Checks: UI must be visible, house must exist, and house must NOT have a tenant or be listed
 		if visible and house and not house.has_tenant and not house.is_listed:
-			
-			# 3. Check if the user is currently typing in the rent box (don't list while editing text)
 			if not rent_slider_info.has_focus():
 				_on_tenent_button_pressed()
-				# Optional: play a sound to confirm the shortcut worked
-				var popup_sound = get_node_or_null("../popupsound")
-				if popup_sound: popup_sound.play()
+				SFX.play_sound("click", 1.1)
+
 # --- CORE UI UPDATER ---
 func update_ui_elements() -> void:
-	# Basic Stats
 	upgrade_label.text = str(house.upgrade_amount) + " / " + str(house.upgrade_max)
 	edit_yard_button.visible = !house.is_building
 	
@@ -73,15 +91,21 @@ func update_ui_elements() -> void:
 	loan_display.text = add_comma_to_int(int(house.loan_price))
 	mortgage_label.text = add_comma_to_int(int(house.mortgage))
 	
+	# Update buy/pay-off button context visibility based on active loan state
+	if is_instance_valid(pay_off_button):
+		pay_off_button.visible = house.has_loan and house.loan_price > 0
+		pay_off_button.text = "Pay Off Mortgage"
+		pay_off_button.tooltip_text = "Clear remaining loan balance of $" + add_comma_to_int(int(house.loan_price)) + " using cash."
+	
 	var current_income: int = int(house.rent) if house.has_tenant else 0
 	var current_mortgage: int = int(house.mortgage)
 	var current_cashflow: int = current_income - current_mortgage
 	if house.has_loan:
-		$Refinance_button.text = "Refinance"
-		$Refinance_button.tooltip_text = "Get a lower interest rate on your current debt."
+		refinance_button.text = "Refinance"
+		refinance_button.tooltip_text = "Get a lower interest rate on your current debt."
 	else:
-		$Refinance_button.text = "Get Mortgage"
-		$Refinance_button.tooltip_text = "Take out a loan against your home's equity for cash."
+		refinance_button.text = "Get Mortgage"
+		refinance_button.tooltip_text = "Take out a loan against your home's equity for cash."
 	income_label.text = "Income: " + add_comma_to_int(current_income)
 	cashflow_label.text = "CashFlow: " + add_comma_to_int(current_cashflow)
 	
@@ -90,14 +114,12 @@ func update_ui_elements() -> void:
 	sell_amount_label.text = "Equity: " + add_comma_to_int(int(house.current_price - house.loan_price))
 
 	if house.has_tenant:
-		# --- LOCKED STATE (LEASE ACTIVE) ---
 		income_label.modulate = Color.GREEN
 		cashflow_label.modulate = Color.LAWN_GREEN if current_cashflow >= 0 else Color.ORANGE_RED
 		rent_slider_info.visible = false
 		rent_slider.editable = false
 		rent_slider_info.editable = false
 		
-		# Force slider and text to match the house's fixed lease rent
 		rent_slider.value = house.rent
 		rent_slider_info.text = "Rent: " + add_comma_to_int(int(house.rent))
 		
@@ -107,7 +129,6 @@ func update_ui_elements() -> void:
 		lease_stat.text = "Lease: " + str(int(house.lease_length)) + " Months"
 		punctuality.text = "punctuality: %.0f%%" % (house.payment_punctuality * 100)
 	else:
-		# --- OPEN STATE (VACANT) ---
 		income_label.modulate = Color.WHITE
 		cashflow_label.modulate = Color.RED if current_mortgage > 0 else Color.WHITE
 		
@@ -117,7 +138,6 @@ func update_ui_elements() -> void:
 		lease_stat.text = "Status: VACANT"
 		punctuality.text = ""
 		
-		# CRITICAL: Only update the text if the player ISN'T typing right now
 		if not rent_slider_info.has_focus():
 			update_rent_feedback(rent_slider.value)
 
@@ -125,32 +145,30 @@ func update_ui_elements() -> void:
 func setup_slider():
 	if not house: return
 	
-	# 1. Set the technical bounds
 	rent_slider.min_value = 25
 	rent_slider.step = 25
 	var max_rent = snapped(house.current_price * 0.010, 25)
 	rent_slider.max_value = max(max_rent, 1000) 
 	
-	# 2. Handle the value (The Persistence Logic)
-	# Check if the house already has a rent value assigned (greater than min_value)
 	if house.rent >= rent_slider.min_value:
 		rent_slider.value = house.rent
 	else:
-		# ONLY calculate a default if the house has no rent set yet
 		var target = house.mortgage * 1.1 if house.mortgage > 0 else (house.current_price * 0.007)
 		var default_val = snapped(clamp(target, rent_slider.min_value, rent_slider.max_value), 25)
 		rent_slider.value = default_val
-		house.rent = default_val # Save this default so it persists next time
+		house.rent = default_val
 	
-	# 3. Update Visuals
 	$Min_rent_label.text = add_comma_to_int(int(rent_slider.min_value))
 	$max_rent_label.text = add_comma_to_int(int(rent_slider.max_value))
 	update_rent_feedback(rent_slider.value)
 
 func _on_slider_value_changed(value: float):
 	if house and not house.has_tenant:
-		house.rent = value # Save directly to house object
+		house.rent = value
 		update_rent_feedback(value)
+		
+		var dynamic_pitch = 1.0 + ((value / rent_slider.max_value) * 0.3)
+		SFX.play_sound("hover", dynamic_pitch)
 
 func update_rent_feedback(val: float):
 	var fair_rent = house.current_price * 0.007
@@ -167,24 +185,23 @@ func update_rent_feedback(val: float):
 	rent_slider_info.add_theme_color_override("font_color", text_color)
 	rent_slider_info.add_theme_color_override("font_placeholder_color", text_color)
 	
-	# Only change the text if the user isn't currently editing it
 	if not rent_slider_info.has_focus():
 		rent_slider_info.text = str(int(val))
 
 func _on_rent_input_submitted(new_text: String):
 	update_slider_from_text(new_text)
 	rent_slider_info.release_focus()
+	SFX.play_sound("click", 1.0)
 
 func _on_rent_input_focus_exited():
 	update_slider_from_text(rent_slider_info.text)
 
 func update_slider_from_text(text: String):
-	# Clean formatting characters if they exist
 	var clean_text = text.replace(",", "").replace("Rent: ", "")
 	if clean_text.is_valid_float():
 		var new_val = clamp(clean_text.to_float(), rent_slider.min_value, rent_slider.max_value)
 		rent_slider.value = new_val 
-		if house: house.rent = new_val # Persistence check
+		if house: house.rent = new_val
 	else:
 		rent_slider_info.text = str(int(rent_slider.value))
 
@@ -193,14 +210,17 @@ func _on_tenent_button_pressed() -> void:
 	if house and Globals.rent_houses:
 		house.is_listed = true
 		update_tenant_buttons()
+		SFX.play_sound("success", 1.1)
 	else:
 		Globals.notify("Need Renting skill to rent houses", Color.RED)
+		SFX.play_sound("error")
 
 func _on_remove_tenent_pressed() -> void:
 	if house:
 		house.remove_tenant()
 		Globals.notify("Removed Tenant", Color.CORNFLOWER_BLUE)
-		setup_slider() # Refresh slider limits/state
+		setup_slider()
+		SFX.play_sound("click", 0.9)
 
 func _on_upgrade_pressed() -> void:
 	var upgrade_cost = 10000
@@ -209,28 +229,36 @@ func _on_upgrade_pressed() -> void:
 		Globals.money -= upgrade_cost
 		house.upgrade_amount += 1
 		house.current_price += upgrade_value
-		setup_slider() # Upgrades change house value, so we refresh slider max
+		setup_slider()
+		SFX.play_sound("success", 1.2) 
+	else:
+		SFX.play_sound("error")
 
 func _on_sell_button_pressed() -> void:
 	$Sell_home.visible = true
+	SFX.play_sound("click", 0.95)
 
 func _on_yes_sell_pressed() -> void:
 	if house:
 		house.sell_house()
 		visible = false
 		$Sell_home.visible = false
+		SFX.play_sound("success", 1.3) 
 
 func _on_no_sell_pressed() -> void:
 	$Sell_home.visible = false
+	SFX.play_sound("click", 0.9)
 
 func _on_close_button_pressed() -> void:
 	visible = false
+	SFX.play_sound("click", 0.85)
 
 func _on_edit_yard_button_pressed() -> void:
 	if house:
 		game._on_edit_yard_button_pressed(house)
 		visible = false
 		if has_node("../Phone"): get_node("../Phone").put_away()
+		SFX.play_sound("click", 1.02)
 
 # --- UTILITIES ---
 func update_tenant_buttons():
@@ -255,12 +283,12 @@ func calculate_mortgage_payment(loan_amount: float, months: int, interest_rate: 
 
 func _on_refinance_button_pressed() -> void:
 	if not is_instance_valid(house):
+		SFX.play_sound("error")
 		return
 
-	# --- 1. SETUP & UNIFIED RATE LOGIC ---
 	var loans_ui = get_tree().get_first_node_in_group("loans_ui")
 	var term_months = 360
-	var interest_rate = 0.06 # Default
+	var interest_rate = 0.06
 	
 	if Globals.credit_score >= 750: interest_rate = 0.04
 	elif Globals.credit_score >= 680: interest_rate = 0.045
@@ -269,12 +297,11 @@ func _on_refinance_button_pressed() -> void:
 	if house.has_loan:
 		# --- MODE A: CASH-OUT REFINANCE ---
 		var old_balance = house.loan_price
-		# Max loan is 80% of what the house is worth NOW
 		var new_loan_amount = int(house.current_price * 0.80)
 		
-		# Check if there is actually cash to take out
 		if new_loan_amount <= old_balance:
 			Globals.notify("No equity available to cash out!", Color.ORANGE)
+			SFX.play_sound("error")
 			return
 			
 		var cash_difference = new_loan_amount - old_balance
@@ -282,34 +309,31 @@ func _on_refinance_button_pressed() -> void:
 		
 		if Globals.money < closing_costs:
 			Globals.notify("Need $" + add_comma_to_int(closing_costs) + " for fees!", Color.RED)
+			SFX.play_sound("error")
 			return
 
-		# Process Transaction
 		Globals.money_out(closing_costs)
-		Globals.money += cash_difference # This gives you the cash!
+		Globals.money += cash_difference
 		
-		# Update UI: Remove the old loan module
 		if loans_ui and is_instance_valid(loans_ui):
 			loans_ui.remove_loan_by_id("mortgage_" + str(house.id))
 		
 		var new_payment = calculate_mortgage_payment(new_loan_amount, term_months, interest_rate)
 		
-		# Update House Data
 		house.loan_price = float(new_loan_amount)
 		house.mortgage = int(new_payment)
 
-		# Add the new, larger loan back to the UI
 		if loans_ui and is_instance_valid(loans_ui):
 			var loan_mod = loans_ui.add_mortgage_as_loan(new_payment, interest_rate, term_months, house)
 			if loan_mod:
 				loan_mod.loan_id = "mortgage_" + str(house.id)
-				# Now this assignment will work because 'loan_module' exists in the house script
 				house.loan_module = loan_mod
 		
 		Globals.notify("Refinanced! Pocketed: $" + add_comma_to_int(cash_difference), Color.GREEN)
+		SFX.play_sound("success", 1.1)
 
 	else:
-		# --- MODE B: NEW MORTGAGE (Initial Equity Pull) ---
+		# --- MODE B: NEW MORTGAGE ---
 		var loan_amount = int(house.current_price * 0.80)
 		var monthly_payment = calculate_mortgage_payment(loan_amount, term_months, interest_rate)
 		
@@ -326,12 +350,54 @@ func _on_refinance_button_pressed() -> void:
 				house.loan_module = loan_mod
 		
 		Globals.notify("Mortgage Taken: +$" + add_comma_to_int(loan_amount), Color.GREEN)
+		SFX.play_sound("success", 1.25)
 
-	# Common Cleanup
 	Globals.recalculate_expenses()
 	update_ui_elements()
 	SaveAndLoad.save_game()
 
-#pay off 
+# --- MORTGAGE PAY-OFF LOGIC ---
 func _on_buy_button_pressed() -> void:
-	pass # Replace with function body.
+	if not is_instance_valid(house):
+		SFX.play_sound("error")
+		return
+		
+	if not house.has_loan or house.loan_price <= 0:
+		Globals.notify("This asset has no outstanding mortgage liability!", Color.ORANGE)
+		SFX.play_sound("error")
+		return
+		
+	var payoff_amount = int(house.loan_price)
+	
+	# Validate player cash balance against outstanding debt balance
+	if Globals.money >= payoff_amount:
+		Globals.money -= payoff_amount
+		
+		# Clear liabilities on target house instance
+		house.has_loan = false
+		house.loan_price = 0.0
+		house.mortgage = 0
+		
+		# Disconnect mortgage item from active phone tracking system cleanly
+		var loans_ui = get_tree().get_first_node_in_group("loans_ui")
+		if not loans_ui:
+			loans_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/Phone/Loans")
+			
+		if loans_ui and is_instance_valid(loans_ui):
+			loans_ui.remove_loan_by_id("mortgage_" + str(house.id))
+			
+		# Explicitly wipe internal node back-references if they exist on the object
+		if "loan_module" in house:
+			house.loan_module = null
+			
+		# Refresh the player's overarching expense balances
+		Globals.recalculate_expenses()
+		update_ui_elements()
+		SaveAndLoad.save_game()
+		
+		Globals.notify("Mortgage Paid Off Fully! -$" + add_comma_to_int(payoff_amount), Color.GREEN)
+		SFX.play_sound("success", 1.25) # Play milestone sound
+	else:
+		var missing_funds = payoff_amount - Globals.money
+		Globals.notify("Insufficient Cash! Need $" + add_comma_to_int(missing_funds) + " more.", Color.RED)
+		SFX.play_sound("error", 0.95)

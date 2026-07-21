@@ -20,6 +20,7 @@ func _on_confirm_button_pressed() -> void:
 		final_name = "My Save"
 		
 	name_confirmed.emit(final_name)
+	
 	queue_free()
 
 func _on_cancel_button_pressed() -> void:

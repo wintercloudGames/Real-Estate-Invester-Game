@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bw07hvhq2wfot"]
+[gd_scene load_steps=9 format=3 uid="uid://bw07hvhq2wfot"]
 
 [ext_resource type="Theme" uid="uid://moc43gk5ss8p" path="res://themes/job_menu.tres" id="1_h25pc"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="2_lr5qw"]
 [ext_resource type="Script" uid="uid://dmder56bmlk68" path="res://assets/job/job_display.gd" id="2_rbwtn"]
 [ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="3_tixg6"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="4_tixg6"]
+[ext_resource type="Script" uid="uid://jgbu4mb80yj5" path="res://effects/audio_stream_player.gd" id="6_yaw0l"]
+[ext_resource type="AudioStream" uid="uid://dojwnnp4k51rq" path="res://effects/sounds/554021__dodrio__clack.ogg" id="8_oh4et"]
+[ext_resource type="AudioStream" uid="uid://dalwtpamyjode" path="res://effects/sounds/839832__tommylistens__ui-click.wav" id="9_ngrck"]
 
 [node name="JobDisplay" type="Control" node_paths=PackedStringArray("active_job_bar")]
 layout_mode = 3
@@ -140,6 +143,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("4_tixg6")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+script = ExtResource("6_yaw0l")
+sound_library = Dictionary[String, AudioStream]({
+"error": ExtResource("9_ngrck"),
+"success": ExtResource("8_oh4et")
+})
 
 [connection signal="pressed" from="Close_Button" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="job_list_button" to="." method="_on_apply_for_job_pressed"]
