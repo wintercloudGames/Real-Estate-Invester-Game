@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=4 uid="uid://cung7j0rgqmwu"]
+[gd_scene load_steps=124 format=4 uid="uid://cung7j0rgqmwu"]
 
 [ext_resource type="Script" uid="uid://cq2g8tdj47vbe" path="res://assets/game.gd" id="1_f0aps"]
 [ext_resource type="Script" uid="uid://bcsm7nw2fa21b" path="res://addons/zylann.hterrain/hterrain.gd" id="2_6p1yv"]
@@ -82,6 +82,7 @@
 [ext_resource type="Theme" uid="uid://behjnfy0onmfv" path="res://themes/new_theme.tres" id="72_8whiy"]
 [ext_resource type="Theme" uid="uid://b8jl6a5r3l2mm" path="res://themes/yellow.tres" id="73_wiy2o"]
 [ext_resource type="PackedScene" uid="uid://dilevjugi3hsg" path="res://assets/Airplane.tscn" id="81_myvto"]
+[ext_resource type="PackedScene" uid="uid://4scb1lh1a7vk" path="res://houses/building_large.tscn" id="83_43td7"]
 
 [sub_resource type="Resource" id="Resource_prxnp"]
 script = ExtResource("4_mevvh")
@@ -2967,16 +2968,16 @@ text = "QUIT"
 
 [node name="Quit_menu" type="Panel" parent="HUD"]
 visible = false
-z_index = 10
+z_index = 4096
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -155.0
-offset_top = -96.0
-offset_right = 155.0
-offset_bottom = 96.0
+offset_left = -165.0
+offset_top = -101.0
+offset_right = 145.0
+offset_bottom = 91.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("23_k076q")
@@ -3173,10 +3174,10 @@ text = "CLOSE"
 
 [node name="Business_UI" parent="HUD" instance=ExtResource("16_0rmd6")]
 visible = false
-offset_left = 1001.68
-offset_top = 403.08
-offset_right = 1341.0801
-offset_bottom = 953.08
+offset_left = 961.68
+offset_top = 413.08
+offset_right = 1301.0801
+offset_bottom = 963.08
 
 [node name="Job_offer_ui" type="Control" parent="HUD"]
 visible = false
@@ -4273,6 +4274,9 @@ transform = Transform3D(0.10650703, 0, -0.9943119, 0, 1, 0, 0.9943119, 0, 0.1065
 
 [node name="Airplane3" parent="." instance=ExtResource("81_myvto")]
 transform = Transform3D(0.10650703, 0, -0.9943119, 0, 1, 0, 0.9943119, 0, 0.10650703, -133.66257, 30.620932, 8.136692)
+
+[node name="Building_large" parent="." instance=ExtResource("83_43td7")]
+transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -20.738272, 1.8693899, 8.795832)
 
 [connection signal="timeout" from="Rent_offer_system/Timer" to="Rent_offer_system" method="_on_timer_timeout"]
 [connection signal="timeout" from="Market/MarketTimer" to="Market" method="_on_market_timer_timeout"]

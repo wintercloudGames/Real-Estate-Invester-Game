@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b2o8cev4c6588" path="res://assets/UI/phone/Sprite-0001.png" id="3_y68pl"]
 [ext_resource type="Texture2D" uid="uid://dtxmxhu4p161o" path="res://assets/UI/icons/pencil_9005388.png" id="4_mnqs0"]
 [ext_resource type="Script" uid="uid://jgbu4mb80yj5" path="res://effects/audio_stream_player.gd" id="6_h7vx2"]
-[ext_resource type="AudioStream" uid="uid://b7332uyq7kqg6" path="res://effects/sounds/194071__potentjello__buttons-and-knobs-10.wav" id="7_8cfuu"]
+[ext_resource type="AudioStream" uid="uid://do7dg5g72bx30" path="res://effects/sounds/237422__plasterbrain__hover-1.ogg" id="7_8cfuu"]
 
 [node name="Profile" type="TextureButton"]
 custom_minimum_size = Vector2(320, 320)
@@ -149,7 +149,8 @@ expand_mode = 1
 script = ExtResource("6_h7vx2")
 sound_library = Dictionary[String, AudioStream]({
 "error": null,
-"success": ExtResource("7_8cfuu")
+"hover": ExtResource("7_8cfuu"),
+"success": null
 })
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

@@ -14,8 +14,8 @@ anchor_right = 0.176
 anchor_bottom = -0.051
 offset_left = -332.32
 offset_top = 53.079998
-offset_right = 42.080017
-offset_bottom = 620.08
+offset_right = 74.08002
+offset_bottom = 636.08
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -32,6 +32,7 @@ grow_vertical = 2
 theme = ExtResource("1_tllg2")
 
 [node name="job_progress" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 62.0
 offset_top = 11.0
@@ -41,6 +42,7 @@ text = "Current Job Progress"
 horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 76.0
 offset_top = 45.0
@@ -48,15 +50,14 @@ offset_right = 305.0
 offset_bottom = 72.0
 
 [node name="Start_Business" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2.0
-offset_top = 2.0
-offset_right = -22.0
-offset_bottom = 2.0
+offset_left = -22.0
+offset_top = 5.0
+offset_right = -68.0
+offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -135,6 +136,7 @@ offset_right = -4.0079994
 offset_bottom = 75.671005
 
 [node name="TabContainer" type="TabContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

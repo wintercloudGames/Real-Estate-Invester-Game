@@ -278,6 +278,7 @@ func load_business(name: String) -> void:
 	business_name = name
 	$TabContainer/info/Business_name.text = name + "'s Info"
 	$Start_Business.visible = false
+	$ProgressBar.visible = true
 	$TabContainer.visible = true
 
 func add_job_mod(payment: int, time: int) -> void:
@@ -295,6 +296,7 @@ func _on_sell_business_button_pressed() -> void:
 	business_worth = 0
 	_reset_job()
 	$TabContainer.visible = false
+	$ProgressBar.visible = false
 	$Start_Business.visible = true
 
 func _on_close_button_pressed() -> void:
