@@ -1,104 +1,274 @@
-[gd_scene load_steps=5 format=3 uid="uid://c84nf6ks4lq8g"]
+[gd_scene load_steps=9 format=3 uid="uid://c84nf6ks4lq8g"]
 
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_oc5uh"]
-[ext_resource type="Script" uid="uid://c8rinoog8yr0m" path="res://assets/UI/apartment_main.gd" id="2_nfje8"]
+[ext_resource type="Script" uid="uid://c8rinoog8yr0m" path="res://assets/UI/apartment_UI_main.gd" id="2_nfje8"]
 [ext_resource type="PackedScene" uid="uid://bqj8lhknk27st" path="res://assets/UI/drag_button.tscn" id="2_u45ib"]
 [ext_resource type="Theme" uid="uid://cy5dyrlrp58mc" path="res://themes/close_button.tres" id="3_nfje8"]
+[ext_resource type="PackedScene" uid="uid://bhk4t3tjwkvji" path="res://assets/UI/phone/rental_controll_mod.tscn" id="5_nfje8"]
+[ext_resource type="Script" uid="uid://jgbu4mb80yj5" path="res://effects/audio_stream_player.gd" id="6_4ikm0"]
+[ext_resource type="AudioStream" uid="uid://b7332uyq7kqg6" path="res://effects/sounds/194071__potentjello__buttons-and-knobs-10.wav" id="7_r1sl7"]
+[ext_resource type="Theme" uid="uid://b8jl6a5r3l2mm" path="res://themes/yellow.tres" id="8_r1sl7"]
 
 [node name="ApartmentMain" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2.0
-offset_right = 2.0
+offset_left = 4.0
+offset_right = -898.0
+offset_bottom = -383.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_oc5uh")
 script = ExtResource("2_nfje8")
-metadata/_edit_lock_ = true
 
 [node name="ColorRect" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 61.0
-offset_top = 9.0
-offset_right = 1072.0
-offset_bottom = 603.0
+offset_left = 3.0
+offset_top = -2.0
+offset_right = 1014.0
+offset_bottom = 592.0
 mouse_filter = 2
 theme = ExtResource("1_oc5uh")
-metadata/_edit_lock_ = true
 
 [node name="ColorRect2" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 61.0
-offset_top = 9.0
-offset_right = 1072.0
-offset_bottom = 115.0
+offset_left = -3.0
+offset_top = -46.0
+offset_right = 1008.0
+offset_bottom = 101.0
 mouse_filter = 2
 theme = ExtResource("1_oc5uh")
 
 [node name="ColorRect3" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 1091.0
-offset_top = 7.0
-offset_right = 1341.0
-offset_bottom = 455.0
+offset_left = -3.0
+offset_top = 583.0
+offset_right = 1023.0
+offset_bottom = 690.0
 mouse_filter = 2
 theme = ExtResource("1_oc5uh")
 
 [node name="Drag_Button" parent="." instance=ExtResource("2_u45ib")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.097820364
-anchor_top = -0.05236395
-anchor_right = -0.097820364
-anchor_bottom = -0.051814813
-offset_left = 246.8151
-offset_top = 54.553066
-offset_right = 294.8151
-offset_bottom = 102.28124
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 303.0
-offset_top = 17.0
-offset_right = 791.0
-offset_bottom = 40.0
-text = "Financhal Summary"
-horizontal_alignment = 1
+anchor_left = -0.14760116
+anchor_top = -0.14632854
+anchor_right = -0.14760116
+anchor_bottom = -0.1457794
+offset_left = 182.8151
+offset_top = 40.553066
+offset_right = 230.8151
+offset_bottom = 88.28124
 
 [node name="Label_cashflow" type="Label" parent="."]
 layout_mode = 0
-offset_left = 109.0
-offset_top = 51.0
-offset_right = 373.0
-offset_bottom = 86.0
+offset_left = 525.0
+offset_top = 3.0
+offset_right = 789.0
+offset_bottom = 41.0
+theme_override_font_sizes/font_size = 25
+text = "cash flow = "
+horizontal_alignment = 1
+
+[node name="Label_total_rent" type="Label" parent="."]
+layout_mode = 0
+offset_left = 525.0
+offset_top = 45.0
+offset_right = 789.0
+offset_bottom = 83.0
 theme_override_font_sizes/font_size = 25
 text = "cash flow = "
 horizontal_alignment = 1
 
 [node name="collect_rent" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1130.0
-offset_top = 32.0
-offset_right = 1299.0
-offset_bottom = 86.0
+offset_left = 11.0
+offset_top = 607.0
+offset_right = 180.0
+offset_bottom = 661.0
 text = "Collect rent"
 
 [node name="List_for_rent" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1133.0
-offset_top = 99.0
-offset_right = 1302.0
-offset_bottom = 153.0
+offset_left = 204.0
+offset_top = 610.0
+offset_right = 373.0
+offset_bottom = 664.0
 text = "List all for rent
 "
 
+[node name="Sell" type="Button" parent="."]
+layout_mode = 0
+offset_left = 636.0
+offset_top = 604.0
+offset_right = 805.0
+offset_bottom = 658.0
+text = "Sell building"
+
 [node name="Close_Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1001.0
-offset_top = -21.0
-offset_right = 1084.0
-offset_bottom = 26.0
+offset_left = 937.0
+offset_top = -35.0
+offset_right = 1020.0
+offset_bottom = 12.0
 theme = ExtResource("3_nfje8")
 text = "CLOSE"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 117.0
+offset_right = 990.0
+offset_bottom = 577.0
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="Rental_controll_mod" parent="ScrollContainer/GridContainer" instance=ExtResource("5_nfje8")]
+layout_mode = 2
+
+[node name="Rental_controll_mod2" parent="ScrollContainer/GridContainer" instance=ExtResource("5_nfje8")]
+layout_mode = 2
+
+[node name="Rental_controll_mod3" parent="ScrollContainer/GridContainer" instance=ExtResource("5_nfje8")]
+layout_mode = 2
+
+[node name="Rental_controll_mod4" parent="ScrollContainer/GridContainer" instance=ExtResource("5_nfje8")]
+layout_mode = 2
+
+[node name="Rental_controll_mod5" parent="ScrollContainer/GridContainer" instance=ExtResource("5_nfje8")]
+layout_mode = 2
+
+[node name="Rental_controll_mod6" parent="ScrollContainer/GridContainer" instance=ExtResource("5_nfje8")]
+layout_mode = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource("6_4ikm0")
+sound_library = Dictionary[String, AudioStream]({
+"error": null,
+"success": ExtResource("7_r1sl7")
+})
+
+[node name="ColorRect4" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = -5.0
+offset_right = 391.0
+offset_bottom = 82.0
+mouse_filter = 2
+theme = ExtResource("8_r1sl7")
+
+[node name="ColorRect5" type="Panel" parent="."]
+modulate = Color(1.7368001, 1.7368001, 1.7368001, 1)
+layout_mode = 0
+offset_left = 170.0
+offset_top = -41.0
+offset_right = 844.0
+offset_bottom = -14.0
+mouse_filter = 2
+theme = ExtResource("8_r1sl7")
+
+[node name="Financhal Summary" type="Label" parent="."]
+layout_mode = 0
+offset_left = 90.0
+offset_top = -41.0
+offset_right = 860.0
+offset_bottom = -18.0
+text = "Financhal Summary"
+horizontal_alignment = 1
+
+[node name="Label_bought_price" type="Label" parent="."]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 1.0
+offset_right = 382.0
+offset_bottom = 24.0
+text = "Label_bought_price"
+horizontal_alignment = 2
+
+[node name="Purchase_Price" type="Label" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 1.0
+offset_right = 159.0
+offset_bottom = 24.0
+text = "Purchase Price:"
+horizontal_alignment = 1
+
+[node name="Label_loan" type="Label" parent="."]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 26.0
+offset_right = 376.0
+offset_bottom = 49.0
+text = "loan"
+horizontal_alignment = 2
+
+[node name="Loan_Amount" type="Label" parent="."]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 27.0
+offset_right = 159.0
+offset_bottom = 50.0
+text = "Loan Amount:"
+
+[node name="Label_morgage_amount" type="Label" parent="."]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 55.0
+offset_right = 158.0
+offset_bottom = 78.0
+text = "Morgage:"
+horizontal_alignment = 2
+
+[node name="Label_morgage" type="Label" parent="."]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 54.0
+offset_right = 372.0
+offset_bottom = 77.0
+text = "Morgage ="
+horizontal_alignment = 2
+
+[node name="Refinance_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 828.0
+offset_top = 606.0
+offset_right = 986.0
+offset_bottom = 652.0
+text = "Refinance"
+
+[node name="Sell_home" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 344.0
+offset_top = 242.0
+offset_right = 569.0
+offset_bottom = 431.0
+
+[node name="Amount" type="Label" parent="Sell_home"]
+layout_mode = 0
+offset_right = 224.0
+offset_bottom = 54.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Yes" type="Button" parent="Sell_home"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 119.0
+offset_right = 210.0
+offset_bottom = 171.0
+text = "SELL"
+
+[node name="No" type="Button" parent="Sell_home"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = -34.0
+offset_right = 216.0
+offset_bottom = -3.0
+text = "close"
+
+[connection signal="pressed" from="Close_Button" to="." method="_on_close_button_pressed"]

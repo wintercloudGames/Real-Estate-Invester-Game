@@ -241,6 +241,30 @@ func set_listing_UI():
 		Listing_ui.visible = true
 	Listing_ui.house = house
 
+func set_apartment_UI():
+	if not house: return
+	
+	var ui_cam = Listing_ui.get_node("SubViewportContainer/SubViewport/ListingCam")
+	
+	var house_marker = house.get_node("Camera_Front") 
+	ui_cam.global_transform = house_marker.global_transform
+	
+	Listing_ui.visible = true
+	Listing_ui.house = house
+	
+	Listing_ui.down_payment = house.current_price * 0.2
+	Listing_ui.list_price = house.current_price
+	
+	var down_pay_val = int(Listing_ui.list_price * 0.2)
+	Listing_ui.loan_display.text = "Loan\n80% Financed\nDown Payment: \n$" + Globals.add_comma_to_int(down_pay_val)
+	
+	Listing_ui.full_price = house.current_price
+	Listing_ui.pay_now_amount = house.current_price
+	
+	if not house.edit_mode:
+		Listing_ui.visible = true
+	Listing_ui.house = house
+
 func set_house_UI():
 	if not house or not House_ui: return
 	House_ui.house = house

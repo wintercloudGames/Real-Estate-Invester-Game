@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=4 uid="uid://cung7j0rgqmwu"]
+[gd_scene load_steps=125 format=4 uid="uid://cung7j0rgqmwu"]
 
 [ext_resource type="Script" uid="uid://cq2g8tdj47vbe" path="res://assets/game.gd" id="1_f0aps"]
 [ext_resource type="Script" uid="uid://bcsm7nw2fa21b" path="res://addons/zylann.hterrain/hterrain.gd" id="2_6p1yv"]
@@ -59,6 +59,7 @@
 [ext_resource type="Texture2D" uid="uid://by8usin4jfy1n" path="res://assets/UI/icons/skills.png" id="44_861v0"]
 [ext_resource type="Texture2D" uid="uid://b2o8cev4c6588" path="res://assets/UI/phone/Sprite-0001.png" id="44_n6l5q"]
 [ext_resource type="Script" uid="uid://dq1efejdvhf6p" path="res://assets/UI/mission_display.gd" id="47_j8b0p"]
+[ext_resource type="PackedScene" uid="uid://c84nf6ks4lq8g" path="res://assets/UI/apartment_main.tscn" id="53_c5ool"]
 [ext_resource type="PackedScene" uid="uid://b07iqv37k8uxs" path="res://assets/Town_Blocks/straight_way.tscn" id="53_drtnu"]
 [ext_resource type="PackedScene" uid="uid://cajj0231mp44r" path="res://assets/Town_Blocks/turn.tscn" id="54_me805"]
 [ext_resource type="PackedScene" uid="uid://be6xahrqbrede" path="res://assets/Town_Blocks/fourway.tscn" id="55_861v0"]
@@ -3058,6 +3059,13 @@ offset_right = 249.0
 offset_bottom = 103.0
 text = "Would you like to quit?"
 
+[node name="ApartmentMain" parent="HUD" instance=ExtResource("53_c5ool")]
+visible = false
+offset_left = 411.0
+offset_top = 377.0
+offset_right = -505.0
+offset_bottom = 6.0
+
 [node name="House_listing_ui" parent="HUD" instance=ExtResource("2_vey1y")]
 visible = false
 custom_minimum_size = Vector2(300, 300)
@@ -4277,6 +4285,15 @@ transform = Transform3D(0.10650703, 0, -0.9943119, 0, 1, 0, 0.9943119, 0, 0.1065
 
 [node name="Building_large" parent="." instance=ExtResource("83_43td7")]
 transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -20.738272, 1.8693899, 8.795832)
+max_total_units = 25
+
+[node name="Building_large2" parent="." instance=ExtResource("83_43td7")]
+transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -23.112043, 1.8693899, 6.153961)
+max_total_units = 25
+
+[node name="Building_large3" parent="." instance=ExtResource("83_43td7")]
+transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -18.914402, 1.8693899, 5.5131574)
+max_total_units = 25
 
 [connection signal="timeout" from="Rent_offer_system/Timer" to="Rent_offer_system" method="_on_timer_timeout"]
 [connection signal="timeout" from="Market/MarketTimer" to="Market" method="_on_market_timer_timeout"]

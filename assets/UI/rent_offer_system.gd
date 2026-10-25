@@ -2,6 +2,7 @@ extends Control
 
 @onready var game = $"."  
 var house = null  
+var target_unit = null # Stores the specific apartment unit dictionary if an apartment was picked
 var rent_offers = []  
 
 @onready var ui_layer = $"../HUD"
@@ -72,19 +73,38 @@ func check_and_start_timer() -> void:
 
 func get_available_houses() -> Array:
 	var available = []
-	# Optimization: Only check nodes in group
 	var houses = get_tree().get_nodes_in_group("houses")
 	for h in houses:
-		# Check all three conditions: Owned, No Tenant, and MUST be listed
-		if h.owned and not h.has_tenant and h.is_listed:
-			available.append(h)
+		if h.owned:
+			if h.is_apartment:
+				# Check if apartment building has any listed, vacant units
+				for unit in h.units:
+					if not unit["has_tenant"] and unit["is_listed"]:
+						available.append(h)
+						break
+			else:
+				# Regular house check
+				if not h.has_tenant and h.is_listed:
+					available.append(h)
 	return available
 
 func _on_timer_timeout() -> void:
 	var available = get_available_houses()
+	target_unit = null # Reset unit target
 	
 	if available.size() > 0:
 		house = available.pick_random()
+		
+		if house.is_apartment:
+			# Pick a random listed, vacant unit from this apartment building
+			var listed_vacant_units = []
+			for unit in house.units:
+				if not unit["has_tenant"] and unit["is_listed"]:
+					listed_vacant_units.append(unit)
+			if listed_vacant_units.size() > 0:
+				target_unit = listed_vacant_units.pick_random()
+			else:
+				return # Fallback if state changed
 		
 		# If you have the app, it auto-processes. Otherwise, it shows UI.
 		if Globals.renter_finder:
@@ -99,21 +119,23 @@ func _on_timer_timeout() -> void:
 func generate_and_display_offers() -> void:
 	if not house: return
 	
-	var fair_rent: float = float(house.current_price) * 0.007 * float(house.apartment_condition)
+	var current_rent = target_unit["rent"] if house.is_apartment and target_unit else house.rent
+	var fair_rent: float = (float(house.current_price) / (house.total_units if house.is_apartment else 1.0)) * 0.007 * float(house.apartment_condition if not house.is_apartment else 1.0)
 	if fair_rent <= 0: fair_rent = 1.0
 	
-	var rent_ratio: float = float(house.rent) / fair_rent
+	var rent_ratio: float = float(current_rent) / fair_rent
 	
 	# If rent is 40% higher than market, 90% chance of no offer
 	if rent_ratio > 1.4 and randf() < 0.9:
-		Globals.notify_action("Price too high for " + house.id, Color.ORANGE, house) 
+		var identifier = "Apt Unit #" + str(target_unit["unit_id"]) if house.is_apartment and target_unit else house.id
+		Globals.notify_action("Price too high for " + identifier, Color.ORANGE, house) 
 		return
 
 	rent_offers = []
 	var offer_count = 1 if rent_ratio > 1.1 else randi_range(1, 3)
 	
 	for i in range(offer_count):
-		var raw_offer: float = float(house.rent) * randf_range(0.95, 1.0)
+		var raw_offer: float = float(current_rent) * randf_range(0.95, 1.0)
 		var snapped_offer = int(snapped(raw_offer, 25))
 		rent_offers.append(max(25, snapped_offer))
 	
@@ -122,29 +144,37 @@ func generate_and_display_offers() -> void:
 func auto_generate_and_add_tenant() -> void:
 	if not house: return
 	
-	var fair_rent: float = float(house.current_price) * 0.007 * float(house.apartment_condition)
+	var current_rent = target_unit["rent"] if house.is_apartment and target_unit else house.rent
+	var fair_rent: float = (float(house.current_price) / (house.total_units if house.is_apartment else 1.0)) * 0.007
 	if fair_rent <= 0: fair_rent = 1.0
 	
 	var max_acceptable_rent: float = fair_rent * 1.3
-	var final_rent: int = int(house.rent)
+	var final_rent: int = int(current_rent)
 	
-	# Agent Logic: Snap to grid and auto-adjust
 	if final_rent > max_acceptable_rent:
 		final_rent = int(snapped(max_acceptable_rent, 25))
 	elif final_rent < (fair_rent * 0.8):
 		final_rent = int(snapped(fair_rent, 25))
 
 	var stats = generate_renter_stats()
-	house.rent = final_rent 
-	house.add_tenant(final_rent, stats.lease_length)
-	house.is_listed = false
-	house.apartment_condition = stats.apartment_condition
-	house.payment_punctuality = stats.payment_punctuality
+	
+	if house.is_apartment and target_unit:
+		target_unit["rent"] = final_rent
+		target_unit["has_tenant"] = true
+		target_unit["is_listed"] = false
+		target_unit["lease_length"] = stats.lease_length
+		target_unit["payment_punctuality"] = stats.payment_punctuality
+		Globals.notify("Agent rented Apt Unit #" + str(target_unit["unit_id"]) + " ($" + add_comma_to_int(final_rent) + ")", Color.GREEN)
+	else:
+		house.rent = final_rent 
+		house.add_tenant(final_rent, stats.lease_length)
+		house.is_listed = false
+		house.apartment_condition = stats.apartment_condition
+		house.payment_punctuality = stats.payment_punctuality
+		Globals.notify("Agent rented " + house.id + " ($" + add_comma_to_int(final_rent) + ")", Color.GREEN)
 	
 	if house.has_method("set_house_UI"):
 		house.set_house_UI()
-	
-	Globals.notify("Agent rented " + house.id + " ($" + add_comma_to_int(final_rent) + ")", Color.GREEN)
 
 func generate_renter_stats() -> Dictionary:
 	var punctuality_base = 0.4
@@ -176,11 +206,20 @@ func display_rent_offers() -> void:
 
 func _on_renter_selected(rent_amount: int, renter_stats: Dictionary) -> void:
 	if house:
-		house.add_tenant(rent_amount, renter_stats.lease_length)
-		house.is_listed = false
+		if house.is_apartment and target_unit:
+			target_unit["rent"] = rent_amount
+			target_unit["has_tenant"] = true
+			target_unit["is_listed"] = false
+			target_unit["lease_length"] = renter_stats.lease_length
+			target_unit["payment_punctuality"] = renter_stats.payment_punctuality
+			Globals.notify("Tenant Moved Into Unit #" + str(target_unit["unit_id"]) + "!", Color.GREEN)
+		else:
+			house.add_tenant(rent_amount, renter_stats.lease_length)
+			house.is_listed = false
+			Globals.notify("Tenant Moved In!", Color.GREEN)
+			
 		clear_offers_ui()
 		Globals.EXP += 5 * Globals.exp_boost
-		Globals.notify("Tenant Moved In!", Color.GREEN)
 
 func clear_offers_ui() -> void:
 	var renters_ui = get_node_or_null("../HUD/Phone/Renters/ScrollContainer/renters")
@@ -199,7 +238,6 @@ func add_comma_to_int(value: int) -> String:
 	for i in range(str_value.length()-3, loop_end, -3):
 		str_value = str_value.insert(i, ",")
 	return str_value
-
 
 func _on_button_button_down() -> void:
 	if house:

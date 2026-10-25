@@ -2,6 +2,9 @@ extends Node3D
 
 @export var is_building = false
 @export var plot = false
+@export var is_apartment: bool = false
+@export var total_units: int = 4 
+@export var max_total_units: int = 4
 var rarity: float = 1.0
 var base_price: float = 0
 var current_price: float = 0
@@ -17,8 +20,12 @@ var is_listed = false
 var edit_mode = false
 var stored_cash = 0
 
+# Apartment Units Data Array
+var units: Array = []
+
 @onready var Collect_Rent = $Collect_Rent
 @onready var Listing_ui: Node = get_node("/root/Root/UserInterface/Game/HUD/House_listing_ui")
+@onready var Apartment_ui: Node = get_node_or_null("/root/Root/UserInterface/Game/HUD/ApartmentMain")
 @onready var events: Node = get_node("/root/Root/UserInterface/Game/events")
 @onready var House_ui: Node = get_node("/root/Root/UserInterface/Game/HUD/House_info")
 @onready var renter = null
@@ -60,12 +67,51 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	Globals.month_ended.connect(_on_month_ended)
-	base_price = randi_range(80000, 500000) * rarity
-	current_price = base_price
-	Collect_Rent = $Collect_Rent
 	randomize()
+	
+	if is_apartment:
+		total_units = randi_range(total_units, max_total_units)
+		for_sale = true
+		
+		# Scale price higher based on how many units the apartment has
+		var min_price = 250000 + (total_units * 50000)
+		var max_price = 1000000 + (total_units * 200000)
+		base_price = randi_range(min_price, max_price) * rarity
+	else:
+		base_price = randi_range(80000, 500000) * rarity
+		
+	current_price = base_price
+	Collect_Rent = get_node_or_null("Collect_Rent")
 	previous_price = base_price
 	loan_price = current_price * 0.8
+
+	if is_apartment and units.is_empty():
+		_initialize_apartment_units()
+
+func _initialize_apartment_units() -> void:
+	units.clear()
+	for i in range(total_units):
+		var unit_data = {
+			"unit_id": i + 1,
+			"rent": snapped(base_price / total_units * 0.008, 25),
+			"has_tenant": false,
+			"lease_length": 12,
+			"apartment_condition": 1.0,
+			"payment_punctuality": 1.0,
+			"is_listed": false,
+			"stored_cash": 0
+		}
+		units.append(unit_data)
+
+func get_total_apartment_income() -> int:
+	var total = 0
+	for u in units:
+		if u["has_tenant"]:
+			var eff_rent = u["rent"]
+			if Globals.rent_bost > 0.0:
+				eff_rent *= (1.0 + Globals.rent_bost)
+			total += int(eff_rent)
+	return total
 
 func _on_visible_on_screen_notifier_3d_screen_entered():
 	is_on_screen = true
@@ -73,12 +119,11 @@ func _on_visible_on_screen_notifier_3d_screen_entered():
 
 func _on_visible_on_screen_notifier_3d_screen_exited():
 	is_on_screen = false
-	# Completely clear labels when off-screen to remove them from the render queue
-	$Label3D.text = ""
-	$Label3D2.text = ""
-	$Label3D3.text = ""
-	$Label3D4.text = ""
-	$Label3D5.text = ""
+	_set_label(1, "")
+	_set_label(2, "")
+	_set_label(3, "")
+	_set_label(4, "")
+	_set_label(5, "")
 
 func _force_ui_refresh():
 	_last_rendered_price = -1
@@ -86,6 +131,14 @@ func _force_ui_refresh():
 	_last_rendered_loan = -1
 	_last_player_money = -1
 	_last_state_string = ""
+
+func _set_label(index: int, text: String, color: Color = Color.WHITE, visible: bool = true) -> void:
+	var node_name = "Label3D" if index == 1 else "Label3D" + str(index)
+	var lbl = get_node_or_null(node_name)
+	if lbl:
+		lbl.text = text
+		lbl.modulate = color
+		lbl.visible = visible
 
 func add_to_base_price(amount: int):
 	base_price += amount
@@ -95,9 +148,7 @@ func set_as_ai_owned():
 	owned = true
 	owner_type = "ai"
 	add_to_group("ai_owned")
-	if has_node("Label3D5"):
-		$Label3D5.text = "Owned by AI"
-		$Label3D5.modulate = Color.ORANGE
+	_set_label(5, "Owned by AI", Color.ORANGE)
 
 var remaining_months: int = 0
 func set_remaining_months(new_months: int) -> void:
@@ -118,11 +169,29 @@ func update_market_value(market_change_percent: float) -> void:
 	var market_multiplier = 1.0 + market_change_percent
 	var noise = randf_range(0.9975, 1.0025)
 	current_price = max(round((previous_price * market_multiplier * noise) / 500.0) * 500, 500)
-	# Queue an update check because pricing metrics altered
 	_last_rendered_price = -1
 
-func _on_month_ended():
-	if owned: return
+func _on_month_ended() -> void:
+	if not owned: return
+	
+	if is_apartment:
+		for unit in units:
+			if unit["has_tenant"]:
+				# Reset rent collection state for the new month
+				unit["paid_rent"] = false
+				
+				# Decrement lease duration
+				if unit["lease_length"] > 0:
+					unit["lease_length"] -= 1
+					
+				# Check for lease expiration
+				if unit["lease_length"] <= 0:
+					unit["lease_length"] = 0
+					unit["has_tenant"] = false
+					unit["is_listed"] = false
+					Globals.notify("Lease expired & tenant moved out of Unit #" + str(unit["unit_id"]) + " in building!", Color.ORANGE)
+		
+		_force_ui_refresh()
 	
 func open_house_ui():
 	if game:
@@ -143,105 +212,93 @@ func get_camera_location() -> Transform3D:
 
 func _process(_delta: float) -> void:
 	_frame_count += 1
-	
-	# If completely off-screen, skip visual formatting entirely.
-	# We process background affordability variables on an interval loop (every 15 frames)
 	if not is_on_screen:
-		if _frame_count % 15 == 0:
-			# Check background states if necessary, otherwise skip completely
-			pass
 		return
 
 	if Globals.yard_edit == true:
 		if _last_state_string != "yard_edit":
-			$Label3D.text = ""
-			$Label3D2.text = ""
-			$Label3D3.text = ""
-			$Label3D4.text = ""
-			$Label3D5.text = ""
+			_set_label(1, "")
+			_set_label(2, "")
+			_set_label(3, "")
+			_set_label(4, "")
+			_set_label(5, "")
 			_last_state_string = "yard_edit"
 		return
 		
 	_last_state_string = "active"
 
 	if owned:
-		# --- OWNED PROPERTY LOGIC ---
 		if loan_price > 0:
 			if _last_rendered_loan != int(loan_price):
-				$Label3D.text = "FINANCED PROPERTY"
-				$Label3D.modulate = Color.FIREBRICK
-				$Label3D2.text = "Loan Balance: " + add_comma_to_int(int(loan_price))
-				$Label3D2.visible = true
+				_set_label(1, "FINANCED PROPERTY", Color.FIREBRICK)
+				_set_label(2, "Loan Balance: " + add_comma_to_int(int(loan_price)), Color.WHITE, true)
 				_last_rendered_loan = int(loan_price)
 			has_loan = true
 		else:
 			if _last_rendered_loan != 0:
-				$Label3D.text = "OWNED PROPERTY"
-				$Label3D.modulate = Color.GREEN
-				$Label3D2.visible = false
-				$Label3D2.text = ""
+				_set_label(1, "OWNED PROPERTY", Color.GREEN)
+				_set_label(2, "", Color.WHITE, false)
 				_last_rendered_loan = 0
 			has_loan = false
 			mortgage = 0
 			loan_price = 0
 
-		if has_tenant and rent > 0:
-			var effective_rent = rent
-			if Globals.rent_bost > 0.0:
-				effective_rent = rent * (1.0 + Globals.rent_bost)
-			
-			var cashflow = int(effective_rent - mortgage)
+		if is_apartment:
+			var total_inc = get_total_apartment_income()
+			var cashflow = int(total_inc - mortgage)
 			if _last_rendered_cashflow != cashflow:
-				$Label3D3.text = "CashFlow: " + add_comma_to_int(cashflow)
-				$Label3D3.modulate = Color.GREEN if cashflow >= 0 else Color.RED
+				_set_label(3, "Apt CashFlow: " + add_comma_to_int(cashflow), Color.GREEN if cashflow >= 0 else Color.RED)
 				_last_rendered_cashflow = cashflow
 		else:
-			if _last_rendered_cashflow != 0:
-				$Label3D3.text = ""
-				_last_rendered_cashflow = 0
+			if has_tenant and rent > 0:
+				var effective_rent = rent
+				if Globals.rent_bost > 0.0:
+					effective_rent = rent * (1.0 + Globals.rent_bost)
+				
+				var cashflow = int(effective_rent - mortgage)
+				if _last_rendered_cashflow != cashflow:
+					_set_label(3, "CashFlow: " + add_comma_to_int(cashflow), Color.GREEN if cashflow >= 0 else Color.RED)
+					_last_rendered_cashflow = cashflow
+			else:
+				if _last_rendered_cashflow != 0:
+					_set_label(3, "")
+					_last_rendered_cashflow = 0
 		
-		$Label3D4.text = "Listed For Rent" if (is_listed and not has_tenant) else ""
-		$Label3D4.modulate = Color.CYAN
-		$Label3D5.text = ""
+		_set_label(4, "Listed For Rent" if (is_listed and not has_tenant) else "", Color.CYAN)
+		_set_label(5, "")
 
 	else:
-		# --- UNOWNED PROPERTY LOGIC ---
 		var price_int = int(current_price)
 		if _last_rendered_price != price_int:
-			$Label3D.text = add_comma_to_int(price_int)
-			$Label3D.modulate = Color.WHITE if for_sale else Color(0.7, 0.7, 0.7)
+			_set_label(1, add_comma_to_int(price_int), Color.WHITE if for_sale else Color(0.7, 0.7, 0.7))
 			_last_rendered_price = price_int
 			
-		$Label3D2.text = ""
-		$Label3D3.text = ""
+		_set_label(2, "")
+		_set_label(3, "")
 		
-		# Combine state evaluations to reduce processing paths
 		if is_in_group("ai_owned") and for_sale:
-			$Label3D5.text = "Competitor Listing"
-			$Label3D5.modulate = Color.ORANGE
+			_set_label(5, "Competitor Listing", Color.ORANGE)
 		elif for_sale:
-			$Label3D4.text = "FOR SALE"
-			$Label3D4.modulate = Color.ORANGE
+			_set_label(4, "FOR SALE", Color.ORANGE)
 			
-			# Only update affordability text if player bank records change
 			var current_player_money = int(Globals.money)
 			if _last_player_money != current_player_money:
 				var down_payment_needed = current_price * 0.2
 				if current_player_money >= down_payment_needed:
-					$Label3D5.text = "Affordable!"
-					$Label3D5.modulate = Color.ORANGE
+					_set_label(5, "Affordable!", Color.ORANGE)
 				else:
-					$Label3D5.text = ""
+					_set_label(5, "")
 				_last_player_money = current_player_money
 		else:
-			$Label3D4.text = ""
-			$Label3D5.text = ""
+			_set_label(4, "")
+			_set_label(5, "")
 
 func create_label(is_affordable: bool):
-	if has_node("Label3D5"):
-		$Label3D5.visible = is_affordable
-		$Label3D5.text = "Affordable!"
-		$Label3D5.modulate = Color.GREEN
+	var lbl = get_node_or_null("Label3D5")
+	if lbl:
+		lbl.visible = is_affordable
+		lbl.text = "Affordable!"
+		lbl.modulate = Color.GREEN
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
@@ -254,19 +311,33 @@ func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Ve
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and !Globals.yard_edit:
 		game.house = self
 		if owned:
-			game.set_house_UI()
+			if is_apartment and Apartment_ui:
+				Apartment_ui.house = self
+				Apartment_ui.visible = true
+				if Apartment_ui.has_method("setup_apartment_ui"):
+					Apartment_ui.setup_apartment_ui()
+			else:
+				game.set_house_UI()
 		else:
 			if for_sale:       
-				game.set_listing_UI()
+				game.set_listing_UI() # Uses the standard listing UI for both houses and unowned apartments!
 
 func remove_tenant():
 	has_tenant = false
 	tenant_offers = null
 	lease_length = 0
 	is_listed = false
-	Collect_Rent.collect_rent()
-	if Collect_Rent:
+	
+	if is_apartment:
+		# Clear tenants across all apartment units safely
+		for unit in units:
+			unit["has_tenant"] = false
+			unit["is_listed"] = false
+			unit["paid_rent"] = false
+	
+	if is_instance_valid(Collect_Rent):
 		Collect_Rent.reset_rent_state(true)
+		
 	_force_ui_refresh()
 
 func add_tenant(income: int, lease_duration: int = 12):
@@ -280,7 +351,7 @@ func house_buy(use_loan: bool, buy_price: int, loan_amount: int, loan_mod: Node 
 		push_error("No valid loan_mod for house %s. Reverting to cash purchase." % name)
 		use_loan = false
 	owned = true
-	$Label3D5.text = ""
+	_set_label(5, "")
 	bought_price = buy_price
 	has_loan = use_loan
 	Globals.EXP += buy_price/100000 * Globals.exp_boost

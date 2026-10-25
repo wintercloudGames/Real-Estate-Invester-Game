@@ -81,20 +81,12 @@ func update_owned_house_mods():
 func add_house_mod(house):
 	var mod_scene = preload("res://assets/UI/phone/rental_controll_mod.tscn")
 	var mod_instance = mod_scene.instantiate()
-
-	# Set data
+	
+	# Set data (rental_controll_mod reads straight from 'house')
 	mod_instance.house = house
-	mod_instance.rent = house.rent
-	mod_instance.mortgage = house.mortgage
-	mod_instance.has_tenant = house.has_tenant
-
+	
 	mod_container.add_child(mod_instance)
 	active_mods[house] = mod_instance
-	
-	# Connect signals if your House script has them, to trigger a resort when status changes
-	if house.has_signal("status_changed"):
-		if not house.status_changed.is_connected(_on_house_status_changed):
-			house.status_changed.connect(_on_house_status_changed)
 
 func remove_house_mod(house):
 	var mod_instance = active_mods[house]

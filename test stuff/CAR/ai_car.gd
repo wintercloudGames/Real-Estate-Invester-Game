@@ -63,10 +63,6 @@ func _ready() -> void:
 	else:
 		push_warning("Car couldn't find World_settings! Check the path.")
 
-	# Setup Visibility Signal bindings manually if you haven't in the editor
-	if visibility_notifier:
-		visibility_notifier.screen_entered.connect(_on_visible_on_screen_notifier_3d_screen_entered)
-		visibility_notifier.screen_exited.connect(_on_visible_on_screen_notifier_3d_screen_exited)
 
 func _on_night_mode_changed(enabled: bool) -> void:
 	lights_should_be_on = enabled
@@ -313,8 +309,9 @@ func _update_lights() -> void:
 		should_be_on = true
 	
 	var season_sys = get_tree().get_root().find_child("Season_System", true, false)
-	if season_sys and season_sys.rain_node.emitting:
-		should_be_on = true
+	if season_sys and "rain_node" in season_sys and season_sys.rain_node != null:
+		if season_sys.rain_node.get("emitting") == true:
+			should_be_on = true
 
 	lights_should_be_on = should_be_on
 	

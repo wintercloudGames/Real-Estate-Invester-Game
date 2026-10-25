@@ -119,7 +119,14 @@ func _process(_delta: float) -> void:
 	if house:
 		price_display.text = "Price: $" + add_comma_to_int(pay_now_amount)
 		time_on_market.text = "Months on market: " + add_comma_to_int(house.time_on_market)
-		$Label_list_price.text = "Listing: $" + add_comma_to_int(house.current_price)
+		
+		# Check if it's an apartment building or regular house using safe property checks
+		var is_apt = "is_apartment" in house and house.is_apartment
+		if is_apt:
+			var unit_count = house.total_units if "total_units" in house else house.units.size()
+			$Label_list_price.text = "Apartment (%d Units)\nListing: $%s" % [unit_count, add_comma_to_int(house.current_price)]
+		else:
+			$Label_list_price.text = "Listing: $" + add_comma_to_int(house.current_price)
 		
 		if can_use_loan and loan_status:
 			var financed_pct = int((1.0 - down_payment_percent) * 100)
@@ -265,15 +272,31 @@ func handle_buy(list_for_rent: bool = false) -> void:
 			SFX.play_sound("error")
 			return
 	
-	if house.has_method("set_house_UI"):
-		house.set_house_UI()
+	# Handle listing options
+	var is_apt = "is_apartment" in house and house.is_apartment
 	if list_for_rent:
-		house.is_listed = true
+		if is_apt:
+			for unit in house.units:
+				unit["is_listed"] = true
+		else:
+			house.is_listed = true
+			
 	if is_instance_valid(loan_button):
 		loan_button.button_pressed = false
 	visible = false
-	game.house = house
-	game.set_house_UI()
+	
+	# Route to correct UI view depending on property type
+	if is_apt:
+		var apartment_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/ApartmentMain")
+		if apartment_ui and is_instance_valid(apartment_ui):
+			apartment_ui.house = house
+			apartment_ui.visible = true
+			if apartment_ui.has_method("setup_apartment_ui"):
+				apartment_ui.setup_apartment_ui()
+	else:
+		game.house = house
+		game.set_house_UI()
+		
 	SaveAndLoad.save_game()
 
 func rollback_purchase():

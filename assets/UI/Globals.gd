@@ -5,7 +5,20 @@ signal money_in_detect(in_value)
 signal money_out_detect(out_value)
 signal skill_points_changed 
 signal stats_changed
+var Income = 0:
+	set(value):
+		Income = value
+		stats_changed.emit()
 
+var Expenses = 0:
+	set(value):
+		Expenses = value
+		stats_changed.emit()
+
+var cashflow = 0:
+	set(value):
+		cashflow = value
+		stats_changed.emit()
 enum GameMode { STORY, MISSION, FREEPLAY }
 var current_game_mode: GameMode = GameMode.FREEPLAY
 var active_mission_id
@@ -56,9 +69,6 @@ var houses_with_tenants: int = 0:
 	set(value):
 		houses_with_tenants = value
 		stats_changed.emit()
-var Income = 0
-var Expenses = 0
-var cashflow = 0
 var save_slot = 1
 var send_to_account:bool = false
 var Editing_Business_Text:bool= false
@@ -541,9 +551,8 @@ func update_economy() -> void:
 		if not house.owned:
 			continue 
 
-		# Use 'current_price' since that's what your script uses for house value
 		var house_value = house.current_price
-		running_property_total += int(house_value) # Add to our new total
+		running_property_total += int(house_value)
 		
 		var mortgage_remaining = house.loan_price
 		
@@ -552,17 +561,29 @@ func update_economy() -> void:
 		total_loan_amount += mortgage_remaining
 		Propertys += 1
 
-		if house.has_tenant:
-			houses_with_tenants += 1
-			Income += house.rent * (1.0 + rent_bost)
+		# Check if it's an apartment building or regular house
+		var is_apt = "is_apartment" in house and house.is_apartment
+		if is_apt:
+			# Get total income using the apartment's built-in helper method
+			Income += house.get_total_apartment_income()
+			
+			# Count rented units for stats
+			for unit in house.units:
+				if unit["has_tenant"]:
+					houses_with_tenants += 1
+		else:
+			if house.has_tenant:
+				houses_with_tenants += 1
+				var house_rent = house.rent
+				if rent_bost > 0.0:
+					house_rent *= (1.0 + rent_bost)
+				Income += house_rent
 
 		if house.is_listed:
 			listed_houses += 1
 
-	# Update the actual Global variable (this triggers the UI update)
 	total_property_value = running_property_total
 	
-	# Rest of your existing logic...
 	if has_car and job_income > 0:
 		Income += job_income
 	if send_to_account:
