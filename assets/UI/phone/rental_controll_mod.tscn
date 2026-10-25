@@ -2,7 +2,21 @@
 
 [ext_resource type="Script" uid="uid://b6r5o3ytb05fe" path="res://assets/UI/phone/rental_controll_mod.gd" id="1_3sp5a"]
 [ext_resource type="Theme" uid="uid://3g1yc1iavd7i" path="res://themes/theme.tres" id="1_pocl4"]
-[ext_resource type="Texture2D" uid="uid://bql3je3n7nto8" path="res://3D assets/Me made/pool_0.png" id="2_qwxxh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r7w1r"]
+bg_color = Color(0.24609375, 0.24609375, 0.24609375, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.05419922, 0, 0.43359375, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 5
 
 [node name="Rental_controll_mod" type="Control"]
 custom_minimum_size = Vector2(325, 140)
@@ -18,16 +32,15 @@ size_flags_horizontal = 3
 theme = ExtResource("1_pocl4")
 script = ExtResource("1_3sp5a")
 
-[node name="Panel" type="TextureRect" parent="."]
-self_modulate = Color(0.172833, 0.172833, 0.172833, 1)
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_qwxxh")
-expand_mode = 1
+theme = ExtResource("1_pocl4")
+theme_override_styles/panel = SubResource("StyleBoxFlat_r7w1r")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -36,9 +49,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -167.5
-offset_top = -33.0
-offset_right = 268.5
+offset_left = -161.5
+offset_top = -37.0
+offset_right = 274.5
+offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.75, 0.75)
@@ -78,9 +92,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -163.5
-offset_right = 164.5
-offset_bottom = 86.0
+offset_left = -145.5
+offset_top = 21.0
+offset_right = 135.5
+offset_bottom = 105.0
 grow_horizontal = 2
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4

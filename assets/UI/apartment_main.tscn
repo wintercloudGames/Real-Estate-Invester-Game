@@ -52,10 +52,10 @@ theme = ExtResource("1_oc5uh")
 [node name="Drag_Button" parent="." instance=ExtResource("2_u45ib")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.14760116
-anchor_top = -0.14632854
-anchor_right = -0.14760116
-anchor_bottom = -0.1457794
+anchor_left = -0.17270638
+anchor_top = -0.12848361
+anchor_right = -0.17270638
+anchor_bottom = -0.12793446
 offset_left = 182.8151
 offset_top = 40.553066
 offset_right = 230.8151
@@ -108,10 +108,10 @@ text = "Sell building"
 
 [node name="Close_Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 937.0
-offset_top = -35.0
-offset_right = 1020.0
-offset_bottom = 12.0
+offset_left = 900.0
+offset_top = -46.0
+offset_right = 983.0
+offset_bottom = 1.0
 theme = ExtResource("3_nfje8")
 text = "CLOSE"
 
@@ -119,8 +119,9 @@ text = "CLOSE"
 layout_mode = 0
 offset_left = 16.0
 offset_top = 117.0
-offset_right = 990.0
+offset_right = 998.0
 offset_bottom = 577.0
+horizontal_scroll_mode = 0
 
 [node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
 layout_mode = 2

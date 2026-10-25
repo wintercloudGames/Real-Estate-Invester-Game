@@ -8,7 +8,7 @@ extends Node3D
 @export var pinch_sensitivity: float = 1.2
 @export var min_zoom_distance: float = 5.0
 @export var max_zoom_distance: float = 20.0
-@export var max_distance: float = 50.0
+@export var max_distance: float = 75.0
 
 # --- Inertia / Throw Settings ---
 @export_group("Inertia")

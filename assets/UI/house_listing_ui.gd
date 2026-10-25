@@ -10,7 +10,7 @@ extends Control
 @onready var buy_button_1: Button = $Buy_button
 @onready var buy_button_2: Button = $Buy_button2
 @onready var loan_button: Button = $Loan_button
-@onready var close_button: Button = $Close_button
+@onready var close_button: Button = $Close_Button
 
 var full_price: int = 0  # Tracks the house's full listing/current price
 var list_price: int = 0 
@@ -124,7 +124,10 @@ func _process(_delta: float) -> void:
 		var is_apt = "is_apartment" in house and house.is_apartment
 		if is_apt:
 			var unit_count = house.total_units if "total_units" in house else house.units.size()
-			$Label_list_price.text = "Apartment (%d Units)\nListing: $%s" % [unit_count, add_comma_to_int(house.current_price)]
+			if not Globals.has_apartment_license:
+				$Label_list_price.text = "Apartment (%d Units) [LOCKED]\nRequires License Skill" % unit_count
+			else:
+				$Label_list_price.text = "Apartment (%d Units)\nListing: $%s" % [unit_count, add_comma_to_int(house.current_price)]
 		else:
 			$Label_list_price.text = "Listing: $" + add_comma_to_int(house.current_price)
 		
@@ -169,6 +172,13 @@ func _on_close_button_pressed() -> void:
 func handle_buy(list_for_rent: bool = false) -> void:
 	if not is_instance_valid(house):
 		Globals.notify("Invalid house!", Color.RED)
+		SFX.play_sound("error")
+		return
+	
+	# Check apartment skill requirement
+	var is_apt = "is_apartment" in house and house.is_apartment
+	if is_apt and not Globals.has_apartment_license:
+		Globals.notify("Locked: Requires Apartment License skill!", Color.RED)
 		SFX.play_sound("error")
 		return
 	
@@ -273,7 +283,6 @@ func handle_buy(list_for_rent: bool = false) -> void:
 			return
 	
 	# Handle listing options
-	var is_apt = "is_apartment" in house and house.is_apartment
 	if list_for_rent:
 		if is_apt:
 			for unit in house.units:

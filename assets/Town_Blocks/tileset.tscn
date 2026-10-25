@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://bg2ds0br8cdkv"]
 
-[ext_resource type="PackedScene" uid="uid://be6xahrqbrede" path="res://assets/Town_Blocks/fourway.tscn" id="1_5rnv2"]
-[ext_resource type="PackedScene" uid="uid://b07iqv37k8uxs" path="res://assets/Town_Blocks/straight_way.tscn" id="2_rydej"]
-[ext_resource type="PackedScene" uid="uid://b1vogh7xv8ycb" path="res://assets/Town_Blocks/threeway.tscn" id="3_euuph"]
-[ext_resource type="PackedScene" uid="uid://cajj0231mp44r" path="res://assets/Town_Blocks/turn.tscn" id="4_mg7ru"]
+[ext_resource type="PackedScene" uid="uid://be6xahrqbrede" path="res://assets/Town_Blocks/house blocks/fourway.tscn" id="1_5rnv2"]
+[ext_resource type="PackedScene" uid="uid://b07iqv37k8uxs" path="res://assets/Town_Blocks/house blocks/straight_way.tscn" id="2_rydej"]
+[ext_resource type="PackedScene" uid="uid://b1vogh7xv8ycb" path="res://assets/Town_Blocks/house blocks/threeway.tscn" id="3_euuph"]
+[ext_resource type="PackedScene" uid="uid://cajj0231mp44r" path="res://assets/Town_Blocks/house blocks/turn.tscn" id="4_mg7ru"]
 [ext_resource type="PackedScene" uid="uid://2cqm1robps1o" path="res://assets/Town_Blocks/end.tscn" id="5_o2fr6"]
 
 [node name="Tileset" type="Node3D"]

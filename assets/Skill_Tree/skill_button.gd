@@ -36,7 +36,7 @@ enum AppSkills {
 	UNLOCK_BUSINESS, HAS_MARKET_APP, JOB_MANAGER, JOB_MANAGER_LEVEL,
 	JOB_BONUS, BUSINESS_BONUS, WORK_BONUS, WORK_AMOUNT, RENT_FINDER_UPGRADE,
 	CREDIT_APP, STOCK_APP, EXP_BOOST, RENT_FINDER_BOOST, LABOR_POINTS,
-	SERVICES_POINTS, TRADE_POINTS, FINANCE_POINTS, MANAGEMENT_POINTS
+	SERVICES_POINTS, TRADE_POINTS, FINANCE_POINTS, MANAGEMENT_POINTS ,APARTMENT_LICENSE
 }
 @export var app_skill_to_unlock: AppSkills = AppSkills.HIRING_APP
 
@@ -277,6 +277,7 @@ func _check_global_unlock_status() -> void:
 		AppSkills.HAS_MARKET_APP: if Globals.has_market_app: new_level = max_level
 		AppSkills.JOB_MANAGER: if Globals.job_manager: new_level = max_level
 		AppSkills.CREDIT_APP: if Globals.credit_app: new_level = max_level
+		AppSkills.APARTMENT_LICENSE: if Globals.has_apartment_license: new_level = max_level
 		AppSkills.RENT_FINDER_UPGRADE: if Globals.rent_finder_upgrade: new_level = max_level
 		AppSkills.RENT_BOOST: if rent_boost_amount > 0: new_level = int(round(Globals.rent_bost / rent_boost_amount))
 		AppSkills.WORK_BONUS: if work_bonus_amount > 0: new_level = int(round(Globals.work_bonus / work_bonus_amount))
@@ -303,6 +304,7 @@ func _apply_permanent_unlock() -> void:
 		AppSkills.JOB_MANAGER: Globals.job_manager = true
 		AppSkills.CREDIT_APP: Globals.credit_app = true
 		AppSkills.RENT_FINDER_UPGRADE: Globals.rent_finder_upgrade = true
+		AppSkills.APARTMENT_LICENSE: Globals.has_apartment_license = true
 		AppSkills.LABOR_POINTS:
 			Globals.labor_skill_points = level
 			Globals.labor_points += points_per_level

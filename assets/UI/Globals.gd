@@ -83,6 +83,7 @@ var EXP: float = 0.0:
 		emit_signal("skill_points_changed") # This refreshes the bar and labels
 var exp_to_level: int = 100
 var level: int = 1
+
 # Skills to unlock
 var has_hireing_app: bool = false
 var has_info_app: bool = false
@@ -102,6 +103,7 @@ var work_amount = 0
 var exp_boost = 1.0
 var rent_finder_boost = 1.0
 var credit_app = false
+var has_apartment_license: bool = false
 
 	#job category Skills
 var labor_skill_points = 0
@@ -192,6 +194,7 @@ func reset(target_mode: GameMode = GameMode.FREEPLAY) -> void:
 	has_market_app = false
 	credit_app = false
 	rent_houses = false
+	has_apartment_license = false
 	unlock_business = false
 	job_manager = false
 	rent_finder_upgrade = false
@@ -298,6 +301,7 @@ func update_cursor_visual():
 	Input.set_custom_mouse_cursor(texture, Input.CURSOR_POINTING_HAND, cursor_offset)
 	Input.set_custom_mouse_cursor(texture, Input.CURSOR_DRAG, cursor_offset)
 	Input.set_custom_mouse_cursor(texture, Input.CURSOR_MOVE, cursor_offset)
+	
 func _process(_delta: float) -> void:
 	if EXP >= exp_to_level:
 		var overflow = EXP - exp_to_level
@@ -595,7 +599,6 @@ func update_economy() -> void:
 
 func monthy():
 	update_economy()
-	
 	money += cashflow
 	month += 1
 	if month > 12:

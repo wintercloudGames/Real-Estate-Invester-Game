@@ -36,7 +36,7 @@ func save_game() -> bool:
 			"active_mission_id": Globals.active_mission.id if Globals.active_mission else "",
 			"current_game_mode": int(Globals.current_game_mode),
 			"current_job_name": Globals.current_job_name,
-			"current_job_category":Globals.current_job_category,
+			"current_job_category": Globals.current_job_category,
 			"unlocked_jobs": Globals.unlocked_jobs,
 			"job_income": Globals.job_income,
 			"job_exp_per_month": Globals.job_exp_per_month,
@@ -67,7 +67,7 @@ func save_game() -> bool:
 			"job_time": Globals.job_time,
 			"employees": Globals.employees,
 			"car_level": Globals.car_level,
-			"has_car":Globals.has_car,
+			"has_car": Globals.has_car,
 			"year": Globals.year,
 			"month": Globals.month,
 			"renter_finder": Globals.renter_finder,
@@ -82,8 +82,8 @@ func save_game() -> bool:
 			"has_hireing_app": Globals.has_hireing_app,
 			"job_exp_gain_per_month": Globals.job_exp_gain_per_month,
 			"has_info_app": Globals.has_info_app,
-			"has_stock_app":Globals.has_stock_app,
-			"has_market_app":Globals.has_market_app,
+			"has_stock_app": Globals.has_stock_app,
+			"has_market_app": Globals.has_market_app,
 			"has_bank_app": Globals.has_bank_app,
 			"has_manager_app": Globals.has_manager_app,
 			"rent_houses": Globals.rent_houses,
@@ -97,10 +97,11 @@ func save_game() -> bool:
 			"work_amount": Globals.work_amount,
 			"rent_finder_upgrade": Globals.rent_finder_upgrade,
 			"exp_boost": Globals.exp_boost,
-			"rent_finder_boost":Globals.rent_finder_boost,
+			"rent_finder_boost": Globals.rent_finder_boost,
 			"credit_app": Globals.credit_app,
 			"labor_skill_points": Globals.labor_skill_points,
 			"services_skill_points": Globals.services_skill_points,
+			"has_apartment_license": Globals.has_apartment_license,
 			"trade_skill_points": Globals.trade_skill_points,
 			"finance_skill_points": Globals.finance_skill_points,
 			"management_skill_points": Globals.management_skill_points
@@ -109,11 +110,13 @@ func save_game() -> bool:
 		"Loans": [],
 		"Market": {}
 	}
+	
 	var market_node = get_node_or_null("/root/Root/UserInterface/Game/Market")
 	if market_node and market_node.has_method("get_market_data"):
 		data["Market"] = market_node.get_market_data()
 	else:
 		data["Market"] = {}
+		
 	for stock in Globals.all_stocks:
 		data["Market"][stock.ticker] = {
 			"current_price": stock.current_price,
@@ -123,25 +126,26 @@ func save_game() -> bool:
 	var houses = get_tree().get_nodes_in_group("houses")
 
 	for house in houses:
-		var collect_rent = house.get_node_or_null("Collect_Rent")
 		if not is_instance_valid(house):
 			push_warning("Invalid house in group 'houses': %s" % house.name)
 			continue
 			
+		var collect_rent = house.get_node_or_null("Collect_Rent")
+			
 		var house_data = {
 			"id": house.id,
-			"is_apartment": house.is_apartment,
-			"total_units": house.total_units,
-			"units": house.units,
+			"is_apartment": house.get("is_apartment"),
+			"total_units": house.get("total_units"),
+			"units": house.get("units"),
 			"yard_objects": [],
 			"plot": house.plot,
 			"rarity": house.rarity,
 			"base_price": house.base_price,
 			"current_price": house.current_price,
 			"mortgage": house.mortgage,
-			"owner_type":house.owner_type,
-			"for_sale":house.for_sale,
-			"time_on_market":house.time_on_market,
+			"owner_type": house.owner_type,
+			"for_sale": house.for_sale,
+			"time_on_market": house.time_on_market,
 			"bought_price": house.bought_price,
 			"rent": house.rent,
 			"lease_length": house.lease_length,
@@ -150,6 +154,7 @@ func save_game() -> bool:
 			"mortgage_deducted": house.mortgage_deducted,
 			"tenant_offers": house.tenant_offers,
 			"is_listed": house.is_listed,
+			"paid_rent": house.paid_rent if "paid_rent" in house else false,
 			"edit_mode": house.edit_mode,
 			"loan_price": house.loan_price,
 			"owned": house.owned,
@@ -162,6 +167,7 @@ func save_game() -> bool:
 			"accumulated_months": collect_rent.accumulated_months if collect_rent else 0
 		}
 		data["Houses"].append(house_data)
+		
 		var storage = house.get_node_or_null("YardObjects")
 		if storage:
 			for item in storage.get_children():
@@ -257,7 +263,7 @@ func load_game() -> bool:
 		Globals.job_time = g.get("job_time", 0)
 		Globals.employees = g.get("employees", 0)
 		Globals.car_level = g.get("car_level", 1)
-		Globals.has_car = g.get("has_car",true)
+		Globals.has_car = g.get("has_car", true)
 		Globals.year = g.get("year", 1)
 		Globals.month = g.get("month", 1)
 		Globals.renter_finder = g.get("renter_finder", false)
@@ -309,7 +315,7 @@ func apply_loaded_data() -> void:
 			if house and is_instance_valid(house):
 				house.is_apartment = saved_house.get("is_apartment", false)
 				house.total_units = saved_house.get("total_units", 4)
-				house.units = saved_house.get("units", [])
+				house.units = saved_house.get("units", []).duplicate(true)
 				house.plot = saved_house.get("plot", house.plot)
 				house.rarity = saved_house.get("rarity", house.rarity)
 				house.base_price = saved_house.get("base_price", house.base_price)
@@ -318,14 +324,28 @@ func apply_loaded_data() -> void:
 				house.bought_price = saved_house.get("bought_price", house.bought_price)
 				house.rent = saved_house.get("rent", house.rent)
 				house.owner_type = saved_house.get("owner_type", house.owner_type)
-				house.for_sale = saved_house.get("for_sale",house.for_sale)
-				house.time_on_market = saved_house.get("time_on_market",house.time_on_market)
+				house.for_sale = saved_house.get("for_sale", house.for_sale)
+				house.time_on_market = saved_house.get("time_on_market", house.time_on_market)
 				house.loan_price = saved_house.get("loan_price", house.loan_price)
 				house.owned = saved_house.get("owned", house.owned)
 				house.has_loan = saved_house.get("has_loan", house.has_loan)
 				house.has_tenant = saved_house.get("has_tenant", house.has_tenant)
+				house.is_listed = saved_house.get("is_listed", house.is_listed)
 				house.just_bought = saved_house.get("just_bought", house.just_bought)
 				house.upgrade_amount = saved_house.get("upgrade_amount", house.upgrade_amount)
+				house.apartment_condition = saved_house.get("apartment_condition", 1.0)
+				house.payment_punctuality = saved_house.get("payment_punctuality", 1.0)
+				if "paid_rent" in house:
+					house.paid_rent = saved_house.get("paid_rent", false)
+				
+				# RESTORE COLLECT_RENT NODE CASH & STATE
+				var collect_rent = house.get_node_or_null("Collect_Rent")
+				if collect_rent:
+					collect_rent.stored_cash = saved_house.get("stored_cash", 0)
+					collect_rent.accumulated_months = saved_house.get("accumulated_months", 0)
+					if collect_rent.stored_cash > 0 and not Globals.hasagent:
+						if collect_rent.dollar_sign:
+							collect_rent.dollar_sign.visible = true
 				
 				if saved_house.has("yard_objects"):
 					var storage = house.get_node_or_null("YardObjects")
@@ -391,6 +411,9 @@ func apply_loaded_data() -> void:
 	Globals.Propertys = owned_count
 	Globals.net_worth = net_worth
 	Globals.Expenses = expenses
+	
+	# Recalculate economy after all property cash & units are loaded
+	Globals.update_economy()
 	loaded_data = {}
 
 func create_new_profile(slot: int) -> bool:
@@ -402,7 +425,7 @@ func create_new_profile(slot: int) -> bool:
 		"Globals": {
 			"save_name": Globals.save_name,
 			"money": 5000,
-			"job_exp_per_month":0.0,
+			"job_exp_per_month": 0.0,
 			"current_job_name": "Unemployed",
 			"job_income": 0,
 			"brokerage_balance": 0.0,

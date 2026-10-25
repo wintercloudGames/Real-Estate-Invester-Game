@@ -139,7 +139,8 @@ emission_energy_multiplier = 1.79
 transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, -21.2204, 1.32127, 11.8198)
 script = ExtResource("1_4q2yv")
 is_building = true
-rarity = 100.0
+total_units = 2
+max_total_units = 5
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, -6.6695e-18, 0, -6.66949e-18, 1, -0.446749, 1.1046, 0.130816)

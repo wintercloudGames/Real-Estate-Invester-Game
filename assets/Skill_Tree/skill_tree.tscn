@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cichm52kww3cn"]
+[gd_scene load_steps=29 format=3 uid="uid://cichm52kww3cn"]
 
 [ext_resource type="Theme" uid="uid://b45etg3nfmcio" path="res://themes/nice_dark_blue.tres" id="1_b6kc5"]
 [ext_resource type="Script" uid="uid://fnvw4y8aim38" path="res://assets/Skill_Tree/skill_tree.gd" id="1_nig2w"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://dwib34gx67f43" path="res://assets/UI/icons/files.png" id="15_m6mis"]
 [ext_resource type="Texture2D" uid="uid://bn2y5ckkxsfd8" path="res://assets/UI/icons/wallet.png" id="15_yn8ca"]
 [ext_resource type="Texture2D" uid="uid://bvoer3ihdrn7h" path="res://assets/UI/icons/histogram.png" id="16_y6xip"]
+[ext_resource type="Texture2D" uid="uid://dmm5ifapcvirq" path="res://assets/UI/icons/id-card.png" id="22_n77n5"]
 [ext_resource type="Texture2D" uid="uid://bsi633oppmpen" path="res://assets/UI/icons/forklift.png" id="22_qd5qf"]
 [ext_resource type="Texture2D" uid="uid://df60lv2sq0dkn" path="res://assets/UI/icons/banknote.png" id="25_bqmw5"]
 [ext_resource type="Texture2D" uid="uid://csij2fsiaeb61" path="res://assets/UI/icons/desk.png" id="26_8caw6"]
@@ -150,10 +151,11 @@ offset_bottom = 564.0
 theme = ExtResource("8_ervgt")
 theme_override_font_sizes/font_size = 30
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 tabs_position = 1
 
 [node name="General" type="Control" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -234,7 +236,6 @@ skill_description = "Required to get in to Management"
 app_skill_to_unlock = 23
 
 [node name="House" type="Control" parent="TabContainer"]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 metadata/_tab_index = 1
@@ -315,6 +316,18 @@ max_level = 10
 skill_name = "Rent Finder Boost"
 skill_description = "Get better renters."
 app_skill_to_unlock = 18
+
+[node name="apartment_license" parent="TabContainer/House" instance=ExtResource("6_2tli5")]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 230.0
+offset_right = 125.0
+offset_bottom = 300.0
+texture_normal = ExtResource("22_n77n5")
+skill_name = "Apartment License"
+skill_description = "Unlocks the legal certification required to purchase, own, and manage multi-unit apartment complexes. Gain access to high-yield commercial properties and expand your real estate empire."
+level_costs = Array[int]([5])
+app_skill_to_unlock = 24
 
 [node name="Money" type="Control" parent="TabContainer"]
 visible = false

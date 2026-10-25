@@ -1,6 +1,6 @@
 extends Control
 
-@onready var house_info_UI = get_node("/root/Root/UserInterface/Game/HUD/House_info")
+@onready var house_info_UI = get_tree().get_first_node_in_group("house_info")
 
 @onready var sell_button: Button = $HBoxContainer/Sell_Button
 @onready var refinance_button: Button = $HBoxContainer/Refinance_Button
@@ -20,25 +20,26 @@ var unit_data = null
 
 func _process(_delta: float) -> void:
 	if unit_data and apartment_building:
-		# --- APARTMENT UNIT DISPLAY MODE ---
-		house_value.visible = false # Hide value for apartment units!
+		# --- 1. APARTMENT UNIT DISPLAY MODE ---
+		house_value.visible = false # Hide house value for unit cards
 		
 		morgage.text = "Rent: " + add_comma_to_int(int(unit_data["rent"]))
 		
+		var status_text = ""
 		if unit_data["has_tenant"]:
 			var lease_months = unit_data.get("lease_length", 12)
 			if lease_months <= 0:
 				rental_status.add_theme_color_override("font_color", Color.ORANGE)
-				rental_status.text = "Status: Lease Expired!"
+				status_text = "Status: Lease Expired!"
 			else:
 				rental_status.add_theme_color_override("font_color", Color.GREEN)
-				rental_status.text = "Status: Rented (%d mo left)" % lease_months
+				status_text = "Status: Rented (%d mo left)" % lease_months
 		elif unit_data["is_listed"]:
 			rental_status.add_theme_color_override("font_color", Color.YELLOW)
-			rental_status.text = "Status: Seeking Tenant..."
+			status_text = "Status: Seeking Tenant..."
 		else:
 			rental_status.add_theme_color_override("font_color", Color.CRIMSON)
-			rental_status.text = "Status: Unlisted"
+			status_text = "Status: Unlisted"
 
 		var flow = int(unit_data["rent"]) if unit_data["has_tenant"] else 0
 		if flow > 0:
@@ -47,23 +48,73 @@ func _process(_delta: float) -> void:
 			cash_flow.add_theme_color_override("font_color", Color.WHITE)
 			
 		cash_flow.text = "Cashflow: " + add_comma_to_int(flow)
+		rental_status.text = status_text + "\n" + cash_flow.text
+		cash_flow.visible = false # Cash flow is embedded into status label text
+		
 		update_apartment_unit_buttons()
 
+	elif house and house.is_apartment:
+		# --- 2. APARTMENT BUILDING PHONE CARD MODE ---
+		house_value.visible = true
+		house_value.text = "Value: " + add_comma_to_int(int(house.current_price))
+		morgage.text = "Mortgage: " + add_comma_to_int(int(house.mortgage))
+		
+		var total_units: int = house.units.size()
+		var rented_count: int = 0
+		var listed_count: int = 0
+		
+		for unit in house.units:
+			if unit["has_tenant"]:
+				rented_count += 1
+			elif unit["is_listed"]:
+				listed_count += 1
+				
+		var status_text = ""
+		if rented_count == total_units:
+			rental_status.add_theme_color_override("font_color", Color.GREEN)
+			status_text = "Status: Fully Rented (%d/%d)" % [rented_count, total_units]
+		elif rented_count > 0:
+			rental_status.add_theme_color_override("font_color", Color.GREEN)
+			status_text = "Status: Rented (%d/%d)" % [rented_count, total_units]
+		elif listed_count > 0:
+			rental_status.add_theme_color_override("font_color", Color.YELLOW)
+			status_text = "Status: Seeking (%d/%d)" % [listed_count, total_units] # Shortened to avoid clipping
+		else:
+			rental_status.add_theme_color_override("font_color", Color.CRIMSON)
+			status_text = "Status: Unlisted (0/%d)" % total_units
+
+		var total_income = house.get_total_apartment_income() if house.has_method("get_total_apartment_income") else 0
+		var flow = total_income - int(house.mortgage)
+		
+		if flow < 0:
+			cash_flow.add_theme_color_override("font_color", Color.CRIMSON)
+		elif flow > 0:
+			cash_flow.add_theme_color_override("font_color", Color.LAWN_GREEN)
+		else:
+			cash_flow.add_theme_color_override("font_color", Color.WHITE)
+			
+		cash_flow.text = "Cashflow: " + add_comma_to_int(int(flow))
+		rental_status.text = status_text + "\n" + cash_flow.text
+		cash_flow.visible = false
+		
+		update_tenant_buttons()
+
 	elif house:
-		# --- REGULAR HOUSE DISPLAY MODE ---
-		house_value.visible = true # Ensure it's visible for normal houses
+		# --- 3. REGULAR SINGLE-FAMILY HOUSE DISPLAY MODE ---
+		house_value.visible = true
 		morgage.text = "Mortgage: " + add_comma_to_int(int(house.mortgage))
 		house_value.text = "Value: " + add_comma_to_int(int(house.current_price))
 		
+		var status_text = ""
 		if house.has_tenant:
 			rental_status.add_theme_color_override("font_color", Color.GREEN)
-			rental_status.text = "Status: Rented"
+			status_text = "Status: Rented"
 		elif house.is_listed:
 			rental_status.add_theme_color_override("font_color", Color.YELLOW)
-			rental_status.text = "Status: Seeking Tenant..."
+			status_text = "Status: Seeking Tenant..."
 		else:
 			rental_status.add_theme_color_override("font_color", Color.CRIMSON)
-			rental_status.text = "Status: Unlisted"
+			status_text = "Status: Unlisted"
 
 		var current_income = house.rent if house.has_tenant else 0
 		var flow = current_income - house.mortgage
@@ -76,6 +127,9 @@ func _process(_delta: float) -> void:
 			cash_flow.add_theme_color_override("font_color", Color.WHITE)
 			
 		cash_flow.text = "Cashflow: " + add_comma_to_int(int(flow))
+		rental_status.text = status_text + "\n" + cash_flow.text
+		cash_flow.visible = false
+		
 		update_tenant_buttons()
 
 func update_tenant_buttons() -> void:
@@ -86,6 +140,27 @@ func update_tenant_buttons() -> void:
 		list_for_rent_button.visible = false
 		return
 
+	# If this card represents an apartment building
+	if house.is_apartment:
+		remove_tenent_button.visible = false # Keep remove tenant hidden on phone card
+		
+		# Check if there's rent ready to collect
+		var collect_node = house.get_node_or_null("Collect_Rent")
+		var has_cash = collect_node and collect_node.stored_cash > 0
+		rent_button.visible = has_cash
+		if rent_ready_label: rent_ready_label.visible = has_cash
+		
+		# Check if there are any unrented units that aren't listed yet
+		var has_unlisted_vacancies = false
+		for unit in house.units:
+			if not unit["has_tenant"] and not unit["is_listed"]:
+				has_unlisted_vacancies = true
+				break
+				
+		list_for_rent_button.visible = has_unlisted_vacancies
+		return
+
+	# --- Regular House Logic ---
 	var rent_ready = house.get_node_or_null("Collect_Rent/Dollar_sign")
 	var is_rent_ready = rent_ready and rent_ready.visible
 	
@@ -115,7 +190,6 @@ func update_apartment_unit_buttons() -> void:
 	var more_btn = $HBoxContainer.get_node_or_null("More_Button")
 	if more_btn: more_btn.visible = false
 
-	# Show collect button only if rented and rent has not been paid yet this cycle
 	var rent_unpaid = unit_data["has_tenant"] and not unit_data.get("paid_rent", false)
 	rent_button.visible = rent_unpaid
 	if rent_ready_label: rent_ready_label.visible = rent_unpaid
@@ -136,10 +210,18 @@ func add_comma_to_int(value: int) -> String:
 
 func _on_list_for_rent_button_pressed() -> void:
 	if unit_data:
+		# Individual apartment unit listing
 		unit_data["is_listed"] = true
 	elif house:
-		house.is_listed = true
-
+		if house.is_apartment:
+			# List all vacant units in the apartment building
+			for unit in house.units:
+				if not unit["has_tenant"]:
+					unit["is_listed"] = true
+			Globals.notify("All vacant units listed for rent!", Color.LAWN_GREEN)
+		else:
+			# Regular single-family house listing
+			house.is_listed = true
 func _on_remove_tenent_button_pressed():
 	if unit_data:
 		unit_data["has_tenant"] = false
@@ -200,8 +282,20 @@ func _on_sell_button_pressed() -> void:
 
 func _on_more_button_pressed() -> void:
 	if unit_data: return
-	house_info_UI.visible = true
-	house_info_UI.house = house
+	
+	if house and house.is_apartment:
+		# Open Apartment UI for apartment buildings
+		var apartment_ui = get_node_or_null("/root/Root/UserInterface/Game/HUD/ApartmentMain")
+		if apartment_ui and is_instance_valid(apartment_ui):
+			apartment_ui.house = house
+			apartment_ui.visible = true
+			if apartment_ui.has_method("setup_apartment_ui"):
+				apartment_ui.setup_apartment_ui()
+	else:
+		# Open standard House Info UI for regular houses
+		if house_info_UI:
+			house_info_UI.visible = true
+			house_info_UI.house = house
 
 func _on_collect_rent_button_pressed() -> void:
 	if unit_data:

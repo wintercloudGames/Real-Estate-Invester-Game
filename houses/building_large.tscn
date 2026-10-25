@@ -1,6 +1,10 @@
-[gd_scene load_steps=10 format=4 uid="uid://4scb1lh1a7vk"]
+[gd_scene load_steps=16 format=4 uid="uid://4scb1lh1a7vk"]
 
 [ext_resource type="Script" uid="uid://dtdaluqrijy0" path="res://assets/UI/house_click.gd" id="1_460dn"]
+[ext_resource type="Script" uid="uid://885nck1e7d83" path="res://houses/collect_rent.gd" id="3_2er1p"]
+[ext_resource type="ArrayMesh" uid="uid://0pbpieoh3bw5" path="res://3D assets/Me made/Dollar sign.obj" id="4_lyk61"]
+[ext_resource type="Script" uid="uid://bkms1t16f02un" path="res://houses/dollar_sign.gd" id="5_421sv"]
+[ext_resource type="AudioStream" uid="uid://birhg2bkbatx" path="res://effects/sounds/547603__kaysonargyle__coin-splash.wav" id="6_14pjt"]
 [ext_resource type="Script" uid="uid://btn5j0kfcjmbi" path="res://houses/Generate_house_texure.gd" id="9_6d6jm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1pbp5"]
@@ -121,16 +125,25 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_uekls")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wahjq"]
+albedo_color = Color(0, 0.941406, 0.147095, 1)
+emission_enabled = true
+emission = Color(0.494965, 0.964844, 0.203522, 1)
+emission_energy_multiplier = 1.79
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jxovs"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_460dn"]
 size = Vector3(1.3713577, 1.8432711, 2.1317978)
 
-[node name="Building_large" type="Node3D"]
+[node name="Building_large" type="Node3D" groups=["houses"]]
 transform = Transform3D(-4.37114e-08, -0.00349065, 0.999993, 0, 0.999993, 0.00349065, -1, 1.52581e-10, -4.37111e-08, 0, 0, 0)
 script = ExtResource("1_460dn")
 is_apartment = true
+max_total_units = 25
 
 [node name="large_buildingA" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.35186e-08, -2.12223e-16, -0.995589, -0.00347526, 0.995584, 1.51908e-10, 0.995584, 0.00347526, -4.35184e-08, -0.287821, -1.61971, 0.0899086)
+transform = Transform3D(1, 0, 0, 0, 1, 6.669495e-18, 0, -6.669495e-18, 1, -0.031130215, -1.32521, -0.90869963)
 ignore_occlusion_culling = true
 visibility_range_begin = 1.0
 visibility_range_end = 20.0
@@ -141,30 +154,58 @@ script = ExtResource("9_6d6jm")
 [node name="Yard_center_for_camera" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.95918083, 0.2827935, 0, -0.2827935, 0.95918083, 0, 0, -0.13834202)
 
+[node name="Collect_Rent" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, -6.6695043e-18, 0, -6.6694944e-18, 1, 0, 0, 0)
+script = ExtResource("3_2er1p")
+
+[node name="Dollar_sign" type="MeshInstance3D" parent="Collect_Rent"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.0548873, 1.23944, 0.00478864)
+visible = false
+material_override = SubResource("StandardMaterial3D_wahjq")
+mesh = ExtResource("4_lyk61")
+skeleton = NodePath("../..")
+script = ExtResource("5_421sv")
+
+[node name="Rent_collect" type="Area3D" parent="Collect_Rent/Dollar_sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10045, 1.63699, -0.0159324)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collect_Rent/Dollar_sign/Rent_collect"]
+shape = SubResource("CylinderShape3D_jxovs")
+
+[node name="Label3D" type="Label3D" parent="Collect_Rent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130532, 2.91884, 0.0112629)
+billboard = 1
+modulate = Color(1, 0.960938, 0, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Collect_Rent"]
+stream = ExtResource("6_14pjt")
+bus = &"SFX"
+
 [node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 6.6694944e-18, 0, -6.6694944e-18, 1, 0.25669077, 0.2944999, -0.99860823)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(0.999474, 0, 0.0324225, 1.6301084e-09, 1, -4.94708e-12, -0.0324225, -6.6694944e-18, 0.999474, -0.27335283, -0.6971506, 0.06611542)
 shape = SubResource("BoxShape3D_460dn")
 
 [node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130532, 2.1317, 0.0112629)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.131, 1.5, -0.789)
 billboard = 1
 
 [node name="Label3D2" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130532, 1.73654, 0.0112629)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.131, 2.5, -0.789)
 billboard = 1
 
 [node name="Label3D3" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130532, 1.43654, 0.0112629)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.131, 1.5, -0.789)
 billboard = 1
 
 [node name="Label3D4" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130532, 1.18626, 0.0112629)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.131, 1, -0.789)
 billboard = 1
 
 [node name="Label3D5" type="Label3D" parent="."]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0.130532, 2.49709, 0.0112629)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0.131, 2, -0.789)
 billboard = 1
 
 [node name="payment_delay_timer" type="Timer" parent="."]
@@ -202,4 +243,5 @@ light_energy = 1.5
 [node name="Camera_Front" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.946874, 0.32160476, 0, -0.32160476, 0.946874, -0.09505391, 1.2530605, 1.3796637)
 
+[connection signal="input_event" from="Collect_Rent/Dollar_sign/Rent_collect" to="Collect_Rent/Dollar_sign" method="_on_rent_collect_input_event"]
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

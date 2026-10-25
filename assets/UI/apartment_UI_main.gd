@@ -3,7 +3,7 @@ extends Control
 @onready var cashflow_label = $Label_cashflow
 @onready var label_total_rent = $Label_total_rent
 @onready var units_scroll_container = $ScrollContainer/GridContainer 
-@onready var game = get_node("/root/Root/UserInterface/Game")
+@onready var game = get_tree().get_first_node_in_group("Game")
 
 # Financial Summary Labels
 @onready var label_bought_price: Label = $Label_bought_price

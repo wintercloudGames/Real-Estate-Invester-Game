@@ -9,15 +9,11 @@ var list_needs_resort: bool = false
 func _ready():
 	await get_tree().process_frame
 	house_list = get_tree().get_nodes_in_group("houses")
-	# Initial sort
 	list_needs_resort = true
 
 func _process(_delta: float) -> void:
 	update_owned_house_mods()
-	
-
 	sort_mods_by_status()
-
 
 func add_comma_to_int(value: int) -> String:
 	var str_value: String = str(value)
@@ -36,36 +32,52 @@ func sort_mods_by_status():
 		var a_weight = _get_status_weight(a.house)
 		var b_weight = _get_status_weight(b.house)
 		
-		# Secondary sort: If status is same, show most expensive houses first
 		if a_weight == b_weight:
 			return a.house.current_price > b.house.current_price
 		
 		return a_weight < b_weight
 	)
 
-	# Apply the new order to the UI container
 	for i in range(mods.size()):
 		mod_container.move_child(mods[i], i)
 
 func _get_status_weight(house) -> int:
-	# 1. ABSOLUTE TOP: Unlisted (Not on market, no tenant)
-	# This MUST come first.
-	if not house.is_listed and not house.has_tenant:
-		return 0
+	if not house: return 4
+	
+	if house.is_apartment:
+		var has_stored_cash = false
+		var all_rented = true
+		var any_listed = false
 		
-	# 2. SECOND: Rent Ready (Unlisted but has stored cash)
-	if house.stored_cash > 0 and not house.is_listed:
-		return 1
-		
-	# 3. THIRD: Looking for Tenant (Is on the market, but empty)
-	if house.is_listed and not house.has_tenant:
-		return 2
-		
-	# 4. BOTTOM: Has Tenant (Active income)
-	if house.has_tenant:
-		return 3
-		
-	return 4 # Fallback
+		var collect_node = house.get_node_or_null("Collect_Rent")
+		if collect_node and collect_node.stored_cash > 0:
+			has_stored_cash = true
+			
+		for unit in house.units:
+			if not unit["has_tenant"]:
+				all_rented = false
+				if unit["is_listed"]:
+					any_listed = true
+					
+		if has_stored_cash:
+			return 1 # Rent Ready
+		elif not all_rented and any_listed:
+			return 2 # Seeking Tenant
+		elif not all_rented and not any_listed:
+			return 0 # Unlisted (vacant units not on market)
+		else:
+			return 3 # Fully Rented
+	else:
+		if not house.is_listed and not house.has_tenant:
+			return 0
+		var collect_node = house.get_node_or_null("Collect_Rent")
+		if collect_node and collect_node.stored_cash > 0 and not house.is_listed:
+			return 1
+		if house.is_listed and not house.has_tenant:
+			return 2
+		if house.has_tenant:
+			return 3
+		return 4
 
 func update_owned_house_mods():
 	for house in house_list:
@@ -82,8 +94,10 @@ func add_house_mod(house):
 	var mod_scene = preload("res://assets/UI/phone/rental_controll_mod.tscn")
 	var mod_instance = mod_scene.instantiate()
 	
-	# Set data (rental_controll_mod reads straight from 'house')
+	# Set data
 	mod_instance.house = house
+	if house.is_apartment:
+		mod_instance.apartment_building = house # <--- Set this so it knows it's an apartment card!
 	
 	mod_container.add_child(mod_instance)
 	active_mods[house] = mod_instance
@@ -93,17 +107,10 @@ func remove_house_mod(house):
 	if is_instance_valid(mod_instance):
 		mod_instance.queue_free()
 	active_mods.erase(house)
-	
-	if house.has_signal("status_changed"):
-		if house.status_changed.is_connected(_on_house_status_changed):
-			house.status_changed.disconnect(_on_house_status_changed)
-
-func _on_house_status_changed():
-	list_needs_resort = true
 
 func _on_collect_rent_pressed() -> void:
 	for house in active_mods:
 		var mod_instance = active_mods[house]
 		if is_instance_valid(mod_instance):
 			mod_instance._on_collect_rent_button_pressed()
-	list_needs_resort = true # Resort after collection in case status changed
+	list_needs_resort = true
