@@ -71,11 +71,10 @@ func _ready() -> void:
 	
 	if is_apartment:
 		total_units = randi_range(total_units, max_total_units)
-		for_sale = true
 		
 		# Scale price higher based on how many units the apartment has
-		var min_price = 250000 + (total_units * 50000)
-		var max_price = 1000000 + (total_units * 200000)
+		var min_price = 2500000 + (total_units * 500000)
+		var max_price = 10000000 + (total_units * 2000000)
 		base_price = randi_range(min_price, max_price) * rarity
 	else:
 		base_price = randi_range(80000, 500000) * rarity

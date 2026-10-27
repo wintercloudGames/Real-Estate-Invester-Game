@@ -35,7 +35,7 @@ func _on_breakdown_check():
 		is_broken = true
 		Globals.has_car = false
 		# Using the "car_event" key keeps this warning on ONE line in the notification list
-		Globals.notify("⚠️ ALERT: Car has broken down!", Color.RED)
+		Globals.notify("ALERT: Car has broken down!", Color.RED)
 		breakdown_timer.stop()
 	else:
 		# Restart the timer for the next check if we didn't break
@@ -123,7 +123,7 @@ func update_status_label():
 	var repair_cost = get_repair_cost()
 	$Repair_Cost_Label.text = "Repair Cost: $%d" % repair_cost
 	
-	var status_text = "❌ Broken Down" if is_broken else "✅ Working"
+	var status_text = "Broken Down" if is_broken else "Working"
 	# Logic: format percentage for the UI
 	var display_rate = breakdown_rate * 100
 	

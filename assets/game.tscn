@@ -4299,6 +4299,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.967796, -0.0027964711, 27
 [node name="Fourway" parent="Town" instance=ExtResource("85_ojuag")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 0, 28)
 
+[node name="Fourway2" parent="Town" instance=ExtResource("85_ojuag")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70, 0, 21)
+
 [node name="StraghtWay17" parent="Town" instance=ExtResource("86_8whiy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63, 0, 28)
 
@@ -4317,17 +4320,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70, 0, 42)
 [node name="StraghtWay39" parent="Town" instance=ExtResource("86_8whiy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63, 0, 21)
 
+[node name="StraghtWay40" parent="Town" instance=ExtResource("86_8whiy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63, 0, 14)
+
 [node name="Threeway7" parent="Town" instance=ExtResource("87_wiy2o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70, 0, 28)
 
 [node name="Threeway8" parent="Town" instance=ExtResource("87_wiy2o")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -77, 0, 28)
 
+[node name="Threeway17" parent="Town" instance=ExtResource("87_wiy2o")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -77, 0, 21)
+
 [node name="Threeway11" parent="Town" instance=ExtResource("87_wiy2o")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -56, 0, 35)
 
 [node name="Threeway12" parent="Town" instance=ExtResource("87_wiy2o")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -70, 0, 21)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -70, 0, 14)
 
 [node name="Threeway14" parent="Town" instance=ExtResource("87_wiy2o")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -56, 0, 21)
@@ -4339,7 +4348,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77, 0, 42)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -56, 0, 42)
 
 [node name="Turn7" parent="Town" instance=ExtResource("88_1288s")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -77, 0, 21)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -77, 0, 14)
+
+[node name="Turn8" parent="Town" instance=ExtResource("88_1288s")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -56, 0, 14)
 
 [node name="playground" parent="Town" instance=ExtResource("89_6esu8")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -8.87963, -0.0075927526, 6.112796)
